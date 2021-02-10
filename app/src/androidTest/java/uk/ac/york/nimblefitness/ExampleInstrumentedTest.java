@@ -1,4 +1,4 @@
-package uk.ac.york.nimblefittness;
+package uk.ac.york.nimblefitness;
 
 import android.content.Context;
 

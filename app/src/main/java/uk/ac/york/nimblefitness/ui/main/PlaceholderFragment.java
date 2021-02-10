@@ -1,4 +1,4 @@
-package uk.ac.york.nimblefittness.ui.main;
+package uk.ac.york.nimblefitness.ui.main;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import uk.ac.york.nimblefittness.R;
+import uk.ac.york.nimblefitness.R;
 
 /**
  * A placeholder fragment containing a simple view.

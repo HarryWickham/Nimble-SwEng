@@ -1,4 +1,4 @@
-package uk.ac.york.nimblefittness;
+package uk.ac.york.nimblefitness;
 
 import android.os.Bundle;
 
@@ -9,11 +9,9 @@ import com.google.android.material.tabs.TabLayout;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 
-import uk.ac.york.nimblefittness.ui.main.SectionsPagerAdapter;
+import uk.ac.york.nimblefitness.ui.main.SectionsPagerAdapter;
 
 public class MainActivity extends AppCompatActivity {
 

@@ -1,4 +1,4 @@
-package uk.ac.york.nimblefittness.ui.main;
+package uk.ac.york.nimblefitness.ui.main;
 
 import android.content.Context;
 
@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import uk.ac.york.nimblefittness.R;
+import uk.ac.york.nimblefitness.R;
 
 /**
  * A [FragmentPagerAdapter] that returns a fragment corresponding to

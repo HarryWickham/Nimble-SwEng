@@ -1,4 +1,4 @@
-package uk.ac.york.nimblefittness.ui.main;
+package uk.ac.york.nimblefitness.ui.main;
 
 import androidx.arch.core.util.Function;
 import androidx.lifecycle.LiveData;
