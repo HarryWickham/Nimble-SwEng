@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1082440501674",
+    "project_id": "nimble-6c107",
+    "storage_bucket": "nimble-6c107.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1082440501674:android:cc7f89102f69b5efca03d3",
+        "android_client_info": {
+          "package_name": "uk.ac.york.nimblefittness"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1082440501674-dsinj9sev8md1518nc8u5bal4rkll72b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDpVmPnyYC-k6YAsYWz8tT8eynAEZuaMHo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1082440501674-dsinj9sev8md1518nc8u5bal4rkll72b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

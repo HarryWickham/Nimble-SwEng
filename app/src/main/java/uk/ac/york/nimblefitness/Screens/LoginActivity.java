@@ -8,10 +8,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import uk.ac.york.nimblefitness.R;
 
 public class LoginActivity extends AppCompatActivity {
-
+    private FirebaseAuth mAuth;
     Button login_button;
 
     @Override
