@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:gravity="center|top"
     android:orientation="vertical"
-    tools:context=".Screens.SignupActivity"
+    tools:context=".Screens.LoginActivity"
     android:paddingHorizontal="40dp">
 
     <ImageView
@@ -20,7 +20,7 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/sign_up"
+        android:text="@string/login"
         android:textSize="30sp"
         android:textStyle="bold"
         android:textColor="#666666"
@@ -29,7 +29,7 @@
         />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/SignUpEmail"
+        android:id="@+id/SignInEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/email_address"
@@ -46,7 +46,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/SignUpPassword"
+        android:id="@+id/SignInPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/password"
@@ -63,39 +63,31 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/SignUpPasswordConfirm"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/forgotten_password"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="@string/confirm_password"
-        android:paddingVertical="5dp"
-        app:endIconMode="password_toggle"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:elevation="4dp">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            />
-
-    </com.google.android.material.textfield.TextInputLayout>
+        android:text="@string/forgotten_password"
+        android:onClick="onClickForgottenPassword"
+        android:clickable="true"
+        android:focusable="true"/>
 
     <Button
-        android:id="@+id/sign_up_button"
+        android:id="@+id/sign_in_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/sign_up"
+        android:text="@string/login"
         android:elevation="4dp"
         android:layout_marginTop="20dp"
         />
 
     <TextView
-        android:id="@+id/already_a_member"
+        android:id="@+id/new_member"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/returning_member"
-        android:onClick="onClickGoToLogin"
+        android:text="@string/new_member"
+        android:onClick="onClickGoToSignUp"
         android:clickable="true"
-        android:focusable="true" />
+        android:focusable="true"
+        />
 </LinearLayout>
