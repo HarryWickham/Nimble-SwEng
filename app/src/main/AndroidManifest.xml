@@ -9,8 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.NimbleFitness">
+        <activity android:name=".Screens.SignupActivity" />
+        <activity android:name=".Screens.LoginScreen" />
         <activity
-            android:name=".MainActivity"
+            android:name=".Screens.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/Theme.NimbleFitness.NoActionBar">
             <intent-filter>
