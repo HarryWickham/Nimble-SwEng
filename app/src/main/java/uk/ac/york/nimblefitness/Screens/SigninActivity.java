@@ -12,7 +12,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import uk.ac.york.nimblefitness.R;
 
-public class LoginActivity extends AppCompatActivity {
+public class SigninActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     Button login_button;
 
@@ -24,14 +24,14 @@ public class LoginActivity extends AppCompatActivity {
         login_button = findViewById(R.id.sign_in_button);
 
         login_button.setOnClickListener(view -> {
-            Intent mIntent = new Intent(LoginActivity.this, MainActivity.class);
+            Intent mIntent = new Intent(SigninActivity.this, MainActivity.class);
             startActivity(mIntent);
             finish();
         });
     }
 
     public void onClickGoToSignUp(View v) {
-        Intent mIntent = new Intent(LoginActivity.this, SignupActivity.class);
+        Intent mIntent = new Intent(SigninActivity.this, SignupActivity.class);
         startActivity(mIntent);
         finish();
     }
