@@ -4,15 +4,16 @@
 
     <application
         android:allowBackup="true"
+        android:fullBackupContent="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.NimbleFitness">
-        <activity android:name=".Screens.SignupActivity" />
-        <activity android:name=".Screens.LoginScreen" />
+        <activity android:name=".Screens.MainActivity" />
+        <activity android:name=".Screens.SigninActivity" />
         <activity
-            android:name=".Screens.MainActivity"
+            android:name=".Screens.SignupActivity"
             android:label="@string/app_name"
             android:theme="@style/Theme.NimbleFitness.NoActionBar">
             <intent-filter>
