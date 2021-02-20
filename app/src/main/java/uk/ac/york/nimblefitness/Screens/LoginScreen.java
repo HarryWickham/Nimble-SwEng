@@ -7,7 +7,6 @@ import android.os.Bundle;
 import uk.ac.york.nimblefitness.R;
 
 public class LoginScreen extends AppCompatActivity {
-    private FirebaseAuth mAuth;
 
 
     @Override
