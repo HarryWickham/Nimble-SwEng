@@ -3,27 +3,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Screens.Profile.ProfileFragment"
-    android:weightSum="100"
-    android:gravity="center_horizontal"
-    >
+    android:gravity="center_horizontal">
 
     <com.google.android.material.card.MaterialCardView
-        android:layout_height="300dp"
-        android:layout_weight="90"
-        android:paddingHorizontal="16dp"
-        android:layout_width="0dp" >
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="8dp"
+        android:layout_width="match_parent"
+        android:layout_marginTop="8dp"
+        app:cardElevation="4dp"
 
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="75dp"
             android:gravity="center_vertical">
             <ImageView
                 android:layout_width="50dp"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:id="@+id/profile_picture"
-                android:src="@drawable/final_logo"
-                android:layout_alignParentLeft="true"
+                android:src="@drawable/ic_baseline_emoji_emotions_24"
 
                 />
             <LinearLayout
@@ -61,6 +65,13 @@
                     android:src="@drawable/ic_baseline_share_24"
                     android:paddingRight="16dp"/>
             </LinearLayout>
+
+        </LinearLayout>
+
+        <ListView
+            android:id="@+id/completed_moves_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
         </LinearLayout>
 
 
