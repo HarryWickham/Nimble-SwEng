@@ -9,7 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CalendarView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Objects;
@@ -18,7 +20,6 @@ import uk.ac.york.nimblefitness.R;
 import uk.ac.york.nimblefitness.Screens.SigninActivity;
 
 public class ProfileFragment extends Fragment {
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -31,7 +32,7 @@ public class ProfileFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_profile, container, false); //shows the fragment_settings.xml file in the frame view of the activity_main.xml
 
-        String[] completed_activity_list = {"Press-ups","Sit-ups","Plank","Crunches"}; //the text that goes in each different list view item
+        String[] completed_activity_list = {"Press-ups", "Sit-ups", "Plank", "Crunches"}; //the text that goes in each different list view item
 
         ListView listView = (ListView) view.findViewById(R.id.completed_moves_list); //find the list view from the fragment_settings.xml file
 
@@ -41,10 +42,12 @@ public class ProfileFragment extends Fragment {
         listView.setOnItemClickListener((parent, view1, position, id) -> {//watches for a user to click on the list view, then gives the program which position the click was in
             String itemValue = (String) listView.getItemAtPosition(position); //converts the position ID into the text that is written in that position
 
-            Toast toast = Toast.makeText(getActivity(), itemValue , Toast.LENGTH_SHORT); //shows an alert with the text of the list item that has been clicked
+            Toast toast = Toast.makeText(getActivity(), itemValue, Toast.LENGTH_SHORT); //shows an alert with the text of the list item that has been clicked
             toast.show();
 
         });
         return view;
     }
 }
+
+

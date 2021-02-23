@@ -5,21 +5,42 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Screens.Profile.ProfileFragment"
-    android:gravity="center_horizontal">
-    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/myDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Your Fitness Calender"
+        android:textColor="@color/black"
+        android:textSize="25dp"
+        android:layout_marginTop="24dp"
+        />
 
     <CalendarView
+        android:id="@+id/calendarView"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/bg_calendar"
+        >
     </CalendarView>
 
+    <Button
+        android:layout_marginTop="16dp"
+        android:text="Test Button"
+        android:textColor="#FFF"
+        android:backgroundTint="@color/colorPrimary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
 
     <com.google.android.material.card.MaterialCardView
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="8dp"
         android:layout_width="match_parent"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         app:cardElevation="2dp"
 
         >
