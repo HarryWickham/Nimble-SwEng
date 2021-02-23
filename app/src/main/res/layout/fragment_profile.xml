@@ -1,111 +1,136 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".Screens.Profile.ProfileFragment"
-    android:gravity="center_horizontal"
-    android:orientation="vertical">
+    tools:context=".Screens.Profile.ProfileFragment">
 
-    <TextView
-        android:id="@+id/myDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Your Fitness Calender"
-        android:textColor="@color/black"
-        android:textSize="25dp"
-        android:layout_marginTop="24dp"
-        />
-
-    <CalendarView
-        android:id="@+id/calendarView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/bg_calendar"
-        >
-    </CalendarView>
-
-    <Button
-        android:layout_marginTop="16dp"
-        android:text="Test Button"
-        android:textColor="#FFF"
-        android:backgroundTint="@color/colorPrimary"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
-
-    <com.google.android.material.card.MaterialCardView
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="8dp"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_marginTop="16dp"
-        app:cardElevation="2dp"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
 
-        >
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:gravity="center_horizontal"
             android:orientation="vertical">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="75dp"
-            android:gravity="center_vertical">
-            <ImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginStart="8dp"
-                android:id="@+id/profile_picture"
-                android:src="@drawable/ic_baseline_emoji_emotions_24"
 
-                />
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingStart="16dp">
             <TextView
+                android:id="@+id/myDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/profile_date"
-                android:text="Feb 22nd"
-                android:textSize="30sp"
-                android:textStyle="bold"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/user_name"
-                android:text="Harry Wickham"
-                android:layout_below="@+id/profile_date"
-                android:layout_alignLeft="@id/profile_picture"
+                android:layout_marginTop="24dp"
+                android:text="Your Fitness Calender"
+                android:textColor="@color/black"
+                android:textSize="25dp"
+                android:visibility="gone"/>
 
-                />
-            </LinearLayout>
-
-            <LinearLayout
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="right|center_vertical">
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginTop="8dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_horizontal">
 
-                <ImageView
-                    android:layout_width="wrap_content"
+                <CalendarView
+                    android:id="@+id/profile_calendar"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_baseline_share_24"
-                    android:paddingRight="16dp"/>
-            </LinearLayout>
+                    android:layout_marginTop="16dp"
+                    android:firstDayOfWeek="2"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:backgroundTint="@color/colorPrimary"
+                android:text="Test Button"
+                android:textColor="#FFF"
+                android:visibility="gone"/>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                app:cardElevation="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="75dp"
+                        android:gravity="center_vertical">
+
+                        <ImageView
+                            android:id="@+id/profile_picture"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_marginStart="8dp"
+                            android:src="@drawable/ic_baseline_emoji_emotions_24"
+
+                            />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:paddingStart="16dp">
+
+                            <TextView
+                                android:id="@+id/profile_date"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Feb 22nd"
+                                android:textSize="30sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/user_name"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/profile_date"
+                                android:layout_alignLeft="@id/profile_picture"
+                                android:text="Harry Wickham"
+
+                                />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="right|center_vertical">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingRight="16dp"
+                                android:src="@drawable/ic_baseline_share_24" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <ListView
+                        android:id="@+id/completed_moves_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp" />
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
         </LinearLayout>
-
-        <ListView
-            android:id="@+id/completed_moves_list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-        </LinearLayout>
-
-    </com.google.android.material.card.MaterialCardView>
-
+    </ScrollView>
 </LinearLayout>
 
 
