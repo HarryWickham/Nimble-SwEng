@@ -1,13 +1,22 @@
 package uk.ac.york.nimblefitness.Screens;
 
 import android.os.Bundle;
+import android.transition.AutoTransition;
+import android.transition.TransitionManager;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -23,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     private RoutinesFragment routinesFragment;
     private SearchFragment searchFragment;
     private SettingsFragment settingsFragment;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +64,9 @@ public class MainActivity extends AppCompatActivity {
             }
             return false;
         });
+
+
+
     }
 
     void openFragment(Fragment fragment){
@@ -63,4 +76,6 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.commit();
 
     }
+
+
 }
