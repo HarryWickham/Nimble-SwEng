@@ -15,6 +15,8 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -23,7 +25,7 @@ import org.w3c.dom.Text;
 import uk.ac.york.nimblefitness.R;
 
 public class SignupActivity extends AppCompatActivity {
-    EditText userEmail, userPassword, userConfirmPassword;
+    TextInputEditText userEmail, userPassword, userConfirmPassword;
     Button signUpButton;
     TextView loginButton;
     FirebaseAuth firebaseAuth;
@@ -71,14 +73,14 @@ public class SignupActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
-                            Toast.makeText(Context:SignupActivity.this, Text:"User Created", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(SignupActivity.this, "User Created", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(getApplicationContext(), MainActivity.class));
 
                         }else{
-                            Toast.makeText(Context:SignupActivity.this, Text:"Error"+task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(Context:SignupActivity.this, Text:"Error"+task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
-                })
+                });
             }
         });
 
