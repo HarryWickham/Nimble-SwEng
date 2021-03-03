@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "1082440501674-j2pejo709bd8qbsjmn0895jgfbplbb8l.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "uk.ac.york.nimblefittness",
+            "certificate_hash": "4fefd06ceae41b674245cfe2d1c4c75f11a34601"
+          }
+        },
+        {
           "client_id": "1082440501674-dsinj9sev8md1518nc8u5bal4rkll72b.apps.googleusercontent.com",
           "client_type": 3
         }
