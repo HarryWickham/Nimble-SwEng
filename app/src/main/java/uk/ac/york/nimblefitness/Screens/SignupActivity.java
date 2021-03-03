@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,7 +26,7 @@ import org.w3c.dom.Text;
 import uk.ac.york.nimblefitness.R;
 
 public class SignupActivity extends AppCompatActivity {
-    TextInputEditText userEmail, userPassword, userConfirmPassword;
+    EditText  userEmail, userPassword, userConfirmPassword;
     Button signUpButton;
     TextView loginButton;
     FirebaseAuth firebaseAuth;
@@ -35,12 +36,17 @@ public class SignupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
-        userEmail = findViewById(R.id.SignInEmail);
+        userEmail = findViewById(R.id.SignUpEmail);
         userPassword = findViewById(R.id.SignUpPassword);
         userConfirmPassword = findViewById(R.id.SignUpPasswordConfirm);
         signUpButton = findViewById(R.id.sign_up_button);
         loginButton = findViewById(R.id.login_button);
         firebaseAuth = FirebaseAuth.getInstance();
+
+        Log.i("userEmail", String.valueOf(userEmail));
+        Log.i("userPassword", String.valueOf(userPassword));
+        Log.i("userConfirmPassword", String.valueOf(userConfirmPassword));
+
 
         if(firebaseAuth.getCurrentUser() != null){
             startActivity(new Intent(getApplicationContext(), MainActivity.class));
