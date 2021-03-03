@@ -29,7 +29,9 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 }
-
+repositories {
+    jcenter()
+}
 dependencies {
 
     implementation 'androidx.appcompat:appcompat:1.1.0'
@@ -45,5 +47,5 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation platform('com.google.firebase:firebase-bom:26.5.0')
     implementation 'com.google.firebase:firebase-analytics'
-
+    implementation 'pl.pawelkleczkowski.customgauge:CustomGauge:1.0.4'
 }
