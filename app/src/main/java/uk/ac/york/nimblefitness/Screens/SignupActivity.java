@@ -5,11 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ProgressBar;
 
 import uk.ac.york.nimblefitness.R;
 
 public class SignupActivity extends AppCompatActivity {
 
+    ProgressBar progressBar;
 
 
     @Override
@@ -23,4 +25,8 @@ public class SignupActivity extends AppCompatActivity {
             finish();
         }
 
+    public void SignUpButton(View view) {
+        progressBar = findViewById(R.id.progress_circular);
+        progressBar.setVisibility(view.VISIBLE);
+    }
 }
