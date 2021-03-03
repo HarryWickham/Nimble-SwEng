@@ -12,12 +12,16 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import java.util.Objects;
 
 import uk.ac.york.nimblefitness.R;
 import uk.ac.york.nimblefitness.Screens.SigninActivity;
 
 public class SettingsFragment extends Fragment {
+
+    FirebaseAuth firebaseAuth;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -28,6 +32,8 @@ public class SettingsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        firebaseAuth = FirebaseAuth.getInstance();
 
         View view = inflater.inflate(R.layout.fragment_settings, container, false); //shows the fragment_settings.xml file in the frame view of the activity_main.xml
 
@@ -45,6 +51,7 @@ public class SettingsFragment extends Fragment {
             toast.show();
 
             if(itemValue.equals("logout")){ //if logout is clicked the user gets taken back to the login/signin screen will need to be changed to a case statement to allow for all items to be perform actions
+                FirebaseAuth.getInstance().signOut();
                 Intent mIntent = new Intent(getActivity(), SigninActivity.class);
                 startActivity(mIntent);
                 Objects.requireNonNull(getActivity()).finish();//closes this activity so when the user logs in again they are taken to the profile page not settings (also conserves device memory)

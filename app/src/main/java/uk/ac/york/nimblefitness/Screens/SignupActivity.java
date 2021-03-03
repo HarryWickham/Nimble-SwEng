@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +31,7 @@ public class SignupActivity extends AppCompatActivity {
     Button signUpButton;
     TextView loginButton;
     FirebaseAuth firebaseAuth;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +44,8 @@ public class SignupActivity extends AppCompatActivity {
         signUpButton = findViewById(R.id.sign_up_button);
         loginButton = findViewById(R.id.login_button);
         firebaseAuth = FirebaseAuth.getInstance();
+        progressBar = findViewById(R.id.progress_circular);
+
 
         Log.i("userEmail", String.valueOf(userEmail));
         Log.i("userPassword", String.valueOf(userPassword));
@@ -59,19 +63,23 @@ public class SignupActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String email = userEmail.getText().toString().trim();
                 String password = userPassword.getText().toString().trim();
+                progressBar.setVisibility(v.VISIBLE);
 
                 if(TextUtils.isEmpty(email)){
                     userEmail.setError("Email is Required");
+                    progressBar.setVisibility(v.GONE);
                     return;
                 }
 
                 if(TextUtils.isEmpty(password)){
                     userPassword.setError("Password is Required");
+                    progressBar.setVisibility(v.GONE);
                     return;
                 }
 
                 if ((password.length()< 6)){
                     userPassword.setError("Password must be at least 6 characters long");
+                    progressBar.setVisibility(v.GONE);
                     return;
                 }
 
@@ -83,6 +91,7 @@ public class SignupActivity extends AppCompatActivity {
                             startActivity(new Intent(getApplicationContext(), MainActivity.class));
 
                         }else{
+                            progressBar.setVisibility(v.GONE);
                             //Toast.makeText(Context:SignupActivity.this, Text:"Error"+task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
