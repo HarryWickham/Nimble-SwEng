@@ -1,0 +1,35 @@
+Index: build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>// Top-level build file where you can add configuration options common to all sub-projects/modules.\r\nbuildscript {\r\n    repositories {\r\n        google()\r\n        jcenter()\r\n    }\r\n    dependencies {\r\n        classpath \"com.android.tools.build:gradle:4.1.1\"\r\n\r\n        // NOTE: Do not place your application dependencies here; they belong\r\n        // in the individual module build.gradle files\r\n    }\r\n}\r\n\r\nallprojects {\r\n    repositories {\r\n        google()\r\n        jcenter()\r\n    }\r\n}\r\n\r\ntask clean(type: Delete) {\r\n    delete rootProject.buildDir\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- build.gradle	(revision e53714dac156de3df6684ee1e2a6ce51d275b4c0)
++++ build.gradle	(date 1612959427644)
+@@ -5,7 +5,7 @@
+         jcenter()
+     }
+     dependencies {
+-        classpath "com.android.tools.build:gradle:4.1.1"
++        classpath 'com.android.tools.build:gradle:4.1.2'
+ 
+         // NOTE: Do not place your application dependencies here; they belong
+         // in the individual module build.gradle files
+Index: .idea/gradle.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"GradleMigrationSettings\" migrationVersion=\"1\" />\r\n  <component name=\"GradleSettings\">\r\n    <option name=\"linkedExternalProjectsSettings\">\r\n      <GradleProjectSettings>\r\n        <option name=\"testRunner\" value=\"PLATFORM\" />\r\n        <option name=\"distributionType\" value=\"DEFAULT_WRAPPED\" />\r\n        <option name=\"externalProjectPath\" value=\"$PROJECT_DIR$\" />\r\n        <option name=\"gradleJvm\" value=\"13\" />\r\n        <option name=\"modules\">\r\n          <set>\r\n            <option value=\"$PROJECT_DIR$\" />\r\n            <option value=\"$PROJECT_DIR$/app\" />\r\n          </set>\r\n        </option>\r\n        <option name=\"resolveModulePerSourceSet\" value=\"false\" />\r\n        <option name=\"useQualifiedModuleNames\" value=\"true\" />\r\n      </GradleProjectSettings>\r\n    </option>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/gradle.xml	(revision e53714dac156de3df6684ee1e2a6ce51d275b4c0)
++++ .idea/gradle.xml	(date 1612959392017)
+@@ -7,7 +7,6 @@
+         <option name="testRunner" value="PLATFORM" />
+         <option name="distributionType" value="DEFAULT_WRAPPED" />
+         <option name="externalProjectPath" value="$PROJECT_DIR$" />
+-        <option name="gradleJvm" value="13" />
+         <option name="modules">
+           <set>
+             <option value="$PROJECT_DIR$" />
