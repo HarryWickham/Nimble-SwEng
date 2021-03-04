@@ -92,7 +92,7 @@ public class SignupActivity extends AppCompatActivity {
 
                         }else{
                             progressBar.setVisibility(v.GONE);
-                            //Toast.makeText(Context:SignupActivity.this, Text:"Error"+task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(SignupActivity.this, "Error"+task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
