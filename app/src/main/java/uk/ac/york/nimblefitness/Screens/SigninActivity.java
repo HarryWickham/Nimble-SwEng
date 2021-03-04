@@ -2,8 +2,10 @@ package uk.ac.york.nimblefitness.Screens;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -24,6 +26,7 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
@@ -33,7 +36,7 @@ import com.google.firebase.auth.GoogleAuthProvider;
 import uk.ac.york.nimblefitness.R;
 
 public class SigninActivity extends AppCompatActivity {
-    public static final int GOOGLE_SIGNIN_CODE = 10005;
+    private static final int GOOGLE_SIGNIN_CODE = 10005;
     EditText userEmail, userPassword;
     Button login_button;
     TextView signUpButton, forgottenPassword;
@@ -102,7 +105,7 @@ public class SigninActivity extends AppCompatActivity {
         signInClient = GoogleSignIn.getClient(this,gso);
 
         GoogleSignInAccount signInAccount = GoogleSignIn.getLastSignedInAccount(this);
-        if (signInAccount != null){
+        if (signInAccount != null || firebaseAuth.getCurrentUser() != null){
             startActivity(new Intent(this,MainActivity.class));
         }
 
@@ -156,6 +159,40 @@ public class SigninActivity extends AppCompatActivity {
         finish();
     }
     public void onClickForgottenPassword(View v) {
+        EditText recoveryEmail = new EditText(v.getContext());
+        AlertDialog.Builder passwordResetDialog = new AlertDialog.Builder(v.getContext());
+        passwordResetDialog.setTitle("Reset Password");
+        passwordResetDialog.setMessage("Enter Your Email Address");
+        passwordResetDialog.setView(recoveryEmail);
+
+        passwordResetDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //extract email and send the reset link
+                String email = recoveryEmail.getText().toString();
+                firebaseAuth.sendPasswordResetEmail(email).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(SigninActivity.this, "Check Your Emails",Toast.LENGTH_SHORT).show();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(SigninActivity.this, "Error, Reset Email Not Sent",Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+            }
+        });
+        passwordResetDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
+        passwordResetDialog.create().show();
+
         Toast toast = Toast.makeText(getApplicationContext(), "Reset Password", Toast.LENGTH_SHORT);//function called to initiate forgotten password user story
         toast.show();
 
