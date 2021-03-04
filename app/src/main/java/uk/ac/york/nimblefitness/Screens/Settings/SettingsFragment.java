@@ -3,6 +3,7 @@ package uk.ac.york.nimblefitness.Screens.Settings;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -12,11 +13,16 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Objects;
 
 import uk.ac.york.nimblefitness.R;
+import uk.ac.york.nimblefitness.Screens.MainActivity;
 import uk.ac.york.nimblefitness.Screens.SigninActivity;
 
 public class SettingsFragment extends Fragment {
@@ -52,6 +58,17 @@ public class SettingsFragment extends Fragment {
 
             if(itemValue.equals("logout")){ //if logout is clicked the user gets taken back to the login/signin screen will need to be changed to a case statement to allow for all items to be perform actions
                 FirebaseAuth.getInstance().signOut();
+                GoogleSignIn.getClient(getActivity(),new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).build()).signOut().addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        startActivity(new Intent(view.getContext(),SigninActivity.class));
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getActivity(),"Signout Failed",Toast.LENGTH_SHORT).show();
+                    }
+                });
                 Intent mIntent = new Intent(getActivity(), SigninActivity.class);
                 startActivity(mIntent);
                 Objects.requireNonNull(getActivity()).finish();//closes this activity so when the user logs in again they are taken to the profile page not settings (also conserves device memory)
