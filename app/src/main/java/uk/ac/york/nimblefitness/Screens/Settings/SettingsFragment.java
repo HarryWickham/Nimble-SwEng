@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,7 +44,7 @@ public class SettingsFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_settings, container, false); //shows the fragment_settings.xml file in the frame view of the activity_main.xml
 
-        String[] settings_list_items = {"Billing Information","Membership Plan","Account","Terms and Conditions","logout"}; //the text that goes in each different list view item
+        String[] settings_list_items = {"Billing Information","Membership Plan","Account","Terms and Conditions","Logout"}; //the text that goes in each different list view item
 
         ListView listView = (ListView) view.findViewById(R.id.settings_list); //find the list view from the fragment_settings.xml file
 
@@ -56,7 +57,7 @@ public class SettingsFragment extends Fragment {
             Toast toast = Toast.makeText(getActivity(), itemValue , Toast.LENGTH_SHORT); //shows an alert with the text of the list item that has been clicked
             toast.show();
 
-            if(itemValue.equals("logout")){ //if logout is clicked the user gets taken back to the login/signin screen will need to be changed to a case statement to allow for all items to be perform actions
+            if(itemValue.equals("Logout")){ //if logout is clicked the user gets taken back to the login/signin screen will need to be changed to a case statement to allow for all items to be perform actions
                 FirebaseAuth.getInstance().signOut();
                 GoogleSignIn.getClient(getActivity(),new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).build()).signOut().addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -73,6 +74,18 @@ public class SettingsFragment extends Fragment {
                 startActivity(mIntent);
                 Objects.requireNonNull(getActivity()).finish();//closes this activity so when the user logs in again they are taken to the profile page not settings (also conserves device memory)
             }
+
+            else if(itemValue.equals("Account")){ //if logout is clicked the user gets taken back to the login/signin screen will need to be changed to a case statement to allow for all items to be perform actions
+                FragmentTransaction fr=getFragmentManager().beginTransaction();
+                fr.replace(R.id.main_frame, new Account());
+                fr.commit();
+            }
+            else if(itemValue.equals("Terms and Conditions")){ //if logout is clicked the user gets taken back to the login/signin screen will need to be changed to a case statement to allow for all items to be perform actions
+                FragmentTransaction fr=getFragmentManager().beginTransaction();
+                fr.replace(R.id.main_frame, new Account());
+                fr.commit();
+            }
+
         });
         return view;
     }

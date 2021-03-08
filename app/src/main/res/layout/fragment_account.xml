@@ -3,11 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Screens.Settings.SettingsFragment"
-   >
+    tools:context=".Screens.Settings.Account">
 
     <ListView
-        android:id="@+id/settings_list"
+        android:id="@+id/account_options_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
