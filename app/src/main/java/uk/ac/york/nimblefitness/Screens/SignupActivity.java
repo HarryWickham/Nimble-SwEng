@@ -31,7 +31,8 @@ import org.w3c.dom.Text;
 import uk.ac.york.nimblefitness.R;
 
 public class SignupActivity extends AppCompatActivity {
-    EditText  userEmail, userPassword, userConfirmPassword;
+    EditText userEmail, userPassword, userConfirmPassword;
+    TextInputLayout userEmailLayout, userPasswordLayout, userConfirmPasswordLayout;
     Button signUpButton;
     TextView loginButton;
     FirebaseAuth firebaseAuth;
@@ -45,6 +46,11 @@ public class SignupActivity extends AppCompatActivity {
         userEmail = findViewById(R.id.SignUpEmail);
         userPassword = findViewById(R.id.SignUpPassword);
         userConfirmPassword = findViewById(R.id.SignUpPasswordConfirm);
+
+        userEmailLayout = findViewById(R.id.SignUpEmailLayout);
+        userPasswordLayout = findViewById(R.id.SignUpPasswordLayout);
+        userConfirmPasswordLayout = findViewById(R.id.SignUpPasswordConfirmLayout);
+
         signUpButton = findViewById(R.id.sign_up_button);
         loginButton = findViewById(R.id.login_button);
         firebaseAuth = FirebaseAuth.getInstance();
@@ -56,7 +62,7 @@ public class SignupActivity extends AppCompatActivity {
         Log.i("userConfirmPassword", String.valueOf(userConfirmPassword));
 
 
-        if(firebaseAuth.getCurrentUser() != null){
+        if (firebaseAuth.getCurrentUser() != null) {
             startActivity(new Intent(getApplicationContext(), MainActivity.class));
             finish();
         }
@@ -67,30 +73,35 @@ public class SignupActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String email = userEmail.getText().toString().trim();
                 String password = userPassword.getText().toString().trim();
-                progressBar.setVisibility(v.VISIBLE);
+                progressBar.setVisibility(View.VISIBLE);
 
-                if(TextUtils.isEmpty(email)){
-                    userEmail.setError("Email is Required");
-                    progressBar.setVisibility(v.GONE);
+                if (TextUtils.isEmpty(email)) {
+                    userEmailLayout.setError("Email is Required");
+                    progressBar.setVisibility(View.GONE);
+                    return;
+                } else {
+                    userEmailLayout.setError(null);
+                }
+
+                if (TextUtils.isEmpty(password)) {
+                    userPasswordLayout.setError("Password is Required");
+                    progressBar.setVisibility(View.GONE);
                     return;
                 }
 
-                if(TextUtils.isEmpty(password)){
-                    userPassword.setError("Password is Required");
-                    progressBar.setVisibility(v.GONE);
+                if ((password.length() < 6)) {
+                    userPasswordLayout.setError("Password must be at least 6 characters long");
+                    progressBar.setVisibility(View.GONE);
                     return;
                 }
-
-                if ((password.length()< 6)){
-                    userPassword.setError("Password must be at least 6 characters long");
-                    progressBar.setVisibility(v.GONE);
-                    return;
+                if (!(TextUtils.isEmpty(password)) && !(password.length() < 6)){
+                    userPasswordLayout.setError(null);
                 }
 
-                firebaseAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()){
+                        if (task.isSuccessful()) {
                             //send verification link
 
                             FirebaseUser user = firebaseAuth.getCurrentUser();
@@ -107,9 +118,9 @@ public class SignupActivity extends AppCompatActivity {
                             Toast.makeText(SignupActivity.this, "User Created", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(getApplicationContext(), MainActivity.class));
 
-                        }else{
-                            progressBar.setVisibility(v.GONE);
-                            Toast.makeText(SignupActivity.this, "Error"+task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        } else {
+                            progressBar.setVisibility(View.GONE);
+                            Toast.makeText(SignupActivity.this, "Error" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -117,12 +128,12 @@ public class SignupActivity extends AppCompatActivity {
         });
 
 
-
     }
-        public void onClickGoToLogin(View v) {//called from the TextView in with id/already_a_member called using (android:onClick="onClickGoToLogin")
-            Intent mIntent = new Intent(SignupActivity.this, SigninActivity.class);//changes current activity from signin to signup
-            startActivity(mIntent);
-            finish();
-        }
+
+    public void onClickGoToLogin(View v) {//called from the TextView in with id/already_a_member called using (android:onClick="onClickGoToLogin")
+        Intent mIntent = new Intent(SignupActivity.this, SigninActivity.class);//changes current activity from signin to signup
+        startActivity(mIntent);
+        finish();
+    }
 
 }

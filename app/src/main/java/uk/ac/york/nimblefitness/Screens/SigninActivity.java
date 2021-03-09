@@ -62,7 +62,7 @@ public class SigninActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         progressBar = findViewById(R.id.progress_circular);
 
-
+        googleSignIn.setSize(SignInButton.SIZE_WIDE);
 
         login_button.setOnClickListener(new View.OnClickListener() {
             @Override

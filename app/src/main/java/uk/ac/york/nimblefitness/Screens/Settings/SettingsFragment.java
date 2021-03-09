@@ -20,11 +20,9 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 
-import java.util.Objects;
-
 import uk.ac.york.nimblefitness.R;
-import uk.ac.york.nimblefitness.Screens.MainActivity;
 import uk.ac.york.nimblefitness.Screens.SigninActivity;
+import uk.ac.york.nimblefitness.Screens.UserDetailsActivity;
 
 public class SettingsFragment extends Fragment {
 
@@ -44,7 +42,7 @@ public class SettingsFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_settings, container, false); //shows the fragment_settings.xml file in the frame view of the activity_main.xml
 
-        String[] settings_list_items = {"Billing Information","Membership Plan","Account","Terms and Conditions","Logout"}; //the text that goes in each different list view item
+        String[] settings_list_items = {"Billing Information", "Membership Plan", "Account", "Terms and Conditions", "logout", "User Details"}; //the text that goes in each different list view item
 
         ListView listView = (ListView) view.findViewById(R.id.settings_list); //find the list view from the fragment_settings.xml file
 
@@ -53,40 +51,41 @@ public class SettingsFragment extends Fragment {
 
         listView.setOnItemClickListener((parent, view1, position, id) -> {//watches for a user to click on the list view, then gives the program which position the click was in
             String itemValue = (String) listView.getItemAtPosition(position); //converts the position ID into the text that is written in that position
-
-            Toast toast = Toast.makeText(getActivity(), itemValue , Toast.LENGTH_SHORT); //shows an alert with the text of the list item that has been clicked
+            Toast toast = Toast.makeText(getActivity(), itemValue, Toast.LENGTH_SHORT); //shows an alert with the text of the list item that has been clicked
             toast.show();
 
-            if(itemValue.equals("Logout")){ //if logout is clicked the user gets taken back to the login/signin screen will need to be changed to a case statement to allow for all items to be perform actions
-                FirebaseAuth.getInstance().signOut();
-                GoogleSignIn.getClient(getActivity(),new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).build()).signOut().addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        startActivity(new Intent(view.getContext(),SigninActivity.class));
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(getActivity(),"Signout Failed",Toast.LENGTH_SHORT).show();
-                    }
-                });
-                Intent mIntent = new Intent(getActivity(), SigninActivity.class);
-                startActivity(mIntent);
-                Objects.requireNonNull(getActivity()).finish();//closes this activity so when the user logs in again they are taken to the profile page not settings (also conserves device memory)
-            }
-
-            else if(itemValue.equals("Account")){ //if logout is clicked the user gets taken back to the login/signin screen will need to be changed to a case statement to allow for all items to be perform actions
-                FragmentTransaction fr=getFragmentManager().beginTransaction();
-                fr.replace(R.id.main_frame, new Account());
-                fr.commit();
-            }
-            else if(itemValue.equals("Terms and Conditions")){ //if logout is clicked the user gets taken back to the login/signin screen will need to be changed to a case statement to allow for all items to be perform actions
-                FragmentTransaction fr=getFragmentManager().beginTransaction();
-                fr.replace(R.id.main_frame, new Account());
-                fr.commit();
-            }
+                if (itemValue.equals("Logout")) { //if logout is clicked the user gets taken back to the login/signin screen will need to be changed to a case statement to allow for all items to be perform actions
+                    FirebaseAuth.getInstance().signOut();
+                    GoogleSignIn.getClient(getActivity(), new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).build()).signOut().addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            startActivity(new Intent(view.getContext(), SigninActivity.class));
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(getActivity(), "Signout Failed", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    Intent mIntent = new Intent(getActivity(), SigninActivity.class);
+                    startActivity(mIntent);
+                    requireActivity().finish();//closes this activity so when the user logs in again they are taken to the profile page not settings (also conserves device memory)
+                } else if (itemValue.equals("Account")) { //if logout is clicked the user gets taken back to the login/signin screen will need to be changed to a case statement to allow for all items to be perform actions
+                    FragmentTransaction fr = getParentFragmentManager().beginTransaction();
+                    fr.replace(R.id.main_frame, new AccountFragment());
+                    fr.commit();
+                } else if (itemValue.equals("Terms and Conditions")) { //if logout is clicked the user gets taken back to the login/signin screen will need to be changed to a case statement to allow for all items to be perform actions
+                    FragmentTransaction fr = getParentFragmentManager().beginTransaction();
+                    fr.replace(R.id.main_frame, new TermsAndConditionsFragment());
+                    fr.commit();
+                } else if (itemValue.equals("User Details")) { //if logout is clicked the user gets taken back to the login/signin screen will need to be changed to a case statement to allow for all items to be perform actions
+                    Intent mIntent = new Intent(getActivity(), UserDetailsActivity.class);
+                    startActivity(mIntent);
+                    requireActivity().finish();
+                }
 
         });
+
         return view;
     }
 }
