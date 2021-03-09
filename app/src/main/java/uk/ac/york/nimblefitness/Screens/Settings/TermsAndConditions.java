@@ -25,9 +25,12 @@ public class TermsAndConditions extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        getActivity().setTitle("Terms and Conditions");
+
         View view = inflater.inflate(R.layout.fragment_terms_and_conditions, container, false); //shows the fragment_settings.xml file in the frame view of the activity_main.xml
 
-        String[] terms_and_conditions_options_list = {"T&Cs","Membership Plan","Account","Terms and Conditions","Logout"}; //the text that goes in each different list view item
+        String[] terms_and_conditions_options_list = {"Terms of Use","Data Policy"}; //the text that goes in each different list view item
 
         ListView listView = (ListView) view.findViewById(R.id.terms_and_conditions_options_list); //find the list view from the fragment_settings.xml file
 

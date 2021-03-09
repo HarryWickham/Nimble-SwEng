@@ -42,6 +42,8 @@ public class SettingsFragment extends Fragment {
 
         firebaseAuth = FirebaseAuth.getInstance();
 
+        getActivity().setTitle("Settings");
+
         View view = inflater.inflate(R.layout.fragment_settings, container, false); //shows the fragment_settings.xml file in the frame view of the activity_main.xml
 
         String[] settings_list_items = {"Billing Information","Membership Plan","Account","Terms and Conditions","Logout"}; //the text that goes in each different list view item
@@ -82,7 +84,7 @@ public class SettingsFragment extends Fragment {
             }
             else if(itemValue.equals("Terms and Conditions")){ //if logout is clicked the user gets taken back to the login/signin screen will need to be changed to a case statement to allow for all items to be perform actions
                 FragmentTransaction fr=getFragmentManager().beginTransaction();
-                fr.replace(R.id.main_frame, new Account());
+                fr.replace(R.id.main_frame, new TermsAndConditions());
                 fr.commit();
             }
 

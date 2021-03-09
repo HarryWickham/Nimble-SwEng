@@ -1,6 +1,8 @@
 package uk.ac.york.nimblefitness.Screens.Settings;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.RestrictionEntry;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -25,9 +27,12 @@ public class Account extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        getActivity().setTitle("Account");
+
         View view = inflater.inflate(R.layout.fragment_account, container, false); //shows the fragment_settings.xml file in the frame view of the activity_main.xml
 
-        String[] account_options_list = {"1","Membership Plan","Account","Terms and Conditions","Logout"}; //the text that goes in each different list view item
+        String[] account_options_list = {"Personal information", "Your Activity", "Favourites", "Notifications", "Security", "Help"}; //the text that goes in each different list view item
 
         ListView listView = (ListView) view.findViewById(R.id.account_options_list); //find the list view from the fragment_settings.xml file
 
@@ -42,4 +47,5 @@ public class Account extends Fragment {
         });
         return view;
     }
+    
 }
