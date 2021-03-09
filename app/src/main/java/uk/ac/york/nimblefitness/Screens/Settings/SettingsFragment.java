@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,7 +43,7 @@ public class SettingsFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_settings, container, false); //shows the fragment_settings.xml file in the frame view of the activity_main.xml
 
-        String[] settings_list_items = {"Billing Information", "Membership Plan", "Account", "Terms and Conditions", "logout", "User Details"}; //the text that goes in each different list view item
+        String[] settings_list_items = {"Billing Information", "Membership Plan", "Account", "Terms and Conditions", "Logout", "User Details"}; //the text that goes in each different list view item
 
         ListView listView = (ListView) view.findViewById(R.id.settings_list); //find the list view from the fragment_settings.xml file
 
@@ -81,7 +82,6 @@ public class SettingsFragment extends Fragment {
                 } else if (itemValue.equals("User Details")) { //if logout is clicked the user gets taken back to the login/signin screen will need to be changed to a case statement to allow for all items to be perform actions
                     Intent mIntent = new Intent(getActivity(), UserDetailsActivity.class);
                     startActivity(mIntent);
-                    requireActivity().finish();
                 }
 
         });
