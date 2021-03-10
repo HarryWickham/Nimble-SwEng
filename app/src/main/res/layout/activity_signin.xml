@@ -7,6 +7,7 @@
 
     tools:context=".Screens.SigninActivity">
 
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -64,7 +65,7 @@
                 android:paddingVertical="5dp"
                 app:endIconMode="password_toggle">
 
-                <com.google.android.material.textfield.TextInputEditText
+                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/SignInPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -97,6 +98,13 @@
                 android:focusable="true"
                 android:onClick="onClickGoToSignUp"
                 android:text="@string/new_member" />
+
+            <com.google.android.gms.common.SignInButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:id="@+id/googleSignIn"
+                />
         </LinearLayout>
     </ScrollView>
 

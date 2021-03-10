@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Screens.Profile.ProfileFragment">
+    tools:context=".Screens.Profile.ProfileFragment"
+    >
 
     <ScrollView
         android:layout_width="match_parent"
@@ -31,7 +32,7 @@
                 <CalendarView
                     android:id="@+id/profile_calendar"
                     android:layout_width="match_parent"
-                    android:layout_height="300dp"
+                    android:layout_height="315dp"
                     android:layout_marginTop="8dp"
                     android:firstDayOfWeek="2"/>
                 </LinearLayout>
@@ -75,7 +76,7 @@
                                 android:id="@+id/profile_date"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Feb 22nd"
+                                android:text=""
                                 android:textSize="30sp"
                                 android:textStyle="bold" />
 
@@ -85,7 +86,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_below="@+id/profile_date"
                                 android:layout_alignLeft="@id/profile_picture"
-                                android:text="Harry Wickham"
+                                android:text=""
 
                                 />
                         </LinearLayout>
