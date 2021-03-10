@@ -17,7 +17,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.auth.api.identity.SignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -28,6 +27,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -45,7 +45,7 @@ public class SigninActivity extends AppCompatActivity {
     GoogleSignInOptions gso;
     FirebaseAuth firebaseAuth;
     ProgressBar progressBar;
-
+    TextInputLayout userEmailLayout, userPassowrdLayout;
 
 
     @Override
@@ -59,8 +59,12 @@ public class SigninActivity extends AppCompatActivity {
         forgottenPassword = findViewById(R.id.forgotten_password);
         signUpButton = findViewById(R.id.sign_up_button);
         googleSignIn = findViewById(R.id.googleSignIn);
-        firebaseAuth = FirebaseAuth.getInstance();
         progressBar = findViewById(R.id.progress_circular);
+        firebaseAuth = FirebaseAuth.getInstance();
+        userEmailLayout = findViewById(R.id.SignInEmailLayout);
+        userPassowrdLayout = findViewById(R.id.SignInPasswordLayout);
+
+
 
 
 
@@ -69,19 +73,26 @@ public class SigninActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String email = userEmail.getText().toString().trim();
                 String password = userPassword.getText().toString().trim();
+                progressBar.setVisibility(v.VISIBLE);
+                userEmailLayout.setError(null);
+                userEmailLayout.setErrorEnabled(false);
+                userPassowrdLayout.setError(null);
+                userPassowrdLayout.setErrorEnabled(false);
 
 
                 if (TextUtils.isEmpty(email)) {
-                    userEmail.setError("Email is Required");
+                    userEmailLayout.setError("Email is Required");
                     progressBar.setVisibility(v.GONE);
                     return;
                 }
 
+
                 if (TextUtils.isEmpty(password)) {
-                    userPassword.setError("Password is Required");
+                    userPassowrdLayout.setError("Password is Required");
                     progressBar.setVisibility(v.GONE);
                     return;
                 }
+
 
                 firebaseAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
@@ -90,7 +101,9 @@ public class SigninActivity extends AppCompatActivity {
                             Toast.makeText(SigninActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(getApplicationContext(),MainActivity.class));
                         }else{
-                            Toast.makeText(SigninActivity.this, "Error"+task.getException(), Toast.LENGTH_SHORT).show();
+                            userEmailLayout.setError(task.getException().getMessage());
+                            System.out.println(task.getException());
+                            progressBar.setVisibility(v.GONE);
                         }
                     }
                 });

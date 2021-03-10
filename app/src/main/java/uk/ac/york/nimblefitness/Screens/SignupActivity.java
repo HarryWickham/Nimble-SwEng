@@ -31,7 +31,8 @@ import org.w3c.dom.Text;
 import uk.ac.york.nimblefitness.R;
 
 public class SignupActivity extends AppCompatActivity {
-    EditText  userEmail, userPassword, userConfirmPassword;
+    EditText userEmail, userPassword, userConfirmPassword;
+    TextInputLayout userEmailLayout, userPasswordLayout, userConfirmPasswordLayout;
     Button signUpButton;
     TextView loginButton;
     FirebaseAuth firebaseAuth;
@@ -49,6 +50,9 @@ public class SignupActivity extends AppCompatActivity {
         loginButton = findViewById(R.id.login_button);
         firebaseAuth = FirebaseAuth.getInstance();
         progressBar = findViewById(R.id.progress_circular);
+        userEmailLayout = findViewById((R.id.SignUpEmailLayout));
+        userPasswordLayout = findViewById((R.id.SignUpPasswordLayout));
+        userConfirmPasswordLayout = findViewById(R.id.SignUpPasswordConfirmLayout);
 
 
         Log.i("userEmail", String.valueOf(userEmail));
@@ -67,24 +71,39 @@ public class SignupActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String email = userEmail.getText().toString().trim();
                 String password = userPassword.getText().toString().trim();
+                String confirmPassword = userConfirmPassword.getText().toString().trim();
                 progressBar.setVisibility(v.VISIBLE);
+                userEmailLayout.setError(null);
+                userEmailLayout.setErrorEnabled(false);
+                userPasswordLayout.setError(null);
+                userPasswordLayout.setErrorEnabled(false);
+                userConfirmPasswordLayout.setError(null);
+                userConfirmPasswordLayout.setErrorEnabled(false);
 
                 if(TextUtils.isEmpty(email)){
-                    userEmail.setError("Email is Required");
+                    userEmailLayout.setError("Email is Required");
                     progressBar.setVisibility(v.GONE);
                     return;
                 }
 
                 if(TextUtils.isEmpty(password)){
-                    userPassword.setError("Password is Required");
+                    userPasswordLayout.setError("Password is Required");
                     progressBar.setVisibility(v.GONE);
                     return;
                 }
 
                 if ((password.length()< 6)){
-                    userPassword.setError("Password must be at least 6 characters long");
+                    userPasswordLayout.setError("Password must be at least 6 characters long");
                     progressBar.setVisibility(v.GONE);
                     return;
+                }
+                Log.i("password", password);
+                Log.i("confirmPassword",confirmPassword);
+                if (!password.equals(confirmPassword)) {
+                    userConfirmPasswordLayout.setError("Password and Confirm Password do not match");
+                    progressBar.setVisibility(v.GONE);
+                    return;
+
                 }
 
                 firebaseAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -92,6 +111,9 @@ public class SignupActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
                             //send verification link
+
+                            userConfirmPasswordLayout.setError(null);
+                            userConfirmPasswordLayout.setErrorEnabled(false);
 
                             FirebaseUser user = firebaseAuth.getCurrentUser();
                             user.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -109,7 +131,7 @@ public class SignupActivity extends AppCompatActivity {
 
                         }else{
                             progressBar.setVisibility(v.GONE);
-                            Toast.makeText(SignupActivity.this, "Error"+task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            userEmailLayout.setError(task.getException().getMessage());
                         }
                     }
                 });
