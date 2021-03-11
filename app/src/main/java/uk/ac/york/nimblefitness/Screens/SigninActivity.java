@@ -73,7 +73,7 @@ public class SigninActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String email = userEmail.getText().toString().trim();
                 String password = userPassword.getText().toString().trim();
-                progressBar.setVisibility(v.VISIBLE);
+                progressBar.setVisibility(View.VISIBLE);
                 userEmailLayout.setError(null);
                 userEmailLayout.setErrorEnabled(false);
                 userPassowrdLayout.setError(null);
@@ -82,14 +82,14 @@ public class SigninActivity extends AppCompatActivity {
 
                 if (TextUtils.isEmpty(email)) {
                     userEmailLayout.setError("Email is Required");
-                    progressBar.setVisibility(v.GONE);
+                    progressBar.setVisibility(View.GONE);
                     return;
                 }
 
 
                 if (TextUtils.isEmpty(password)) {
                     userPassowrdLayout.setError("Password is Required");
-                    progressBar.setVisibility(v.GONE);
+                    progressBar.setVisibility(View.GONE);
                     return;
                 }
 
@@ -102,8 +102,7 @@ public class SigninActivity extends AppCompatActivity {
                             startActivity(new Intent(getApplicationContext(),MainActivity.class));
                         }else{
                             userEmailLayout.setError(task.getException().getMessage());
-                            System.out.println(task.getException());
-                            progressBar.setVisibility(v.GONE);
+                            progressBar.setVisibility(View.GONE);
                         }
                     }
                 });
@@ -210,7 +209,5 @@ public class SigninActivity extends AppCompatActivity {
         toast.show();
 
     }
-
-
 
 }
