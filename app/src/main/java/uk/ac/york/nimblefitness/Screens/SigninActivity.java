@@ -148,8 +148,6 @@ public class SigninActivity extends AppCompatActivity {
             } catch (ApiException e) {
                 e.printStackTrace();
             }
-
-
         }
     }
 
@@ -181,7 +179,6 @@ public class SigninActivity extends AppCompatActivity {
                         Toast.makeText(SigninActivity.this, "Error, Reset Email Not Sent",Toast.LENGTH_SHORT).show();
                     }
                 });
-
             }
         });
         passwordResetDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -192,7 +189,6 @@ public class SigninActivity extends AppCompatActivity {
         });
 
         passwordResetDialog.create().show();
-
         Toast toast = Toast.makeText(getApplicationContext(), "Reset Password", Toast.LENGTH_SHORT);//function called to initiate forgotten password user story
         toast.show();
 

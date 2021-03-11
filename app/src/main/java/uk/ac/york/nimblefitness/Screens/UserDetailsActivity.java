@@ -1,17 +1,15 @@
 package uk.ac.york.nimblefitness.Screens;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -21,15 +19,10 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
-import java.util.Queue;
 
 import uk.ac.york.nimblefitness.HelperClasses.UserHelperClass;
 import uk.ac.york.nimblefitness.R;
-import uk.ac.york.nimblefitness.Screens.Settings.SettingsFragment;
 
 public class UserDetailsActivity extends AppCompatActivity {
 
@@ -43,6 +36,8 @@ public class UserDetailsActivity extends AppCompatActivity {
 
     FirebaseDatabase rootDatabase;
     DatabaseReference rootReference;
+
+    UserHelperClass helperClass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,37 +118,36 @@ public class UserDetailsActivity extends AppCompatActivity {
 
         FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        save_user_details_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(validateFirstName() & validateLastName() & validateAge() & validateGender() & validateExerciseDuration() & validateExerciseType()) {
+        save_user_details_button.setOnClickListener(view -> {
+            if(validateFirstName() & validateLastName() & validateAge() & validateGender() & validateExerciseDuration() & validateExerciseType()) {
 
-                    String firstName = user_account_first_name.getEditText().getText().toString().trim();
-                    String lastName = user_account_last_name.getEditText().getText().toString().trim();
-                    String userAge = user_account_age.getEditText().getText().toString().trim();
-                    String gender = gender_selector.getEditText().getText().toString();
-                    String exerciseType = exercise_type_selector.getEditText().getText().toString();
-                    String exerciseDuration = activity_level_selector.getEditText().getText().toString();
+                String firstName = user_account_first_name.getEditText().getText().toString().trim();
+                String lastName = user_account_last_name.getEditText().getText().toString().trim();
+                String userAge = user_account_age.getEditText().getText().toString().trim();
+                String gender = gender_selector.getEditText().getText().toString();
+                String exerciseType = exercise_type_selector.getEditText().getText().toString();
+                String exerciseDuration = activity_level_selector.getEditText().getText().toString();
 
-                    UserHelperClass helperClass = new UserHelperClass(firstName, lastName, gender, exerciseType, exerciseDuration, userAge);
-                    rootReference.child(currentFirebaseUser.getUid()).setValue(helperClass);
+                helperClass = new UserHelperClass(firstName, lastName, gender, exerciseType, exerciseDuration, userAge);
+                rootReference.child(currentFirebaseUser.getUid()).setValue(helperClass);
 
-                    Intent mIntent = new Intent(UserDetailsActivity.this, MainActivity.class);
-                    startActivity(mIntent);
-                    finish();
-                }
+                Intent mIntent = new Intent(UserDetailsActivity.this, MainActivity.class);
+                startActivity(mIntent);
+                finish();
             }
         });
 
         rootReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String user_firstName = snapshot.child(currentFirebaseUser.getUid()).child("firstName").getValue(String.class);
-                user_account_first_name_edit_text.setText(user_firstName);
-                String user_lastName = snapshot.child(currentFirebaseUser.getUid()).child("lastName").getValue(String.class);
-                user_account_last_name_edit_text.setText(user_lastName);
-                String user_age = snapshot.child(currentFirebaseUser.getUid()).child("age").getValue(String.class);
-                user_account_age_edit_text.setText(user_age);
+
+                helperClass = snapshot.child(currentFirebaseUser.getUid()).getValue(UserHelperClass.class);
+
+                user_account_first_name_edit_text.setText(helperClass.getFirstName());
+                //String user_lastName = snapshot.child(currentFirebaseUser.getUid()).child("lastName").getValue(String.class);
+                user_account_last_name_edit_text.setText(helperClass.getLastName());
+                //String user_age = snapshot.child(currentFirebaseUser.getUid()).child("age").getValue(String.class);
+                user_account_age_edit_text.setText(helperClass.getAge());
 
             }
 
