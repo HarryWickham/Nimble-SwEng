@@ -21,4 +21,6 @@
     <style name="Theme.NimbleFitness.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.NimbleFitness.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+
 </resources>

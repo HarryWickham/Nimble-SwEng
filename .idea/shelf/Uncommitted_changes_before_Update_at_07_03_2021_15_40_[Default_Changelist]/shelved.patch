@@ -1,0 +1,621 @@
+Index: app/src/main/res/layout/activity_signin.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<LinearLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n\r\n    tools:context=\".Screens.SigninActivity\">\r\n\r\n\r\n    <ScrollView\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"match_parent\"\r\n        android:scrollbars=\"none\">\r\n\r\n        <LinearLayout\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:gravity=\"center|top\"\r\n            android:orientation=\"vertical\"\r\n            android:paddingHorizontal=\"40dp\"\r\n            android:paddingBottom=\"10dp\">\r\n\r\n\r\n            <ImageView\r\n                android:id=\"@+id/imageView\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:contentDescription=\"@string/nimble_logo_description\"\r\n                app:srcCompat=\"@drawable/final_logo\" />\r\n\r\n            <TextView\r\n                android:id=\"@+id/textView\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:elevation=\"4dp\"\r\n                android:paddingBottom=\"20dp\"\r\n                android:text=\"@string/login\"\r\n                android:textColor=\"#666666\"\r\n                android:textSize=\"30sp\"\r\n                android:textStyle=\"bold\" />\r\n\r\n            <com.google.android.material.textfield.TextInputLayout\r\n                style=\"@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox\"\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:elevation=\"4dp\"\r\n                android:hint=\"@string/email_address\"\r\n                android:paddingVertical=\"5dp\">\r\n\r\n                <com.google.android.material.textfield.TextInputEditText\r\n                    android:id=\"@+id/SignInEmail\"\r\n                    android:layout_width=\"match_parent\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:inputType=\"textEmailAddress\" />\r\n\r\n            </com.google.android.material.textfield.TextInputLayout>\r\n\r\n            <com.google.android.material.textfield.TextInputLayout\r\n                style=\"@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox\"\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:elevation=\"4dp\"\r\n                android:hint=\"@string/password\"\r\n                android:paddingVertical=\"5dp\"\r\n                app:endIconMode=\"password_toggle\">\r\n\r\n                 <com.google.android.material.textfield.TextInputEditText\r\n                    android:id=\"@+id/SignInPassword\"\r\n                    android:layout_width=\"match_parent\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:inputType=\"textPassword\" />\r\n\r\n            </com.google.android.material.textfield.TextInputLayout>\r\n\r\n            <TextView\r\n                android:id=\"@+id/forgotten_password\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:clickable=\"true\"\r\n                android:focusable=\"true\"\r\n                android:onClick=\"onClickForgottenPassword\"\r\n                android:text=\"@string/forgotten_password\" />\r\n\r\n            <Button\r\n                android:id=\"@+id/sign_in_button\"\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:layout_marginTop=\"20dp\"\r\n                android:elevation=\"4dp\"\r\n                android:text=\"@string/login\" />\r\n\r\n            <TextView\r\n                android:id=\"@+id/new_member\"\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:clickable=\"true\"\r\n                android:focusable=\"true\"\r\n                android:onClick=\"onClickGoToSignUp\"\r\n                android:text=\"@string/new_member\" />\r\n\r\n            <com.google.android.gms.common.SignInButton\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:layout_marginTop=\"20dp\"\r\n                android:id=\"@+id/googleSignIn\"/>\r\n        </LinearLayout>\r\n    </ScrollView>\r\n\r\n</LinearLayout>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/activity_signin.xml	(revision 736b23f7b09241db870b635cab845799e5e9e155)
++++ app/src/main/res/layout/activity_signin.xml	(date 1614941664298)
+@@ -103,7 +103,8 @@
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:layout_marginTop="20dp"
+-                android:id="@+id/googleSignIn"/>
++                android:id="@+id/googleSignIn"
++                />
+         </LinearLayout>
+     </ScrollView>
+ 
+Index: app/src/main/java/uk/ac/york/nimblefitness/Screens/SignupActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package uk.ac.york.nimblefitness.Screens;\r\n\r\nimport androidx.annotation.NonNull;\r\nimport androidx.appcompat.app.AppCompatActivity;\r\n\r\nimport android.content.Context;\r\nimport android.content.Intent;\r\nimport android.nfc.Tag;\r\nimport android.os.Bundle;\r\nimport android.text.TextUtils;\r\nimport android.util.Log;\r\nimport android.view.View;\r\nimport android.widget.Button;\r\nimport android.widget.EditText;\r\nimport android.widget.ProgressBar;\r\nimport android.widget.TextView;\r\nimport android.widget.Toast;\r\n\r\nimport com.google.android.gms.tasks.OnCompleteListener;\r\nimport com.google.android.gms.tasks.OnFailureListener;\r\nimport com.google.android.gms.tasks.OnSuccessListener;\r\nimport com.google.android.gms.tasks.Task;\r\nimport com.google.android.material.textfield.TextInputEditText;\r\nimport com.google.android.material.textfield.TextInputLayout;\r\nimport com.google.firebase.auth.AuthResult;\r\nimport com.google.firebase.auth.FirebaseAuth;\r\nimport com.google.firebase.auth.FirebaseUser;\r\n\r\nimport org.w3c.dom.Text;\r\n\r\nimport uk.ac.york.nimblefitness.R;\r\n\r\npublic class SignupActivity extends AppCompatActivity {\r\n    EditText  userEmail, userPassword, userConfirmPassword;\r\n    Button signUpButton;\r\n    TextView loginButton;\r\n    FirebaseAuth firebaseAuth;\r\n    ProgressBar progressBar;\r\n\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        setContentView(R.layout.activity_signup);\r\n\r\n        userEmail = findViewById(R.id.SignUpEmail);\r\n        userPassword = findViewById(R.id.SignUpPassword);\r\n        userConfirmPassword = findViewById(R.id.SignUpPasswordConfirm);\r\n        signUpButton = findViewById(R.id.sign_up_button);\r\n        loginButton = findViewById(R.id.login_button);\r\n        firebaseAuth = FirebaseAuth.getInstance();\r\n        progressBar = findViewById(R.id.progress_circular);\r\n\r\n\r\n        Log.i(\"userEmail\", String.valueOf(userEmail));\r\n        Log.i(\"userPassword\", String.valueOf(userPassword));\r\n        Log.i(\"userConfirmPassword\", String.valueOf(userConfirmPassword));\r\n\r\n\r\n        if(firebaseAuth.getCurrentUser() != null){\r\n            startActivity(new Intent(getApplicationContext(), MainActivity.class));\r\n            finish();\r\n        }\r\n\r\n\r\n        signUpButton.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                String email = userEmail.getText().toString().trim();\r\n                String password = userPassword.getText().toString().trim();\r\n                progressBar.setVisibility(v.VISIBLE);\r\n\r\n                if(TextUtils.isEmpty(email)){\r\n                    userEmail.setError(\"Email is Required\");\r\n                    progressBar.setVisibility(v.GONE);\r\n                    return;\r\n                }\r\n\r\n                if(TextUtils.isEmpty(password)){\r\n                    userPassword.setError(\"Password is Required\");\r\n                    progressBar.setVisibility(v.GONE);\r\n                    return;\r\n                }\r\n\r\n                if ((password.length()< 6)){\r\n                    userPassword.setError(\"Password must be at least 6 characters long\");\r\n                    progressBar.setVisibility(v.GONE);\r\n                    return;\r\n                }\r\n\r\n                firebaseAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {\r\n                    @Override\r\n                    public void onComplete(@NonNull Task<AuthResult> task) {\r\n                        if(task.isSuccessful()){\r\n                            //send verification link\r\n\r\n                            FirebaseUser user = firebaseAuth.getCurrentUser();\r\n                            user.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {\r\n                                @Override\r\n                                public void onSuccess(Void aVoid) {\r\n                                    Toast.makeText(SignupActivity.this, \"Verification Email Sent\", Toast.LENGTH_SHORT).show();\r\n                                }\r\n                            }).addOnFailureListener(new OnFailureListener() {\r\n                                @Override\r\n                                public void onFailure(@NonNull Exception e) {\r\n                                }\r\n                            });\r\n                            Toast.makeText(SignupActivity.this, \"User Created\", Toast.LENGTH_SHORT).show();\r\n                            startActivity(new Intent(getApplicationContext(), MainActivity.class));\r\n\r\n                        }else{\r\n                            progressBar.setVisibility(v.GONE);\r\n                            Toast.makeText(SignupActivity.this, \"Error\"+task.getException().getMessage(), Toast.LENGTH_SHORT).show();\r\n                        }\r\n                    }\r\n                });\r\n            }\r\n        });\r\n\r\n\r\n\r\n    }\r\n        public void onClickGoToLogin(View v) {//called from the TextView in with id/already_a_member called using (android:onClick=\"onClickGoToLogin\")\r\n            Intent mIntent = new Intent(SignupActivity.this, SigninActivity.class);//changes current activity from signin to signup\r\n            startActivity(mIntent);\r\n            finish();\r\n        }\r\n\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/uk/ac/york/nimblefitness/Screens/SignupActivity.java	(revision 736b23f7b09241db870b635cab845799e5e9e155)
++++ app/src/main/java/uk/ac/york/nimblefitness/Screens/SignupActivity.java	(date 1614941664256)
+@@ -31,7 +31,8 @@
+ import uk.ac.york.nimblefitness.R;
+ 
+ public class SignupActivity extends AppCompatActivity {
+-    EditText  userEmail, userPassword, userConfirmPassword;
++    EditText userEmail, userPassword, userConfirmPassword;
++    TextInputLayout userEmailLayout, userPasswordLayout, userConfirmPasswordLayout;
+     Button signUpButton;
+     TextView loginButton;
+     FirebaseAuth firebaseAuth;
+@@ -45,6 +46,11 @@
+         userEmail = findViewById(R.id.SignUpEmail);
+         userPassword = findViewById(R.id.SignUpPassword);
+         userConfirmPassword = findViewById(R.id.SignUpPasswordConfirm);
++
++        userEmailLayout = findViewById(R.id.SignUpEmailLayout);
++        userPasswordLayout = findViewById(R.id.SignUpPasswordLayout);
++        userConfirmPasswordLayout = findViewById(R.id.SignUpPasswordConfirmLayout);
++
+         signUpButton = findViewById(R.id.sign_up_button);
+         loginButton = findViewById(R.id.login_button);
+         firebaseAuth = FirebaseAuth.getInstance();
+@@ -56,7 +62,7 @@
+         Log.i("userConfirmPassword", String.valueOf(userConfirmPassword));
+ 
+ 
+-        if(firebaseAuth.getCurrentUser() != null){
++        if (firebaseAuth.getCurrentUser() != null) {
+             startActivity(new Intent(getApplicationContext(), MainActivity.class));
+             finish();
+         }
+@@ -67,30 +73,35 @@
+             public void onClick(View v) {
+                 String email = userEmail.getText().toString().trim();
+                 String password = userPassword.getText().toString().trim();
+-                progressBar.setVisibility(v.VISIBLE);
++                progressBar.setVisibility(View.VISIBLE);
+ 
+-                if(TextUtils.isEmpty(email)){
+-                    userEmail.setError("Email is Required");
+-                    progressBar.setVisibility(v.GONE);
++                if (TextUtils.isEmpty(email)) {
++                    userEmailLayout.setError("Email is Required");
++                    progressBar.setVisibility(View.GONE);
+                     return;
++                } else {
++                    userEmailLayout.setError(null);
+                 }
+ 
+-                if(TextUtils.isEmpty(password)){
+-                    userPassword.setError("Password is Required");
+-                    progressBar.setVisibility(v.GONE);
++                if (TextUtils.isEmpty(password)) {
++                    userPasswordLayout.setError("Password is Required");
++                    progressBar.setVisibility(View.GONE);
+                     return;
+                 }
+ 
+-                if ((password.length()< 6)){
+-                    userPassword.setError("Password must be at least 6 characters long");
+-                    progressBar.setVisibility(v.GONE);
++                if ((password.length() < 6)) {
++                    userPasswordLayout.setError("Password must be at least 6 characters long");
++                    progressBar.setVisibility(View.GONE);
+                     return;
+                 }
++                if (!(TextUtils.isEmpty(password)) && !(password.length() < 6)){
++                    userPasswordLayout.setError(null);
++                }
+ 
+-                firebaseAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
++                firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                     @Override
+                     public void onComplete(@NonNull Task<AuthResult> task) {
+-                        if(task.isSuccessful()){
++                        if (task.isSuccessful()) {
+                             //send verification link
+ 
+                             FirebaseUser user = firebaseAuth.getCurrentUser();
+@@ -107,9 +118,9 @@
+                             Toast.makeText(SignupActivity.this, "User Created", Toast.LENGTH_SHORT).show();
+                             startActivity(new Intent(getApplicationContext(), MainActivity.class));
+ 
+-                        }else{
+-                            progressBar.setVisibility(v.GONE);
+-                            Toast.makeText(SignupActivity.this, "Error"+task.getException().getMessage(), Toast.LENGTH_SHORT).show();
++                        } else {
++                            progressBar.setVisibility(View.GONE);
++                            Toast.makeText(SignupActivity.this, "Error" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                         }
+                     }
+                 });
+@@ -117,12 +128,12 @@
+         });
+ 
+ 
+-
+     }
+-        public void onClickGoToLogin(View v) {//called from the TextView in with id/already_a_member called using (android:onClick="onClickGoToLogin")
+-            Intent mIntent = new Intent(SignupActivity.this, SigninActivity.class);//changes current activity from signin to signup
+-            startActivity(mIntent);
+-            finish();
+-        }
++
++    public void onClickGoToLogin(View v) {//called from the TextView in with id/already_a_member called using (android:onClick="onClickGoToLogin")
++        Intent mIntent = new Intent(SignupActivity.this, SigninActivity.class);//changes current activity from signin to signup
++        startActivity(mIntent);
++        finish();
++    }
+ 
+ }
+\ No newline at end of file
+Index: app/src/main/java/uk/ac/york/nimblefitness/Screens/Settings/SettingsFragment.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package uk.ac.york.nimblefitness.Screens.Settings;\r\n\r\nimport android.content.Intent;\r\nimport android.os.Bundle;\r\n\r\nimport androidx.annotation.NonNull;\r\nimport androidx.fragment.app.Fragment;\r\n\r\nimport android.view.LayoutInflater;\r\nimport android.view.View;\r\nimport android.view.ViewGroup;\r\nimport android.widget.ArrayAdapter;\r\nimport android.widget.ListView;\r\nimport android.widget.Toast;\r\n\r\nimport com.google.android.gms.auth.api.signin.GoogleSignIn;\r\nimport com.google.android.gms.auth.api.signin.GoogleSignInOptions;\r\nimport com.google.android.gms.tasks.OnFailureListener;\r\nimport com.google.android.gms.tasks.OnSuccessListener;\r\nimport com.google.firebase.auth.FirebaseAuth;\r\n\r\nimport java.util.Objects;\r\n\r\nimport uk.ac.york.nimblefitness.R;\r\nimport uk.ac.york.nimblefitness.Screens.MainActivity;\r\nimport uk.ac.york.nimblefitness.Screens.SigninActivity;\r\n\r\npublic class SettingsFragment extends Fragment {\r\n\r\n    FirebaseAuth firebaseAuth;\r\n\r\n    @Override\r\n    public void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n\r\n    }\r\n\r\n    @Override\r\n    public View onCreateView(LayoutInflater inflater, ViewGroup container,\r\n                             Bundle savedInstanceState) {\r\n\r\n        firebaseAuth = FirebaseAuth.getInstance();\r\n\r\n        View view = inflater.inflate(R.layout.fragment_settings, container, false); //shows the fragment_settings.xml file in the frame view of the activity_main.xml\r\n\r\n        String[] settings_list_items = {\"Billing Information\",\"Membership Plan\",\"Account\",\"Terms and Conditions\",\"logout\"}; //the text that goes in each different list view item\r\n\r\n        ListView listView = (ListView) view.findViewById(R.id.settings_list); //find the list view from the fragment_settings.xml file\r\n\r\n        ArrayAdapter<String> ListViewAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, settings_list_items); //need to make a 'simple_list_item_1' replacement -> 'settings_list_layout' allow the use of images in the list view like in settings activity example\r\n        listView.setAdapter(ListViewAdapter);\r\n\r\n        listView.setOnItemClickListener((parent, view1, position, id) -> {//watches for a user to click on the list view, then gives the program which position the click was in\r\n            String itemValue = (String) listView.getItemAtPosition(position); //converts the position ID into the text that is written in that position\r\n\r\n            Toast toast = Toast.makeText(getActivity(), itemValue , Toast.LENGTH_SHORT); //shows an alert with the text of the list item that has been clicked\r\n            toast.show();\r\n\r\n            if(itemValue.equals(\"logout\")){ //if logout is clicked the user gets taken back to the login/signin screen will need to be changed to a case statement to allow for all items to be perform actions\r\n                FirebaseAuth.getInstance().signOut();\r\n                GoogleSignIn.getClient(getActivity(),new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).build()).signOut().addOnSuccessListener(new OnSuccessListener<Void>() {\r\n                    @Override\r\n                    public void onSuccess(Void aVoid) {\r\n                        startActivity(new Intent(view.getContext(),SigninActivity.class));\r\n                    }\r\n                }).addOnFailureListener(new OnFailureListener() {\r\n                    @Override\r\n                    public void onFailure(@NonNull Exception e) {\r\n                        Toast.makeText(getActivity(),\"Signout Failed\",Toast.LENGTH_SHORT).show();\r\n                    }\r\n                });\r\n                Intent mIntent = new Intent(getActivity(), SigninActivity.class);\r\n                startActivity(mIntent);\r\n                Objects.requireNonNull(getActivity()).finish();//closes this activity so when the user logs in again they are taken to the profile page not settings (also conserves device memory)\r\n            }\r\n        });\r\n        return view;\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/uk/ac/york/nimblefitness/Screens/Settings/SettingsFragment.java	(revision 736b23f7b09241db870b635cab845799e5e9e155)
++++ app/src/main/java/uk/ac/york/nimblefitness/Screens/Settings/SettingsFragment.java	(date 1614969395155)
+@@ -35,7 +35,7 @@
+ 
+     }
+ 
+-    @Override
++    @Override 
+     public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                              Bundle savedInstanceState) {
+ 
+@@ -71,7 +71,7 @@
+                 });
+                 Intent mIntent = new Intent(getActivity(), SigninActivity.class);
+                 startActivity(mIntent);
+-                Objects.requireNonNull(getActivity()).finish();//closes this activity so when the user logs in again they are taken to the profile page not settings (also conserves device memory)
++                requireActivity().finish();//closes this activity so when the user logs in again they are taken to the profile page not settings (also conserves device memory)
+             }
+         });
+         return view;
+Index: .idea/shelf/Uncommitted_changes_before_Update_at_28_02_2021_09_58_[Default_Changelist]/shelved.patch
+===================================================================
+--- .idea/shelf/Uncommitted_changes_before_Update_at_28_02_2021_09_58_[Default_Changelist]/shelved.patch	(revision 736b23f7b09241db870b635cab845799e5e9e155)
++++ .idea/shelf/Uncommitted_changes_before_Update_at_28_02_2021_09_58_[Default_Changelist]/shelved.patch	(revision 736b23f7b09241db870b635cab845799e5e9e155)
+@@ -1,35 +0,0 @@
+-Index: build.gradle
+-IDEA additional info:
+-Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+-<+>// Top-level build file where you can add configuration options common to all sub-projects/modules.\r\nbuildscript {\r\n    repositories {\r\n        google()\r\n        jcenter()\r\n    }\r\n    dependencies {\r\n        classpath \"com.android.tools.build:gradle:4.1.1\"\r\n\r\n        // NOTE: Do not place your application dependencies here; they belong\r\n        // in the individual module build.gradle files\r\n    }\r\n}\r\n\r\nallprojects {\r\n    repositories {\r\n        google()\r\n        jcenter()\r\n    }\r\n}\r\n\r\ntask clean(type: Delete) {\r\n    delete rootProject.buildDir\r\n}
+-Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+-<+>UTF-8
+-===================================================================
+---- build.gradle	(revision e53714dac156de3df6684ee1e2a6ce51d275b4c0)
+-+++ build.gradle	(date 1612959427644)
+-@@ -5,7 +5,7 @@
+-         jcenter()
+-     }
+-     dependencies {
+--        classpath "com.android.tools.build:gradle:4.1.1"
+-+        classpath 'com.android.tools.build:gradle:4.1.2'
+- 
+-         // NOTE: Do not place your application dependencies here; they belong
+-         // in the individual module build.gradle files
+-Index: .idea/gradle.xml
+-IDEA additional info:
+-Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+-<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"GradleMigrationSettings\" migrationVersion=\"1\" />\r\n  <component name=\"GradleSettings\">\r\n    <option name=\"linkedExternalProjectsSettings\">\r\n      <GradleProjectSettings>\r\n        <option name=\"testRunner\" value=\"PLATFORM\" />\r\n        <option name=\"distributionType\" value=\"DEFAULT_WRAPPED\" />\r\n        <option name=\"externalProjectPath\" value=\"$PROJECT_DIR$\" />\r\n        <option name=\"gradleJvm\" value=\"13\" />\r\n        <option name=\"modules\">\r\n          <set>\r\n            <option value=\"$PROJECT_DIR$\" />\r\n            <option value=\"$PROJECT_DIR$/app\" />\r\n          </set>\r\n        </option>\r\n        <option name=\"resolveModulePerSourceSet\" value=\"false\" />\r\n        <option name=\"useQualifiedModuleNames\" value=\"true\" />\r\n      </GradleProjectSettings>\r\n    </option>\r\n  </component>\r\n</project>
+-Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+-<+>UTF-8
+-===================================================================
+---- .idea/gradle.xml	(revision e53714dac156de3df6684ee1e2a6ce51d275b4c0)
+-+++ .idea/gradle.xml	(date 1612959392017)
+-@@ -7,7 +7,6 @@
+-         <option name="testRunner" value="PLATFORM" />
+-         <option name="distributionType" value="DEFAULT_WRAPPED" />
+-         <option name="externalProjectPath" value="$PROJECT_DIR$" />
+--        <option name="gradleJvm" value="13" />
+-         <option name="modules">
+-           <set>
+-             <option value="$PROJECT_DIR$" />
+Index: .idea/shelf/Uncommitted_changes_before_Update_at_28_02_2021_09_58__Default_Changelist_.xml
+===================================================================
+--- .idea/shelf/Uncommitted_changes_before_Update_at_28_02_2021_09_58__Default_Changelist_.xml	(revision 736b23f7b09241db870b635cab845799e5e9e155)
++++ .idea/shelf/Uncommitted_changes_before_Update_at_28_02_2021_09_58__Default_Changelist_.xml	(revision 736b23f7b09241db870b635cab845799e5e9e155)
+@@ -1,4 +0,0 @@
+-<changelist name="Uncommitted_changes_before_Update_at_28_02_2021_09_58_[Default_Changelist]" date="1614506326520" recycled="true" deleted="true">
+-  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_28_02_2021_09_58_[Default_Changelist]/shelved.patch" />
+-  <option name="DESCRIPTION" value="Uncommitted changes before Update at 28/02/2021 09:58 [Default Changelist]" />
+-</changelist>
+\ No newline at end of file
+Index: app/src/main/res/layout/activity_payment.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/activity_payment.xml	(date 1614941664553)
++++ app/src/main/res/layout/activity_payment.xml	(date 1614941664553)
+@@ -0,0 +1,9 @@
++<?xml version="1.0" encoding="utf-8"?>
++<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:app="http://schemas.android.com/apk/res-auto"
++    xmlns:tools="http://schemas.android.com/tools"
++    android:layout_width="match_parent"
++    android:layout_height="match_parent"
++    tools:context=".Screens.PaymentActivity">
++
++</androidx.constraintlayout.widget.ConstraintLayout>
+\ No newline at end of file
+Index: app/src/main/res/layout/fragment_profile.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<LinearLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    tools:context=\".Screens.Profile.ProfileFragment\">\r\n\r\n    <ScrollView\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"match_parent\"\r\n        android:scrollbars=\"none\">\r\n\r\n        <LinearLayout\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_marginBottom=\"16dp\"\r\n            android:gravity=\"center_horizontal\"\r\n            android:orientation=\"vertical\">\r\n\r\n            <androidx.cardview.widget.CardView\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:layout_marginHorizontal=\"8dp\"\r\n                android:layout_marginTop=\"8dp\">\r\n                <LinearLayout\r\n                    android:layout_width=\"match_parent\"\r\n                    android:layout_height=\"match_parent\"\r\n                    android:gravity=\"center_horizontal\">\r\n\r\n                <CalendarView\r\n                    android:id=\"@+id/profile_calendar\"\r\n                    android:layout_width=\"match_parent\"\r\n                    android:layout_height=\"300dp\"\r\n                    android:layout_marginTop=\"8dp\"\r\n                    android:firstDayOfWeek=\"2\"/>\r\n                </LinearLayout>\r\n            </androidx.cardview.widget.CardView>\r\n\r\n\r\n            <androidx.cardview.widget.CardView\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:layout_marginHorizontal=\"8dp\"\r\n                android:layout_marginTop=\"16dp\"\r\n                android:layout_marginBottom=\"16dp\"\r\n                app:cardElevation=\"2dp\">\r\n\r\n                <LinearLayout\r\n                    android:layout_width=\"match_parent\"\r\n                    android:layout_height=\"match_parent\"\r\n                    android:orientation=\"vertical\">\r\n\r\n                    <LinearLayout\r\n                        android:layout_width=\"match_parent\"\r\n                        android:layout_height=\"75dp\"\r\n                        android:gravity=\"center_vertical\">\r\n\r\n                        <ImageView\r\n                            android:id=\"@+id/profile_picture\"\r\n                            android:layout_width=\"50dp\"\r\n                            android:layout_height=\"50dp\"\r\n                            android:layout_marginStart=\"8dp\"\r\n                            android:src=\"@drawable/ic_baseline_emoji_emotions_24\"\r\n\r\n                            />\r\n\r\n                        <LinearLayout\r\n                            android:layout_width=\"wrap_content\"\r\n                            android:layout_height=\"wrap_content\"\r\n                            android:orientation=\"vertical\"\r\n                            android:paddingStart=\"16dp\">\r\n\r\n                            <TextView\r\n                                android:id=\"@+id/profile_date\"\r\n                                android:layout_width=\"wrap_content\"\r\n                                android:layout_height=\"wrap_content\"\r\n                                android:text=\"Feb 22nd\"\r\n                                android:textSize=\"30sp\"\r\n                                android:textStyle=\"bold\" />\r\n\r\n                            <TextView\r\n                                android:id=\"@+id/user_name\"\r\n                                android:layout_width=\"wrap_content\"\r\n                                android:layout_height=\"wrap_content\"\r\n                                android:layout_below=\"@+id/profile_date\"\r\n                                android:layout_alignLeft=\"@id/profile_picture\"\r\n                                android:text=\"Harry Wickham\"\r\n\r\n                                />\r\n                        </LinearLayout>\r\n\r\n                        <LinearLayout\r\n                            android:layout_width=\"match_parent\"\r\n                            android:layout_height=\"match_parent\"\r\n                            android:gravity=\"right|center_vertical\">\r\n\r\n                            <ImageView\r\n                                android:layout_width=\"wrap_content\"\r\n                                android:layout_height=\"wrap_content\"\r\n                                android:paddingRight=\"16dp\"\r\n                                android:src=\"@drawable/ic_baseline_share_24\" />\r\n                        </LinearLayout>\r\n\r\n                    </LinearLayout>\r\n\r\n                    <ListView\r\n                        android:id=\"@+id/completed_moves_list\"\r\n                        android:layout_width=\"match_parent\"\r\n                        android:layout_height=\"200dp\" />\r\n                </LinearLayout>\r\n\r\n            </androidx.cardview.widget.CardView>\r\n        </LinearLayout>\r\n    </ScrollView>\r\n</LinearLayout>\r\n\r\n\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/fragment_profile.xml	(revision 736b23f7b09241db870b635cab845799e5e9e155)
++++ app/src/main/res/layout/fragment_profile.xml	(date 1614941664066)
+@@ -31,7 +31,7 @@
+                 <CalendarView
+                     android:id="@+id/profile_calendar"
+                     android:layout_width="match_parent"
+-                    android:layout_height="300dp"
++                    android:layout_height="315dp"
+                     android:layout_marginTop="8dp"
+                     android:firstDayOfWeek="2"/>
+                 </LinearLayout>
+Index: app/src/main/res/navigation/nav_graph.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/navigation/nav_graph.xml	(date 1614941664324)
++++ app/src/main/res/navigation/nav_graph.xml	(date 1614941664324)
+@@ -0,0 +1,28 @@
++<?xml version="1.0" encoding="utf-8"?>
++<navigation xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:app="http://schemas.android.com/apk/res-auto"
++    xmlns:tools="http://schemas.android.com/tools"
++    android:id="@+id/nav_graph"
++    app:startDestination="@id/FirstFragment">
++
++    <fragment
++        android:id="@+id/FirstFragment"
++        android:name="uk.ac.york.nimblefitness.Screens.FirstFragment"
++        android:label="@string/first_fragment_label"
++        tools:layout="@layout/fragment_first">
++
++        <action
++            android:id="@+id/action_FirstFragment_to_SecondFragment"
++            app:destination="@id/SecondFragment" />
++    </fragment>
++    <fragment
++        android:id="@+id/SecondFragment"
++        android:name="uk.ac.york.nimblefitness.Screens.SecondFragment"
++        android:label="@string/second_fragment_label"
++        tools:layout="@layout/fragment_second">
++
++        <action
++            android:id="@+id/action_SecondFragment_to_FirstFragment"
++            app:destination="@id/FirstFragment" />
++    </fragment>
++</navigation>
+\ No newline at end of file
+Index: app/src/main/res/layout/activity_signup.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<LinearLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:gravity=\"center|top\"\r\n    android:orientation=\"vertical\"\r\n    tools:context=\".Screens.SignupActivity\"\r\n    android:paddingHorizontal=\"40dp\">\r\n\r\n    <ImageView\r\n        android:id=\"@+id/imageView\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:contentDescription=\"@string/nimble_logo_description\"\r\n        app:srcCompat=\"@drawable/final_logo\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/textView\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:text=\"@string/sign_up\"\r\n        android:textSize=\"30sp\"\r\n        android:textStyle=\"bold\"\r\n        android:textColor=\"#666666\"\r\n        android:elevation=\"4dp\"\r\n        android:paddingBottom=\"20dp\"\r\n        />\r\n\r\n    <com.google.android.material.textfield.TextInputLayout\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:hint=\"@string/email_address\"\r\n        android:paddingVertical=\"5dp\"\r\n        style=\"@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox\"\r\n        android:elevation=\"4dp\">\r\n\r\n        <com.google.android.material.textfield.TextInputEditText\r\n            android:id=\"@+id/SignUpEmail\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:inputType=\"textEmailAddress\"\r\n            />\r\n\r\n    </com.google.android.material.textfield.TextInputLayout>\r\n\r\n    <com.google.android.material.textfield.TextInputLayout\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:hint=\"@string/password\"\r\n        android:paddingVertical=\"5dp\"\r\n        app:endIconMode=\"password_toggle\"\r\n        style=\"@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox\"\r\n        android:elevation=\"4dp\">\r\n\r\n        <com.google.android.material.textfield.TextInputEditText\r\n            android:id=\"@+id/SignUpPassword\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:inputType=\"textPassword\"\r\n            />\r\n\r\n    </com.google.android.material.textfield.TextInputLayout>\r\n\r\n    <com.google.android.material.textfield.TextInputLayout\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:hint=\"@string/confirm_password\"\r\n        android:paddingVertical=\"5dp\"\r\n        app:endIconMode=\"password_toggle\"\r\n        style=\"@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox\"\r\n        android:elevation=\"4dp\">\r\n\r\n        <com.google.android.material.textfield.TextInputEditText\r\n            android:id=\"@+id/SignUpPasswordConfirm\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:inputType=\"textPassword\"\r\n            />\r\n\r\n    </com.google.android.material.textfield.TextInputLayout>\r\n\r\n    <ProgressBar\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:id=\"@+id/progress_circular\"\r\n        android:visibility=\"gone\"/>\r\n\r\n    <Button\r\n        android:id=\"@+id/sign_up_button\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:text=\"@string/sign_up\"\r\n        android:elevation=\"4dp\"\r\n        android:layout_marginTop=\"20dp\"\r\n        />\r\n\r\n    <TextView\r\n        android:id=\"@+id/login_button\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:text=\"@string/returning_member\"\r\n        android:onClick=\"onClickGoToLogin\"\r\n        android:clickable=\"true\"\r\n        android:focusable=\"true\" />\r\n</LinearLayout>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/activity_signup.xml	(revision 736b23f7b09241db870b635cab845799e5e9e155)
++++ app/src/main/res/layout/activity_signup.xml	(date 1614941664084)
+@@ -4,104 +4,121 @@
+     xmlns:tools="http://schemas.android.com/tools"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+-    android:gravity="center|top"
+-    android:orientation="vertical"
+-    tools:context=".Screens.SignupActivity"
+-    android:paddingHorizontal="40dp">
++    tools:context=".Screens.SignupActivity"
++    >
++
++    <ScrollView
++        android:layout_width="match_parent"
++        android:layout_height="match_parent"
++        android:scrollbars="none">
++
++        <LinearLayout
++            android:layout_width="match_parent"
++            android:layout_height="wrap_content"
++            android:gravity="center|top"
++            android:orientation="vertical"
++            android:paddingHorizontal="40dp"
++            android:paddingBottom="10dp">
++
+ 
+-    <ImageView
+-        android:id="@+id/imageView"
+-        android:layout_width="wrap_content"
+-        android:layout_height="wrap_content"
+-        android:contentDescription="@string/nimble_logo_description"
+-        app:srcCompat="@drawable/final_logo" />
++            <ImageView
++                android:id="@+id/imageView"
++                android:layout_width="wrap_content"
++                android:layout_height="wrap_content"
++                android:contentDescription="@string/nimble_logo_description"
++                app:srcCompat="@drawable/final_logo" />
+ 
+-    <TextView
+-        android:id="@+id/textView"
+-        android:layout_width="wrap_content"
+-        android:layout_height="wrap_content"
+-        android:text="@string/sign_up"
+-        android:textSize="30sp"
+-        android:textStyle="bold"
+-        android:textColor="#666666"
+-        android:elevation="4dp"
+-        android:paddingBottom="20dp"
+-        />
++            <TextView
++                android:id="@+id/textView"
++                android:layout_width="wrap_content"
++                android:layout_height="wrap_content"
++                android:elevation="4dp"
++                android:paddingBottom="20dp"
++                android:text="@string/sign_up"
++                android:textColor="#666666"
++                android:textSize="30sp"
++                android:textStyle="bold" />
+ 
+-    <com.google.android.material.textfield.TextInputLayout
+-        android:layout_width="match_parent"
+-        android:layout_height="wrap_content"
+-        android:hint="@string/email_address"
+-        android:paddingVertical="5dp"
+-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+-        android:elevation="4dp">
++            <com.google.android.material.textfield.TextInputLayout
++                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
++                android:layout_width="match_parent"
++                android:layout_height="wrap_content"
++                android:elevation="4dp"
++                android:hint="@string/email_address"
++                android:paddingVertical="5dp"
++                android:id="@+id/SignUpEmailLayout"
++                app:errorEnabled="true">
+ 
+-        <com.google.android.material.textfield.TextInputEditText
+-            android:id="@+id/SignUpEmail"
+-            android:layout_width="match_parent"
+-            android:layout_height="wrap_content"
+-            android:inputType="textEmailAddress"
+-            />
++                <com.google.android.material.textfield.TextInputEditText
++                    android:id="@+id/SignUpEmail"
++                    android:layout_width="match_parent"
++                    android:layout_height="wrap_content"
++                    android:inputType="textEmailAddress" />
+ 
+-    </com.google.android.material.textfield.TextInputLayout>
++            </com.google.android.material.textfield.TextInputLayout>
+ 
+-    <com.google.android.material.textfield.TextInputLayout
+-        android:layout_width="match_parent"
+-        android:layout_height="wrap_content"
+-        android:hint="@string/password"
+-        android:paddingVertical="5dp"
+-        app:endIconMode="password_toggle"
+-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+-        android:elevation="4dp">
++            <com.google.android.material.textfield.TextInputLayout
++                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
++                android:layout_width="match_parent"
++                android:layout_height="wrap_content"
++                android:elevation="4dp"
++                android:hint="@string/password"
++                android:paddingVertical="5dp"
++                app:endIconMode="password_toggle"
++                android:id="@+id/SignUpPasswordLayout"
++                app:errorEnabled="true">
+ 
+-        <com.google.android.material.textfield.TextInputEditText
+-            android:id="@+id/SignUpPassword"
+-            android:layout_width="match_parent"
+-            android:layout_height="wrap_content"
+-            android:inputType="textPassword"
+-            />
++                <com.google.android.material.textfield.TextInputEditText
++                    android:id="@+id/SignUpPassword"
++                    android:layout_width="match_parent"
++                    android:layout_height="wrap_content"
++                    android:inputType="textPassword" />
+ 
+-    </com.google.android.material.textfield.TextInputLayout>
++            </com.google.android.material.textfield.TextInputLayout>
+ 
+-    <com.google.android.material.textfield.TextInputLayout
+-        android:layout_width="match_parent"
+-        android:layout_height="wrap_content"
+-        android:hint="@string/confirm_password"
+-        android:paddingVertical="5dp"
+-        app:endIconMode="password_toggle"
+-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+-        android:elevation="4dp">
++            <com.google.android.material.textfield.TextInputLayout
++                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
++                android:layout_width="match_parent"
++                android:layout_height="wrap_content"
++                android:elevation="4dp"
++                android:hint="@string/confirm_password"
++                android:paddingVertical="5dp"
++                app:endIconMode="password_toggle"
++                android:id="@+id/SignUpPasswordConfirmLayout"
++                app:errorEnabled="true">
+ 
+-        <com.google.android.material.textfield.TextInputEditText
+-            android:id="@+id/SignUpPasswordConfirm"
+-            android:layout_width="match_parent"
+-            android:layout_height="wrap_content"
+-            android:inputType="textPassword"
+-            />
++                <com.google.android.material.textfield.TextInputEditText
++                    android:id="@+id/SignUpPasswordConfirm"
++                    android:layout_width="match_parent"
++                    android:layout_height="wrap_content"
++                    android:inputType="textPassword" />
+ 
+-    </com.google.android.material.textfield.TextInputLayout>
++            </com.google.android.material.textfield.TextInputLayout>
+ 
+-    <ProgressBar
+-        android:layout_width="wrap_content"
+-        android:layout_height="wrap_content"
+-        android:id="@+id/progress_circular"
+-        android:visibility="gone"/>
++            <ProgressBar
++                android:id="@+id/progress_circular"
++                android:layout_width="wrap_content"
++                android:layout_height="wrap_content"
++                android:visibility="gone" />
+ 
+-    <Button
+-        android:id="@+id/sign_up_button"
+-        android:layout_width="match_parent"
+-        android:layout_height="wrap_content"
+-        android:text="@string/sign_up"
+-        android:elevation="4dp"
+-        android:layout_marginTop="20dp"
+-        />
++            <Button
++                android:id="@+id/sign_up_button"
++                android:layout_width="match_parent"
++                android:layout_height="wrap_content"
++                android:layout_marginTop="20dp"
++                android:elevation="4dp"
++                android:text="@string/sign_up" />
+ 
+-    <TextView
+-        android:id="@+id/login_button"
+-        android:layout_width="wrap_content"
+-        android:layout_height="wrap_content"
+-        android:text="@string/returning_member"
+-        android:onClick="onClickGoToLogin"
+-        android:clickable="true"
+-        android:focusable="true" />
++            <TextView
++                android:id="@+id/login_button"
++                android:layout_width="wrap_content"
++                android:layout_height="wrap_content"
++                android:clickable="true"
++                android:focusable="true"
++                android:onClick="onClickGoToLogin"
++                android:text="@string/returning_member" />
++
++        </LinearLayout>
++
++    </ScrollView>
+ </LinearLayout>
+Index: app/src/main/res/values/strings.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><resources>\r\n    <string name=\"app_name\">Nimble Fitness</string>\r\n    <string name=\"tab_text_1\">Tab 1</string>\r\n    <string name=\"tab_text_2\">Tab 2</string>\r\n    <string name=\"menu_search_label\">Search</string>\r\n    <string name=\"menu_profile_label\">Profile</string>\r\n    <string name=\"menu_routines_label\">Routines</string>\r\n    <string name=\"menu_settings_label\">Settings</string>\r\n    <!-- TODO: Remove or change this placeholder text -->\r\n    <string name=\"hello_blank_fragment\">Hello blank fragment</string>\r\n    <string name=\"title_activity_login\">LoginActivity</string>\r\n    <string name=\"prompt_email\">Email</string>\r\n    <string name=\"prompt_password\">Password</string>\r\n    <string name=\"action_sign_in\">Sign in or register</string>\r\n    <string name=\"action_sign_in_short\">Sign in</string>\r\n    <string name=\"welcome\">\"Welcome !\"</string>\r\n    <string name=\"invalid_username\">Not a valid username</string>\r\n    <string name=\"invalid_password\">Password must be >5 characters</string>\r\n    <string name=\"login_failed\">\"Login failed\"</string>\r\n    <string name=\"sign_up\">SIGN UP</string>\r\n    <string name=\"email_address\">Email Address</string>\r\n    <string name=\"password\">Password</string>\r\n    <string name=\"confirm_password\">Confirm Password</string>\r\n    <string name=\"returning_member\">Already a member? Sign in here.</string>\r\n    <string name=\"nimble_logo_description\">Nimble Logo</string>\r\n    <string name=\"new_member\">Not a member yet? Sign up here.</string>\r\n    <string name=\"login\">LOGIN</string>\r\n    <string name=\"forgotten_password\">Forgotten your password?</string>\r\n</resources>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/values/strings.xml	(revision 736b23f7b09241db870b635cab845799e5e9e155)
++++ app/src/main/res/values/strings.xml	(date 1614941664562)
+@@ -26,4 +26,13 @@
+     <string name="new_member">Not a member yet? Sign up here.</string>
+     <string name="login">LOGIN</string>
+     <string name="forgotten_password">Forgotten your password?</string>
++    <string name="title_activity_payment">PaymentActivity</string>
++    <!-- Strings used for fragments for navigation -->
++    <string name="first_fragment_label">First Fragment</string>
++    <string name="second_fragment_label">Second Fragment</string>
++    <string name="next">Next</string>
++    <string name="previous">Previous</string>
++
++    <string name="hello_first_fragment">Hello first fragment</string>
++    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+ </resources>
+\ No newline at end of file
+Index: app/src/main/java/uk/ac/york/nimblefitness/Screens/PaymentActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/uk/ac/york/nimblefitness/Screens/PaymentActivity.java	(date 1614941664711)
++++ app/src/main/java/uk/ac/york/nimblefitness/Screens/PaymentActivity.java	(date 1614941664711)
+@@ -0,0 +1,16 @@
++package uk.ac.york.nimblefitness.Screens;
++
++import androidx.appcompat.app.AppCompatActivity;
++
++import android.os.Bundle;
++
++import uk.ac.york.nimblefitness.R;
++
++public class PaymentActivity extends AppCompatActivity {
++
++    @Override
++    protected void onCreate(Bundle savedInstanceState) {
++        super.onCreate(savedInstanceState);
++        setContentView(R.layout.activity_payment);
++    }
++}
+\ No newline at end of file
+Index: app/src/main/java/uk/ac/york/nimblefitness/Screens/SigninActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package uk.ac.york.nimblefitness.Screens;\r\n\r\nimport androidx.annotation.NonNull;\r\nimport androidx.annotation.Nullable;\r\nimport androidx.appcompat.app.AlertDialog;\r\nimport androidx.appcompat.app.AppCompatActivity;\r\n\r\nimport android.content.DialogInterface;\r\nimport android.content.Intent;\r\nimport android.os.Bundle;\r\nimport android.text.TextUtils;\r\nimport android.util.Log;\r\nimport android.view.View;\r\nimport android.widget.Button;\r\nimport android.widget.EditText;\r\nimport android.widget.ProgressBar;\r\nimport android.widget.TextView;\r\nimport android.widget.Toast;\r\n\r\nimport com.google.android.gms.auth.api.identity.SignInClient;\r\nimport com.google.android.gms.auth.api.signin.GoogleSignIn;\r\nimport com.google.android.gms.auth.api.signin.GoogleSignInAccount;\r\nimport com.google.android.gms.auth.api.signin.GoogleSignInClient;\r\nimport com.google.android.gms.auth.api.signin.GoogleSignInOptions;\r\nimport com.google.android.gms.common.SignInButton;\r\nimport com.google.android.gms.common.api.ApiException;\r\nimport com.google.android.gms.tasks.OnCompleteListener;\r\nimport com.google.android.gms.tasks.OnFailureListener;\r\nimport com.google.android.gms.tasks.OnSuccessListener;\r\nimport com.google.android.gms.tasks.Task;\r\nimport com.google.firebase.auth.AuthCredential;\r\nimport com.google.firebase.auth.AuthResult;\r\nimport com.google.firebase.auth.FirebaseAuth;\r\nimport com.google.firebase.auth.GoogleAuthProvider;\r\n\r\nimport uk.ac.york.nimblefitness.R;\r\n\r\npublic class SigninActivity extends AppCompatActivity {\r\n    private static final int GOOGLE_SIGNIN_CODE = 10005;\r\n    EditText userEmail, userPassword;\r\n    Button login_button;\r\n    TextView signUpButton, forgottenPassword;\r\n    SignInButton googleSignIn;\r\n    GoogleSignInClient signInClient;\r\n    GoogleSignInOptions gso;\r\n    FirebaseAuth firebaseAuth;\r\n    ProgressBar progressBar;\r\n\r\n\r\n\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        setContentView(R.layout.activity_signin);\r\n\r\n        userEmail = findViewById(R.id.SignInEmail);\r\n        userPassword = findViewById(R.id.SignInPassword);\r\n        login_button = findViewById(R.id.sign_in_button);\r\n        forgottenPassword = findViewById(R.id.forgotten_password);\r\n        signUpButton = findViewById(R.id.sign_up_button);\r\n        googleSignIn = findViewById(R.id.googleSignIn);\r\n        firebaseAuth = FirebaseAuth.getInstance();\r\n        progressBar = findViewById(R.id.progress_circular);\r\n\r\n\r\n\r\n        login_button.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                String email = userEmail.getText().toString().trim();\r\n                String password = userPassword.getText().toString().trim();\r\n\r\n\r\n                if (TextUtils.isEmpty(email)) {\r\n                    userEmail.setError(\"Email is Required\");\r\n                    progressBar.setVisibility(v.GONE);\r\n                    return;\r\n                }\r\n\r\n                if (TextUtils.isEmpty(password)) {\r\n                    userPassword.setError(\"Password is Required\");\r\n                    progressBar.setVisibility(v.GONE);\r\n                    return;\r\n                }\r\n\r\n                firebaseAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {\r\n                    @Override\r\n                    public void onComplete(@NonNull Task<AuthResult> task) {\r\n                        if(task.isSuccessful()){\r\n                            Toast.makeText(SigninActivity.this, \"Login Successful\", Toast.LENGTH_SHORT).show();\r\n                            startActivity(new Intent(getApplicationContext(),MainActivity.class));\r\n                        }else{\r\n                            Toast.makeText(SigninActivity.this, \"Error\"+task.getException(), Toast.LENGTH_SHORT).show();\r\n                        }\r\n                    }\r\n                });\r\n\r\n            }\r\n        });\r\n        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)\r\n                .requestIdToken(\"1082440501674-dsinj9sev8md1518nc8u5bal4rkll72b.apps.googleusercontent.com\")\r\n                .requestEmail()\r\n                .build();\r\n\r\n        signInClient = GoogleSignIn.getClient(this,gso);\r\n\r\n        GoogleSignInAccount signInAccount = GoogleSignIn.getLastSignedInAccount(this);\r\n        if (signInAccount != null || firebaseAuth.getCurrentUser() != null){\r\n            startActivity(new Intent(this,MainActivity.class));\r\n        }\r\n\r\n        googleSignIn.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                Intent gSignIn = signInClient.getSignInIntent();\r\n                startActivityForResult(gSignIn, GOOGLE_SIGNIN_CODE);\r\n            }\r\n        });\r\n\r\n\r\n    }\r\n\r\n    @Override\r\n    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {\r\n        super.onActivityResult(requestCode, resultCode, data);\r\n        if(requestCode == GOOGLE_SIGNIN_CODE){\r\n            Task<GoogleSignInAccount> signInTask = GoogleSignIn.getSignedInAccountFromIntent(data);\r\n\r\n            try {\r\n                GoogleSignInAccount signInAcc = signInTask.getResult(ApiException.class);\r\n\r\n                AuthCredential authCredential = GoogleAuthProvider.getCredential(signInAcc.getIdToken(),null);\r\n                firebaseAuth.signInWithCredential(authCredential).addOnCompleteListener(new OnCompleteListener<AuthResult>() {\r\n                    @Override\r\n                    public void onComplete(@NonNull Task<AuthResult> task) {\r\n                        Toast.makeText(getApplicationContext(),\"Google Account Connected\",Toast.LENGTH_SHORT).show();\r\n                        startActivity(new Intent(getApplicationContext(),MainActivity.class));\r\n                    }\r\n                }) .addOnFailureListener(new OnFailureListener() {\r\n                    @Override\r\n                    public void onFailure(@NonNull Exception e) {\r\n\r\n                    }\r\n                });\r\n\r\n                Toast.makeText(this, \"Goolge Account Connected\",Toast.LENGTH_SHORT).show();\r\n                startActivity(new Intent(this,MainActivity.class));\r\n            } catch (ApiException e) {\r\n                e.printStackTrace();\r\n            }\r\n\r\n\r\n        }\r\n    }\r\n\r\n    public void onClickGoToSignUp(View v) {//called from the TextView in with id/new_member called using (android:onClick=\"onClickGoToSignUp\")\r\n        Intent mIntent = new Intent(SigninActivity.this, SignupActivity.class); //changes current activity from signin to signup\r\n        startActivity(mIntent);\r\n        finish();\r\n    }\r\n    public void onClickForgottenPassword(View v) {\r\n        EditText recoveryEmail = new EditText(v.getContext());\r\n        AlertDialog.Builder passwordResetDialog = new AlertDialog.Builder(v.getContext());\r\n        passwordResetDialog.setTitle(\"Reset Password\");\r\n        passwordResetDialog.setMessage(\"Enter Your Email Address\");\r\n        passwordResetDialog.setView(recoveryEmail);\r\n\r\n        passwordResetDialog.setPositiveButton(\"Yes\", new DialogInterface.OnClickListener() {\r\n            @Override\r\n            public void onClick(DialogInterface dialog, int which) {\r\n                //extract email and send the reset link\r\n                String email = recoveryEmail.getText().toString();\r\n                firebaseAuth.sendPasswordResetEmail(email).addOnSuccessListener(new OnSuccessListener<Void>() {\r\n                    @Override\r\n                    public void onSuccess(Void aVoid) {\r\n                        Toast.makeText(SigninActivity.this, \"Check Your Emails\",Toast.LENGTH_SHORT).show();\r\n                    }\r\n                }).addOnFailureListener(new OnFailureListener() {\r\n                    @Override\r\n                    public void onFailure(@NonNull Exception e) {\r\n                        Toast.makeText(SigninActivity.this, \"Error, Reset Email Not Sent\",Toast.LENGTH_SHORT).show();\r\n                    }\r\n                });\r\n\r\n            }\r\n        });\r\n        passwordResetDialog.setNegativeButton(\"No\", new DialogInterface.OnClickListener() {\r\n            @Override\r\n            public void onClick(DialogInterface dialog, int which) {\r\n\r\n            }\r\n        });\r\n\r\n        passwordResetDialog.create().show();\r\n\r\n        Toast toast = Toast.makeText(getApplicationContext(), \"Reset Password\", Toast.LENGTH_SHORT);//function called to initiate forgotten password user story\r\n        toast.show();\r\n\r\n    }\r\n\r\n\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/uk/ac/york/nimblefitness/Screens/SigninActivity.java	(revision 736b23f7b09241db870b635cab845799e5e9e155)
++++ app/src/main/java/uk/ac/york/nimblefitness/Screens/SigninActivity.java	(date 1614941664110)
+@@ -62,7 +62,7 @@
+         firebaseAuth = FirebaseAuth.getInstance();
+         progressBar = findViewById(R.id.progress_circular);
+ 
+-
++        googleSignIn.setSize(SignInButton.SIZE_WIDE);
+ 
+         login_button.setOnClickListener(new View.OnClickListener() {
+             @Override
+Index: app/src/main/AndroidManifest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<manifest xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    package=\"uk.ac.york.nimblefitness\">\r\n\r\n    <uses-permission android:name=\"android.permission.INTERNET\"/>\r\n    \r\n    <application\r\n        android:allowBackup=\"true\"\r\n        android:fullBackupContent=\"true\"\r\n        android:icon=\"@mipmap/ic_launcher\"\r\n        android:label=\"@string/app_name\"\r\n        android:roundIcon=\"@mipmap/ic_launcher_round\"\r\n        android:supportsRtl=\"true\"\r\n        android:theme=\"@style/Theme.NimbleFitness\">\r\n        <activity android:name=\".Screens.MainActivity\" />\r\n        <activity android:name=\".Screens.SigninActivity\" />\r\n        <activity\r\n            android:name=\".Screens.SignupActivity\"\r\n            android:label=\"@string/app_name\"\r\n            android:theme=\"@style/Theme.NimbleFitness.NoActionBar\">\r\n            <intent-filter>\r\n                <action android:name=\"android.intent.action.MAIN\" />\r\n\r\n                <category android:name=\"android.intent.category.LAUNCHER\" />\r\n            </intent-filter>\r\n        </activity>\r\n    </application>\r\n\r\n</manifest>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/AndroidManifest.xml	(revision 736b23f7b09241db870b635cab845799e5e9e155)
++++ app/src/main/AndroidManifest.xml	(date 1614941664726)
+@@ -2,8 +2,8 @@
+ <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+     package="uk.ac.york.nimblefitness">
+ 
+-    <uses-permission android:name="android.permission.INTERNET"/>
+-    
++    <uses-permission android:name="android.permission.INTERNET" />
++
+     <application
+         android:allowBackup="true"
+         android:fullBackupContent="true"
+@@ -12,6 +12,7 @@
+         android:roundIcon="@mipmap/ic_launcher_round"
+         android:supportsRtl="true"
+         android:theme="@style/Theme.NimbleFitness">
++        <activity android:name=".Screens.PaymentActivity" />
+         <activity android:name=".Screens.MainActivity" />
+         <activity android:name=".Screens.SigninActivity" />
+         <activity
+Index: app/build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>\r\n    apply plugin:  'com.android.application'\r\n    apply plugin: 'com.google.gms.google-services'\r\n\r\n\r\n\r\nandroid {\r\n    compileSdkVersion 29\r\n    buildToolsVersion \"29.0.3\"\r\n\r\n    defaultConfig {\r\n        applicationId \"uk.ac.york.nimblefittness\"\r\n        minSdkVersion 21\r\n        targetSdkVersion 29\r\n        versionCode 1\r\n        versionName \"1.0\"\r\n\r\n        testInstrumentationRunner \"androidx.test.runner.AndroidJUnitRunner\"\r\n    }\r\n\r\n    buildTypes {\r\n        release {\r\n            minifyEnabled false\r\n            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'\r\n        }\r\n    }\r\n    compileOptions {\r\n        sourceCompatibility JavaVersion.VERSION_1_8\r\n        targetCompatibility JavaVersion.VERSION_1_8\r\n    }\r\n}\r\n\r\ndependencies {\r\n\r\n    implementation 'androidx.appcompat:appcompat:1.1.0'\r\n    implementation 'com.google.android.material:material:1.1.0'\r\n    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'\r\n    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0'\r\n    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'\r\n    implementation 'androidx.legacy:legacy-support-v4:1.0.0'\r\n    implementation 'androidx.annotation:annotation:1.1.0'\r\n    implementation 'com.google.firebase:firebase-auth:20.0.2'\r\n    implementation 'com.google.android.gms:play-services-auth:19.0.0'\r\n    implementation 'com.google.android.material:material:1.2.1'\r\n    testImplementation 'junit:junit:4.+'\r\n    androidTestImplementation 'androidx.test.ext:junit:1.1.1'\r\n    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'\r\n    implementation platform('com.google.firebase:firebase-bom:26.5.0')\r\n    implementation 'com.google.firebase:firebase-analytics'\r\n\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/build.gradle	(revision 736b23f7b09241db870b635cab845799e5e9e155)
++++ app/build.gradle	(date 1614941664285)
+@@ -42,6 +42,8 @@
+     implementation 'com.google.firebase:firebase-auth:20.0.2'
+     implementation 'com.google.android.gms:play-services-auth:19.0.0'
+     implementation 'com.google.android.material:material:1.2.1'
++    implementation 'androidx.navigation:navigation-fragment:2.3.3'
++    implementation 'androidx.navigation:navigation-ui:2.3.3'
+     testImplementation 'junit:junit:4.+'
+     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+diff --git .idea/shelf/Uncommitted_changes_before_Update_at_03_03_2021_12_40__Default_Changelist_.xml .idea/shelf/Uncommitted_changes_before_Update_at_03_03_2021_12_40__Default_Changelist_.xml

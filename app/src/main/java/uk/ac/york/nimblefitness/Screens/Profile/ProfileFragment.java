@@ -16,6 +16,16 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import org.w3c.dom.Text;
+
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -29,6 +39,8 @@ import uk.ac.york.nimblefitness.Screens.SigninActivity;
 public class ProfileFragment extends Fragment {
 
     private static final String TAG = "log";
+    FirebaseDatabase rootDatabase;
+    DatabaseReference rootReference;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -38,9 +50,7 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         getActivity().setTitle("Profile");
-
         View view = inflater.inflate(R.layout.fragment_profile, container, false); //shows the fragment_settings.xml file in the frame view of the activity_main.xml
 
         String[] completed_activity_list = {"Press-ups", "Sit-ups", "Plank", "Crunches"}; //the text that goes in each different list view item
@@ -48,6 +58,29 @@ public class ProfileFragment extends Fragment {
         ListView listView = (ListView) view.findViewById(R.id.completed_moves_list); //find the list view from the fragment_settings.xml file
         CalendarView calendarView = view.findViewById(R.id.profile_calendar);
         TextView dayNumber = view.findViewById(R.id.profile_date);
+        TextView userName = view.findViewById(R.id.user_name);
+
+        rootDatabase = FirebaseDatabase.getInstance();
+        rootReference = rootDatabase.getReference("users");
+
+        FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        rootReference.addListenerForSingleValueEvent(new ValueEventListener() {
+             @Override
+             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                 String user_firstName = snapshot.child(currentFirebaseUser.getUid()).child("firstName").getValue(String.class);
+                 String user_lastName = snapshot.child(currentFirebaseUser.getUid()).child("lastName").getValue(String.class);
+
+                 userName.setText(user_firstName + " " + user_lastName);
+             }
+
+             @Override
+             public void onCancelled(@NonNull DatabaseError error) {
+
+             }
+         });
+
+
 
         SimpleDateFormat month = new SimpleDateFormat("M");
         SimpleDateFormat day = new SimpleDateFormat("d");

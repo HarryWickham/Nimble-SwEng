@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Screens.Settings.TermsAndConditions">
+    tools:context=".Screens.Settings.TermsAndConditionsFragment">
 
     <ListView
         android:id="@+id/terms_and_conditions_options_list"
