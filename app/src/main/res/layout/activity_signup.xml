@@ -5,9 +5,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Screens.SignupActivity"
-    >
+    android:paddingHorizontal="40dp">
 
-    <ScrollView
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/nimble_logo_description"
+        app:srcCompat="@drawable/final_logo" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sign_up"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:textColor="#666666"
+        android:elevation="4dp"
+        android:paddingBottom="20dp"
+        />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/SignUpEmailLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="none">
@@ -21,12 +41,22 @@
             android:paddingBottom="10dp">
 
 
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:contentDescription="@string/nimble_logo_description"
-                app:srcCompat="@drawable/final_logo" />
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/SignUpPasswordLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/password"
+        android:paddingVertical="5dp"
+        app:endIconMode="password_toggle"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:elevation="4dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/SignUpPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            />
 
             <TextView
                 android:id="@+id/textView"
@@ -39,15 +69,22 @@
                 android:textSize="30sp"
                 android:textStyle="bold" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:elevation="4dp"
-                android:hint="@string/email_address"
-                android:paddingVertical="5dp"
-                android:id="@+id/SignUpEmailLayout"
-                app:errorEnabled="true">
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/SignUpPasswordConfirmLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/confirm_password"
+        android:paddingVertical="5dp"
+        app:endIconMode="password_toggle"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:elevation="4dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/SignUpPasswordConfirm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            />
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/SignUpEmail"

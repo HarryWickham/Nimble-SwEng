@@ -42,6 +42,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:id="@+id/SignInEmailLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:elevation="4dp"
@@ -58,6 +59,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:id="@+id/SignInPasswordLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:elevation="4dp"
@@ -90,21 +92,29 @@
                 android:elevation="4dp"
                 android:text="@string/login" />
 
+            <com.google.android.gms.common.SignInButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:id="@+id/googleSignIn"/>
+
             <TextView
                 android:id="@+id/new_member"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 android:clickable="true"
                 android:focusable="true"
                 android:onClick="onClickGoToSignUp"
                 android:text="@string/new_member" />
 
-            <com.google.android.gms.common.SignInButton
-                android:layout_width="match_parent"
+            <ProgressBar
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:id="@+id/googleSignIn"
-                />
+                android:id="@+id/progress_circular"
+                android:visibility="gone"/>
+
+
         </LinearLayout>
     </ScrollView>
 
