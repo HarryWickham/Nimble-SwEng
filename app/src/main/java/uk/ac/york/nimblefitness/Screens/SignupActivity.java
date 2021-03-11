@@ -35,6 +35,11 @@ public class SignupActivity extends AppCompatActivity {
         userEmail = findViewById(R.id.SignUpEmail);
         userPassword = findViewById(R.id.SignUpPassword);
         userConfirmPassword = findViewById(R.id.SignUpPasswordConfirm);
+
+        userEmailLayout = findViewById(R.id.SignUpEmailLayout);
+        userPasswordLayout = findViewById(R.id.SignUpPasswordLayout);
+        userConfirmPasswordLayout = findViewById(R.id.SignUpPasswordConfirmLayout);
+
         signUpButton = findViewById(R.id.sign_up_button);
         firebaseAuth = FirebaseAuth.getInstance();
         progressBar = findViewById(R.id.progress_circular);
@@ -43,7 +48,7 @@ public class SignupActivity extends AppCompatActivity {
         userConfirmPasswordLayout = findViewById(R.id.SignUpPasswordConfirmLayout);
 
 
-        if(firebaseAuth.getCurrentUser() != null){
+        if (firebaseAuth.getCurrentUser() != null) {
             startActivity(new Intent(getApplicationContext(), MainActivity.class));
             finish();
         }
@@ -67,6 +72,8 @@ public class SignupActivity extends AppCompatActivity {
                     userEmailLayout.setError("Email is Required");
                     progressBar.setVisibility(View.GONE);
                     return;
+                } else {
+                    userEmailLayout.setError(null);
                 }
 
                 if(TextUtils.isEmpty(password)){
@@ -80,6 +87,9 @@ public class SignupActivity extends AppCompatActivity {
                     progressBar.setVisibility(View.GONE);
                     return;
                 }
+                if (!(TextUtils.isEmpty(password)) && !(password.length() < 6)){
+                    userPasswordLayout.setError(null);
+                }
 
                 if (!password.equals(confirmPassword)) {
                     userConfirmPasswordLayout.setError("Password and Confirm Password do not match");
@@ -91,7 +101,7 @@ public class SignupActivity extends AppCompatActivity {
                 firebaseAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()){
+                        if (task.isSuccessful()) {
                             //send verification link
 
                             userConfirmPasswordLayout.setError(null);
@@ -121,12 +131,12 @@ public class SignupActivity extends AppCompatActivity {
         });
 
 
-
     }
-        public void onClickGoToLogin(View v) {//called from the TextView in with id/already_a_member called using (android:onClick="onClickGoToLogin")
-            Intent mIntent = new Intent(SignupActivity.this, SigninActivity.class);//changes current activity from signin to signup
-            startActivity(mIntent);
-            finish();
-        }
+
+    public void onClickGoToLogin(View v) {//called from the TextView in with id/already_a_member called using (android:onClick="onClickGoToLogin")
+        Intent mIntent = new Intent(SignupActivity.this, SigninActivity.class);//changes current activity from signin to signup
+        startActivity(mIntent);
+        finish();
+    }
 
 }

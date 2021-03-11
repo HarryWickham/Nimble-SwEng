@@ -66,7 +66,7 @@ public class SigninActivity extends AppCompatActivity {
 
 
 
-
+        googleSignIn.setSize(SignInButton.SIZE_WIDE);
 
         login_button.setOnClickListener(new View.OnClickListener() {
             @Override
