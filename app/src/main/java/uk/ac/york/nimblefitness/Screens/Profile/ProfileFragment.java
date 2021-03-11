@@ -1,12 +1,10 @@
 package uk.ac.york.nimblefitness.Screens.Profile;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,17 +22,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import org.w3c.dom.Text;
-
-import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Objects;
 
 import uk.ac.york.nimblefitness.R;
-import uk.ac.york.nimblefitness.Screens.SigninActivity;
 
 public class ProfileFragment extends Fragment {
 
@@ -51,7 +43,7 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         getActivity().setTitle("Profile");
-        View view = inflater.inflate(R.layout.fragment_profile, container, false); //shows the fragment_settings.xml file in the frame view of the activity_main.xml
+        View view = inflater.inflate(R.layout.fragment_calendar, container, false); //shows the fragment_settings.xml file in the frame view of the activity_main.xml
 
         String[] completed_activity_list = {"Press-ups", "Sit-ups", "Plank", "Crunches"}; //the text that goes in each different list view item
 
