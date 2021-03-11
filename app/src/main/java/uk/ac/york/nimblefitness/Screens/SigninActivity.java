@@ -37,15 +37,15 @@ import uk.ac.york.nimblefitness.R;
 
 public class SigninActivity extends AppCompatActivity {
     private static final int GOOGLE_SIGNIN_CODE = 10005;
-    EditText userEmail, userPassword;
-    Button login_button;
-    TextView signUpButton, forgottenPassword;
-    SignInButton googleSignIn;
-    GoogleSignInClient signInClient;
-    GoogleSignInOptions gso;
-    FirebaseAuth firebaseAuth;
-    ProgressBar progressBar;
-    TextInputLayout userEmailLayout, userPassowrdLayout;
+    private EditText userEmail, userPassword;
+    private Button login_button;
+    private TextView signUpButton, forgottenPassword;
+    private SignInButton googleSignIn;
+    private GoogleSignInClient signInClient;
+    private GoogleSignInOptions gso;
+    private FirebaseAuth firebaseAuth;
+    private ProgressBar progressBar;
+    private TextInputLayout userEmailLayout, userPassowrdLayout;
 
 
     @Override
@@ -178,7 +178,7 @@ public class SigninActivity extends AppCompatActivity {
         passwordResetDialog.setMessage("Enter Your Email Address");
         passwordResetDialog.setView(recoveryEmail);
 
-        passwordResetDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+        passwordResetDialog.setPositiveButton("Submit", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 //extract email and send the reset link
@@ -197,7 +197,7 @@ public class SigninActivity extends AppCompatActivity {
 
             }
         });
-        passwordResetDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+        passwordResetDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 

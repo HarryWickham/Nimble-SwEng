@@ -31,12 +31,12 @@ import org.w3c.dom.Text;
 import uk.ac.york.nimblefitness.R;
 
 public class SignupActivity extends AppCompatActivity {
-    EditText userEmail, userPassword, userConfirmPassword;
-    TextInputLayout userEmailLayout, userPasswordLayout, userConfirmPasswordLayout;
-    Button signUpButton;
-    TextView loginButton;
-    FirebaseAuth firebaseAuth;
-    ProgressBar progressBar;
+    private EditText userEmail, userPassword, userConfirmPassword;
+    private TextInputLayout userEmailLayout, userPasswordLayout, userConfirmPasswordLayout;
+    private Button signUpButton;
+    private TextView loginButton;
+    private FirebaseAuth firebaseAuth;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,11 +53,6 @@ public class SignupActivity extends AppCompatActivity {
         userEmailLayout = findViewById((R.id.SignUpEmailLayout));
         userPasswordLayout = findViewById((R.id.SignUpPasswordLayout));
         userConfirmPasswordLayout = findViewById(R.id.SignUpPasswordConfirmLayout);
-
-
-        Log.i("userEmail", String.valueOf(userEmail));
-        Log.i("userPassword", String.valueOf(userPassword));
-        Log.i("userConfirmPassword", String.valueOf(userConfirmPassword));
 
 
         if(firebaseAuth.getCurrentUser() != null){
@@ -97,8 +92,7 @@ public class SignupActivity extends AppCompatActivity {
                     progressBar.setVisibility(v.GONE);
                     return;
                 }
-                Log.i("password", password);
-                Log.i("confirmPassword",confirmPassword);
+
                 if (!password.equals(confirmPassword)) {
                     userConfirmPasswordLayout.setError("Password and Confirm Password do not match");
                     progressBar.setVisibility(v.GONE);
