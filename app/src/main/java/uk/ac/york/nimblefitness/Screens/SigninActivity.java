@@ -86,8 +86,9 @@ public class SigninActivity extends AppCompatActivity {
 
 
                 if (validateEmail() & validatePassword()) {
-
+                    //Shows the user a loading symbol to reassure them that something is happening
                     progressBar.setVisibility(View.VISIBLE);
+                    //passes the login details to firebase to authenticate
                     firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
@@ -104,6 +105,7 @@ public class SigninActivity extends AppCompatActivity {
 
             }
         });
+        //to enable signin with google
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken("1082440501674-dsinj9sev8md1518nc8u5bal4rkll72b.apps.googleusercontent.com")
                 .requestEmail()
@@ -164,6 +166,7 @@ public class SigninActivity extends AppCompatActivity {
         finish();
     }
 
+    //to enable user to reset password
     public void onClickForgottenPassword(View v) {
         EditText recoveryEmail = new EditText(v.getContext());
         AlertDialog.Builder passwordResetDialog = new AlertDialog.Builder(v.getContext());
@@ -206,15 +209,15 @@ public class SigninActivity extends AppCompatActivity {
         String email = userEmail.getText().toString().trim();
 
         progressBar.setVisibility(View.GONE);
-        if (email.isEmpty()) {
+        if (email.isEmpty()) {//checks to see if an email address has been entered
             userEmailLayout.setError("Email is Required");
             progressBar.setVisibility(View.GONE);
             return false;
-        } else if (!email.matches(String.valueOf(Patterns.EMAIL_ADDRESS))) {
+        } else if (!email.matches(String.valueOf(Patterns.EMAIL_ADDRESS))) {//checks to see if the email address entered follows the correct pattern
             userEmailLayout.setError("Invalid email address");
             progressBar.setVisibility(View.GONE);
             return false;
-        } else {
+        } else {//removes any error messages that appeared if the email was incorrect previously
             userEmailLayout.setError(null);
             userEmailLayout.setErrorEnabled(false);
             return true;
@@ -235,22 +238,22 @@ public class SigninActivity extends AppCompatActivity {
                 "$";
 
         progressBar.setVisibility(View.GONE);
-        if (password.isEmpty()) {
+        if (password.isEmpty()) {//checks to see if a password has been entered
             userPasswordLayout.setError("Password is Required");
             progressBar.setVisibility(View.GONE);
             return false;
-        } else if (!password.matches(passwordVal)) {
+        } else if (!password.matches(passwordVal)) {//checks to see if the password entered follows the correct pattern
             userPasswordLayout.setError("Invalid Password must be more than 6 characters long with at least 1 lower case letter and at least 1 upper case letter");
             progressBar.setVisibility(View.GONE);
             return false;
-        } else {
+        } else {//removes any error messages that appeared if the password was incorrect previously
             userPasswordLayout.setError(null);
             userPasswordLayout.setErrorEnabled(false);
             return true;
         }
     }
 
-    private void invalidUser(){
+    private void invalidUser(){//displays an error if Firebase fails at logging the user in
         progressBar.setVisibility(View.GONE);
         userPasswordLayout.setError("Wrong username or password");
         userEmailLayout.setError("Wrong username or password");

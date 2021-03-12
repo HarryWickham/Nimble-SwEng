@@ -72,7 +72,7 @@ public class SignupActivity extends AppCompatActivity {
         });
 
 
-        if (firebaseAuth.getCurrentUser() != null) {
+        if (firebaseAuth.getCurrentUser() != null) {// this checks to see if the user is already logged in from last session - avoids need for user to relogin everytime apps opens
             startActivity(new Intent(getApplicationContext(), MainActivity.class));
             finish();
         }
@@ -132,15 +132,15 @@ public class SignupActivity extends AppCompatActivity {
     private Boolean validateEmail() {
         String email = userEmail.getText().toString().trim();
 
-        if (email.isEmpty()) {
+        if (email.isEmpty()) {//checks to see if an email address has been entered
             userEmailLayout.setError("Email is Required");
             progressBar.setVisibility(View.GONE);
             return false;
-        } else if (!email.matches(String.valueOf(Patterns.EMAIL_ADDRESS))) {
+        } else if (!email.matches(String.valueOf(Patterns.EMAIL_ADDRESS))) {//checks to see if the email address entered follows the correct pattern
             userEmailLayout.setError("Invalid email address");
             progressBar.setVisibility(View.GONE);
             return false;
-        } else {
+        } else {//removes any error messages that appeared if the email was incorrect previously
             userEmailLayout.setError(null);
             userEmailLayout.setErrorEnabled(false);
             return true;
@@ -160,15 +160,15 @@ public class SignupActivity extends AppCompatActivity {
                 ".{4,}" +               //at least 4 characters
                 "$";
 
-        if (password.isEmpty()) {
+        if (password.isEmpty()) {//checks to see if a password has been entered
             userPasswordLayout.setError("Password is Required");
             progressBar.setVisibility(View.GONE);
             return false;
-        } else if (!password.matches(passwordVal)) {
+        } else if (!password.matches(passwordVal)) {//checks to see if the password entered follows the correct pattern
             userPasswordLayout.setError("Invalid Password must be more than 6 characters long with at least 1 lower case letter and at least 1 upper case letter");
             progressBar.setVisibility(View.GONE);
             return false;
-        } else {
+        } else {//removes any error messages that appeared if the password was incorrect previously
             userPasswordLayout.setError(null);
             userPasswordLayout.setErrorEnabled(false);
             return true;
@@ -178,15 +178,15 @@ public class SignupActivity extends AppCompatActivity {
     private Boolean validateConfirmPassword(){
         String confirmPassword = userConfirmPassword.getText().toString().trim();
         String password = userPassword.getText().toString().trim();
-        if (password.isEmpty()) {
+        if (confirmPassword.isEmpty()) {//checks to see if a confirm password has been entered
             userConfirmPasswordLayout.setError("Password is Required");
             progressBar.setVisibility(View.GONE);
             return false;
-        }else if (!confirmPassword.equals(password)) {
+        }else if (!confirmPassword.equals(password)) {//checks to see if a confirm password and password are the same
             userConfirmPasswordLayout.setError("Confirm Password must be the same as Password");
             progressBar.setVisibility(View.GONE);
             return false;
-        } else {
+        } else {//removes any error messages that appeared if the password was incorrect previously
             userConfirmPasswordLayout.setError(null);
             userConfirmPasswordLayout.setErrorEnabled(false);
             return true;
