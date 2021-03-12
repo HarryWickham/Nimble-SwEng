@@ -83,7 +83,11 @@
                 android:focusable="true"
                 android:onClick="onClickForgottenPassword"
                 android:text="@string/forgotten_password" />
-
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/progress_circular"
+                android:visibility="gone"/>
             <Button
                 android:id="@+id/sign_in_button"
                 android:layout_width="match_parent"
@@ -108,11 +112,7 @@
                 android:onClick="onClickGoToSignUp"
                 android:text="@string/new_member" />
 
-            <ProgressBar
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/progress_circular"
-                android:visibility="gone"/>
+
 
 
         </LinearLayout>
