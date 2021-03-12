@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -48,6 +49,29 @@ public class SignupActivity extends AppCompatActivity {
         userConfirmPasswordLayout = findViewById(R.id.SignUpPasswordConfirmLayout);
 
 
+        userEmailLayout.setErrorIconDrawable(null);
+        userPasswordLayout.setErrorIconDrawable(null);
+        userConfirmPasswordLayout.setErrorIconDrawable(null);
+
+        userEmailLayout.getEditText().setOnFocusChangeListener((view, b) -> {
+            if(!b){
+                validateEmail();
+            }
+        });
+
+        userPasswordLayout.getEditText().setOnFocusChangeListener((view, b) -> {
+            if(!b){
+                validatePassword();
+            }
+        });
+
+        userConfirmPasswordLayout.getEditText().setOnFocusChangeListener((view, b) -> {
+            if(!b){
+                validateConfirmPassword();
+            }
+        });
+
+
         if (firebaseAuth.getCurrentUser() != null) {
             startActivity(new Intent(getApplicationContext(), MainActivity.class));
             finish();
@@ -59,74 +83,39 @@ public class SignupActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String email = userEmail.getText().toString().trim();
                 String password = userPassword.getText().toString().trim();
-                String confirmPassword = userConfirmPassword.getText().toString().trim();
                 progressBar.setVisibility(View.VISIBLE);
-                userEmailLayout.setError(null);
-                userEmailLayout.setErrorEnabled(false);
-                userPasswordLayout.setError(null);
-                userPasswordLayout.setErrorEnabled(false);
-                userConfirmPasswordLayout.setError(null);
-                userConfirmPasswordLayout.setErrorEnabled(false);
 
-                if(TextUtils.isEmpty(email)){
-                    userEmailLayout.setError("Email is Required");
-                    progressBar.setVisibility(View.GONE);
-                    return;
-                } else {
-                    userEmailLayout.setError(null);
-                }
+                if(validateEmail() & validatePassword() & validateConfirmPassword()) {
+                    firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                //send verification link
 
-                if(TextUtils.isEmpty(password)){
-                    userPasswordLayout.setError("Password is Required");
-                    progressBar.setVisibility(View.GONE);
-                    return;
-                }
+                                userConfirmPasswordLayout.setError(null);
+                                userConfirmPasswordLayout.setErrorEnabled(false);
 
-                if ((password.length()< 6)){
-                    userPasswordLayout.setError("Password must be at least 6 characters long");
-                    progressBar.setVisibility(View.GONE);
-                    return;
-                }
-                if (!(TextUtils.isEmpty(password)) && !(password.length() < 6)){
-                    userPasswordLayout.setError(null);
-                }
+                                FirebaseUser user = firebaseAuth.getCurrentUser();
+                                user.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Toast.makeText(SignupActivity.this, "Verification Email Sent", Toast.LENGTH_SHORT).show();
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                    }
+                                });
+                                Toast.makeText(SignupActivity.this, "User Created", Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(getApplicationContext(), MainActivity.class));
 
-                if (!password.equals(confirmPassword)) {
-                    userConfirmPasswordLayout.setError("Password and Confirm Password do not match");
-                    progressBar.setVisibility(View.GONE);
-                    return;
-
-                }
-
-                firebaseAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            //send verification link
-
-                            userConfirmPasswordLayout.setError(null);
-                            userConfirmPasswordLayout.setErrorEnabled(false);
-
-                            FirebaseUser user = firebaseAuth.getCurrentUser();
-                            user.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void aVoid) {
-                                    Toast.makeText(SignupActivity.this, "Verification Email Sent", Toast.LENGTH_SHORT).show();
-                                }
-                            }).addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                }
-                            });
-                            Toast.makeText(SignupActivity.this, "User Created", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
-
-                        }else{
-                            progressBar.setVisibility(View.GONE);
-                            userEmailLayout.setError(task.getException().getMessage());
+                            } else {
+                                progressBar.setVisibility(View.GONE);
+                                userEmailLayout.setError(task.getException().getMessage());
+                            }
                         }
-                    }
-                });
+                    });
+                }
             }
         });
 
@@ -139,4 +128,68 @@ public class SignupActivity extends AppCompatActivity {
         finish();
     }
 
+
+    private Boolean validateEmail() {
+        String email = userEmail.getText().toString().trim();
+
+        if (email.isEmpty()) {
+            userEmailLayout.setError("Email is Required");
+            progressBar.setVisibility(View.GONE);
+            return false;
+        } else if (!email.matches(String.valueOf(Patterns.EMAIL_ADDRESS))) {
+            userEmailLayout.setError("Invalid email address");
+            progressBar.setVisibility(View.GONE);
+            return false;
+        } else {
+            userEmailLayout.setError(null);
+            userEmailLayout.setErrorEnabled(false);
+            return true;
+        }
+    }
+
+    private Boolean validatePassword() {
+        String password = userPassword.getText().toString().trim();
+
+        String passwordVal = "^" +
+                //"(?=.*[0-9])" +         //at least 1 digit
+                "(?=.*[a-z])" +         //at least 1 lower case letter
+                "(?=.*[A-Z])" +         //at least 1 upper case letter
+                "(?=.*[a-zA-Z])" +      //any letter
+                //"(?=.*[@#$%^&+=])" +    //at least 1 special character
+                "(?=\\S+$)" +           //no white spaces
+                ".{4,}" +               //at least 4 characters
+                "$";
+
+        if (password.isEmpty()) {
+            userPasswordLayout.setError("Password is Required");
+            progressBar.setVisibility(View.GONE);
+            return false;
+        } else if (!password.matches(passwordVal)) {
+            userPasswordLayout.setError("Invalid Password must be more than 6 characters long with at least 1 lower case letter and at least 1 upper case letter");
+            progressBar.setVisibility(View.GONE);
+            return false;
+        } else {
+            userPasswordLayout.setError(null);
+            userPasswordLayout.setErrorEnabled(false);
+            return true;
+        }
+    }
+
+    private Boolean validateConfirmPassword(){
+        String confirmPassword = userConfirmPassword.getText().toString().trim();
+        String password = userPassword.getText().toString().trim();
+        if (password.isEmpty()) {
+            userConfirmPasswordLayout.setError("Password is Required");
+            progressBar.setVisibility(View.GONE);
+            return false;
+        }else if (!confirmPassword.equals(password)) {
+            userConfirmPasswordLayout.setError("Confirm Password must be the same as Password");
+            progressBar.setVisibility(View.GONE);
+            return false;
+        } else {
+            userConfirmPasswordLayout.setError(null);
+            userConfirmPasswordLayout.setErrorEnabled(false);
+            return true;
+        }
+    }
 }

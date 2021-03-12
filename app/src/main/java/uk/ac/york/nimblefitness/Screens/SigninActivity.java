@@ -57,6 +57,10 @@ public class SigninActivity extends AppCompatActivity {
         userEmailLayout = findViewById(R.id.SignInEmailLayout);
         userPasswordLayout = findViewById(R.id.SignInPasswordLayout);
 
+        userEmailLayout.setErrorIconDrawable(null);
+        userPasswordLayout.setErrorIconDrawable(null);
+
+
         userEmailLayout.getEditText().setOnFocusChangeListener((view, b) -> {
             if(!b){
                 validateEmail();
