@@ -20,6 +20,8 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import java.util.Objects;
+
 import uk.ac.york.nimblefitness.R;
 import uk.ac.york.nimblefitness.Screens.Profile.ProfileFragment;
 import uk.ac.york.nimblefitness.Screens.Routines.RoutinesFragment;
@@ -33,7 +35,6 @@ public class MainActivity extends AppCompatActivity {
     private SearchFragment searchFragment;
     private SettingsFragment settingsFragment;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         openFragment(new ProfileFragment());
+
         bottomNav.setOnNavigationItemSelectedListener(item -> {
 
             switch (item.getItemId()){
@@ -76,6 +78,4 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.commit();
 
     }
-
-
 }

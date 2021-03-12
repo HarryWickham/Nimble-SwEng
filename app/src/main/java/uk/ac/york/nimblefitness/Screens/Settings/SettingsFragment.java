@@ -12,8 +12,6 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -42,14 +40,10 @@ public class SettingsFragment extends Fragment {
 
         firebaseAuth = FirebaseAuth.getInstance();
 
+        getActivity().setTitle("Settings");
+
         View view; //shows the fragment_settings.xml file in the frame view of the activity_main.xml
         view = inflater.inflate(R.layout.fragment_settings, container, false);
-
-        ActionBar actionBar = ((AppCompatActivity)getActivity()).getSupportActionBar();
-
-        actionBar.setDisplayHomeAsUpEnabled(true);
-
-
 
         String[] settings_list_items = {"Billing Information", "Membership Plan", "Account", "Terms and Conditions", "Logout", "User Details"}; //the text that goes in each different list view item
 

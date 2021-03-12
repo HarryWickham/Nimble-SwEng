@@ -143,11 +143,17 @@ public class UserDetailsActivity extends AppCompatActivity {
 
                 helperClass = snapshot.child(currentFirebaseUser.getUid()).getValue(UserHelperClass.class);
 
-                user_account_first_name_edit_text.setText(helperClass.getFirstName());
+                if (helperClass != null) {
+                    user_account_first_name_edit_text.setText(helperClass.getFirstName());
+                }
                 //String user_lastName = snapshot.child(currentFirebaseUser.getUid()).child("lastName").getValue(String.class);
-                user_account_last_name_edit_text.setText(helperClass.getLastName());
+                if (helperClass != null) {
+                    user_account_last_name_edit_text.setText(helperClass.getLastName());
+                }
                 //String user_age = snapshot.child(currentFirebaseUser.getUid()).child("age").getValue(String.class);
-                user_account_age_edit_text.setText(helperClass.getAge());
+                if (helperClass != null) {
+                    user_account_age_edit_text.setText(helperClass.getAge());
+                }
 
             }
 
