@@ -35,6 +35,9 @@ public class RoutinesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        getActivity().setTitle("Routines");
+
         View view = inflater.inflate(R.layout.fragment_routines, container, false); //shows the fragment_settings.xml file in the frame view of the activity_main.xml
 
         ListView routineListView = view.findViewById(R.id.routines_list);
