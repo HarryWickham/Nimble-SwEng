@@ -1,8 +1,10 @@
 package uk.ac.york.nimblefitness.Screens;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.transition.AutoTransition;
 import android.transition.TransitionManager;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -15,6 +17,7 @@ import android.widget.Toast;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
@@ -72,10 +75,34 @@ public class MainActivity extends AppCompatActivity {
     void openFragment(Fragment fragment){
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.main_frame, fragment);
-        fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
 
     }
 
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+        AlertDialog.Builder exitApp = new AlertDialog.Builder(this);
+        exitApp.setTitle("Would you like to close the app?");
+        Log.i("TAG", "onBackPressed: ");
+        exitApp.setCancelable(true)
+                .setPositiveButton("Close",new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,int id) {
+                        // if this button is clicked, close
+                        // current activity
+                        MainActivity.this.finish();
+                    }
+                })
+                .setNegativeButton("Cancel",new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,int id) {
+                        // if this button is clicked, just close
+                        // the dialog box and do nothing
+                        dialog.cancel();
+                    }
+                });
 
+        // create alert dialog
+        exitApp.create().show();
+
+    }
 }
