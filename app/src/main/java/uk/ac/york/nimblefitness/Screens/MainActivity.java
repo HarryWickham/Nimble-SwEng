@@ -28,8 +28,8 @@ import uk.ac.york.nimblefitness.Screens.Search.SearchFragment;
 import uk.ac.york.nimblefitness.Screens.Settings.SettingsFragment;
 
 public class MainActivity extends AppCompatActivity {
-    //change 'calendar fragment' stuff to 'profile tabs' when tab fragment is functional
-    private CalendarFragment calendarFragment;
+
+    private ProfileTabsFragment profileTabsFragment;
     private RoutinesFragment routinesFragment;
     private SearchFragment searchFragment;
     private SettingsFragment settingsFragment;
@@ -39,19 +39,19 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        calendarFragment = new CalendarFragment();
+        profileTabsFragment = new ProfileTabsFragment();
         routinesFragment = new RoutinesFragment();
         searchFragment = new SearchFragment();
         settingsFragment = new SettingsFragment();
 
         setContentView(R.layout.activity_main);
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
-        openFragment(new CalendarFragment());
+        openFragment(new ProfileTabsFragment());
         bottomNav.setOnNavigationItemSelectedListener(item -> {
 
             switch (item.getItemId()){
                 case R.id.profile_page:
-                    openFragment(calendarFragment);
+                    openFragment(profileTabsFragment);
                     return true;
                 case R.id.routines_page:
                     openFragment(routinesFragment);

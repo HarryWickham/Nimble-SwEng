@@ -29,6 +29,7 @@
                     android:layout_height="wrap_content">
 
                     <!--The angle is measured clockwise starting from 'East'-->
+                    <!--The amount the gauge is filled by doesn't change when gaugeStartValue is changed-->
                     <pl.pawelkleczkowski.customgauge.CustomGauge
                         android:id="@+id/gauge"
                         android:layout_gravity="center_horizontal"
@@ -47,16 +48,17 @@
                         app:gaugeStrokeCap="ROUND"
                         app:gaugeStrokeWidth="30dp">
                     </pl.pawelkleczkowski.customgauge.CustomGauge>
-
+                    <!--Have yet to find the code to show the number as in the example image in the Design Spec-->
                     <TextView
                         android:id="@+id/moves_counter"
-                        android:layout_gravity="bottom"
+                        android:layout_gravity="center_vertical"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textAlignment="center"
-                        android:textSize="32sp"
+                        android:textSize="64sp"
                         android:textStyle="bold"
-                        android:text="36/100">
+                        android:textColor="@color/purple_200"
+                        android:text="200">
                     </TextView>
                 </FrameLayout>
             </androidx.cardview.widget.CardView>

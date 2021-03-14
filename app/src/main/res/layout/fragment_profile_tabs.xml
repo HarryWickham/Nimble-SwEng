@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".Screens.MainActivity">
 
     <FrameLayout
         android:id="@+id/profile_frame"
@@ -22,29 +24,35 @@
         android:background="@color/colorPrimary"
         app:tabIndicatorColor="@color/colorOnPrimary"
         app:tabIndicatorGravity="top"
-        app:tabIconTint="@color/colorOnPrimary"
-        app:tabTextColor="@color/colorOnPrimary"
+        app:tabIconTint="@color/bottom_navigation_item_colour_selector"
+        app:tabTextColor="@color/bottom_navigation_item_colour_selector"
         app:tabMode="fixed">
-
+        <!--icon & text colour have yet to be set to change upon selection-->
         <com.google.android.material.tabs.TabItem
+            android:id="@+id/calendar_tab"
+            android:enabled="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Favourites"
-            android:icon="@drawable/ic_baseline_favorite_border_24"
+            android:text="Calendar"
+            android:icon="@drawable/ic_baseline_calendar_today_24"
             />
 
         <com.google.android.material.tabs.TabItem
+            android:id="@+id/faves_tab"
+            android:enabled="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="favourites"
+            android:icon="@drawable/ic_baseline_favorite_24"
+            />
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/goals_tab"
+            android:enabled="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Goals"
-            android:icon="@drawable/ic_baseline_outlined_flag_24"
-            />
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="History"
-            android:icon="@drawable/ic_baseline_calendar_today_24"
+            android:icon="@drawable/ic_baseline_flag_24"
             />
 
     </com.google.android.material.tabs.TabLayout>

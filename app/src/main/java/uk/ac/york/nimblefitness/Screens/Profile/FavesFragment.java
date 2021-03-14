@@ -20,7 +20,7 @@ public class FavesFragment extends Fragment {
                              Bundle savedInstanceState) {
         getActivity().setTitle("Profile");
         View view = inflater.inflate(R.layout.fragment_favourites, container, false);
-        //TODO add details to enable the favourites fragment to show correctly
+        //TODO add details so the favourites tab shows content
         return view;
     }
 }

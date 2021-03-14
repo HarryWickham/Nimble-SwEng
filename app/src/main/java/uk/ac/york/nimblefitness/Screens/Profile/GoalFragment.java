@@ -32,10 +32,10 @@ public class GoalFragment extends Fragment {
         ArrayAdapter<String> ListViewAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, moves_to_do); //need to make a 'simple_list_item_1' replacement -> 'settings_list_layout' allow the use of images in the list view like in settings activity example
         listView.setAdapter(ListViewAdapter);
 
-        String[] quotes = {"You can do it!","Feel the burn.","Time to make some gains.","Time to exercise!"}; //List of quotes which appear on the 'goals' tab of the profile page
+        String[] quotes = {"You can do it!","Feel the burn.","Time to make some gains.","Time to exercise!"}; //List of quotes which may appear on the 'goals' tab of the profile page
         TextView motivationQuote = view.findViewById(R.id.motivation);
-        Random rand = new Random(); //The quote changes each time the user opens the app (?)
-        int n = rand.nextInt(2);
+        Random rand = new Random(); //The quote changes each time the user opens the app -> so far doesn't appear to, just goes to default
+        int n = rand.nextInt(3);
         switch (n){
             case 0:
                 motivationQuote.setText(quotes[0]);
