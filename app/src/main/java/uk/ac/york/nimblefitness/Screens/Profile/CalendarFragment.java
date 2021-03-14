@@ -28,7 +28,7 @@ import java.util.Date;
 
 import uk.ac.york.nimblefitness.R;
 
-public class ProfileFragment extends Fragment {
+public class CalendarFragment extends Fragment {
 
     private static final String TAG = "log";
     FirebaseDatabase rootDatabase;
