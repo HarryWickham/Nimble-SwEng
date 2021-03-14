@@ -28,7 +28,7 @@ import uk.ac.york.nimblefitness.Screens.Search.SearchFragment;
 import uk.ac.york.nimblefitness.Screens.Settings.SettingsFragment;
 
 public class MainActivity extends AppCompatActivity {
-
+    //change 'calendar fragment' stuff to 'profile tabs' when tab fragment is functional
     private CalendarFragment calendarFragment;
     private RoutinesFragment routinesFragment;
     private SearchFragment searchFragment;
