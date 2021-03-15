@@ -24,14 +24,13 @@
         android:background="@color/colorPrimary"
         app:tabIndicatorColor="@color/colorOnPrimary"
         app:tabIndicatorGravity="top"
-        app:tabIconTint="@color/grey"
         app:tabTextColor="@color/grey"
         app:tabSelectedTextColor="@color/white"
+        app:tabIconTint="@color/tab_colour_selector"
         app:tabMode="fixed">
-        <!--icon colour doesn't change when selected/unselected-->
+
         <com.google.android.material.tabs.TabItem
             android:id="@+id/calendar_tab"
-
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Calendar"
@@ -40,7 +39,6 @@
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/faves_tab"
-
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="favourites"
@@ -49,12 +47,10 @@
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/goals_tab"
-
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Goals"
             android:icon="@drawable/ic_baseline_flag_24"
             />
-
     </com.google.android.material.tabs.TabLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
