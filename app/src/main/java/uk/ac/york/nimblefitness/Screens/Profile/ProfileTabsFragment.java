@@ -1,5 +1,6 @@
 package uk.ac.york.nimblefitness.Screens.Profile;
 
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -20,13 +21,10 @@ import uk.ac.york.nimblefitness.Screens.Settings.SettingsFragment;
 
 public class ProfileTabsFragment extends Fragment {
 
-    private FrameLayout profileFrame;
-    private TabLayout profileTabs;
-    //need to set a default tab that automatically loads when the 'Profile' is selected in bottomNavigation
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        //the calendar tab is the first view to appear
         FragmentTransaction ft = getParentFragmentManager().beginTransaction();
         ft.replace(R.id.profile_frame, new CalendarFragment());
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
@@ -38,10 +36,10 @@ public class ProfileTabsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         getActivity().setTitle("Profile");
-        View view = inflater.inflate(R.layout.fragment_profile_tabs, container, false);
-        TabLayout profileTabs = (TabLayout) view.findViewById(R.id.profile_tabs);
+        View view = inflater.inflate(R.layout.fragment_profile_tabs, container, false); //inflates the tab layout fragment so it's visible
+        TabLayout profileTabs = (TabLayout) view.findViewById(R.id.profile_tabs); //finds where in the fragment the tab layout should go
 
-        profileTabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        profileTabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() { //listens for when a user selects a new tab and shows the respective tab
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 Fragment fragment = null;
@@ -56,7 +54,7 @@ public class ProfileTabsFragment extends Fragment {
                         fragment = new GoalFragment();
                         break;
                 }
-
+                //this changes the visible fragment when a different tab is selected
                 FragmentTransaction ft = getParentFragmentManager().beginTransaction();
                 ft.replace(R.id.profile_frame, fragment);
                 ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
