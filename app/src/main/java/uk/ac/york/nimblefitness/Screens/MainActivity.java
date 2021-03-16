@@ -12,14 +12,15 @@ import androidx.fragment.app.FragmentTransaction;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import uk.ac.york.nimblefitness.R;
-import uk.ac.york.nimblefitness.Screens.Profile.ProfileFragment;
+import uk.ac.york.nimblefitness.Screens.Profile.CalendarFragment;
+import uk.ac.york.nimblefitness.Screens.Profile.ProfileTabsFragment;
 import uk.ac.york.nimblefitness.Screens.Routines.RoutinesFragment;
 import uk.ac.york.nimblefitness.Screens.Search.SearchFragment;
 import uk.ac.york.nimblefitness.Screens.Settings.SettingsFragment;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ProfileFragment profileFragment;
+    private ProfileTabsFragment profileTabsFragment;
     private RoutinesFragment routinesFragment;
     private SearchFragment searchFragment;
     private SettingsFragment settingsFragment;
@@ -29,19 +30,19 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        profileFragment = new ProfileFragment();
+        profileTabsFragment = new ProfileTabsFragment();
         routinesFragment = new RoutinesFragment();
         searchFragment = new SearchFragment();
         settingsFragment = new SettingsFragment();
 
         setContentView(R.layout.activity_main);
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
-        openFragment(new ProfileFragment());
+        openFragment(new ProfileTabsFragment());
         bottomNav.setOnNavigationItemSelectedListener(item -> {
 
             switch (item.getItemId()){
                 case R.id.profile_page:
-                    openFragment(profileFragment);
+                    openFragment(profileTabsFragment);
                     return true;
                 case R.id.routines_page:
                     openFragment(routinesFragment);
