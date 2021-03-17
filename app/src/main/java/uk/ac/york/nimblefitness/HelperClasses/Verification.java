@@ -34,11 +34,11 @@ public class Verification {
         this.email = email;
     }
 
-    public Verification(String password, String email) {
+    public Verification(String email, String pssword) {
         this.password = password;
         this.email = email;
     }
-    public Verification(String password, String email, String confirmPassword) {
+    public Verification(String email,String password, String confirmPassword) {
         this.password = password;
         this.email = email;
         this.confirmPassword = confirmPassword;
@@ -50,10 +50,11 @@ public class Verification {
         if (email.isEmpty()) {//checks to see if an email address has been entered
             return ("Email is Required");
 
-        } else if (!email.matches(String.valueOf(Patterns.EMAIL_ADDRESS))) {//checks to see if the email address entered follows the correct pattern
+        }else if (!email.matches(String.valueOf(Patterns.EMAIL_ADDRESS))) {//checks to see if the email address entered follows the correct pattern
+            System.out.println(email);
             return("Invalid email address");
-
-        } else {//removes any error messages that appeared if the email was incorrect previously
+        }
+        else {//removes any error messages that appeared if the email was incorrect previously
             return("Valid");
         }
     }
@@ -74,7 +75,7 @@ public class Verification {
             return ("Password is Required");
 
         } else  if (!password.matches(passwordVal)) {//checks to see if the password entered follows the correct pattern
-            return ("Invalid Password must be more than 6 characters long with at least 1 lower case letter and at least 1 upper case letter");
+            return ("Invalid Password must be more than 6 characters long with at least 1 lower case letter and at least 1 upper case letter and a number");
 
         }else
             return("Valid");
