@@ -3,6 +3,7 @@ package uk.ac.york.nimblefitness.Screens;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -31,6 +32,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
 
+import uk.ac.york.nimblefitness.HelperClasses.Verification;
 import uk.ac.york.nimblefitness.R;
 
 public class SigninActivity extends AppCompatActivity {
@@ -55,6 +57,9 @@ public class SigninActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         userEmailLayout = findViewById(R.id.SignInEmailLayout);
         userPasswordLayout = findViewById(R.id.SignInPasswordLayout);
+        String email = userEmail.getText().toString().trim();
+        String password = userPassword.getText().toString().trim();
+        Verification userDetails = new Verification(password, email);
 
         userEmailLayout.setErrorIconDrawable(null);
         userPasswordLayout.setErrorIconDrawable(null);
@@ -62,33 +67,27 @@ public class SigninActivity extends AppCompatActivity {
 
         userEmailLayout.getEditText().setOnFocusChangeListener((view, b) -> {
             if(!b){
-                validateEmail();
+                validateEmail(userDetails);
             }
         });
 
         userPasswordLayout.getEditText().setOnFocusChangeListener((view, b) -> {
             if(!b){
-                validatePassword();
+                validatePassword(userDetails);
             }
         });
 
-
-        googleSignIn.setSize(SignInButton.SIZE_WIDE);
 
         login_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
 
-                String email = userEmail.getText().toString().trim();
-                String password = userPassword.getText().toString().trim();
-
-
-                if (validateEmail() & validatePassword()) {
+                if (validateEmail(userDetails) & validatePassword(userDetails)) {
                     //Shows the user a loading symbol to reassure them that something is happening
                     progressBar.setVisibility(View.VISIBLE);
                     //passes the login details to firebase to authenticate
-                    firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    firebaseAuth.signInWithEmailAndPassword(userDetails.getEmail(),userDetails.getPassword()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
@@ -110,12 +109,13 @@ public class SigninActivity extends AppCompatActivity {
                 .requestEmail()
                 .build();
 
+        googleSignIn.setSize(SignInButton.SIZE_WIDE);
         signInClient = GoogleSignIn.getClient(this, gso);
 
         GoogleSignInAccount signInAccount = GoogleSignIn.getLastSignedInAccount(this);
         if (signInAccount != null || firebaseAuth.getCurrentUser() != null) {
-            startActivity(new Intent(this, MainActivity.class));
-        }
+           startActivity(new Intent(this, MainActivity.class));
+       }
 
         googleSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -168,6 +168,7 @@ public class SigninActivity extends AppCompatActivity {
     //to enable user to reset password
     public void onClickForgottenPassword(View v) {
         EditText recoveryEmail = new EditText(v.getContext());
+        recoveryEmail.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
         AlertDialog.Builder passwordResetDialog = new AlertDialog.Builder(v.getContext());
         passwordResetDialog.setTitle("Reset Password");
         passwordResetDialog.setMessage("Enter Your Email Address");
@@ -181,12 +182,12 @@ public class SigninActivity extends AppCompatActivity {
                 firebaseAuth.sendPasswordResetEmail(email).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Toast.makeText(SigninActivity.this, "Check Your Emails", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SigninActivity.this, "Check Your Emails", Toast.LENGTH_LONG).show();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(SigninActivity.this, "Error, Reset Email Not Sent", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SigninActivity.this, "Error, No account with specified email found", Toast.LENGTH_LONG).show();
                     }
                 });
             }
@@ -204,48 +205,30 @@ public class SigninActivity extends AppCompatActivity {
 
     }
 
-    private Boolean validateEmail() {
-        String email = userEmail.getText().toString().trim();
-
-        progressBar.setVisibility(View.GONE);
-        if (email.isEmpty()) {//checks to see if an email address has been entered
-            userEmailLayout.setError("Email is Required");
+    private Boolean validateEmail(Verification userDetails) {
+        userDetails.setEmail(userEmail.getText().toString().trim());
+        String reply = userDetails.validateEmail();
+        if(!reply.equals("Valid")){
+            userEmailLayout.setError(reply);
             progressBar.setVisibility(View.GONE);
             return false;
-        } else if (!email.matches(String.valueOf(Patterns.EMAIL_ADDRESS))) {//checks to see if the email address entered follows the correct pattern
-            userEmailLayout.setError("Invalid email address");
-            progressBar.setVisibility(View.GONE);
-            return false;
-        } else {//removes any error messages that appeared if the email was incorrect previously
+        }
+        else{
             userEmailLayout.setError(null);
             userEmailLayout.setErrorEnabled(false);
             return true;
         }
     }
 
-    private Boolean validatePassword() {
-        String password = userPassword.getText().toString().trim();
-
-        String passwordVal = "^" +
-                //"(?=.*[0-9])" +         //at least 1 digit
-                "(?=.*[a-z])" +         //at least 1 lower case letter
-                "(?=.*[A-Z])" +         //at least 1 upper case letter
-                "(?=.*[a-zA-Z])" +      //any letter
-                //"(?=.*[@#$%^&+=])" +    //at least 1 special character
-                "(?=\\S+$)" +           //no white spaces
-                ".{4,}" +               //at least 4 characters
-                "$";
-
-        progressBar.setVisibility(View.GONE);
-        if (password.isEmpty()) {//checks to see if a password has been entered
-            userPasswordLayout.setError("Password is Required");
+    private Boolean validatePassword(Verification userDetails) {
+        userDetails.setPassword(userPassword.getText().toString().trim());
+        String reply = userDetails.validatePassword();
+        if(!reply.equals("Valid")){
+            userPasswordLayout.setError(reply);
             progressBar.setVisibility(View.GONE);
             return false;
-        } else if (!password.matches(passwordVal)) {//checks to see if the password entered follows the correct pattern
-            userPasswordLayout.setError("Invalid Password must be more than 6 characters long with at least 1 lower case letter and at least 1 upper case letter");
-            progressBar.setVisibility(View.GONE);
-            return false;
-        } else {//removes any error messages that appeared if the password was incorrect previously
+        }
+        else{
             userPasswordLayout.setError(null);
             userPasswordLayout.setErrorEnabled(false);
             return true;
@@ -254,8 +237,8 @@ public class SigninActivity extends AppCompatActivity {
 
     private void invalidUser(){//displays an error if Firebase fails at logging the user in
         progressBar.setVisibility(View.GONE);
-        userPasswordLayout.setError("Wrong username or password");
-        userEmailLayout.setError("Wrong username or password");
+        userPasswordLayout.setError("Incorrect username or password");
+        userEmailLayout.setError("Incorrect username or password");
     }
 
 }

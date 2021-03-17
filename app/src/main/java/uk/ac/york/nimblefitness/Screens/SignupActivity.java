@@ -21,6 +21,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import uk.ac.york.nimblefitness.HelperClasses.Verification;
 import uk.ac.york.nimblefitness.R;
 
 public class SignupActivity extends AppCompatActivity {
@@ -48,6 +49,10 @@ public class SignupActivity extends AppCompatActivity {
         userEmailLayout = findViewById((R.id.SignUpEmailLayout));
         userPasswordLayout = findViewById((R.id.SignUpPasswordLayout));
         userConfirmPasswordLayout = findViewById(R.id.SignUpPasswordConfirmLayout);
+        String email = userEmail.getText().toString().trim();
+        String password = userPassword.getText().toString().trim();
+        String confirmPassword = userConfirmPassword.getText().toString().trim();
+        Verification userDetails = new Verification(password, email, confirmPassword);
 
 
         userEmailLayout.setErrorIconDrawable(null);
@@ -56,19 +61,19 @@ public class SignupActivity extends AppCompatActivity {
 
         userEmailLayout.getEditText().setOnFocusChangeListener((view, b) -> {
             if(!b){
-                validateEmail();
+                validateEmail(userDetails);
             }
         });
 
         userPasswordLayout.getEditText().setOnFocusChangeListener((view, b) -> {
             if(!b){
-                validatePassword();
+                validatePassword(userDetails);
             }
         });
 
         userConfirmPasswordLayout.getEditText().setOnFocusChangeListener((view, b) -> {
             if(!b){
-                validateConfirmPassword();
+                validateConfirmPassword(userDetails);
             }
         });
 
@@ -86,7 +91,7 @@ public class SignupActivity extends AppCompatActivity {
                 String password = userPassword.getText().toString().trim();
                 progressBar.setVisibility(View.VISIBLE);
 
-                if(validateEmail() & validatePassword() & validateConfirmPassword()) {
+                if(validateEmail(userDetails) & validatePassword(userDetails) & validateConfirmPassword(userDetails)) {
                     firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
@@ -130,64 +135,47 @@ public class SignupActivity extends AppCompatActivity {
     }
 
 
-    private Boolean validateEmail() {
-        String email = userEmail.getText().toString().trim();
-
-        if (email.isEmpty()) {//checks to see if an email address has been entered
-            userEmailLayout.setError("Email is Required");
+    private Boolean validateEmail(Verification userDetails) {
+        userDetails.setEmail(userEmail.getText().toString().trim());
+        String reply = userDetails.validateEmail();
+        if(!reply.equals("Valid")){
+            userEmailLayout.setError(reply);
             progressBar.setVisibility(View.GONE);
             return false;
-        } else if (!email.matches(String.valueOf(Patterns.EMAIL_ADDRESS))) {//checks to see if the email address entered follows the correct pattern
-            userEmailLayout.setError("Invalid email address");
-            progressBar.setVisibility(View.GONE);
-            return false;
-        } else {//removes any error messages that appeared if the email was incorrect previously
+        }
+        else{
             userEmailLayout.setError(null);
             userEmailLayout.setErrorEnabled(false);
             return true;
         }
     }
 
-    private Boolean validatePassword() {
-        String password = userPassword.getText().toString().trim();
-
-        String passwordVal = "^" +
-                //"(?=.*[0-9])" +         //at least 1 digit
-                "(?=.*[a-z])" +         //at least 1 lower case letter
-                "(?=.*[A-Z])" +         //at least 1 upper case letter
-                "(?=.*[a-zA-Z])" +      //any letter
-                //"(?=.*[@#$%^&+=])" +    //at least 1 special character
-                "(?=\\S+$)" +           //no white spaces
-                ".{4,}" +               //at least 4 characters
-                "$";
-
-        if (password.isEmpty()) {//checks to see if a password has been entered
-            userPasswordLayout.setError("Password is Required");
+    private Boolean validatePassword(Verification userDetails) {
+        userDetails.setPassword(userPassword.getText().toString().trim());
+        String reply = userDetails.validatePassword();
+        if(!reply.equals("Valid")){
+            userPasswordLayout.setError(reply);
             progressBar.setVisibility(View.GONE);
             return false;
-        } else if (!password.matches(passwordVal)) {//checks to see if the password entered follows the correct pattern
-            userPasswordLayout.setError("Invalid Password must be more than 6 characters long with at least 1 lower case letter and at least 1 upper case letter");
-            progressBar.setVisibility(View.GONE);
-            return false;
-        } else {//removes any error messages that appeared if the password was incorrect previously
+        }
+        else{
             userPasswordLayout.setError(null);
             userPasswordLayout.setErrorEnabled(false);
             return true;
         }
     }
 
-    private Boolean validateConfirmPassword(){
-        String confirmPassword = userConfirmPassword.getText().toString().trim();
-        String password = userPassword.getText().toString().trim();
-        if (confirmPassword.isEmpty()) {//checks to see if a confirm password has been entered
-            userConfirmPasswordLayout.setError("Password is Required");
+    private Boolean validateConfirmPassword(Verification userDetails){
+
+        userDetails.setConfirmPassword(userConfirmPassword.getText().toString().trim());
+        String reply = userDetails.validateConfirmPassword();
+
+        if(!reply.equals("Valid")){
+            userConfirmPasswordLayout.setError(reply);
             progressBar.setVisibility(View.GONE);
             return false;
-        }else if (!confirmPassword.equals(password)) {//checks to see if a confirm password and password are the same
-            userConfirmPasswordLayout.setError("Confirm Password must be the same as Password");
-            progressBar.setVisibility(View.GONE);
-            return false;
-        } else {//removes any error messages that appeared if the password was incorrect previously
+        }
+        else{
             userConfirmPasswordLayout.setError(null);
             userConfirmPasswordLayout.setErrorEnabled(false);
             return true;
