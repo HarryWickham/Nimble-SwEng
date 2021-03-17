@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.FirebaseUserMetadata;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -72,8 +73,6 @@ public class CalendarFragment extends Fragment {
              }
          });
 
-
-
         SimpleDateFormat month = new SimpleDateFormat("M");
         SimpleDateFormat day = new SimpleDateFormat("d");
         Date currentTime = Calendar.getInstance().getTime();
@@ -81,7 +80,11 @@ public class CalendarFragment extends Fragment {
         String dayString = day.format(currentTime);
 
         dayNumber.setText(monthText(Integer.parseInt(monthString)) + " " + dayString + datePrefix(Integer.parseInt(dayString)));
-
+        //the user can only select a date in the range from when they signed up to the app up to today's date
+        long today = calendarView.getDate();
+        long startDate = currentFirebaseUser.getMetadata().getCreationTimestamp();
+        calendarView.setMaxDate(today);
+        calendarView.setMinDate(startDate);
 
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override

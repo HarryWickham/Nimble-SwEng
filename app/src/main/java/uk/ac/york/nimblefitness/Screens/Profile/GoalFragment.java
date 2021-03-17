@@ -57,6 +57,7 @@ public class GoalFragment extends Fragment {
         TextView motivationQuote = view.findViewById(R.id.motivation); //finds where the quote should go in this layout
         Random rand = new Random(); //The quote changes each time the user opens the goal tab
         int n = rand.nextInt(quotes.length);
+        String default_quote = "Improve your health today!";
         switch (n){
             case 0:
                 motivationQuote.setText(quotes[0]);
@@ -71,7 +72,7 @@ public class GoalFragment extends Fragment {
                 motivationQuote.setText(quotes[3]);
                 break;
             default:
-                motivationQuote.setText("Improve your health today!");
+                motivationQuote.setText(default_quote);
         }
 
         TextView userName = view.findViewById(R.id.user_name);
