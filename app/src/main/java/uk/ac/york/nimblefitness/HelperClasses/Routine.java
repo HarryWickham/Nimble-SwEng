@@ -1,10 +1,11 @@
 package uk.ac.york.nimblefitness.HelperClasses;
 
-import android.media.Image;
+import java.util.ArrayList;
 
 public class Routine {
     private String routineName;
     private int routineImage;
+    private ArrayList<Exercise> exerciseArrayList;
 
     public Routine(String routineName, int routineImage) {
         this.routineName = routineName;
@@ -26,4 +27,10 @@ public class Routine {
     public void setRoutineImage(int routineImage) {
         this.routineImage = routineImage;
     }
+
+    public int getNumberOfExercises() { return exerciseArrayList.size(); }
+
+    public Exercise getExercise(int i) { return exerciseArrayList.get(i); }
+
+
 }

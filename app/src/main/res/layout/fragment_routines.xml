@@ -3,17 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Screens.Routines.RoutinesFragment"
->
-    <ListView
+    android:orientation="vertical"
+    tools:context=".Screens.Routines.RoutinesFragment">
+
+    <ExpandableListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/routines_list"
-        android:clickable="false"
-        android:focusable="false"
-        android:divider="@null"
+        android:id="@+id/routine_exp_list"
         />
-
 
 </LinearLayout>
 
