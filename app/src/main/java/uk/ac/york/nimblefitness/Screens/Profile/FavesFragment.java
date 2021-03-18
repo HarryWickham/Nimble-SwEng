@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
@@ -48,6 +49,8 @@ public class FavesFragment extends Fragment {
         getActivity().setTitle("Profile");
         View view = inflater.inflate(R.layout.fragment_favourites, container, false);
 
+        ListView FavouritesList = view.findViewById(R.id.FavouritesList);
+
         mDatabase = FirebaseDatabase.getInstance().getReference("users");
 
         FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -59,29 +62,36 @@ public class FavesFragment extends Fragment {
                 Log.i("TAG", "" + favourite);
                 ListView FavouritesListView = view.findViewById(R.id.FavouritesList);
 
+                if (favourite != null) {
+                    Log.i("TAG", "" + currentFirebaseUser.getUid());
+                    Routine routine1 = new Routine(favourite, R.drawable.final_logo);
+                    //Routine routine2 = new Routine("Routine2", R.drawable.final_logo);
+                    //Routine routine3 = new Routine("Routine3", R.drawable.final_logo);
+                    //Routine routine4 = new Routine("Routine4", R.drawable.final_logo);
 
-                Log.i("TAG", "" + currentFirebaseUser.getUid());
-                Routine routine1 = new Routine(favourite, R.drawable.final_logo);
-                //Routine routine2 = new Routine("Routine2", R.drawable.final_logo);
-                //Routine routine3 = new Routine("Routine3", R.drawable.final_logo);
-                //Routine routine4 = new Routine("Routine4", R.drawable.final_logo);
+                    ArrayList<Routine> FavouritesArrayList = new ArrayList<>();
+                    FavouritesArrayList.add(routine1);
+                    //FavouritesArrayList.add(routine2);
+                    //FavouritesArrayList.add(routine3);
+                    //FavouritesArrayList.add(routine4);
 
-                ArrayList<Routine> FavouritesArrayList = new ArrayList<>();
-                FavouritesArrayList.add(routine1);
-                //FavouritesArrayList.add(routine2);
-                //FavouritesArrayList.add(routine3);
-                //FavouritesArrayList.add(routine4);
+                    RoutineListAdapter adapter = new RoutineListAdapter(getContext(), R.layout.routines_list_layout, FavouritesArrayList);
+                    FavouritesListView.setAdapter(adapter);
+                } else {
+                    String[] settings_list_items = {"Favourites"}; //the text that goes in each different list view item
 
-                RoutineListAdapter adapter = new RoutineListAdapter(getContext(), R.layout.routines_list_layout, FavouritesArrayList);
-                FavouritesListView.setAdapter(adapter);
+                    ArrayAdapter<String> ListViewAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, settings_list_items); //need to make a 'simple_list_item_1' replacement -> 'settings_list_layout' allow the use of images in the list view like in settings activity example
+                    FavouritesList.setAdapter(ListViewAdapter);
+                }
+
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
+
             }
         });
-
 
 
         return view;
