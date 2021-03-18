@@ -1,13 +1,12 @@
 package uk.ac.york.nimblefitness.HelperClasses;
 
-import android.util.Patterns;
-import android.view.View;
-
 public class Verification {
 
     private String email;
     private String password;
     private String confirmPassword;
+    String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+
 
     public String getConfirmPassword() {
         return confirmPassword;
@@ -34,7 +33,7 @@ public class Verification {
         this.email = email;
     }
 
-    public Verification(String email, String pssword) {
+    public Verification(String email, String password) {
         this.password = password;
         this.email = email;
     }
@@ -50,7 +49,7 @@ public class Verification {
         if (email.isEmpty()) {//checks to see if an email address has been entered
             return ("Email is Required");
 
-        }else if (!email.matches(String.valueOf(Patterns.EMAIL_ADDRESS))) {//checks to see if the email address entered follows the correct pattern
+        }else if (!email.matches(EMAIL_PATTERN)) {//checks to see if the email address entered follows the correct pattern
             System.out.println(email);
             return("Invalid email address");
         }

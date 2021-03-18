@@ -1,27 +1,58 @@
 package uk.ac.york.nimblefitness.HelperClasses;
 
-import   org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 
 class VerificationTest {
-    String email = "hmt519@york.ac.uk", password = "Hello123", confirmPassword = "Hello123";
-    Verification user = new Verification(email,password,confirmPassword);
 
+    Verification allValid = new Verification("yahoo@email.com","Password123","Password123");
+    Verification invalidEmail = new Verification("emailemailcomxc","Password123","Password123");
+    Verification differentPasswords = new Verification("email@yahoo.com", "Password123", "Password324");
+
+    //User enters valid details
     @Test
-    void validateEmail_CorrectEmailSample_ReturnsTrue() {
-        System.out.println(user.validateEmail());
-        assertEquals("Valid",user.validateEmail());
+    void validateEmailCorrectEmailSampleReturnsTrue() {
+        assertEquals("Valid", allValid.validateEmail());
+    }
+    @Test
+    void validatePasswordCorrectFormatReturnsTrue() {
+        assertEquals("Valid",allValid.validatePassword());
+    }
+    @Test
+    void validateConfirmPasswordCorrectFormatReturnsTrue() {
+        assertEquals("Valid",allValid.validateConfirmPassword());
+    }
+
+    //User enters invalid email
+    @Test
+    void validateEmailWrongEmailSampleReturnsTrue() {
+        assertEquals("Invalid email address", invalidEmail.validateEmail());
+    }
+    @Test
+    void validatePasswordWrongEmailSampleReturnsTrue() {
+        assertEquals("Valid",invalidEmail.validatePassword());
+    }
+    @Test
+    void validateConfirmPasswordWrongEmailSampleReturnsTrue() {
+        assertEquals("Valid",invalidEmail.validateConfirmPassword());
+    }
+
+    //User enters non-matching passwords
+    @Test
+    void validateEmailWrongPasswordsReturnsTrue() {
+        assertEquals("Valid", differentPasswords.validateEmail());
+    }
+    @Test
+    void validatePasswordWrongPasswordsReturnsTrue() {
+        assertEquals("Valid", differentPasswords.validatePassword());
     }
 
     @Test
-    void validatePassword_CorrectFormat_ReturnsTrue() {
-        assertEquals("Valid",user.validatePassword());
+    void validateConfirmPasswordWrongFormatReturnsTrue() {
+        assertEquals("Confirm Password must be the same as Password", differentPasswords.validateConfirmPassword()); //Expecting the passwords to not match
     }
 
-    @Test
-    void validateConfirmPassword_CorrectFormat_ReturnsTrue() {
-        assertEquals("Valid",user.validateConfirmPassword());
-    }
+
 }

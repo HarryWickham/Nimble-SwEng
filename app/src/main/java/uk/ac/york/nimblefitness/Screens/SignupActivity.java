@@ -2,7 +2,6 @@ package uk.ac.york.nimblefitness.Screens;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -90,41 +89,45 @@ public class SignupActivity extends AppCompatActivity {
                 String email = userEmail.getText().toString().trim();
                 String password = userPassword.getText().toString().trim();
                 progressBar.setVisibility(View.VISIBLE);
-
                 if(validateEmail(userDetails) & validatePassword(userDetails) & validateConfirmPassword(userDetails)) {
-                    firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+
+                    checkSignUpDetails(email, password);
+                }
+
+            }
+        });
+    }
+
+    public void checkSignUpDetails(String email, String password){
+        firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()) {
+                    //send verification link
+
+                    userConfirmPasswordLayout.setError(null);
+                    userConfirmPasswordLayout.setErrorEnabled(false);
+
+                    FirebaseUser user = firebaseAuth.getCurrentUser();
+                    user.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-                                //send verification link
-
-                                userConfirmPasswordLayout.setError(null);
-                                userConfirmPasswordLayout.setErrorEnabled(false);
-
-                                FirebaseUser user = firebaseAuth.getCurrentUser();
-                                user.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                        Toast.makeText(SignupActivity.this, "Verification Email Sent", Toast.LENGTH_SHORT).show();
-                                    }
-                                }).addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                    }
-                                });
-                                Toast.makeText(SignupActivity.this, "User Created", Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(getApplicationContext(), MainActivity.class));
-
-                            } else {
-                                progressBar.setVisibility(View.GONE);
-                                userEmailLayout.setError(task.getException().getMessage());
-                            }
+                        public void onSuccess(Void aVoid) {
+                            Toast.makeText(SignupActivity.this, "Verification Email Sent", Toast.LENGTH_SHORT).show();
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
                         }
                     });
+                    Toast.makeText(SignupActivity.this, "User Created", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+
+                } else {
+                    progressBar.setVisibility(View.GONE);
+                    userEmailLayout.setError(task.getException().getMessage());
                 }
             }
         });
-
 
     }
 
