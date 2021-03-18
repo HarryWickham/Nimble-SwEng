@@ -12,7 +12,12 @@ import uk.ac.york.nimblefitness.R;
 public class PaymentActivity extends AppCompatActivity {
 
     Button pushMeButton;
+    Button pushMeButton1;
+    Button pushMeButton2;
+
     TextView writingFeedback;
+    TextView writingFeedback1;
+    TextView writingFeedback2;
 
 
 
@@ -24,12 +29,31 @@ public class PaymentActivity extends AppCompatActivity {
         writingFeedback = findViewById(R.id.writing);
         pushMeButton = findViewById(R.id.pushme);
 
+        writingFeedback1 = findViewById(R.id.writing1);
+        writingFeedback2 = findViewById(R.id.writing2);
+        pushMeButton1 = findViewById(R.id.pushme1);
+        pushMeButton2 = findViewById(R.id.pushme2);
+
         this.setTitle("Membership Page");
 
         pushMeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 writingFeedback.setText("clicked");
+            }
+        });
+
+        pushMeButton1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                writingFeedback1.setText("clicked1");
+            }
+        });
+
+        pushMeButton2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                writingFeedback2.setText("clicked2");
             }
         });
     }
