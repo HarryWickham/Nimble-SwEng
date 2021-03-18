@@ -2,6 +2,8 @@ package uk.ac.york.nimblefitness.Screens;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+//Importing
+
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -12,162 +14,277 @@ import uk.ac.york.nimblefitness.R;
 
 public class PaymentActivity extends AppCompatActivity {
 
-    private LinearLayout membershipDetails;
-    private LinearLayout membershipDetails1;
-    private LinearLayout membershipDetails2;
+    //Declare LinearLayouts which hold membership detail paragraphs for each plan
 
-    private LinearLayout downArrow;
-    private LinearLayout downArrow1;
-    private LinearLayout downArrow2;
+    private LinearLayout membershipDetailsBronze;
+    private LinearLayout membershipDetailsSilver;
+    private LinearLayout membershipDetailsGold;
 
-    Button pushMeButton;
-    Button pushMeButton1;
-    Button pushMeButton2;
+    //Declare LinearLayouts which hold down arrows for the show details buttons for each plan
 
-    Button lessDetailsButton;
-    Button lessDetailsButton1;
-    Button lessDetailsButton2;
+    private LinearLayout downArrowBronze;
+    private LinearLayout downArrowSilver;
+    private LinearLayout downArrowGold;
 
-    Button chooseButton;
-    Button chooseButton1;
-    Button chooseButton2;
+    //Declare boolean variables for the selection status of membership plans
 
-    TextView writingFeedback;
-    TextView writingFeedback1;
-    TextView writingFeedback2;
+    boolean selectionStatusBronze = false;
+    boolean selectionStatusSilver = false;
+    boolean selectionStatusGold = false;
 
-    TextView activationFeedback;
-    TextView activationFeedback1;
-    TextView activationFeedback2;
+    //Declare Buttons used to expand the membership details for each plan
+
+    Button moreDetailsButtonBronze;
+    Button moreDetailsButtonSilver;
+    Button moreDetailsButtonGold;
+
+    //Declare Buttons used to minimize the membership details for each plan
+
+    Button lessDetailsButtonBronze;
+    Button lessDetailsButtonSilver;
+    Button lessDetailsButtonGold;
+
+    //Declare Buttons used to select membership plans
+
+    Button selectionButtonBronze;
+    Button selectionButtonSilver;
+    Button selectionButtonGold;
+
+    //Declare Buttons used to checkout for each plan (at bottom of screen)
+
+    Button checkoutButtonDefault;
+    Button checkoutButtonBronze;
+    Button checkoutButtonSilver;
+    Button checkoutButtonGold;
+    Button checkoutButtonNoSelection;
+
+    //Declare TextView which displays viewed status text for each membership plan
+
+    TextView viewedFeedbackBronze;
+    TextView viewedFeedbackSilver;
+    TextView viewedFeedbackGold;
+
+    //Declare TextView which displays selection status text for each membership plan
+
+    TextView selectionFeedbackBronze;
+    TextView selectionFeedbackSilver;
+    TextView selectionFeedbackGold;
+
+    //Runs when page is created (opened by user)
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment);
-        writingFeedback = findViewById(R.id.writing);
-        pushMeButton = findViewById(R.id.pushme);
 
-        membershipDetails = findViewById(R.id.dropdown_menu);
-        membershipDetails1 = findViewById(R.id.dropdown_menu1);
-        membershipDetails2 = findViewById(R.id.dropdown_menu2);
+        //Links membershipDetails[plan] to the corresponding id in the xml
 
-        downArrow = findViewById(R.id.arrow);
-        downArrow1 = findViewById(R.id.arrow1);
-        downArrow2 = findViewById(R.id.arrow2);
+        membershipDetailsBronze = findViewById(R.id.membership_details_bronze);
+        membershipDetailsSilver = findViewById(R.id.memership_details_silver);
+        membershipDetailsGold = findViewById(R.id.membership_details_gold);
 
-        writingFeedback1 = findViewById(R.id.writing1);
-        writingFeedback2 = findViewById(R.id.writing2);
-        pushMeButton1 = findViewById(R.id.pushme1);
-        pushMeButton2 = findViewById(R.id.pushme2);
+        //Links downArrow[plan] to the corresponding id in the xml
 
-        lessDetailsButton = findViewById(R.id.lessdetailsbutton);
-        lessDetailsButton1 = findViewById(R.id.lessdetailsbutton1);
-        lessDetailsButton2 = findViewById(R.id.lessdetailsbutton2);
+        downArrowBronze = findViewById(R.id.down_arrow_bronze);
+        downArrowSilver = findViewById(R.id.down_arrow_silver);
+        downArrowGold = findViewById(R.id.down_arrow_gold);
 
-        chooseButton = findViewById(R.id.choosebutton);
-        chooseButton1 = findViewById(R.id.choosebutton1);
-        chooseButton2 = findViewById(R.id.choosebutton2);
+        //Links viewedFeedback[plan] to the corresponding id in the xml
 
-        activationFeedback = findViewById(R.id.activationwriting);
-        activationFeedback1 = findViewById(R.id.activationwriting1);
-        activationFeedback2 = findViewById(R.id.activationwriting2);
+        viewedFeedbackBronze = findViewById(R.id.viewed_feedback_bronze);
+        viewedFeedbackSilver = findViewById(R.id.viewed_feedback_silver);
+        viewedFeedbackGold = findViewById(R.id.viewed_feedback_gold);
+
+        //Links moreDetailsButton[plan] to the corresponding id in the xml
+
+        moreDetailsButtonBronze = findViewById(R.id.more_details_button_bronze);
+        moreDetailsButtonSilver = findViewById(R.id.more_details_button_silver);
+        moreDetailsButtonGold = findViewById(R.id.more_details_button_gold);
+
+        //Links lessDetailsButton[plan] to the corresponding id in the xml
+
+        lessDetailsButtonBronze = findViewById(R.id.less_details_button_bronze);
+        lessDetailsButtonSilver = findViewById(R.id.less_details_button_silver);
+        lessDetailsButtonGold = findViewById(R.id.less_details_button_gold);
+
+        //Links selectionButton[plan] to the corresponding id in the xml
+
+        selectionButtonBronze = findViewById(R.id.selection_button_bronze);
+        selectionButtonSilver = findViewById(R.id.selection_button_silver);
+        selectionButtonGold = findViewById(R.id.selection_button_gold);
+
+        //Links selectionFeedback[plan] to the corresponding id in the xml
+
+        selectionFeedbackBronze = findViewById(R.id.selection_feedback_bronze);
+        selectionFeedbackSilver = findViewById(R.id.selection_feedback_silver);
+        selectionFeedbackGold = findViewById(R.id.selection_feedback_gold);
+
+        //Links checkout buttons to the corresponding ids in the xml
+
+        checkoutButtonDefault = findViewById(R.id.checkout_button_default);
+        checkoutButtonBronze = findViewById(R.id.checkout_button_bronze);
+        checkoutButtonSilver = findViewById(R.id.checkout_button_silver);
+        checkoutButtonGold = findViewById(R.id.checkout_button_gold);
+        checkoutButtonNoSelection = findViewById(R.id.checkout_button_no_selection);
+
+        //Set title displayed at the top of the screen
 
         this.setTitle("Membership Page");
 
-        pushMeButton.setOnClickListener(new View.OnClickListener() {
+        /*Upon clicking the more details button for each of the membership plans, set the
+        * more details button to be gone, set the less details button for that plan
+        * to be visible and the details paragraph to be visible.*/
+
+        moreDetailsButtonBronze.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                writingFeedback.setText("Basic Membership Plan (Viewed)");
-                membershipDetails.setVisibility(View.VISIBLE);
-                downArrow.setVisibility(View.GONE);
+                viewedFeedbackBronze.setText("Basic Membership Plan (Viewed)");
+                membershipDetailsBronze.setVisibility(View.VISIBLE);
+                downArrowBronze.setVisibility(View.GONE);
             }
         });
 
-        pushMeButton1.setOnClickListener(new View.OnClickListener() {
+        moreDetailsButtonSilver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                writingFeedback1.setText("Intermediate Membership Plan (Viewed)");
-                membershipDetails1.setVisibility(View.VISIBLE);
-                downArrow1.setVisibility(View.GONE);
+                viewedFeedbackSilver.setText("Intermediate Membership Plan (Viewed)");
+                membershipDetailsSilver.setVisibility(View.VISIBLE);
+                downArrowSilver.setVisibility(View.GONE);
             }
         });
 
-        pushMeButton2.setOnClickListener(new View.OnClickListener() {
+        moreDetailsButtonGold.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                writingFeedback2.setText("Advanced Membership Plan (Viewed)");
-                membershipDetails2.setVisibility(View.VISIBLE);
-                downArrow2.setVisibility(View.GONE);
+                viewedFeedbackGold.setText("Advanced Membership Plan (Viewed)");
+                membershipDetailsGold.setVisibility(View.VISIBLE);
+                downArrowGold.setVisibility(View.GONE);
             }
         });
 
-        lessDetailsButton.setOnClickListener(new View.OnClickListener() {
+        /*Upon clicking the less details button for each of the membership plans, set the
+         * more details button to be visible, set the less details button to be gone, set
+         * the details paragraph for that plan to be gone.*/
+
+        lessDetailsButtonBronze.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                membershipDetails.setVisibility(View.GONE);
-                downArrow.setVisibility(View.VISIBLE);
+                membershipDetailsBronze.setVisibility(View.GONE);
+                downArrowBronze.setVisibility(View.VISIBLE);
             }
         });
 
-        lessDetailsButton1.setOnClickListener(new View.OnClickListener() {
+        lessDetailsButtonSilver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                membershipDetails1.setVisibility(View.GONE);
-                downArrow1.setVisibility(View.VISIBLE);
+                membershipDetailsSilver.setVisibility(View.GONE);
+                downArrowSilver.setVisibility(View.VISIBLE);
             }
         });
 
-        lessDetailsButton2.setOnClickListener(new View.OnClickListener() {
+        lessDetailsButtonGold.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                membershipDetails2.setVisibility(View.GONE);
-                downArrow2.setVisibility(View.VISIBLE);
+                membershipDetailsGold.setVisibility(View.GONE);
+                downArrowGold.setVisibility(View.VISIBLE);
             }
         });
 
-        chooseButton.setOnClickListener(new View.OnClickListener() {
+        /*For each membership plan's selection buttons, if it is clicked, set that membership plan's
+        * selection button to be gone and all other membership plan's selection buttons to be
+        * visible, also set the checkout button at the bottom of the screen to a button in correspondence
+        * to selected membership plan, if no plan is selected, a checkout button displaying text asking
+        * the user to select a plan will be set to be visible. In any of these cases, one button is
+        * set to visible and the rest set to be gone.*/
+
+        selectionButtonBronze.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                activationFeedback.setText("Bronze Membership (Selected)");
-                activationFeedback1.setText("Silver Membership");
-                activationFeedback2.setText("Gold Membership");
-                chooseButton.setVisibility(View.GONE);
-                chooseButton1.setVisibility(View.VISIBLE);
-                chooseButton2.setVisibility(View.VISIBLE);
+                selectionStatusBronze = true;
+                selectionStatusSilver = false;
+                selectionStatusGold = false;
+
+                selectionFeedbackBronze.setText("Bronze Membership (Selected)");
+                selectionFeedbackSilver.setText("Silver Membership");
+                selectionFeedbackGold.setText("Gold Membership");
+
+                selectionButtonBronze.setVisibility(View.INVISIBLE);
+                selectionButtonSilver.setVisibility(View.VISIBLE);
+                selectionButtonGold.setVisibility(View.VISIBLE);
+
+                checkoutButtonDefault.setVisibility(View.GONE);
+                checkoutButtonBronze.setVisibility(View.VISIBLE);
+                checkoutButtonSilver.setVisibility(View.GONE);
+                checkoutButtonGold.setVisibility(View.GONE);
+                checkoutButtonNoSelection.setVisibility(View.GONE);
             }
         });
 
-        chooseButton1.setOnClickListener(new View.OnClickListener() {
+        selectionButtonSilver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                activationFeedback1.setText("Silver Membership (Selected)");
-                activationFeedback.setText("Bronze Membership");
-                activationFeedback2.setText("Gold Membership");
-                chooseButton1.setVisibility(View.GONE);
-                chooseButton.setVisibility(View.VISIBLE);
-                chooseButton2.setVisibility(View.VISIBLE);
+                selectionStatusBronze = false;
+                selectionStatusSilver = true;
+                selectionStatusGold = false;
+
+                selectionFeedbackBronze.setText("Bronze Membership");
+                selectionFeedbackSilver.setText("Silver Membership (Selected)");
+                selectionFeedbackGold.setText("Gold Membership");
+
+                selectionButtonBronze.setVisibility(View.VISIBLE);
+                selectionButtonSilver.setVisibility(View.INVISIBLE);
+                selectionButtonGold.setVisibility(View.VISIBLE);
+
+                checkoutButtonDefault.setVisibility(View.GONE);
+                checkoutButtonBronze.setVisibility(View.GONE);
+                checkoutButtonSilver.setVisibility(View.VISIBLE);
+                checkoutButtonGold.setVisibility(View.GONE);
+                checkoutButtonNoSelection.setVisibility(View.GONE);
             }
         });
 
-        chooseButton2.setOnClickListener(new View.OnClickListener() {
+        selectionButtonGold.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                activationFeedback2.setText("Gold Membership (Selected)");
-                activationFeedback.setText("Bronze Membership");
-                activationFeedback1.setText("Silver Membership");
-                chooseButton2.setVisibility(View.GONE);
-                chooseButton.setVisibility(View.VISIBLE);
-                chooseButton1.setVisibility(View.VISIBLE);
+                selectionStatusBronze = false;
+                selectionStatusSilver = false;
+                selectionStatusGold = true;
+
+                selectionFeedbackBronze.setText("Bronze Membership");
+                selectionFeedbackSilver.setText("Silver Membership");
+                selectionFeedbackGold.setText("Gold Membership (Selected)");
+
+                selectionButtonBronze.setVisibility(View.VISIBLE);
+                selectionButtonSilver.setVisibility(View.VISIBLE);
+                selectionButtonGold.setVisibility(View.INVISIBLE);
+
+                checkoutButtonDefault.setVisibility(View.GONE);
+                checkoutButtonBronze.setVisibility(View.GONE);
+                checkoutButtonSilver.setVisibility(View.GONE);
+                checkoutButtonGold.setVisibility(View.VISIBLE);
+                checkoutButtonNoSelection.setVisibility(View.GONE);
+            }
+        });
+
+        checkoutButtonDefault.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                checkoutButtonDefault.setVisibility(View.GONE);
+                checkoutButtonBronze.setVisibility(View.GONE);
+                checkoutButtonSilver.setVisibility(View.GONE);
+                checkoutButtonGold.setVisibility(View.GONE);
+                checkoutButtonNoSelection.setVisibility(View.VISIBLE);
             }
         });
 
