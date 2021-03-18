@@ -1,17 +1,14 @@
 package uk.ac.york.nimblefitness.Screens;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
-import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,15 +19,13 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
+
+import java.util.Objects;
 
 import uk.ac.york.nimblefitness.HelperClasses.Verification;
 import uk.ac.york.nimblefitness.R;
@@ -65,43 +60,37 @@ public class SigninActivity extends AppCompatActivity {
         userPasswordLayout.setErrorIconDrawable(null);
 
 
-        userEmailLayout.getEditText().setOnFocusChangeListener((view, b) -> {
+        Objects.requireNonNull(userEmailLayout.getEditText()).setOnFocusChangeListener((view, b) -> {//validates the email text box when the user clicks away from them
             if(!b){
                 validateEmail(userDetails);
             }
         });
 
-        userPasswordLayout.getEditText().setOnFocusChangeListener((view, b) -> {
+        Objects.requireNonNull(userPasswordLayout.getEditText()).setOnFocusChangeListener((view, b) -> {//validates the password text box when the user clicks away from them
             if(!b){
                 validatePassword(userDetails);
             }
         });
 
 
-        login_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        login_button.setOnClickListener(v -> {
 
 
-                if (validateEmail(userDetails) & validatePassword(userDetails)) {
-                    //Shows the user a loading symbol to reassure them that something is happening
-                    progressBar.setVisibility(View.VISIBLE);
-                    //passes the login details to firebase to authenticate
-                    firebaseAuth.signInWithEmailAndPassword(userDetails.getEmail(),userDetails.getPassword()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-                                Toast.makeText(SigninActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                            } else {
-                                invalidUser();
+            if (validateEmail(userDetails) & validatePassword(userDetails)) {
+                //Shows the user a loading symbol to reassure them that something is happening
+                progressBar.setVisibility(View.VISIBLE);
+                //passes the login details to firebase to authenticate
+                firebaseAuth.signInWithEmailAndPassword(userDetails.getEmail(),userDetails.getPassword()).addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Toast.makeText(SigninActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(getApplicationContext(), MainActivity.class));//takes user the main page
+                    } else {
+                        invalidUser();
 
-                            }
-                        }
-                    });
-                }
-
+                    }
+                });
             }
+
         });
         //to enable signin with google
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -117,12 +106,9 @@ public class SigninActivity extends AppCompatActivity {
            startActivity(new Intent(this, MainActivity.class));
        }
 
-        googleSignIn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent gSignIn = signInClient.getSignInIntent();
-                startActivityForResult(gSignIn, GOOGLE_SIGNIN_CODE);
-            }
+        googleSignIn.setOnClickListener(v -> {
+            Intent gSignIn = signInClient.getSignInIntent();
+            startActivityForResult(gSignIn, GOOGLE_SIGNIN_CODE);
         });
 
 
@@ -137,21 +123,16 @@ public class SigninActivity extends AppCompatActivity {
             try {
                 GoogleSignInAccount signInAcc = signInTask.getResult(ApiException.class);
 
+                assert signInAcc != null;
                 AuthCredential authCredential = GoogleAuthProvider.getCredential(signInAcc.getIdToken(), null);
-                firebaseAuth.signInWithCredential(authCredential).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        Toast.makeText(getApplicationContext(), "Google Account Connected", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
+                firebaseAuth.signInWithCredential(authCredential).addOnCompleteListener(task -> {
+                    Toast.makeText(getApplicationContext(), "Google Account Connected", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                }).addOnFailureListener(e -> {
 
-                    }
                 });
 
-                Toast.makeText(this, "Goolge Account Connected", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Google Account Connected", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(this, MainActivity.class));
             } catch (ApiException e) {
                 e.printStackTrace();
@@ -168,35 +149,19 @@ public class SigninActivity extends AppCompatActivity {
     //to enable user to reset password
     public void onClickForgottenPassword(View v) {
         EditText recoveryEmail = new EditText(v.getContext());
-        recoveryEmail.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+        recoveryEmail.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);//ensures that text box can only take one line
         AlertDialog.Builder passwordResetDialog = new AlertDialog.Builder(v.getContext());
         passwordResetDialog.setTitle("Reset Password");
         passwordResetDialog.setMessage("Enter Your Email Address");
         passwordResetDialog.setView(recoveryEmail);
 
-        passwordResetDialog.setPositiveButton("Submit", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                //extract email and send the reset link
-                String email = recoveryEmail.getText().toString();
-                firebaseAuth.sendPasswordResetEmail(email).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Toast.makeText(SigninActivity.this, "Check Your Emails", Toast.LENGTH_LONG).show();
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(SigninActivity.this, "Error, No account with specified email found", Toast.LENGTH_LONG).show();
-                    }
-                });
-            }
+        passwordResetDialog.setPositiveButton("Submit", (dialog, which) -> {
+            //extract email and send the reset link
+            String email = recoveryEmail.getText().toString();
+            firebaseAuth.sendPasswordResetEmail(email).addOnSuccessListener(aVoid -> Toast.makeText(SigninActivity.this, "Check Your Emails", Toast.LENGTH_LONG).show()).addOnFailureListener(e -> Toast.makeText(SigninActivity.this, "Error, No account with specified email found", Toast.LENGTH_LONG).show());
         });
-        passwordResetDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
+        passwordResetDialog.setNegativeButton("Cancel", (dialog, which) -> {
 
-            }
         });
 
         passwordResetDialog.create().show();
@@ -205,7 +170,7 @@ public class SigninActivity extends AppCompatActivity {
 
     }
 
-    private Boolean validateEmail(Verification userDetails) {
+    private Boolean validateEmail(Verification userDetails) {// calls the validate email method in the verification class
         userDetails.setEmail(userEmail.getText().toString().trim());
         String reply = userDetails.validateEmail();
         if(!reply.equals("Valid")){
@@ -220,7 +185,7 @@ public class SigninActivity extends AppCompatActivity {
         }
     }
 
-    private Boolean validatePassword(Verification userDetails) {
+    private Boolean validatePassword(Verification userDetails) {// calls the validate password method in the verification class
         userDetails.setPassword(userPassword.getText().toString().trim());
         String reply = userDetails.validatePassword();
         if(!reply.equals("Valid")){

@@ -1,22 +1,25 @@
 package uk.ac.york.nimblefitness.HelperClasses;
 
-import android.util.Patterns;
-import android.view.View;
-
 public class Verification {
 
     private String email;
     private String password;
     private String confirmPassword;
+    String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
-    public String getConfirmPassword() {
-        return confirmPassword;
+    public Verification(String email, String password) {
+        this.password = password;
+        this.email = email;
+    }
+    public Verification(String email,String password, String confirmPassword) {
+        this.password = password;
+        this.email = email;
+        this.confirmPassword = confirmPassword;
     }
 
     public void setConfirmPassword(String confirmPassword) {
         this.confirmPassword = confirmPassword;
     }
-
 
     public String getEmail() {
         return email;
@@ -34,24 +37,13 @@ public class Verification {
         this.email = email;
     }
 
-    public Verification(String email, String pssword) {
-        this.password = password;
-        this.email = email;
-    }
-    public Verification(String email,String password, String confirmPassword) {
-        this.password = password;
-        this.email = email;
-        this.confirmPassword = confirmPassword;
-    }
-
 
     public String validateEmail() {
 
         if (email.isEmpty()) {//checks to see if an email address has been entered
             return ("Email is Required");
 
-        }else if (!email.matches(String.valueOf(Patterns.EMAIL_ADDRESS))) {//checks to see if the email address entered follows the correct pattern
-            System.out.println(email);
+        }else if (!email.matches(EMAIL_PATTERN)) {//checks to see if the email address entered follows the correct pattern
             return("Invalid email address");
         }
         else {//removes any error messages that appeared if the email was incorrect previously
