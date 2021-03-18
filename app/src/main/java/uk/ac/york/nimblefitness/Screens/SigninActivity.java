@@ -64,13 +64,13 @@ public class SigninActivity extends AppCompatActivity {
         userPasswordLayout.setErrorIconDrawable(null);
 
 
-        userEmailLayout.getEditText().setOnFocusChangeListener((view, b) -> {
+        userEmailLayout.getEditText().setOnFocusChangeListener((view, b) -> {//validates the email text box when the user clicks away from them
             if(!b){
                 validateEmail(userDetails);
             }
         });
 
-        userPasswordLayout.getEditText().setOnFocusChangeListener((view, b) -> {
+        userPasswordLayout.getEditText().setOnFocusChangeListener((view, b) -> {//validates the password text box when the user clicks away from them
             if(!b){
                 validatePassword(userDetails);
             }
@@ -91,7 +91,7 @@ public class SigninActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
                                 Toast.makeText(SigninActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                                startActivity(new Intent(getApplicationContext(), MainActivity.class));//takes user the main page
                             } else {
                                 invalidUser();
 
@@ -167,7 +167,7 @@ public class SigninActivity extends AppCompatActivity {
     //to enable user to reset password
     public void onClickForgottenPassword(View v) {
         EditText recoveryEmail = new EditText(v.getContext());
-        recoveryEmail.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+        recoveryEmail.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);//ensures that text box can only take one line
         AlertDialog.Builder passwordResetDialog = new AlertDialog.Builder(v.getContext());
         passwordResetDialog.setTitle("Reset Password");
         passwordResetDialog.setMessage("Enter Your Email Address");
@@ -204,7 +204,7 @@ public class SigninActivity extends AppCompatActivity {
 
     }
 
-    private Boolean validateEmail(Verification userDetails) {
+    private Boolean validateEmail(Verification userDetails) {// calls the validate email method in the verification class
         userDetails.setEmail(userEmail.getText().toString().trim());
         String reply = userDetails.validateEmail();
         if(!reply.equals("Valid")){
@@ -219,7 +219,7 @@ public class SigninActivity extends AppCompatActivity {
         }
     }
 
-    private Boolean validatePassword(Verification userDetails) {
+    private Boolean validatePassword(Verification userDetails) {// calls the validate password method in the verification class
         userDetails.setPassword(userPassword.getText().toString().trim());
         String reply = userDetails.validatePassword();
         if(!reply.equals("Valid")){

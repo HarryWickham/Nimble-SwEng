@@ -58,19 +58,19 @@ public class SignupActivity extends AppCompatActivity {
         userPasswordLayout.setErrorIconDrawable(null);
         userConfirmPasswordLayout.setErrorIconDrawable(null);
 
-        userEmailLayout.getEditText().setOnFocusChangeListener((view, b) -> {
+        userEmailLayout.getEditText().setOnFocusChangeListener((view, b) -> {//validates the email text box when the user clicks away from them
             if(!b){
                 validateEmail(userDetails);
             }
         });
 
-        userPasswordLayout.getEditText().setOnFocusChangeListener((view, b) -> {
+        userPasswordLayout.getEditText().setOnFocusChangeListener((view, b) -> {//validates the password text box when the user clicks away from them
             if(!b){
                 validatePassword(userDetails);
             }
         });
 
-        userConfirmPasswordLayout.getEditText().setOnFocusChangeListener((view, b) -> {
+        userConfirmPasswordLayout.getEditText().setOnFocusChangeListener((view, b) -> {//validates the confirm password text box when the user clicks away from them
             if(!b){
                 validateConfirmPassword(userDetails);
             }
@@ -105,8 +105,8 @@ public class SignupActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     //send verification link
 
-                    userConfirmPasswordLayout.setError(null);
-                    userConfirmPasswordLayout.setErrorEnabled(false);
+                    userConfirmPasswordLayout.setError(null);//resets errors
+                    userConfirmPasswordLayout.setErrorEnabled(false);//resets errors
 
                     FirebaseUser user = firebaseAuth.getCurrentUser();
                     user.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -138,7 +138,7 @@ public class SignupActivity extends AppCompatActivity {
     }
 
 
-    private Boolean validateEmail(Verification userDetails) {
+    private Boolean validateEmail(Verification userDetails) {// calls the validate email method in the verification class
         userDetails.setEmail(userEmail.getText().toString().trim());
         String reply = userDetails.validateEmail();
         if(!reply.equals("Valid")){
@@ -153,7 +153,7 @@ public class SignupActivity extends AppCompatActivity {
         }
     }
 
-    private Boolean validatePassword(Verification userDetails) {
+    private Boolean validatePassword(Verification userDetails) {// calls the validate password method in the verification class
         userDetails.setPassword(userPassword.getText().toString().trim());
         String reply = userDetails.validatePassword();
         if(!reply.equals("Valid")){
@@ -168,7 +168,7 @@ public class SignupActivity extends AppCompatActivity {
         }
     }
 
-    private Boolean validateConfirmPassword(Verification userDetails){
+    private Boolean validateConfirmPassword(Verification userDetails){// calls the validate confirm password method in the verification class
 
         userDetails.setConfirmPassword(userConfirmPassword.getText().toString().trim());
         String reply = userDetails.validateConfirmPassword();
