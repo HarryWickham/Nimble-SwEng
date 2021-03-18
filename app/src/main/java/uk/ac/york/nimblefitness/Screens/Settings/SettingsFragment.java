@@ -21,6 +21,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.Objects;
+
 import uk.ac.york.nimblefitness.R;
 import uk.ac.york.nimblefitness.Screens.PaymentActivity;
 import uk.ac.york.nimblefitness.Screens.SigninActivity;
@@ -42,14 +44,14 @@ public class SettingsFragment extends Fragment {
 
         firebaseAuth = FirebaseAuth.getInstance();
 
-        getActivity().setTitle("Settings");
+        requireActivity().setTitle("Settings");
 
         View view; //shows the fragment_settings.xml file in the frame view of the activity_main.xml
         view = inflater.inflate(R.layout.fragment_settings, container, false);
 
-        ActionBar actionBar = ((AppCompatActivity)getActivity()).getSupportActionBar();
+        ActionBar actionBar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
 
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(actionBar).setDisplayHomeAsUpEnabled(true);
 
 
 
@@ -93,7 +95,7 @@ public class SettingsFragment extends Fragment {
                 }
                 case "Logout": { //if logout is clicked the user gets taken back to the login/signin screen will need to be changed to a case statement to allow for all items to be perform actions
                     FirebaseAuth.getInstance().signOut();
-                    GoogleSignIn.getClient(getActivity(), new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).build()).signOut().addOnSuccessListener(aVoid ->
+                    GoogleSignIn.getClient(requireActivity(), new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).build()).signOut().addOnSuccessListener(aVoid ->
                             startActivity(new Intent(view.getContext(), SigninActivity.class))).addOnFailureListener(e ->
                             Toast.makeText(getActivity(), "Sign-out Failed", Toast.LENGTH_SHORT).show());
                     Intent mIntent = new Intent(getActivity(), SigninActivity.class);

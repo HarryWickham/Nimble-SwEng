@@ -46,7 +46,7 @@ public class FavesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        getActivity().setTitle("Profile");
+        requireActivity().setTitle("Profile");
         View view = inflater.inflate(R.layout.fragment_favourites, container, false);
 
         ListView FavouritesList = view.findViewById(R.id.FavouritesList);
@@ -58,30 +58,32 @@ public class FavesFragment extends Fragment {
         mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                favourite = snapshot.child(currentFirebaseUser.getUid()).child("favouriteRoutines").getValue(String.class);
-                Log.i("TAG", "" + favourite);
-                ListView FavouritesListView = view.findViewById(R.id.FavouritesList);
+                if (currentFirebaseUser != null) {
+                    favourite = snapshot.child(currentFirebaseUser.getUid()).child("favouriteRoutines").getValue(String.class);
+                    Log.i("TAG", "" + favourite);
+                    ListView FavouritesListView = view.findViewById(R.id.FavouritesList);
 
-                if (favourite != null) {
-                    Log.i("TAG", "" + currentFirebaseUser.getUid());
-                    Routine routine1 = new Routine(favourite, R.drawable.final_logo);
-                    //Routine routine2 = new Routine("Routine2", R.drawable.final_logo);
-                    //Routine routine3 = new Routine("Routine3", R.drawable.final_logo);
-                    //Routine routine4 = new Routine("Routine4", R.drawable.final_logo);
+                    if (favourite != null) {
+                        Log.i("TAG", "" + currentFirebaseUser.getUid());
+                        Routine routine1 = new Routine(favourite, R.drawable.final_logo);
+                        //Routine routine2 = new Routine("Routine2", R.drawable.final_logo);
+                        //Routine routine3 = new Routine("Routine3", R.drawable.final_logo);
+                        //Routine routine4 = new Routine("Routine4", R.drawable.final_logo);
 
-                    ArrayList<Routine> FavouritesArrayList = new ArrayList<>();
-                    FavouritesArrayList.add(routine1);
-                    //FavouritesArrayList.add(routine2);
-                    //FavouritesArrayList.add(routine3);
-                    //FavouritesArrayList.add(routine4);
+                        ArrayList<Routine> FavouritesArrayList = new ArrayList<>();
+                        FavouritesArrayList.add(routine1);
+                        //FavouritesArrayList.add(routine2);
+                        //FavouritesArrayList.add(routine3);
+                        //FavouritesArrayList.add(routine4);
 
-                    RoutineListAdapter adapter = new RoutineListAdapter(getContext(), R.layout.routines_list_layout, FavouritesArrayList);
-                    FavouritesListView.setAdapter(adapter);
-                } else {
-                    String[] settings_list_items = {"Favourites"}; //the text that goes in each different list view item
+                        RoutineListAdapter adapter = new RoutineListAdapter(requireContext(), R.layout.routines_list_layout, FavouritesArrayList);
+                        FavouritesListView.setAdapter(adapter);
+                    } else {
+                        String[] settings_list_items = {"Favourites"}; //the text that goes in each different list view item
 
-                    ArrayAdapter<String> ListViewAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, settings_list_items); //need to make a 'simple_list_item_1' replacement -> 'settings_list_layout' allow the use of images in the list view like in settings activity example
-                    FavouritesList.setAdapter(ListViewAdapter);
+                        ArrayAdapter<String> ListViewAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, settings_list_items); //need to make a 'simple_list_item_1' replacement -> 'settings_list_layout' allow the use of images in the list view like in settings activity example
+                        FavouritesList.setAdapter(ListViewAdapter);
+                    }
                 }
 
             }

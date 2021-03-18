@@ -105,7 +105,7 @@
                     android:layout_gravity="top|center"
                     android:drawableRight="@drawable/ic_baseline_keyboard_arrow_up_24"
                     android:drawableTint="@color/white"
-                    android:text="less details"></Button>
+                    android:text="less details" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -123,7 +123,7 @@
                     android:layout_gravity="top|center"
                     android:drawableRight="@drawable/ic_baseline_fitness_center_24"
                     android:drawableTint="@color/white"
-                    android:text="select this plan (£1.99)"></Button>
+                    android:text="select this plan (£2.99)" />
 
             </LinearLayout>
 
@@ -353,6 +353,7 @@
                 android:drawableTint="@color/white"
                 android:text="checkout with bronze plan"
                 android:drawableRight="@drawable/ic_baseline_account_circle_24"
+                android:onClick="planBought"
                 android:visibility="gone"/>
 
             <Button
@@ -363,6 +364,7 @@
                 android:drawableTint="@color/white"
                 android:text="checkout with silver plan"
                 android:drawableRight="@drawable/ic_baseline_account_circle_24"
+                android:onClick="planBought"
                 android:visibility="gone"/>
 
             <Button
@@ -373,6 +375,7 @@
                 android:drawableTint="@color/white"
                 android:text="checkout with gold plan"
                 android:drawableRight="@drawable/ic_baseline_account_circle_24"
+                android:onClick="planBought"
                 android:visibility="gone"/>
 
             <Button
@@ -383,6 +386,7 @@
                 android:drawableTint="@color/white"
                 android:text="please select a plan above to checkout"
                 android:drawableRight="@drawable/ic_baseline_account_circle_24"
+                android:onClick="planBought"
                 android:visibility="gone"/>
 
         </LinearLayout>

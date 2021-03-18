@@ -129,8 +129,9 @@ public class UserDetailsActivity extends AppCompatActivity {
                 String exerciseDuration = activity_level_selector.getEditText().getText().toString();
 
                 helperClass = new UserHelperClass(firstName, lastName, gender, exerciseType, exerciseDuration, userAge);
-                rootReference.child(currentFirebaseUser.getUid()).setValue(helperClass);
-
+                if (currentFirebaseUser != null) {
+                    rootReference.child(currentFirebaseUser.getUid()).setValue(helperClass);
+                }
                 Intent mIntent = new Intent(UserDetailsActivity.this, MainActivity.class);
                 startActivity(mIntent);
                 finish();
@@ -141,7 +142,10 @@ public class UserDetailsActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                helperClass = snapshot.child(currentFirebaseUser.getUid()).getValue(UserHelperClass.class);
+                assert currentFirebaseUser != null;
+                if (currentFirebaseUser != null) {
+                    helperClass = snapshot.child(currentFirebaseUser.getUid()).getValue(UserHelperClass.class);
+
                 if (helperClass != null) {
                     user_account_first_name_edit_text.setText(helperClass.getFirstName());
                     user_account_last_name_edit_text.setText(helperClass.getLastName());
@@ -150,6 +154,7 @@ public class UserDetailsActivity extends AppCompatActivity {
                     activity_level_selector_spinner.setText(helperClass.getExerciseDuration());
                     exercise_type_selector_spinner.setText(helperClass.getExerciseType());
 
+                }
                 }
             }
 

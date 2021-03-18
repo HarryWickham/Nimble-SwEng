@@ -45,7 +45,7 @@ public class GoalFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        getActivity().setTitle("Profile"); // The title that appears at the top of the page
+        requireActivity().setTitle("Profile"); // The title that appears at the top of the page
         View view = inflater.inflate(R.layout.fragment_goal, container, false);
 
         CustomGauge gauge = (CustomGauge) view.findViewById(R.id.gauge);
@@ -77,10 +77,12 @@ public class GoalFragment extends Fragment {
         rootReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String user_firstName = snapshot.child(currentFirebaseUser.getUid()).child("firstName").getValue(String.class);
-                String user_lastName = snapshot.child(currentFirebaseUser.getUid()).child("lastName").getValue(String.class);
-                //The user's name is set in the section of the layout above the moves list.
-                userName.setText(user_firstName + " " + user_lastName);
+                if (currentFirebaseUser != null) {
+                    String user_firstName = snapshot.child(currentFirebaseUser.getUid()).child("firstName").getValue(String.class);
+                    String user_lastName = snapshot.child(currentFirebaseUser.getUid()).child("lastName").getValue(String.class);
+                    //The user's name is set in the section of the layout above the moves list.
+                    userName.setText(String.format("%s %s", user_firstName, user_lastName));
+                }
             }
 
             @Override

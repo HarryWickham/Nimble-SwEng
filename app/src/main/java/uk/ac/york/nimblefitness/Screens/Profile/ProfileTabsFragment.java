@@ -11,6 +11,8 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.tabs.TabLayout;
 
+import java.util.Objects;
+
 import uk.ac.york.nimblefitness.R;
 /*
  This class initialises the Tab Layout within the profile page and allows the user to switch and
@@ -29,7 +31,7 @@ public class ProfileTabsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        getActivity().setTitle("Profile");
+        requireActivity().setTitle("Profile");
         View view = inflater.inflate(R.layout.fragment_profile_tabs, container, false);
         TabLayout profileTabs = (TabLayout) view.findViewById(R.id.profile_tabs); //Finds where in the fragment the tab layout should go.
         //This listener listens for when a user selects a new tab and shows the respective fragment.

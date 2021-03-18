@@ -48,7 +48,7 @@ public class SigninActivity extends AppCompatActivity {
         userPassword = findViewById(R.id.SignInPassword);
         Button login_button = findViewById(R.id.sign_in_button);
         SignInButton googleSignIn = findViewById(R.id.googleSignIn);
-        progressBar = findViewById(R.id.progress_circular);
+        progressBar = findViewById(R.id.signin_progress_circular);
         firebaseAuth = FirebaseAuth.getInstance();
         userEmailLayout = findViewById(R.id.SignInEmailLayout);
         userPasswordLayout = findViewById(R.id.SignInPasswordLayout);
@@ -127,13 +127,13 @@ public class SigninActivity extends AppCompatActivity {
                 AuthCredential authCredential = GoogleAuthProvider.getCredential(signInAcc.getIdToken(), null);
                 firebaseAuth.signInWithCredential(authCredential).addOnCompleteListener(task -> {
                     Toast.makeText(getApplicationContext(), "Google Account Connected", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                    startActivity(new Intent(getApplicationContext(), PaymentActivity.class));
                 }).addOnFailureListener(e -> {
 
                 });
 
                 Toast.makeText(this, "Google Account Connected", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(this, MainActivity.class));
+                startActivity(new Intent(this, PaymentActivity.class));
             } catch (ApiException e) {
                 e.printStackTrace();
             }

@@ -1,10 +1,6 @@
 package uk.ac.york.nimblefitness.Screens.Settings;
 
-import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import java.util.Objects;
+import androidx.fragment.app.Fragment;
 
 import uk.ac.york.nimblefitness.R;
 
@@ -26,10 +22,10 @@ public class AccountFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_account, container, false); //shows the fragment_settings.xml file in the frame view of the activity_main.xml
-        getActivity().setTitle("Account");
+        requireActivity().setTitle("Account");
         String[] account_options_list = {"Personal information", "Your Activity", "Favourites", "Notifications", "Security", "Help"}; //the text that goes in each different list view item
 
-        ListView listView = (ListView) view.findViewById(R.id.account_options_list); //find the list view from the fragment_settings.xml file
+        ListView listView = view.findViewById(R.id.account_options_list); //find the list view from the fragment_settings.xml file
 
         ArrayAdapter<String> ListViewAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, account_options_list); //need to make a 'simple_list_item_1' replacement -> 'settings_list_layout' allow the use of images in the list view like in settings activity example
         listView.setAdapter(ListViewAdapter);

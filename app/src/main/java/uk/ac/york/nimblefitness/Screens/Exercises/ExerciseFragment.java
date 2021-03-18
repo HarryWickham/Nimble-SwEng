@@ -32,7 +32,7 @@ public class ExerciseFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        getActivity().setTitle("Search for exercise");
+        requireActivity().setTitle("Search for exercise");
 
         View view = inflater.inflate(R.layout.fragment_exercises, container, false);
         list = view.findViewById(R.id.list);

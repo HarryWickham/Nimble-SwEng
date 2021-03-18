@@ -69,7 +69,6 @@ public class SignupActivityTest {
         assertNotNull(signup_progress_circular);
         assertNotNull(sign_up_button);
         assertNotNull(login_button);
-
     }
 
     @Test

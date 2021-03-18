@@ -1,10 +1,6 @@
 package uk.ac.york.nimblefitness.Screens.Profile;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,9 +10,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.FirebaseUserMetadata;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -43,7 +41,7 @@ public class CalendarFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        getActivity().setTitle("Profile");
+        requireActivity().setTitle("Profile");
         View view = inflater.inflate(R.layout.fragment_calendar, container, false); //shows the fragment_settings.xml file in the frame view of the activity_main.xml
 
         String[] completed_activity_list = {"Press-ups", "Sit-ups", "Plank", "Crunches"}; //the text that goes in each different list view item
@@ -61,10 +59,12 @@ public class CalendarFragment extends Fragment {
         rootReference.addListenerForSingleValueEvent(new ValueEventListener() {
              @Override
              public void onDataChange(@NonNull DataSnapshot snapshot) {
-                 String user_firstName = snapshot.child(currentFirebaseUser.getUid()).child("firstName").getValue(String.class);
-                 String user_lastName = snapshot.child(currentFirebaseUser.getUid()).child("lastName").getValue(String.class);
+                 if (currentFirebaseUser != null) {
+                     String user_firstName = snapshot.child(currentFirebaseUser.getUid()).child("firstName").getValue(String.class);
+                     String user_lastName = snapshot.child(currentFirebaseUser.getUid()).child("lastName").getValue(String.class);
+                     userName.setText(String.format("%s %s", user_firstName, user_lastName));
+                 }
 
-                 userName.setText(user_firstName + " " + user_lastName);
              }
 
              @Override
@@ -79,17 +79,20 @@ public class CalendarFragment extends Fragment {
         String monthString = month.format(currentTime);
         String dayString = day.format(currentTime);
 
-        dayNumber.setText(monthText(Integer.parseInt(monthString)) + " " + dayString + datePrefix(Integer.parseInt(dayString)));
+        dayNumber.setText(String.format("%s %s%s", monthText(Integer.parseInt(monthString)), dayString, datePrefix(Integer.parseInt(dayString))));
         //the user can only select a date in the range from when they signed up to the app up to today's date
         long today = calendarView.getDate();
-        long startDate = currentFirebaseUser.getMetadata().getCreationTimestamp();
+        if (currentFirebaseUser != null) {
+            long startDate = currentFirebaseUser.getMetadata().getCreationTimestamp();
+            calendarView.setMinDate(startDate);
+        }
         calendarView.setMaxDate(today);
-        calendarView.setMinDate(startDate);
+
 
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-                dayNumber.setText(monthText(month+1) + " " + dayOfMonth + datePrefix(dayOfMonth));
+                dayNumber.setText(String.format("%s %d%s", monthText(month + 1), dayOfMonth, datePrefix(dayOfMonth)));
             }
         });
 
