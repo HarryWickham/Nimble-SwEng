@@ -7,10 +7,14 @@
     tools:context=".Screens.PaymentActivity"
     android:orientation="vertical">
 
+
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="none">
+
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -19,6 +23,17 @@
             android:orientation="vertical"
             android:paddingHorizontal="20dp"
             android:paddingBottom="10dp">
+
+            <TextView
+                android:padding="16dp"
+                android:id="@+id/tipbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginVertical="16dp"
+                android:textAlignment="center"
+                android:text="Use panels below to view or select membership plans. Scroll to checkout button at the bottom of this page to go to payment."/>
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -351,3 +366,4 @@
 
 
 </LinearLayout>
+
