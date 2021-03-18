@@ -140,7 +140,7 @@ public class PaymentActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                viewedFeedbackBronze.setText("Basic Membership Plan (Viewed)");
+                viewedFeedbackBronze.setText("Basic Membership (Viewed)");
                 membershipDetailsBronze.setVisibility(View.VISIBLE);
                 downArrowBronze.setVisibility(View.GONE);
             }
@@ -150,7 +150,7 @@ public class PaymentActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                viewedFeedbackSilver.setText("Intermediate Membership Plan (Viewed)");
+                viewedFeedbackSilver.setText("Intermediate Membership (Viewed)");
                 membershipDetailsSilver.setVisibility(View.VISIBLE);
                 downArrowSilver.setVisibility(View.GONE);
             }
@@ -160,7 +160,7 @@ public class PaymentActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                viewedFeedbackGold.setText("Advanced Membership Plan (Viewed)");
+                viewedFeedbackGold.setText("Advanced Membership (Viewed)");
                 membershipDetailsGold.setVisibility(View.VISIBLE);
                 downArrowGold.setVisibility(View.GONE);
             }
@@ -212,9 +212,9 @@ public class PaymentActivity extends AppCompatActivity {
                 selectionStatusSilver = false;
                 selectionStatusGold = false;
 
-                selectionFeedbackBronze.setText("Bronze Membership (Selected)");
-                selectionFeedbackSilver.setText("Silver Membership");
-                selectionFeedbackGold.setText("Gold Membership");
+                selectionFeedbackBronze.setText("Bronze (Selected)");
+                selectionFeedbackSilver.setText("Silver");
+                selectionFeedbackGold.setText("Gold");
 
                 selectionButtonBronze.setVisibility(View.INVISIBLE);
                 selectionButtonSilver.setVisibility(View.VISIBLE);
@@ -236,9 +236,9 @@ public class PaymentActivity extends AppCompatActivity {
                 selectionStatusSilver = true;
                 selectionStatusGold = false;
 
-                selectionFeedbackBronze.setText("Bronze Membership");
-                selectionFeedbackSilver.setText("Silver Membership (Selected)");
-                selectionFeedbackGold.setText("Gold Membership");
+                selectionFeedbackBronze.setText("Bronze");
+                selectionFeedbackSilver.setText("Silver(Selected)");
+                selectionFeedbackGold.setText("Gold");
 
                 selectionButtonBronze.setVisibility(View.VISIBLE);
                 selectionButtonSilver.setVisibility(View.INVISIBLE);
@@ -260,9 +260,9 @@ public class PaymentActivity extends AppCompatActivity {
                 selectionStatusSilver = false;
                 selectionStatusGold = true;
 
-                selectionFeedbackBronze.setText("Bronze Membership");
-                selectionFeedbackSilver.setText("Silver Membership");
-                selectionFeedbackGold.setText("Gold Membership (Selected)");
+                selectionFeedbackBronze.setText("Bronze");
+                selectionFeedbackSilver.setText("Silver");
+                selectionFeedbackGold.setText("Gold (Selected)");
 
                 selectionButtonBronze.setVisibility(View.VISIBLE);
                 selectionButtonSilver.setVisibility(View.VISIBLE);
