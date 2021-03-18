@@ -1,24 +1,14 @@
 package uk.ac.york.nimblefitness.Screens.Routines;
 
 import android.os.Bundle;
-
-import androidx.cardview.widget.CardView;
-import androidx.fragment.app.Fragment;
-
-import android.transition.AutoTransition;
-import android.transition.TransitionManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
-import android.widget.ExpandableListView;
 import android.widget.ListView;
-import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 import uk.ac.york.nimblefitness.Adapters.RoutineListAdapter;
 import uk.ac.york.nimblefitness.HelperClasses.Routine;
@@ -41,8 +31,8 @@ public class RoutinesFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_routines, container, false); //shows the fragment_settings.xml file in the frame view of the activity_main.xml
 
-        //ListView routineListView = view.findViewById(R.id.routines_list);
-        ExpandableListView routineListView = view.findViewById(R.id.routine_exp_list);
+        ListView routineListView = view.findViewById(R.id.routine_exp_list);
+        //ExpandableListView routineListView = view.findViewById(R.id.routine_exp_list);
 
         Routine routine1 = new Routine("Routine1", R.drawable.final_logo);
         Routine routine2 = new Routine("Routine2", R.drawable.final_logo);
