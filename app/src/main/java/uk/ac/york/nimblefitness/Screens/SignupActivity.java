@@ -8,17 +8,13 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import java.util.Objects;
 
 import uk.ac.york.nimblefitness.HelperClasses.Verification;
 import uk.ac.york.nimblefitness.R;
@@ -58,19 +54,19 @@ public class SignupActivity extends AppCompatActivity {
         userPasswordLayout.setErrorIconDrawable(null);
         userConfirmPasswordLayout.setErrorIconDrawable(null);
 
-        userEmailLayout.getEditText().setOnFocusChangeListener((view, b) -> {//validates the email text box when the user clicks away from them
+        Objects.requireNonNull(userEmailLayout.getEditText()).setOnFocusChangeListener((view, b) -> {//validates the email text box when the user clicks away from them
             if(!b){
                 validateEmail(userDetails);
             }
         });
 
-        userPasswordLayout.getEditText().setOnFocusChangeListener((view, b) -> {//validates the password text box when the user clicks away from them
+        Objects.requireNonNull(userPasswordLayout.getEditText()).setOnFocusChangeListener((view, b) -> {//validates the password text box when the user clicks away from them
             if(!b){
                 validatePassword(userDetails);
             }
         });
 
-        userConfirmPasswordLayout.getEditText().setOnFocusChangeListener((view, b) -> {//validates the confirm password text box when the user clicks away from them
+        Objects.requireNonNull(userConfirmPasswordLayout.getEditText()).setOnFocusChangeListener((view, b) -> {//validates the confirm password text box when the user clicks away from them
             if(!b){
                 validateConfirmPassword(userDetails);
             }
@@ -83,49 +79,36 @@ public class SignupActivity extends AppCompatActivity {
         }
 
 
-        signUpButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String email = userEmail.getText().toString().trim();
-                String password = userPassword.getText().toString().trim();
-                progressBar.setVisibility(View.VISIBLE);
-                if(validateEmail(userDetails) & validatePassword(userDetails) & validateConfirmPassword(userDetails)) {
+        signUpButton.setOnClickListener(v -> {
+            String email1 = userEmail.getText().toString().trim();
+            String password1 = userPassword.getText().toString().trim();
+            progressBar.setVisibility(View.VISIBLE);
+            if(validateEmail(userDetails) & validatePassword(userDetails) & validateConfirmPassword(userDetails)) {
 
-                    checkSignUpDetails(email, password);
-                }
-
+                checkSignUpDetails(email1, password1);
             }
+
         });
     }
 
     public void checkSignUpDetails(String email, String password){
-        firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()) {
-                    //send verification link
+        firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                //send verification link
 
-                    userConfirmPasswordLayout.setError(null);//resets errors
-                    userConfirmPasswordLayout.setErrorEnabled(false);//resets errors
+                userConfirmPasswordLayout.setError(null);//resets errors
+                userConfirmPasswordLayout.setErrorEnabled(false);//resets errors
 
-                    FirebaseUser user = firebaseAuth.getCurrentUser();
-                    user.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-                            Toast.makeText(SignupActivity.this, "Verification Email Sent", Toast.LENGTH_SHORT).show();
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                        }
-                    });
-                    Toast.makeText(SignupActivity.this, "User Created", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                assert user != null;
+                user.sendEmailVerification().addOnSuccessListener(aVoid -> Toast.makeText(SignupActivity.this, "Verification Email Sent", Toast.LENGTH_SHORT).show()).addOnFailureListener(e -> {
+                });
+                Toast.makeText(SignupActivity.this, "User Created", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
 
-                } else {
-                    progressBar.setVisibility(View.GONE);
-                    userEmailLayout.setError(task.getException().getMessage());
-                }
+            } else {
+                progressBar.setVisibility(View.GONE);
+                userEmailLayout.setError(Objects.requireNonNull(task.getException()).getMessage());
             }
         });
 

@@ -7,15 +7,19 @@ public class Verification {
     private String confirmPassword;
     String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
-
-    public String getConfirmPassword() {
-        return confirmPassword;
+    public Verification(String email, String password) {
+        this.password = password;
+        this.email = email;
+    }
+    public Verification(String email,String password, String confirmPassword) {
+        this.password = password;
+        this.email = email;
+        this.confirmPassword = confirmPassword;
     }
 
     public void setConfirmPassword(String confirmPassword) {
         this.confirmPassword = confirmPassword;
     }
-
 
     public String getEmail() {
         return email;
@@ -33,16 +37,6 @@ public class Verification {
         this.email = email;
     }
 
-    public Verification(String email, String password) {
-        this.password = password;
-        this.email = email;
-    }
-    public Verification(String email,String password, String confirmPassword) {
-        this.password = password;
-        this.email = email;
-        this.confirmPassword = confirmPassword;
-    }
-
 
     public String validateEmail() {
 
@@ -50,7 +44,6 @@ public class Verification {
             return ("Email is Required");
 
         }else if (!email.matches(EMAIL_PATTERN)) {//checks to see if the email address entered follows the correct pattern
-            System.out.println(email);
             return("Invalid email address");
         }
         else {//removes any error messages that appeared if the email was incorrect previously

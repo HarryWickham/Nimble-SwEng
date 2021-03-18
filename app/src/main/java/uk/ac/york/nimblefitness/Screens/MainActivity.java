@@ -1,6 +1,5 @@
 package uk.ac.york.nimblefitness.Screens;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -12,7 +11,6 @@ import androidx.fragment.app.FragmentTransaction;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import uk.ac.york.nimblefitness.R;
-import uk.ac.york.nimblefitness.Screens.Profile.CalendarFragment;
 import uk.ac.york.nimblefitness.Screens.Profile.ProfileTabsFragment;
 import uk.ac.york.nimblefitness.Screens.Routines.RoutinesFragment;
 import uk.ac.york.nimblefitness.Screens.Search.SearchFragment;
@@ -75,19 +73,15 @@ public class MainActivity extends AppCompatActivity {
         exitApp.setTitle("Would you like to close the app?");
         Log.i("TAG", "onBackPressed: ");
         exitApp.setCancelable(true)
-                .setPositiveButton("Close",new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog,int id) {
-                        // if this button is clicked, close
-                        // current activity
-                        MainActivity.this.finish();
-                    }
+                .setPositiveButton("Close", (dialog, id) -> {
+                    // if this button is clicked, close
+                    // current activity
+                    MainActivity.this.finish();
                 })
-                .setNegativeButton("Cancel",new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog,int id) {
-                        // if this button is clicked, just close
-                        // the dialog box and do nothing
-                        dialog.cancel();
-                    }
+                .setNegativeButton("Cancel", (dialog, id) -> {
+                    // if this button is clicked, just close
+                    // the dialog box and do nothing
+                    dialog.cancel();
                 });
 
         // create alert dialog
