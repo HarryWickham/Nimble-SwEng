@@ -104,6 +104,7 @@ public class SigninActivity extends AppCompatActivity {
         GoogleSignInAccount signInAccount = GoogleSignIn.getLastSignedInAccount(this);
         if (signInAccount != null || firebaseAuth.getCurrentUser() != null) {
            startActivity(new Intent(this, MainActivity.class));
+            finish();
        }
 
         googleSignIn.setOnClickListener(v -> {
@@ -128,12 +129,13 @@ public class SigninActivity extends AppCompatActivity {
                 firebaseAuth.signInWithCredential(authCredential).addOnCompleteListener(task -> {
                     Toast.makeText(getApplicationContext(), "Google Account Connected", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(getApplicationContext(), PaymentActivity.class));
+                    finish();
                 }).addOnFailureListener(e -> {
 
                 });
 
                 Toast.makeText(this, "Google Account Connected", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(this, PaymentActivity.class));
+                //startActivity(new Intent(this, PaymentActivity.class));
             } catch (ApiException e) {
                 e.printStackTrace();
             }

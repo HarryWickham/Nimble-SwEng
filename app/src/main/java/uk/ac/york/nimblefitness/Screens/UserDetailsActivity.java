@@ -142,19 +142,18 @@ public class UserDetailsActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                assert currentFirebaseUser != null;
                 if (currentFirebaseUser != null) {
-                    helperClass = snapshot.child(currentFirebaseUser.getUid()).getValue(UserHelperClass.class);
+                        helperClass = snapshot.child(currentFirebaseUser.getUid()).getValue(UserHelperClass.class);
 
-                if (helperClass != null) {
-                    user_account_first_name_edit_text.setText(helperClass.getFirstName());
-                    user_account_last_name_edit_text.setText(helperClass.getLastName());
-                    user_account_age_edit_text.setText(helperClass.getAge());
-                    gender_selector_spinner.setText(helperClass.getGender());
-                    activity_level_selector_spinner.setText(helperClass.getExerciseDuration());
-                    exercise_type_selector_spinner.setText(helperClass.getExerciseType());
+                    if (helperClass != null) {
+                        user_account_first_name_edit_text.setText(helperClass.getFirstName());
+                        user_account_last_name_edit_text.setText(helperClass.getLastName());
+                        user_account_age_edit_text.setText(helperClass.getAge());
+                        gender_selector_spinner.setText(helperClass.getGender());
+                        activity_level_selector_spinner.setText(helperClass.getExerciseDuration());
+                        exercise_type_selector_spinner.setText(helperClass.getExerciseType());
 
-                }
+                    }
                 }
             }
 

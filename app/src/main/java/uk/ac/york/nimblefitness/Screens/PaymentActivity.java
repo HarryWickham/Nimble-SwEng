@@ -242,5 +242,6 @@ public class PaymentActivity extends AppCompatActivity {
 
     public void planBought(View view) {
         startActivity(new Intent(getApplicationContext(), UserDetailsActivity.class));//takes user the main page
+        finish();
     }
 }
