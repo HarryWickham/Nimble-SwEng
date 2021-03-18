@@ -1,12 +1,10 @@
 package uk.ac.york.nimblefitness.Screens.Profile;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,25 +16,20 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.FirebaseUserMetadata;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import org.w3c.dom.Text;
-
-import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Objects;
 
 import uk.ac.york.nimblefitness.R;
-import uk.ac.york.nimblefitness.Screens.SigninActivity;
 
-public class ProfileFragment extends Fragment {
+public class CalendarFragment extends Fragment {
 
     private static final String TAG = "log";
     FirebaseDatabase rootDatabase;
@@ -51,7 +44,7 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         getActivity().setTitle("Profile");
-        View view = inflater.inflate(R.layout.fragment_profile, container, false); //shows the fragment_settings.xml file in the frame view of the activity_main.xml
+        View view = inflater.inflate(R.layout.fragment_calendar, container, false); //shows the fragment_settings.xml file in the frame view of the activity_main.xml
 
         String[] completed_activity_list = {"Press-ups", "Sit-ups", "Plank", "Crunches"}; //the text that goes in each different list view item
 
@@ -80,8 +73,6 @@ public class ProfileFragment extends Fragment {
              }
          });
 
-
-
         SimpleDateFormat month = new SimpleDateFormat("M");
         SimpleDateFormat day = new SimpleDateFormat("d");
         Date currentTime = Calendar.getInstance().getTime();
@@ -89,7 +80,11 @@ public class ProfileFragment extends Fragment {
         String dayString = day.format(currentTime);
 
         dayNumber.setText(monthText(Integer.parseInt(monthString)) + " " + dayString + datePrefix(Integer.parseInt(dayString)));
-
+        //the user can only select a date in the range from when they signed up to the app up to today's date
+        long today = calendarView.getDate();
+        long startDate = currentFirebaseUser.getMetadata().getCreationTimestamp();
+        calendarView.setMaxDate(today);
+        calendarView.setMinDate(startDate);
 
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
@@ -144,6 +139,7 @@ public class ProfileFragment extends Fragment {
             default: return ("th");
         }
     }
+
 
 }
 

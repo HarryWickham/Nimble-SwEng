@@ -1,30 +1,27 @@
 package uk.ac.york.nimblefitness.Screens;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
+
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import java.util.Objects;
+
+import uk.ac.york.nimblefitness.HelperClasses.Verification;
 import uk.ac.york.nimblefitness.R;
 
 public class SignupActivity extends AppCompatActivity {
     private EditText userEmail, userPassword, userConfirmPassword;
     private TextInputLayout userEmailLayout, userPasswordLayout, userConfirmPasswordLayout;
-    private Button signUpButton;
     private FirebaseAuth firebaseAuth;
     private ProgressBar progressBar;
 
@@ -41,33 +38,37 @@ public class SignupActivity extends AppCompatActivity {
         userPasswordLayout = findViewById(R.id.SignUpPasswordLayout);
         userConfirmPasswordLayout = findViewById(R.id.SignUpPasswordConfirmLayout);
 
-        signUpButton = findViewById(R.id.sign_up_button);
+        Button signUpButton = findViewById(R.id.sign_up_button);
         firebaseAuth = FirebaseAuth.getInstance();
         progressBar = findViewById(R.id.progress_circular);
         userEmailLayout = findViewById((R.id.SignUpEmailLayout));
         userPasswordLayout = findViewById((R.id.SignUpPasswordLayout));
         userConfirmPasswordLayout = findViewById(R.id.SignUpPasswordConfirmLayout);
+        String email = userEmail.getText().toString().trim();
+        String password = userPassword.getText().toString().trim();
+        String confirmPassword = userConfirmPassword.getText().toString().trim();
+        Verification userDetails = new Verification(password, email, confirmPassword);
 
 
         userEmailLayout.setErrorIconDrawable(null);
         userPasswordLayout.setErrorIconDrawable(null);
         userConfirmPasswordLayout.setErrorIconDrawable(null);
 
-        userEmailLayout.getEditText().setOnFocusChangeListener((view, b) -> {
+        Objects.requireNonNull(userEmailLayout.getEditText()).setOnFocusChangeListener((view, b) -> {//validates the email text box when the user clicks away from them
             if(!b){
-                validateEmail();
+                validateEmail(userDetails);
             }
         });
 
-        userPasswordLayout.getEditText().setOnFocusChangeListener((view, b) -> {
+        Objects.requireNonNull(userPasswordLayout.getEditText()).setOnFocusChangeListener((view, b) -> {//validates the password text box when the user clicks away from them
             if(!b){
-                validatePassword();
+                validatePassword(userDetails);
             }
         });
 
-        userConfirmPasswordLayout.getEditText().setOnFocusChangeListener((view, b) -> {
+        Objects.requireNonNull(userConfirmPasswordLayout.getEditText()).setOnFocusChangeListener((view, b) -> {//validates the confirm password text box when the user clicks away from them
             if(!b){
-                validateConfirmPassword();
+                validateConfirmPassword(userDetails);
             }
         });
 
@@ -78,47 +79,38 @@ public class SignupActivity extends AppCompatActivity {
         }
 
 
-        signUpButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String email = userEmail.getText().toString().trim();
-                String password = userPassword.getText().toString().trim();
-                progressBar.setVisibility(View.VISIBLE);
+        signUpButton.setOnClickListener(v -> {
+            String email1 = userEmail.getText().toString().trim();
+            String password1 = userPassword.getText().toString().trim();
+            progressBar.setVisibility(View.VISIBLE);
+            if(validateEmail(userDetails) & validatePassword(userDetails) & validateConfirmPassword(userDetails)) {
 
-                if(validateEmail() & validatePassword() & validateConfirmPassword()) {
-                    firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-                                //send verification link
+                checkSignUpDetails(email1, password1);
+            }
 
-                                userConfirmPasswordLayout.setError(null);
-                                userConfirmPasswordLayout.setErrorEnabled(false);
+        });
+    }
 
-                                FirebaseUser user = firebaseAuth.getCurrentUser();
-                                user.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                        Toast.makeText(SignupActivity.this, "Verification Email Sent", Toast.LENGTH_SHORT).show();
-                                    }
-                                }).addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                    }
-                                });
-                                Toast.makeText(SignupActivity.this, "User Created", Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+    public void checkSignUpDetails(String email, String password){
+        firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                //send verification link
 
-                            } else {
-                                progressBar.setVisibility(View.GONE);
-                                userEmailLayout.setError(task.getException().getMessage());
-                            }
-                        }
-                    });
-                }
+                userConfirmPasswordLayout.setError(null);//resets errors
+                userConfirmPasswordLayout.setErrorEnabled(false);//resets errors
+
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                assert user != null;
+                user.sendEmailVerification().addOnSuccessListener(aVoid -> Toast.makeText(SignupActivity.this, "Verification Email Sent", Toast.LENGTH_SHORT).show()).addOnFailureListener(e -> {
+                });
+                Toast.makeText(SignupActivity.this, "User Created", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+
+            } else {
+                progressBar.setVisibility(View.GONE);
+                userEmailLayout.setError(Objects.requireNonNull(task.getException()).getMessage());
             }
         });
-
 
     }
 
@@ -129,64 +121,47 @@ public class SignupActivity extends AppCompatActivity {
     }
 
 
-    private Boolean validateEmail() {
-        String email = userEmail.getText().toString().trim();
-
-        if (email.isEmpty()) {//checks to see if an email address has been entered
-            userEmailLayout.setError("Email is Required");
+    private Boolean validateEmail(Verification userDetails) {// calls the validate email method in the verification class
+        userDetails.setEmail(userEmail.getText().toString().trim());
+        String reply = userDetails.validateEmail();
+        if(!reply.equals("Valid")){
+            userEmailLayout.setError(reply);
             progressBar.setVisibility(View.GONE);
             return false;
-        } else if (!email.matches(String.valueOf(Patterns.EMAIL_ADDRESS))) {//checks to see if the email address entered follows the correct pattern
-            userEmailLayout.setError("Invalid email address");
-            progressBar.setVisibility(View.GONE);
-            return false;
-        } else {//removes any error messages that appeared if the email was incorrect previously
+        }
+        else{
             userEmailLayout.setError(null);
             userEmailLayout.setErrorEnabled(false);
             return true;
         }
     }
 
-    private Boolean validatePassword() {
-        String password = userPassword.getText().toString().trim();
-
-        String passwordVal = "^" +
-                //"(?=.*[0-9])" +         //at least 1 digit
-                "(?=.*[a-z])" +         //at least 1 lower case letter
-                "(?=.*[A-Z])" +         //at least 1 upper case letter
-                "(?=.*[a-zA-Z])" +      //any letter
-                //"(?=.*[@#$%^&+=])" +    //at least 1 special character
-                "(?=\\S+$)" +           //no white spaces
-                ".{4,}" +               //at least 4 characters
-                "$";
-
-        if (password.isEmpty()) {//checks to see if a password has been entered
-            userPasswordLayout.setError("Password is Required");
+    private Boolean validatePassword(Verification userDetails) {// calls the validate password method in the verification class
+        userDetails.setPassword(userPassword.getText().toString().trim());
+        String reply = userDetails.validatePassword();
+        if(!reply.equals("Valid")){
+            userPasswordLayout.setError(reply);
             progressBar.setVisibility(View.GONE);
             return false;
-        } else if (!password.matches(passwordVal)) {//checks to see if the password entered follows the correct pattern
-            userPasswordLayout.setError("Invalid Password must be more than 6 characters long with at least 1 lower case letter and at least 1 upper case letter");
-            progressBar.setVisibility(View.GONE);
-            return false;
-        } else {//removes any error messages that appeared if the password was incorrect previously
+        }
+        else{
             userPasswordLayout.setError(null);
             userPasswordLayout.setErrorEnabled(false);
             return true;
         }
     }
 
-    private Boolean validateConfirmPassword(){
-        String confirmPassword = userConfirmPassword.getText().toString().trim();
-        String password = userPassword.getText().toString().trim();
-        if (confirmPassword.isEmpty()) {//checks to see if a confirm password has been entered
-            userConfirmPasswordLayout.setError("Password is Required");
+    private Boolean validateConfirmPassword(Verification userDetails){// calls the validate confirm password method in the verification class
+
+        userDetails.setConfirmPassword(userConfirmPassword.getText().toString().trim());
+        String reply = userDetails.validateConfirmPassword();
+
+        if(!reply.equals("Valid")){
+            userConfirmPasswordLayout.setError(reply);
             progressBar.setVisibility(View.GONE);
             return false;
-        }else if (!confirmPassword.equals(password)) {//checks to see if a confirm password and password are the same
-            userConfirmPasswordLayout.setError("Confirm Password must be the same as Password");
-            progressBar.setVisibility(View.GONE);
-            return false;
-        } else {//removes any error messages that appeared if the password was incorrect previously
+        }
+        else{
             userConfirmPasswordLayout.setError(null);
             userConfirmPasswordLayout.setErrorEnabled(false);
             return true;

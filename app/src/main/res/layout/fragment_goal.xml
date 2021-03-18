@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Screens.Profile.ProfileFragment">
+    tools:context=".Screens.Profile.GoalFragment">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -24,41 +25,63 @@
                 android:layout_marginHorizontal="8dp"
                 android:layout_marginTop="8dp">
 
-                <FrameLayout
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="vertical">
 
-                    <!--The angle is measured clockwise starting from 'East'-->
-                    <pl.pawelkleczkowski.customgauge.CustomGauge
-                        android:id="@+id/gauge"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_width="300dp"
-                        android:layout_height="300dp"
-                        android:paddingBottom="10dp"
-                        android:paddingLeft="10dp"
-                        android:paddingRight="10dp"
-                        android:paddingTop="10dp"
-                        app:gaugeStartAngle="135"
-                        app:gaugeSweepAngle="270"
-                        app:gaugeStartValue="200"
-                        app:gaugeEndValue="800"
-                        app:gaugePointStartColor="@color/purple_200"
-                        app:gaugePointEndColor="@color/purple_700"
-                        app:gaugeStrokeCap="ROUND"
-                        app:gaugeStrokeWidth="30dp">
-                    </pl.pawelkleczkowski.customgauge.CustomGauge>
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <!--The angle is measured clockwise starting from 'East'-->
+                        <pl.pawelkleczkowski.customgauge.CustomGauge
+                            android:id="@+id/gauge"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="300dp"
+                            android:paddingBottom="8dp"
+                            android:paddingLeft="8dp"
+                            android:paddingRight="8dp"
+                            android:paddingTop="8dp"
+                            app:gaugeStartAngle="135"
+                            app:gaugeSweepAngle="270"
+                            app:gaugeStartValue="0"
+                            app:gaugeEndValue="100"
+                            app:gaugePointStartColor="@color/purple_200"
+                            app:gaugePointEndColor="@color/purple_700"
+                            app:gaugeStrokeCap="ROUND"
+                            app:gaugeStrokeWidth="28dp">
+                        </pl.pawelkleczkowski.customgauge.CustomGauge>
+
+                        <TextView
+                            android:id="@+id/moves_counter"
+                            android:layout_gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textAlignment="center"
+                            android:textSize="64sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/purple_200"
+                            android:text="">
+                        </TextView>
+                    </FrameLayout>
 
                     <TextView
-                        android:id="@+id/moves_counter"
-                        android:layout_gravity="bottom"
+                        android:id="@+id/motivation"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textAlignment="center"
                         android:textSize="32sp"
                         android:textStyle="bold"
-                        android:text="36/100">
+                        android:text=""
+                        android:paddingHorizontal="8dp"
+                        android:paddingBottom="8dp">
                     </TextView>
-                </FrameLayout>
+
+                </LinearLayout>
+
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
@@ -72,30 +95,65 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:gravity="center_horizontal"
                     android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/motivation"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textAlignment="center"
-                        android:textSize="32sp"
-                        android:textStyle="bold"
-                        android:text="A really motivational quote to start exercising!">
-                    </TextView>
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:paddingTop="16dp">
+                        android:layout_height="75dp"
+                        android:gravity="center_vertical">
 
-                        <ListView
-                            android:id="@+id/todays_moves"
+                        <ImageView
+                            android:id="@+id/profile_picture"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_marginStart="8dp"
+                            android:src="@drawable/ic_baseline_emoji_emotions_24"
+                            android:contentDescription="@string/profile_picture" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:paddingStart="16dp"
+                            android:paddingEnd="0dp">
+
+                            <TextView
+                                android:id="@+id/today"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/today"
+                                android:textSize="30sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/user_name"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/today"
+                                android:layout_alignLeft="@id/profile_picture"
+                                android:text="" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="200dp">
-                        </ListView>
+                            android:layout_height="match_parent"
+                            android:gravity="end|center_vertical">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingStart="0dp"
+                                android:paddingEnd="16dp"
+                                android:src="@drawable/ic_baseline_share_24"
+                                android:contentDescription="@string/share_icon" />
+                        </LinearLayout>
                     </LinearLayout>
+
+                    <ListView
+                        android:id="@+id/todays_moves"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
         </LinearLayout>

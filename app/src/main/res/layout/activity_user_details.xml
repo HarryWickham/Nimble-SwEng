@@ -79,13 +79,17 @@
                 android:layout_height="wrap_content"
                 android:hint="Please select your gender"
                 android:layout_marginVertical="4dp"
+
                 >
 
-                <AutoCompleteTextView
-                    android:id="@+id/actv_gender_selector"
+                <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+                    android:id="@+id/gender_selector_spinner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="none"
+                    android:paddingVertical="6dp"
+                    android:paddingHorizontal="10dp"
+                    app:met_hideUnderline="true"
                     />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -111,11 +115,14 @@
                 android:layout_marginVertical="4dp"
                 >
 
-                <AutoCompleteTextView
-                    android:id="@+id/actv_activity_level_selector"
+                <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+                    android:id="@+id/activity_level_selector_spinner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="none"
+                    android:paddingVertical="6dp"
+                    android:paddingHorizontal="10dp"
+                    app:met_hideUnderline="true"
                     />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -129,11 +136,14 @@
                 android:layout_marginVertical="4dp"
                 >
 
-                <AutoCompleteTextView
-                    android:id="@+id/actv_exercise_type_selector"
+                <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+                    android:id="@+id/exercise_type_selector_spinner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="none"
+                    android:paddingVertical="6dp"
+                    android:paddingHorizontal="10dp"
+                    app:met_hideUnderline="true"
                     />
 
             </com.google.android.material.textfield.TextInputLayout>

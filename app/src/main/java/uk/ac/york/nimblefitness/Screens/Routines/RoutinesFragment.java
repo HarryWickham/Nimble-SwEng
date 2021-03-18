@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -42,7 +43,8 @@ public class RoutinesFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_routines, container, false); //shows the fragment_settings.xml file in the frame view of the activity_main.xml
 
-        ListView routineListView = view.findViewById(R.id.routines_list);
+        //ListView routineListView = view.findViewById(R.id.routines_list);
+        ExpandableListView routineListView = view.findViewById(R.id.routine_exp_list);
 
         Routine routine1 = new Routine("Routine1", R.drawable.final_logo);
         Routine routine2 = new Routine("Routine2", R.drawable.final_logo);
@@ -53,7 +55,7 @@ public class RoutinesFragment extends Fragment {
         routineArrayList.add(routine2);
         routineArrayList.add(routine3);
 
-        RoutineListAdapter adapter = new RoutineListAdapter(getContext(), R.layout.routines_list_layout, routineArrayList);
+        RoutineListAdapter adapter = new RoutineListAdapter(routineListView.getContext(), R.layout.routines_list_layout, routineArrayList);
         routineListView.setAdapter(adapter);
 
 

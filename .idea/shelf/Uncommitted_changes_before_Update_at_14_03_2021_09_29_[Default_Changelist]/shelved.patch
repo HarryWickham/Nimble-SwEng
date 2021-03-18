@@ -1,0 +1,208 @@
+Index: app/src/main/java/uk/ac/york/nimblefitness/Screens/MainActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package uk.ac.york.nimblefitness.Screens;\r\n\r\nimport android.os.Bundle;\r\nimport android.transition.AutoTransition;\r\nimport android.transition.TransitionManager;\r\nimport android.view.MenuItem;\r\nimport android.view.View;\r\nimport android.widget.Button;\r\nimport android.widget.FrameLayout;\r\nimport android.widget.ImageButton;\r\nimport android.widget.ImageView;\r\nimport android.widget.LinearLayout;\r\nimport android.widget.Toast;\r\n\r\nimport com.google.android.material.bottomnavigation.BottomNavigationView;\r\n\r\nimport androidx.annotation.NonNull;\r\nimport androidx.appcompat.app.AppCompatActivity;\r\nimport androidx.cardview.widget.CardView;\r\nimport androidx.fragment.app.Fragment;\r\nimport androidx.fragment.app.FragmentTransaction;\r\n\r\nimport uk.ac.york.nimblefitness.R;\r\nimport uk.ac.york.nimblefitness.Screens.Profile.ProfileFragment;\r\nimport uk.ac.york.nimblefitness.Screens.Routines.RoutinesFragment;\r\nimport uk.ac.york.nimblefitness.Screens.Search.SearchFragment;\r\nimport uk.ac.york.nimblefitness.Screens.Settings.SettingsFragment;\r\n\r\npublic class MainActivity extends AppCompatActivity {\r\n\r\n    private ProfileFragment profileFragment;\r\n    private RoutinesFragment routinesFragment;\r\n    private SearchFragment searchFragment;\r\n    private SettingsFragment settingsFragment;\r\n\r\n\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n\r\n        profileFragment = new ProfileFragment();\r\n        routinesFragment = new RoutinesFragment();\r\n        searchFragment = new SearchFragment();\r\n        settingsFragment = new SettingsFragment();\r\n\r\n        setContentView(R.layout.activity_main);\r\n        BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);\r\n        openFragment(new ProfileFragment());\r\n        bottomNav.setOnNavigationItemSelectedListener(item -> {\r\n\r\n            switch (item.getItemId()){\r\n                case R.id.profile_page:\r\n                    openFragment(profileFragment);\r\n                    return true;\r\n                case R.id.routines_page:\r\n                    openFragment(routinesFragment);\r\n                    return true;\r\n                case R.id.search_page:\r\n                    openFragment(searchFragment);\r\n                    return true;\r\n                case R.id.settings_page:\r\n                    openFragment(settingsFragment);\r\n                    return true;\r\n            }\r\n            return false;\r\n        });\r\n\r\n\r\n\r\n    }\r\n\r\n    void openFragment(Fragment fragment){\r\n        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();\r\n        fragmentTransaction.replace(R.id.main_frame, fragment);\r\n        fragmentTransaction.addToBackStack(null);\r\n        fragmentTransaction.commit();\r\n\r\n    }\r\n\r\n\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/uk/ac/york/nimblefitness/Screens/MainActivity.java	(revision 4786fdd1203b09d5c48432187dc69026ce7216c7)
++++ app/src/main/java/uk/ac/york/nimblefitness/Screens/MainActivity.java	(date 1615647568416)
+@@ -1,30 +1,18 @@
+ package uk.ac.york.nimblefitness.Screens;
+ 
+ import android.os.Bundle;
+-import android.transition.AutoTransition;
+-import android.transition.TransitionManager;
+-import android.view.MenuItem;
+-import android.view.View;
+-import android.widget.Button;
+-import android.widget.FrameLayout;
+-import android.widget.ImageButton;
+-import android.widget.ImageView;
+-import android.widget.LinearLayout;
+-import android.widget.Toast;
+ 
+ import com.google.android.material.bottomnavigation.BottomNavigationView;
+ 
+-import androidx.annotation.NonNull;
+ import androidx.appcompat.app.AppCompatActivity;
+-import androidx.cardview.widget.CardView;
+ import androidx.fragment.app.Fragment;
+ import androidx.fragment.app.FragmentTransaction;
+ 
+ import uk.ac.york.nimblefitness.R;
+-import uk.ac.york.nimblefitness.Screens.Profile.ProfileFragment;
++import uk.ac.york.nimblefitness.Screens.Profile.ProfileActivity;
+ import uk.ac.york.nimblefitness.Screens.Routines.RoutinesFragment;
+ import uk.ac.york.nimblefitness.Screens.Search.SearchFragment;
+-import uk.ac.york.nimblefitness.Screens.Settings.SettingsFragment;
++import uk.ac.york.nimblefitness.Screens.Settings.SettingsFragment;e
+ 
+ public class MainActivity extends AppCompatActivity {
+ 
+@@ -36,16 +24,16 @@
+ 
+     @Override
+     protected void onCreate(Bundle savedInstanceState) {
+-        super.onCreate(savedInstanceState);
++        super.onCreate(savedInstanceState);d
+ 
+-        profileFragment = new ProfileFragment();
++        profilefragment = new ProfileFragment();
+         routinesFragment = new RoutinesFragment();
+         searchFragment = new SearchFragment();
+         settingsFragment = new SettingsFragment();
+ 
+         setContentView(R.layout.activity_main);
+         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
+-        openFragment(new ProfileFragment());
++        open(new profileFragment());
+         bottomNav.setOnNavigationItemSelectedListener(item -> {
+ 
+             switch (item.getItemId()){
+Index: app/src/main/res/layout/activity_profile.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:id=\"@+id/fixedTabs\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\">\r\n<!--TODO make active/inactive tab colours different-->\r\n    <com.google.android.material.tabs.TabLayout\r\n        app:layout_constraintTop_toTopOf=\"parent\"\r\n        android:id=\"@+id/profile_tabs\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:background=\"@color/colorPrimary\"\r\n        app:tabIndicatorColor=\"@color/colorOnPrimary\"\r\n        app:tabIndicatorGravity=\"top\"\r\n        app:tabIconTint=\"@color/colorOnPrimary\"\r\n        app:tabTextColor=\"@color/colorOnPrimary\"\r\n        app:tabMode=\"fixed\">\r\n\r\n        <com.google.android.material.tabs.TabItem\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:text=\"Favourites\"\r\n            android:icon=\"@drawable/ic_baseline_favorite_border_24\"\r\n            />\r\n\r\n        <com.google.android.material.tabs.TabItem\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:text=\"Goals\"\r\n            android:icon=\"@drawable/ic_baseline_outlined_flag_24\"\r\n            />\r\n\r\n        <com.google.android.material.tabs.TabItem\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:text=\"History\"\r\n            android:icon=\"@drawable/ic_baseline_calendar_today_24\"\r\n            />\r\n\r\n    </com.google.android.material.tabs.TabLayout>\r\n</androidx.constraintlayout.widget.ConstraintLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/activity_profile.xml	(revision 4786fdd1203b09d5c48432187dc69026ce7216c7)
++++ app/src/main/res/layout/activity_profile.xml	(date 1615631254579)
+@@ -5,7 +5,16 @@
+     android:id="@+id/fixedTabs"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent">
+-<!--TODO make active/inactive tab colours different-->
++
++    <FrameLayout
++        android:id="@+id/profile_frame"
++        android:layout_width="0dp"
++        android:layout_height="0dp"
++        app:layout_constraintTop_toBottomOf="@+id/profile_tabs"
++        app:layout_constraintEnd_toEndOf="parent"
++        app:layout_constraintStart_toStartOf="parent"
++        app:layout_constraintBottom_toBottomOf="parent"/>
++
+     <com.google.android.material.tabs.TabLayout
+         app:layout_constraintTop_toTopOf="parent"
+         android:id="@+id/profile_tabs"
+@@ -19,6 +28,7 @@
+         app:tabMode="fixed">
+ 
+         <com.google.android.material.tabs.TabItem
++            android:id="@+id/faves_tab"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="Favourites"
+@@ -26,6 +36,7 @@
+             />
+ 
+         <com.google.android.material.tabs.TabItem
++            android:id="@+id/goal_tab"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="Goals"
+@@ -33,6 +44,7 @@
+             />
+ 
+         <com.google.android.material.tabs.TabItem
++            android:id="@+id/past_tab"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="History"
+Index: app/src/main/res/layout/fragment_goal.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<LinearLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    tools:context=\".Screens.Profile.ProfileFragment\">\r\n\r\n    <ScrollView\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"match_parent\"\r\n        android:scrollbars=\"none\">\r\n\r\n        <LinearLayout\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_marginBottom=\"16dp\"\r\n            android:gravity=\"center_horizontal\"\r\n            android:orientation=\"vertical\">\r\n\r\n            <androidx.cardview.widget.CardView\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:layout_marginHorizontal=\"8dp\"\r\n                android:layout_marginTop=\"8dp\">\r\n\r\n                <FrameLayout\r\n                    android:layout_width=\"match_parent\"\r\n                    android:layout_height=\"wrap_content\">\r\n\r\n                    <!--The angle is measured clockwise starting from 'East'-->\r\n                    <pl.pawelkleczkowski.customgauge.CustomGauge\r\n                        android:id=\"@+id/gauge\"\r\n                        android:layout_gravity=\"center_horizontal\"\r\n                        android:layout_width=\"300dp\"\r\n                        android:layout_height=\"300dp\"\r\n                        android:paddingBottom=\"10dp\"\r\n                        android:paddingLeft=\"10dp\"\r\n                        android:paddingRight=\"10dp\"\r\n                        android:paddingTop=\"10dp\"\r\n                        app:gaugeStartAngle=\"135\"\r\n                        app:gaugeSweepAngle=\"270\"\r\n                        app:gaugeStartValue=\"200\"\r\n                        app:gaugeEndValue=\"800\"\r\n                        app:gaugePointStartColor=\"@color/purple_200\"\r\n                        app:gaugePointEndColor=\"@color/purple_700\"\r\n                        app:gaugeStrokeCap=\"ROUND\"\r\n                        app:gaugeStrokeWidth=\"30dp\">\r\n                    </pl.pawelkleczkowski.customgauge.CustomGauge>\r\n\r\n                    <TextView\r\n                        android:id=\"@+id/moves_counter\"\r\n                        android:layout_gravity=\"bottom\"\r\n                        android:layout_width=\"match_parent\"\r\n                        android:layout_height=\"wrap_content\"\r\n                        android:textAlignment=\"center\"\r\n                        android:textSize=\"32sp\"\r\n                        android:textStyle=\"bold\"\r\n                        android:text=\"36/100\">\r\n                    </TextView>\r\n                </FrameLayout>\r\n            </androidx.cardview.widget.CardView>\r\n\r\n            <androidx.cardview.widget.CardView\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:layout_marginHorizontal=\"8dp\"\r\n                android:layout_marginTop=\"16dp\"\r\n                android:layout_marginBottom=\"16dp\"\r\n                app:cardElevation=\"2dp\">\r\n\r\n                <LinearLayout\r\n                    android:layout_width=\"match_parent\"\r\n                    android:layout_height=\"match_parent\"\r\n                    android:gravity=\"center_horizontal\"\r\n                    android:orientation=\"vertical\">\r\n\r\n                    <TextView\r\n                        android:id=\"@+id/motivation\"\r\n                        android:layout_width=\"match_parent\"\r\n                        android:layout_height=\"wrap_content\"\r\n                        android:textAlignment=\"center\"\r\n                        android:textSize=\"32sp\"\r\n                        android:textStyle=\"bold\"\r\n                        android:text=\"A really motivational quote to start exercising!\">\r\n                    </TextView>\r\n\r\n                    <LinearLayout\r\n                        android:layout_width=\"match_parent\"\r\n                        android:layout_height=\"match_parent\"\r\n                        android:paddingTop=\"16dp\">\r\n\r\n                        <ListView\r\n                            android:id=\"@+id/todays_moves\"\r\n                            android:layout_width=\"match_parent\"\r\n                            android:layout_height=\"200dp\">\r\n                        </ListView>\r\n                    </LinearLayout>\r\n                </LinearLayout>\r\n            </androidx.cardview.widget.CardView>\r\n        </LinearLayout>\r\n    </ScrollView>\r\n</LinearLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/fragment_goal.xml	(revision 4786fdd1203b09d5c48432187dc69026ce7216c7)
++++ app/src/main/res/layout/fragment_goal.xml	(date 1615646854140)
+@@ -4,7 +4,8 @@
+     xmlns:tools="http://schemas.android.com/tools"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+-    tools:context=".Screens.Profile.ProfileFragment">
++    tools:context=".Screens.Profile.CalendarFragment"
++    android:id="@+id/goal_fragment">
+ 
+     <ScrollView
+         android:layout_width="match_parent"
+Index: app/src/main/res/layout/fragment_search.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<LinearLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    tools:context=\".Screens.Profile.ProfileFragment\"\r\n    android:gravity=\"center_horizontal\"\r\n    android:orientation=\"vertical\">\r\n\r\n    <SearchView\r\n        android:id=\"@+id/search\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\" />\r\n\r\n    <TextView\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:text=\"Search Page\" />\r\n\r\n    <ListView\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"match_parent\"\r\n        android:id=\"@+id/list\"\r\n        android:dividerHeight=\"2dp\"\r\n        android:divider=\"@android:color/white\"\r\n        android:layout_below=\"@+id/etSearch\" />\r\n\r\n\r\n</LinearLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/fragment_search.xml	(revision 4786fdd1203b09d5c48432187dc69026ce7216c7)
++++ app/src/main/res/layout/fragment_search.xml	(date 1615646854144)
+@@ -4,7 +4,7 @@
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+     xmlns:app="http://schemas.android.com/apk/res-auto"
+-    tools:context=".Screens.Profile.ProfileFragment"
++    tools:context=".Screens.Profile.CalendarFragment"
+     android:gravity="center_horizontal"
+     android:orientation="vertical">
+ 
+Index: app/src/main/res/values/colors.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<resources>\r\n    <color name=\"purple_200\">#FFBB86FC</color>\r\n    <color name=\"purple_500\">#FF6200EE</color>\r\n    <color name=\"purple_700\">#FF3700B3</color>\r\n    <color name=\"teal_200\">#FF03DAC5</color>\r\n    <color name=\"teal_700\">#FF018786</color>\r\n    <color name=\"black\">#FF000000</color>\r\n    <color name=\"white\">#FFFFFFFF</color>\r\n    <color name=\"colorPrimary\">#0047BB</color>\r\n    <color name=\"colorOnPrimary\">@color/white</color>\r\n</resources>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/values/colors.xml	(revision 4786fdd1203b09d5c48432187dc69026ce7216c7)
++++ app/src/main/res/values/colors.xml	(date 1615630364833)
+@@ -7,6 +7,7 @@
+     <color name="teal_700">#FF018786</color>
+     <color name="black">#FF000000</color>
+     <color name="white">#FFFFFFFF</color>
++    <color name="grey">#99FFFFFF</color>
+     <color name="colorPrimary">#0047BB</color>
+     <color name="colorOnPrimary">@color/white</color>
+ </resources>
+\ No newline at end of file
+Index: app/src/main/res/layout/fragment_calendar.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<LinearLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    tools:context=\".Screens.Profile.ProfileFragment\"\r\n    >\r\n\r\n    <ScrollView\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"match_parent\"\r\n        android:scrollbars=\"none\">\r\n\r\n        <LinearLayout\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_marginBottom=\"16dp\"\r\n            android:gravity=\"center_horizontal\"\r\n            android:orientation=\"vertical\">\r\n\r\n            <androidx.cardview.widget.CardView\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:layout_marginHorizontal=\"8dp\"\r\n                android:layout_marginTop=\"8dp\">\r\n                <LinearLayout\r\n                    android:layout_width=\"match_parent\"\r\n                    android:layout_height=\"match_parent\"\r\n                    android:gravity=\"center_horizontal\">\r\n\r\n                <CalendarView\r\n                    android:id=\"@+id/profile_calendar\"\r\n                    android:layout_width=\"match_parent\"\r\n                    android:layout_height=\"315dp\"\r\n                    android:layout_marginTop=\"8dp\"\r\n                    android:firstDayOfWeek=\"2\"/>\r\n                </LinearLayout>\r\n            </androidx.cardview.widget.CardView>\r\n\r\n\r\n            <androidx.cardview.widget.CardView\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:layout_marginHorizontal=\"8dp\"\r\n                android:layout_marginTop=\"16dp\"\r\n                android:layout_marginBottom=\"16dp\"\r\n                app:cardElevation=\"2dp\">\r\n\r\n                <LinearLayout\r\n                    android:layout_width=\"match_parent\"\r\n                    android:layout_height=\"match_parent\"\r\n                    android:orientation=\"vertical\">\r\n\r\n                    <LinearLayout\r\n                        android:layout_width=\"match_parent\"\r\n                        android:layout_height=\"75dp\"\r\n                        android:gravity=\"center_vertical\">\r\n\r\n                        <ImageView\r\n                            android:id=\"@+id/profile_picture\"\r\n                            android:layout_width=\"50dp\"\r\n                            android:layout_height=\"50dp\"\r\n                            android:layout_marginStart=\"8dp\"\r\n                            android:src=\"@drawable/ic_baseline_emoji_emotions_24\"\r\n\r\n                            />\r\n\r\n                        <LinearLayout\r\n                            android:layout_width=\"wrap_content\"\r\n                            android:layout_height=\"wrap_content\"\r\n                            android:orientation=\"vertical\"\r\n                            android:paddingStart=\"16dp\">\r\n\r\n                            <TextView\r\n                                android:id=\"@+id/profile_date\"\r\n                                android:layout_width=\"wrap_content\"\r\n                                android:layout_height=\"wrap_content\"\r\n                                android:text=\"\"\r\n                                android:textSize=\"30sp\"\r\n                                android:textStyle=\"bold\" />\r\n\r\n                            <TextView\r\n                                android:id=\"@+id/user_name\"\r\n                                android:layout_width=\"wrap_content\"\r\n                                android:layout_height=\"wrap_content\"\r\n                                android:layout_below=\"@+id/profile_date\"\r\n                                android:layout_alignLeft=\"@id/profile_picture\"\r\n                                android:text=\"\"\r\n\r\n                                />\r\n                        </LinearLayout>\r\n\r\n                        <LinearLayout\r\n                            android:layout_width=\"match_parent\"\r\n                            android:layout_height=\"match_parent\"\r\n                            android:gravity=\"right|center_vertical\">\r\n\r\n                            <ImageView\r\n                                android:layout_width=\"wrap_content\"\r\n                                android:layout_height=\"wrap_content\"\r\n                                android:paddingRight=\"16dp\"\r\n                                android:src=\"@drawable/ic_baseline_share_24\" />\r\n                        </LinearLayout>\r\n\r\n                    </LinearLayout>\r\n\r\n                    <ListView\r\n                        android:id=\"@+id/completed_moves_list\"\r\n                        android:layout_width=\"match_parent\"\r\n                        android:layout_height=\"200dp\" />\r\n                </LinearLayout>\r\n\r\n            </androidx.cardview.widget.CardView>\r\n        </LinearLayout>\r\n    </ScrollView>\r\n</LinearLayout>\r\n\r\n\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/fragment_calendar.xml	(revision 4786fdd1203b09d5c48432187dc69026ce7216c7)
++++ app/src/main/res/layout/fragment_calendar.xml	(date 1615646854133)
+@@ -4,8 +4,8 @@
+     xmlns:tools="http://schemas.android.com/tools"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+-    tools:context=".Screens.Profile.ProfileFragment"
+-    >
++    tools:context=".Screens.Profile.CalendarFragment"
++    android:id="@+id/calendar_fragment">
+ 
+     <ScrollView
+         android:layout_width="match_parent"
+Index: app/src/main/java/uk/ac/york/nimblefitness/Screens/Profile/ProfileFragment.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package uk.ac.york.nimblefitness.Screens.Profile;\r\n\r\nimport android.os.Bundle;\r\n\r\nimport androidx.annotation.NonNull;\r\nimport androidx.fragment.app.Fragment;\r\n\r\nimport android.view.LayoutInflater;\r\nimport android.view.View;\r\nimport android.view.ViewGroup;\r\nimport android.widget.ArrayAdapter;\r\nimport android.widget.CalendarView;\r\nimport android.widget.ListView;\r\nimport android.widget.TextView;\r\nimport android.widget.Toast;\r\n\r\nimport com.google.firebase.auth.FirebaseAuth;\r\nimport com.google.firebase.auth.FirebaseUser;\r\nimport com.google.firebase.database.DataSnapshot;\r\nimport com.google.firebase.database.DatabaseError;\r\nimport com.google.firebase.database.DatabaseReference;\r\nimport com.google.firebase.database.FirebaseDatabase;\r\nimport com.google.firebase.database.ValueEventListener;\r\n\r\nimport java.text.SimpleDateFormat;\r\nimport java.util.Calendar;\r\nimport java.util.Date;\r\n\r\nimport uk.ac.york.nimblefitness.R;\r\n\r\npublic class ProfileFragment extends Fragment {\r\n\r\n    private static final String TAG = \"log\";\r\n    FirebaseDatabase rootDatabase;\r\n    DatabaseReference rootReference;\r\n\r\n    @Override\r\n    public void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n    }\r\n\r\n    @Override\r\n    public View onCreateView(LayoutInflater inflater, ViewGroup container,\r\n                             Bundle savedInstanceState) {\r\n        getActivity().setTitle(\"Profile\");\r\n        View view = inflater.inflate(R.layout.fragment_calendar, container, false); //shows the fragment_settings.xml file in the frame view of the activity_main.xml\r\n\r\n        String[] completed_activity_list = {\"Press-ups\", \"Sit-ups\", \"Plank\", \"Crunches\"}; //the text that goes in each different list view item\r\n\r\n        ListView listView = (ListView) view.findViewById(R.id.completed_moves_list); //find the list view from the fragment_settings.xml file\r\n        CalendarView calendarView = view.findViewById(R.id.profile_calendar);\r\n        TextView dayNumber = view.findViewById(R.id.profile_date);\r\n        TextView userName = view.findViewById(R.id.user_name);\r\n\r\n        rootDatabase = FirebaseDatabase.getInstance();\r\n        rootReference = rootDatabase.getReference(\"users\");\r\n\r\n        FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();\r\n\r\n        rootReference.addListenerForSingleValueEvent(new ValueEventListener() {\r\n             @Override\r\n             public void onDataChange(@NonNull DataSnapshot snapshot) {\r\n                 String user_firstName = snapshot.child(currentFirebaseUser.getUid()).child(\"firstName\").getValue(String.class);\r\n                 String user_lastName = snapshot.child(currentFirebaseUser.getUid()).child(\"lastName\").getValue(String.class);\r\n\r\n                 userName.setText(user_firstName + \" \" + user_lastName);\r\n             }\r\n\r\n             @Override\r\n             public void onCancelled(@NonNull DatabaseError error) {\r\n\r\n             }\r\n         });\r\n\r\n\r\n\r\n        SimpleDateFormat month = new SimpleDateFormat(\"M\");\r\n        SimpleDateFormat day = new SimpleDateFormat(\"d\");\r\n        Date currentTime = Calendar.getInstance().getTime();\r\n        String monthString = month.format(currentTime);\r\n        String dayString = day.format(currentTime);\r\n\r\n        dayNumber.setText(monthText(Integer.parseInt(monthString)) + \" \" + dayString + datePrefix(Integer.parseInt(dayString)));\r\n\r\n\r\n        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {\r\n            @Override\r\n            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {\r\n                dayNumber.setText(monthText(month+1) + \" \" + dayOfMonth + datePrefix(dayOfMonth));\r\n            }\r\n        });\r\n\r\n        ArrayAdapter<String> ListViewAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, completed_activity_list); //need to make a 'simple_list_item_1' replacement -> 'settings_list_layout' allow the use of images in the list view like in settings activity example\r\n        listView.setAdapter(ListViewAdapter);\r\n\r\n        listView.setOnItemClickListener((parent, view1, position, id) -> {//watches for a user to click on the list view, then gives the program which position the click was in\r\n            String itemValue = (String) listView.getItemAtPosition(position); //converts the position ID into the text that is written in that position\r\n\r\n            Toast toast = Toast.makeText(getActivity(), itemValue, Toast.LENGTH_SHORT); //shows an alert with the text of the list item that has been clicked\r\n            toast.show();\r\n\r\n        });\r\n        return view;\r\n    }\r\n\r\n    public String monthText(int month){\r\n        switch (month){\r\n            case 1: return(\"January\");\r\n            case 2: return(\"February\");\r\n            case 3: return(\"March\");\r\n            case 4: return(\"April\");\r\n            case 5: return(\"May\");\r\n            case 6: return(\"June\");\r\n            case 7: return(\"July\");\r\n            case 8: return(\"August\");\r\n            case 9: return(\"September\");\r\n            case 10: return(\"October\");\r\n            case 11: return(\"November\");\r\n            case 12: return(\"December\");\r\n            default: return(\"error\");\r\n        }\r\n    }\r\n\r\n    public String datePrefix(int dayOfMonth){\r\n        switch (dayOfMonth){\r\n            case 1:\r\n            case 21:\r\n            case 31:\r\n                return (\"st\");\r\n            case 2:\r\n            case 22:\r\n                return (\"nd\");\r\n            case 3:\r\n            case 23:\r\n                return (\"rd\");\r\n            default: return (\"th\");\r\n        }\r\n    }\r\n\r\n}\r\n\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/uk/ac/york/nimblefitness/Screens/Profile/ProfileFragment.java	(revision 4786fdd1203b09d5c48432187dc69026ce7216c7)
++++ app/src/main/java/uk/ac/york/nimblefitness/Screens/Profile/CalendarFragment.java	(date 1615647136303)
+@@ -28,7 +28,7 @@
+ 
+ import uk.ac.york.nimblefitness.R;
+ 
+-public class ProfileFragment extends Fragment {
++public class CalendarFragment extends Fragment {
+ 
+     private static final String TAG = "log";
+     FirebaseDatabase rootDatabase;
+diff --git .idea/shelf/Uncommitted_changes_before_Update_at_07_03_2021_15_40__Default_Changelist_.xml .idea/shelf/Uncommitted_changes_before_Update_at_07_03_2021_15_40__Default_Changelist_.xml
+diff --git .idea/shelf/Uncommitted_changes_before_Update_at_09_03_2021_12_01__Default_Changelist_.xml .idea/shelf/Uncommitted_changes_before_Update_at_09_03_2021_12_01__Default_Changelist_.xml
