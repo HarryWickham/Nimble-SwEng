@@ -7,10 +7,14 @@
     tools:context=".Screens.PaymentActivity"
     android:orientation="vertical">
 
+
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="none">
+
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -20,12 +24,22 @@
             android:paddingHorizontal="20dp"
             android:paddingBottom="10dp">
 
+            <TextView
+                android:padding="16dp"
+                android:id="@+id/tipbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginVertical="16dp"
+                android:textAlignment="center"
+                android:text="Use panels below to view or select membership plans. Scroll to checkout button at the bottom of this page to go to payment."/>
+
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp">
-
 
 
         <LinearLayout
@@ -34,17 +48,23 @@
             android:orientation="vertical">
 
 
+            <TextView
+                android:id="@+id/writing"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginVertical="16dp"
+                android:text="Basic Membership Plan" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="Basic Membership Plan"
-            android:layout_marginVertical="16dp"
-            android:layout_marginHorizontal="16dp"
-            android:id="@+id/writing"
-            />
-
+            <TextView
+                android:id="@+id/activationwriting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginVertical="16dp"
+                android:text="Bronze Membership" />
 
             <ImageView
                 android:id="@+id/basicmembershippic"
@@ -56,15 +76,60 @@
                 app:srcCompat="@drawable/bronzerounded" />
 
 
-            <Button
-            android:drawableTint="@color/white"
-            android:drawableRight="@drawable/ic_baseline_keyboard_arrow_down_24"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="details"
-            android:id="@+id/pushme"
-            />
+            <LinearLayout
+                android:id="@+id/arrow"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
+                <Button
+                    android:id="@+id/pushme"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="16dp"
+                    android:drawableRight="@drawable/ic_baseline_keyboard_arrow_down_24"
+                    android:drawableTint="@color/white"
+                    android:text="more details">
+
+                </Button>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/dropdown_menu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+
+                <Button
+                    android:id="@+id/lessdetailsbutton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top|center"
+                    android:drawableRight="@drawable/ic_baseline_keyboard_arrow_up_24"
+                    android:drawableTint="@color/white"
+                    android:text="less details"></Button>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginVertical="16dp"
+                    android:text="Lorem ipsum dolor sit amet." />
+
+                <Button
+                    android:id="@+id/choosebutton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top|center"
+                    android:drawableRight="@drawable/ic_baseline_fitness_center_24"
+                    android:drawableTint="@color/white"
+                    android:text="select this plan (£2.99)"></Button>
+
+            </LinearLayout>
 
 
         </LinearLayout>
@@ -86,11 +151,21 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="Intermediate Membership plan"
+                android:layout_gravity="center_horizontal"
+                android:text="Intermediate Membership Plan"
                 android:layout_marginVertical="16dp"
                 android:layout_marginHorizontal="16dp"
                 android:id="@+id/writing1"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="Silver Membership"
+                android:layout_marginVertical="16dp"
+                android:layout_marginHorizontal="16dp"
+                android:id="@+id/activationwriting1"
                 />
 
             <ImageView
@@ -100,17 +175,68 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginVertical="16dp"
-                app:srcCompat="@drawable/silverrounded" /> />
+                app:srcCompat="@drawable/silverrounded" />
 
 
+            <LinearLayout
+                android:id="@+id/arrow1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-            <Button
-                android:drawableTint="@color/white"
-                android:drawableRight="@drawable/ic_baseline_keyboard_arrow_down_24"
+                <Button
+                    android:id="@+id/pushme1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="16dp"
+                    android:drawableRight="@drawable/ic_baseline_keyboard_arrow_down_24"
+                    android:drawableTint="@color/white"
+                    android:text="more details">
+
+                </Button>
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="details"
-                android:id="@+id/pushme1"/>
+                android:visibility="gone"
+                android:id="@+id/dropdown_menu1"
+                >
+
+
+
+
+                <Button
+                    android:id="@+id/lessdetailsbutton1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top|center"
+                    android:drawableTint="@color/white"
+                    android:text="less details"
+                    android:drawableRight="@drawable/ic_baseline_keyboard_arrow_up_24"></Button>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginVertical="16dp"
+                    android:layout_gravity="center_horizontal"
+                    android:text="Lorem ipsum dolor sit amet."/>
+
+                <Button
+                    android:id="@+id/choosebutton1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top|center"
+                    android:drawableTint="@color/white"
+                    android:text="select this plan (£5.99)"
+                    android:drawableRight="@drawable/ic_baseline_fitness_center_24"></Button>
+
+            </LinearLayout>
+
+
 
         </LinearLayout>
 
@@ -122,7 +248,6 @@
         android:layout_marginBottom="20dp">
 
         <LinearLayout
-
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -139,6 +264,16 @@
                 android:id="@+id/writing2"
                 />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="Gold Membership"
+                android:layout_marginVertical="16dp"
+                android:layout_marginHorizontal="16dp"
+                android:id="@+id/activationwriting2"
+                />
+
             <ImageView
                 android:id="@+id/advancedmembershippic"
                 android:layout_width="wrap_content"
@@ -146,21 +281,89 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginVertical="16dp"
-                app:srcCompat="@drawable/goldrounded" /> />
+                app:srcCompat="@drawable/goldrounded" />
 
-            <Button
-                android:drawableTint="@color/white"
-                android:drawableRight="@drawable/ic_baseline_keyboard_arrow_down_24"
+
+            <LinearLayout
+                android:id="@+id/arrow2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/pushme2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="16dp"
+                    android:drawableRight="@drawable/ic_baseline_keyboard_arrow_down_24"
+                    android:drawableTint="@color/white"
+                    android:text="more details">
+
+                </Button>
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="details"
-                android:id="@+id/pushme2"/>
+                android:visibility="gone"
+                android:id="@+id/dropdown_menu2"
+                >
+
+
+
+
+                <Button
+                    android:id="@+id/lessdetailsbutton2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top|center"
+                    android:drawableTint="@color/white"
+                    android:text="less details"
+                    android:drawableRight="@drawable/ic_baseline_keyboard_arrow_up_24"></Button>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginVertical="16dp"
+                    android:layout_gravity="center_horizontal"
+                    android:text="Lorem ipsum dolor sit amet."/>
+
+                <Button
+                    android:id="@+id/choosebutton2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top|center"
+                    android:drawableTint="@color/white"
+                    android:text="select this plan (£8.99)"
+                    android:drawableRight="@drawable/ic_baseline_fitness_center_24"></Button>
+
+            </LinearLayout>
+
+
 
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
 
+            <Button
+                android:id="@+id/checkoutbutton"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_gravity="bottom|center"
+                android:drawableTint="@color/white"
+                android:text="checkout with selected plan"
+                android:drawableRight="@drawable/ic_baseline_account_circle_24"/>
+
         </LinearLayout>
+
+
+
     </ScrollView>
 
+
+
 </LinearLayout>
+
