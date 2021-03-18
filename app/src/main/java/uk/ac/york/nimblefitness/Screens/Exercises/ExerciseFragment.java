@@ -1,33 +1,26 @@
-package uk.ac.york.nimblefitness.Screens.Search;
+package uk.ac.york.nimblefitness.Screens.Exercises;
 
-import android.content.Context;
 import android.os.Bundle;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
 
 import java.util.ArrayList;
 
 import uk.ac.york.nimblefitness.R;
 
 
-public class SearchFragment extends Fragment {
+public class ExerciseFragment extends Fragment {
 
     ListView list;
-    SearchView search;
+    SearchView exercises;
 
 
     @Override
@@ -39,16 +32,16 @@ public class SearchFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-        getActivity().setTitle("Search");
+        getActivity().setTitle("Search for exercise");
 
-        View view = inflater.inflate(R.layout.fragment_search, container, false);
+        View view = inflater.inflate(R.layout.fragment_exercises, container, false);
         list = view.findViewById(R.id.list);
-        search = view.findViewById(R.id.search);
-        search.setActivated(true);
-        search.setQueryHint("Search for exercises");
-        search.onActionViewExpanded();
-        search.setIconified(false);
+        exercises = view.findViewById(R.id.search);
+        exercises.setActivated(true);
+        exercises.setQueryHint("Search for exercises");
+        exercises.onActionViewExpanded();
+        exercises.setIconified(false);
+
         ArrayList<String> arrayList = new ArrayList<>();
         arrayList.add("Push Ups");
         arrayList.add("Sit Ups");
@@ -58,7 +51,8 @@ public class SearchFragment extends Fragment {
                 android.R.layout.simple_list_item_1,
                 arrayList);
         list.setAdapter(arrayAdapter);
-        search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
+        exercises.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 return false;

@@ -13,14 +13,14 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import uk.ac.york.nimblefitness.R;
 import uk.ac.york.nimblefitness.Screens.Profile.ProfileTabsFragment;
 import uk.ac.york.nimblefitness.Screens.Routines.RoutinesFragment;
-import uk.ac.york.nimblefitness.Screens.Search.SearchFragment;
+import uk.ac.york.nimblefitness.Screens.Exercises.ExerciseFragment;
 import uk.ac.york.nimblefitness.Screens.Settings.SettingsFragment;
 
 public class MainActivity extends AppCompatActivity {
 
     private ProfileTabsFragment profileTabsFragment;
     private RoutinesFragment routinesFragment;
-    private SearchFragment searchFragment;
+    private ExerciseFragment exerciseFragment;
     private SettingsFragment settingsFragment;
 
 
@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
         profileTabsFragment = new ProfileTabsFragment();
         routinesFragment = new RoutinesFragment();
-        searchFragment = new SearchFragment();
+        exerciseFragment = new ExerciseFragment();
         settingsFragment = new SettingsFragment();
 
         setContentView(R.layout.activity_main);
@@ -45,8 +45,8 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.routines_page:
                     openFragment(routinesFragment);
                     return true;
-                case R.id.search_page:
-                    openFragment(searchFragment);
+                case R.id.exercises_page:
+                    openFragment(exerciseFragment);
                     return true;
                 case R.id.settings_page:
                     openFragment(settingsFragment);
