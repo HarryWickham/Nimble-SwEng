@@ -127,7 +127,7 @@
                     android:layout_gravity="top|center"
                     android:drawableRight="@drawable/ic_baseline_fitness_center_24"
                     android:drawableTint="@color/white"
-                    android:text="select this plan (£2.99)"></Button>
+                    android:text="select this plan (£1.99)"></Button>
 
             </LinearLayout>
 
@@ -231,7 +231,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="top|center"
                     android:drawableTint="@color/white"
-                    android:text="select this plan (£5.99)"
+                    android:text="select this plan (£3.99)"
                     android:drawableRight="@drawable/ic_baseline_fitness_center_24"></Button>
 
             </LinearLayout>
@@ -337,7 +337,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="top|center"
                     android:drawableTint="@color/white"
-                    android:text="select this plan (£8.99)"
+                    android:text="select this plan (£5.99)"
                     android:drawableRight="@drawable/ic_baseline_fitness_center_24"></Button>
 
             </LinearLayout>
