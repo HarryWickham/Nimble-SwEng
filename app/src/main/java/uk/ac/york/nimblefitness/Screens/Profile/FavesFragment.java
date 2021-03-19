@@ -51,38 +51,45 @@ public class FavesFragment extends Fragment {
 
         ListView FavouritesList = view.findViewById(R.id.FavouritesList);
 
-        mDatabase = FirebaseDatabase.getInstance().getReference("users");
+        mDatabase = FirebaseDatabase.getInstance().getReference("users"); // Finding the "users" child in the firebase
 
-        FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();  // Getting the unique ID for the current user for their information
 
+        // Listener to gather information out of the firebase
         mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (currentFirebaseUser != null) {
+                if (currentFirebaseUser != null) { // If the firebase is detected
+                    // Importing the favourited routine name into the favourites list to be displayed
                     favourite = snapshot.child(currentFirebaseUser.getUid()).child("favouriteRoutines").getValue(String.class);
-                    Log.i("TAG", "" + favourite);
+                    Log.i("TAG", "" + favourite); // Console output
+                    // Outputs the found name of the favourite routine in a list using the pre made routine card
                     ListView FavouritesListView = view.findViewById(R.id.FavouritesList);
 
+                    // If there is a saved routine in favourites
                     if (favourite != null) {
-                        Log.i("TAG", "" + currentFirebaseUser.getUid());
+                        Log.i("TAG", "" + currentFirebaseUser.getUid()); // Console output
+                        // Makes a new routine and names it the name of the saved favourite routine
                         Routine routine1 = new Routine(favourite, R.drawable.final_logo);
                         //Routine routine2 = new Routine("Routine2", R.drawable.final_logo);
                         //Routine routine3 = new Routine("Routine3", R.drawable.final_logo);
                         //Routine routine4 = new Routine("Routine4", R.drawable.final_logo);
 
+                        // Creates an array for the favourite routines to go into
                         ArrayList<Routine> FavouritesArrayList = new ArrayList<>();
-                        FavouritesArrayList.add(routine1);
+                        FavouritesArrayList.add(routine1); // Adding the routine to the list for favourites
                         //FavouritesArrayList.add(routine2);
                         //FavouritesArrayList.add(routine3);
                         //FavouritesArrayList.add(routine4);
 
+
                         RoutineListAdapter adapter = new RoutineListAdapter(requireContext(), R.layout.routines_list_layout, FavouritesArrayList);
                         FavouritesListView.setAdapter(adapter);
-                    } else {
-                        String[] settings_list_items = {"Favourites"}; //the text that goes in each different list view item
+                    } else { // If there are no favourite routines found
+                        String[] settings_list_items = {"Favourites"}; //Adds a simple list with the title "favourites" to show that is where they will go when favourited
 
                         ArrayAdapter<String> ListViewAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, settings_list_items); //need to make a 'simple_list_item_1' replacement -> 'settings_list_layout' allow the use of images in the list view like in settings activity example
-                        FavouritesList.setAdapter(ListViewAdapter);
+                        FavouritesList.setAdapter(ListViewAdapter); // Changing the layout of the list in favourites if there are no favourite routines
                     }
                 }
 
