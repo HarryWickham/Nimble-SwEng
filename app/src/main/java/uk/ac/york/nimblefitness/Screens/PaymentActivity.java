@@ -51,7 +51,7 @@ public class PaymentActivity extends AppCompatActivity {
 
         //Links membershipDetails[plan] to the corresponding id in the xml
         membershipDetailsBronze = findViewById(R.id.membership_details_bronze);
-        membershipDetailsSilver = findViewById(R.id.memership_details_silver);
+        membershipDetailsSilver = findViewById(R.id.membership_details_silver);
         membershipDetailsGold = findViewById(R.id.membership_details_gold);
 
         //Links downArrow[plan] to the corresponding id in the xml
@@ -189,7 +189,7 @@ public class PaymentActivity extends AppCompatActivity {
                 selectionStatusGold = false;
 
                 selectionFeedbackBronze.setText("Bronze");
-                selectionFeedbackSilver.setText("Silver(Selected)");
+                selectionFeedbackSilver.setText("Silver (Selected)");
                 selectionFeedbackGold.setText("Gold");
 
                 selectionButtonBronze.setVisibility(View.VISIBLE);

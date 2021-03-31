@@ -196,7 +196,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="gone"
-                android:id="@+id/memership_details_silver"
+                android:id="@+id/membership_details_silver"
                 >
 
                 <Button
@@ -386,7 +386,6 @@
                 android:drawableTint="@color/white"
                 android:text="please select a plan above to checkout"
                 android:drawableRight="@drawable/ic_baseline_account_circle_24"
-                android:onClick="planBought"
                 android:visibility="gone"/>
 
         </LinearLayout>
