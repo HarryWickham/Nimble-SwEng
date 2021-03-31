@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Screens.Profile.CalendarFragment">
+    tools:context=".Screens.Profile.Calendar.CalendarFragment">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -86,9 +86,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_below="@+id/profile_date"
                                 android:layout_alignStart="@id/profile_picture"
-                                android:text=""
-
-                                />
+                                android:text="" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -117,6 +115,3 @@
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
-
-
-

@@ -1,4 +1,4 @@
-package uk.ac.york.nimblefitness.Screens.Profile;
+package uk.ac.york.nimblefitness.Screens.Profile.Goal;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

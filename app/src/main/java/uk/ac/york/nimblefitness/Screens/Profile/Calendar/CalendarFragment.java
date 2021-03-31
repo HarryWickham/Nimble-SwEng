@@ -1,4 +1,4 @@
-package uk.ac.york.nimblefitness.Screens.Profile;
+package uk.ac.york.nimblefitness.Screens.Profile.Calendar;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -27,7 +27,7 @@ import java.util.Date;
 
 import uk.ac.york.nimblefitness.R;
 
-public class CalendarFragment extends Fragment {
+public class CalendarFragment extends Fragment implements CalendarContract.CalendarView{
 
     private static final String TAG = "log";
     FirebaseDatabase rootDatabase;
@@ -145,5 +145,3 @@ public class CalendarFragment extends Fragment {
 
 
 }
-
-

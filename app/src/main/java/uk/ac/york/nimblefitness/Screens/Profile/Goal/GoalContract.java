@@ -1,4 +1,4 @@
-package uk.ac.york.nimblefitness.Screens.Profile;
+package uk.ac.york.nimblefitness.Screens.Profile.Goal;
 
 /*
  This contract interface file allows the Model, View and Presenter for the Goal tab of the profile

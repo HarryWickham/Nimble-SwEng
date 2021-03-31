@@ -1,6 +1,4 @@
-package uk.ac.york.nimblefitness.Screens.Profile;
-
-import pl.pawelkleczkowski.customgauge.CustomGauge;
+package uk.ac.york.nimblefitness.Screens.Profile.Goal;
 
 public class GoalPresenter implements GoalContract.Presenter{
 
