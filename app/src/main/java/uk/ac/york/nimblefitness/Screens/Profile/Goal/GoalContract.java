@@ -1,22 +1,25 @@
 package uk.ac.york.nimblefitness.Screens.Profile.Goal;
 
+import android.content.Context;
+
+import uk.ac.york.nimblefitness.Adapters.MovesListAdapter;
+
 /*
  This contract interface file allows the Model, View and Presenter for the Goal tab of the profile
  page to interact with each other.
 */
-
 public interface GoalContract {
 
     interface GoalView {
-        // some view methods
+        Context getContext();
     }
 
     interface Model {
-        int updateGauge(int currentValue, int valueAdded);
         String motivationQuote();
         String currentUser();
+        int updateGauge(int currentValue, int valueAdded);
         int gaugeEndValue();
-        //void todaysMoves();
+        MovesListAdapter todaysMoves(Context context);
     }
 
     interface Presenter {
@@ -24,5 +27,6 @@ public interface GoalContract {
         String displayUserName();
         int displayGaugeInfo();
         int setGaugeEndValue();
+        MovesListAdapter setTodaysMovesList();
     }
 }

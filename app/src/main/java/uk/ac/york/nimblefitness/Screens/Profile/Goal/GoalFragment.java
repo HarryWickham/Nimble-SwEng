@@ -1,5 +1,6 @@
 package uk.ac.york.nimblefitness.Screens.Profile.Goal;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 
 import pl.pawelkleczkowski.customgauge.CustomGauge;
+import uk.ac.york.nimblefitness.Adapters.MovesListAdapter;
 import uk.ac.york.nimblefitness.R;
 
 /*
@@ -47,16 +49,20 @@ public class GoalFragment extends Fragment implements GoalContract.GoalView {
         // Finds where the quote should go in this layout.
         TextView motivationQuote = view.findViewById(R.id.motivation);
         motivationQuote.setText(goalPresenter.displayQuote()); // Sets the quote.
-
+        // Finds where in the layout the current user's name should go.
         TextView userName = view.findViewById(R.id.user_name);
         userName.setText(goalPresenter.displayUserName()); // Displays the user's name.
-
-        ListView listView = (ListView) view.findViewById(R.id.todays_moves); //Finds where the string array 'moves_to_do' should go.
-
-        String[] moves_to_do = {"Plank", "Squats", "Sit-Ups", "Press-ups"}; //A list of the moves completed/in progress for the current day.
-        ArrayAdapter<String> ListViewAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, moves_to_do); //need to make a 'simple_list_item_1' replacement -> 'settings_list_layout' allow the use of images in the list view like in settings activity example
-        listView.setAdapter(ListViewAdapter);
+        // The list of exercises to do for today.
+        ListView listView = (ListView) view.findViewById(R.id.todays_moves);
+        listView.setAdapter(goalPresenter.setTodaysMovesList()); // Sets the list of today's moves.
 
         return view;
     }
+    // This method is used to send the fragment's context to the Presenter so the list of today's
+    // moves can be set.
+    @Override
+    public Context getContext(){
+        return getActivity();
+    }
+
 }

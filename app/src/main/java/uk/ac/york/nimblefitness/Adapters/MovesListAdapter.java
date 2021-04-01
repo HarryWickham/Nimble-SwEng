@@ -24,13 +24,15 @@ public class MovesListAdapter extends BaseAdapter {
     Context context;
     private String[] exerciseTitle;
     private String[] exerciseDetails;
+    private String[] numberOfMoves;
     private int[] exerciseIcon;
 
-    public MovesListAdapter(Context context, String [] exerciseTitle,
-                       String [] exerciseDetails, int [] exerciseIcon) {
+    public MovesListAdapter(Context context, String [] exerciseTitle, String [] exerciseDetails,
+                            String[] numberOfMoves, int [] exerciseIcon) {
         this.context = context;
         this.exerciseTitle = exerciseTitle;
         this.exerciseDetails = exerciseDetails;
+        this.numberOfMoves = numberOfMoves;
         this.exerciseIcon = exerciseIcon;
     }
 
@@ -63,6 +65,7 @@ public class MovesListAdapter extends BaseAdapter {
 
             viewHolder.txtName = (TextView) convertView.findViewById(R.id.exercise_name);
             viewHolder.txtDetails = (TextView) convertView.findViewById(R.id.sets_of_reps);
+            viewHolder.txtMoves = (TextView) convertView.findViewById(R.id.number_of_moves);
             viewHolder.icon = (ImageView) convertView.findViewById(R.id.exercise_icon);
 
             result = convertView;
@@ -74,13 +77,19 @@ public class MovesListAdapter extends BaseAdapter {
 
         viewHolder.txtName.setText(exerciseTitle[position]);
         viewHolder.txtDetails.setText(exerciseDetails[position]);
+        viewHolder.txtMoves.setText(numberOfMoves[position]);
         viewHolder.icon.setImageResource(exerciseIcon[position]);
         return convertView;
+    }
+
+    public String getExerciseTitleAtPosition(int position){
+        return exerciseTitle[position];
     }
 
     private static class ViewHolder {
         TextView txtName;
         TextView txtDetails;
+        TextView txtMoves;
         ImageView icon;
     }
 }

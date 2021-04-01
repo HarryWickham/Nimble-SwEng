@@ -1,5 +1,10 @@
 package uk.ac.york.nimblefitness.Screens.Profile.Goal;
 
+import uk.ac.york.nimblefitness.Adapters.MovesListAdapter;
+
+/*
+ This class is used to interface between the View and Model associated with the Goal tab.
+ */
 public class GoalPresenter implements GoalContract.Presenter{
 
     private GoalFragment goalView;
@@ -22,12 +27,17 @@ public class GoalPresenter implements GoalContract.Presenter{
 
     @Override
     public int displayGaugeInfo() {
-        return goalModel.updateGauge(0,33);
+        return goalModel.updateGauge(0,68);
     }
 
     @Override
     public int setGaugeEndValue() {
         return goalModel.gaugeEndValue();
+    }
+
+    @Override
+    public MovesListAdapter setTodaysMovesList() {
+        return goalModel.todaysMoves(goalView.getContext());
     }
 
 }
