@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Screens.Profile.GoalFragment">
+    tools:context=".Screens.Profile.Goal.GoalFragment">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -79,7 +79,6 @@
                         android:paddingHorizontal="8dp"
                         android:paddingBottom="8dp">
                     </TextView>
-
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
@@ -129,10 +128,7 @@
                                 android:id="@+id/user_name"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_below="@+id/today"
-                                android:layout_alignLeft="@id/profile_picture"
                                 android:text="" />
-
                         </LinearLayout>
 
                         <LinearLayout
@@ -149,7 +145,7 @@
                                 android:contentDescription="@string/share_icon" />
                         </LinearLayout>
                     </LinearLayout>
-
+<!--Unable to scroll through list without scrolling entire page-->
                     <ListView
                         android:id="@+id/todays_moves"
                         android:layout_width="match_parent"

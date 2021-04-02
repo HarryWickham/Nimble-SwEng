@@ -12,23 +12,31 @@ import androidx.fragment.app.FragmentTransaction;
 import com.google.android.material.tabs.TabLayout;
 
 import uk.ac.york.nimblefitness.R;
+import uk.ac.york.nimblefitness.Screens.Profile.Calendar.CalendarFragment;
+import uk.ac.york.nimblefitness.Screens.Profile.Goal.GoalFragment;
 
+/*
+ This class initialises the Tab Layout within the profile page and allows the user to switch and
+ view the different tabs: Calendar, Favourites & Goals.
+*/
 public class ProfileTabsFragment extends Fragment {
-
+    // This method initialises the fragment.
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        switchFragment(new CalendarFragment()); //the calendar tab is the first fragment to appear in the tab view
+        //The calendar tab is the first fragment to appear in the tab view.
+        switchFragment(new CalendarFragment());
     }
-
+    // This method creates the appearance of the fragment and inflates the goal tab layout so it's
+    // visible.
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        getActivity().setTitle("Profile");
-        View view = inflater.inflate(R.layout.fragment_profile_tabs, container, false); //inflates the tab layout fragment so it's visible
-        TabLayout profileTabs = (TabLayout) view.findViewById(R.id.profile_tabs); //finds where in the fragment the tab layout should go
-
-        profileTabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() { //listens for when a user selects a new tab and shows the respective fragment
+        requireActivity().setTitle("Profile");
+        View view = inflater.inflate(R.layout.fragment_profile_tabs, container, false);
+        TabLayout profileTabs = (TabLayout) view.findViewById(R.id.profile_tabs); //Finds where in the fragment the tab layout should go.
+        //This listener listens for when a user selects a new tab and shows the respective fragment.
+        profileTabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 Fragment fragment = null;
@@ -45,7 +53,7 @@ public class ProfileTabsFragment extends Fragment {
                     default:
                         Toast.makeText(getActivity(), "Error", Toast.LENGTH_SHORT).show();
                 }
-                switchFragment(fragment); //this changes the visible fragment when a different tab is selected
+                switchFragment(fragment); //This changes the visible fragment when a different tab is selected.
             }
 
             @Override
@@ -58,7 +66,7 @@ public class ProfileTabsFragment extends Fragment {
         });
     return view;
     }
-    //this switches the current fragment displayed when the corresponding tab is selected
+    //This switches the current fragment displayed when the corresponding tab is selected.
     void switchFragment(Fragment fragment) {
         FragmentTransaction ft = getParentFragmentManager().beginTransaction();
         ft.replace(R.id.profile_frame, fragment);

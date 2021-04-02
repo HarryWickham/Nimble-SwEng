@@ -7,14 +7,10 @@
     tools:context=".Screens.PaymentActivity"
     android:orientation="vertical">
 
-
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="none">
-
-
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -41,33 +37,34 @@
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp">
 
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-
             <TextView
-                android:id="@+id/writing"
+                android:id="@+id/viewed_feedback_bronze"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginVertical="16dp"
-                android:text="Basic Membership Plan" />
+                android:textAlignment="center"
+                android:text="Basic Membership" />
 
             <TextView
-                android:id="@+id/activationwriting"
+                android:id="@+id/selection_feedback_bronze"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginVertical="16dp"
-                android:text="Bronze Membership" />
+                android:textAlignment="center"
+                android:textSize="30sp"
+                android:text="Bronze" />
 
             <ImageView
-                android:id="@+id/basicmembershippic"
+                android:id="@+id/bronze_membership_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="125dp"
                 android:layout_gravity="center_horizontal"
@@ -75,15 +72,14 @@
                 android:layout_marginVertical="16dp"
                 app:srcCompat="@drawable/bronzerounded" />
 
-
             <LinearLayout
-                android:id="@+id/arrow"
+                android:id="@+id/down_arrow_bronze"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
                 <Button
-                    android:id="@+id/pushme"
+                    android:id="@+id/more_details_button_bronze"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -91,26 +87,25 @@
                     android:drawableRight="@drawable/ic_baseline_keyboard_arrow_down_24"
                     android:drawableTint="@color/white"
                     android:text="more details">
-
                 </Button>
+
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/dropdown_menu"
+                android:id="@+id/membership_details_bronze"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:visibility="gone">
 
-
                 <Button
-                    android:id="@+id/lessdetailsbutton"
+                    android:id="@+id/less_details_button_bronze"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="top|center"
                     android:drawableRight="@drawable/ic_baseline_keyboard_arrow_up_24"
                     android:drawableTint="@color/white"
-                    android:text="less details"></Button>
+                    android:text="less details" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -121,16 +116,16 @@
                     android:text="Lorem ipsum dolor sit amet." />
 
                 <Button
-                    android:id="@+id/choosebutton"
+                    android:id="@+id/selection_button_bronze"
+                    android:layout_marginBottom="16dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="top|center"
                     android:drawableRight="@drawable/ic_baseline_fitness_center_24"
                     android:drawableTint="@color/white"
-                    android:text="select this plan (£1.99)"></Button>
+                    android:text="select this plan (£2.99)" />
 
             </LinearLayout>
-
 
         </LinearLayout>
 
@@ -146,30 +141,30 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:text="Intermediate Membership Plan"
+                android:text="Intermediate Membership"
                 android:layout_marginVertical="16dp"
                 android:layout_marginHorizontal="16dp"
-                android:id="@+id/writing1"
+                android:textAlignment="center"
+                android:id="@+id/viewed_feedback_silver"
                 />
 
             <TextView
+                android:id="@+id/selection_feedback_silver"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:text="Silver Membership"
-                android:layout_marginVertical="16dp"
                 android:layout_marginHorizontal="16dp"
-                android:id="@+id/activationwriting1"
-                />
+                android:layout_marginVertical="16dp"
+                android:textAlignment="center"
+                android:textSize="30sp"
+                android:text="Silver" />
 
             <ImageView
-                android:id="@+id/intermediatemembershippic"
+                android:id="@+id/silver_membership_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="125dp"
                 android:layout_gravity="center_horizontal"
@@ -177,15 +172,14 @@
                 android:layout_marginVertical="16dp"
                 app:srcCompat="@drawable/silverrounded" />
 
-
             <LinearLayout
-                android:id="@+id/arrow1"
+                android:id="@+id/down_arrow_silver"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
                 <Button
-                    android:id="@+id/pushme1"
+                    android:id="@+id/more_details_button_silver"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -193,8 +187,8 @@
                     android:drawableRight="@drawable/ic_baseline_keyboard_arrow_down_24"
                     android:drawableTint="@color/white"
                     android:text="more details">
-
                 </Button>
+
             </LinearLayout>
 
             <LinearLayout
@@ -202,14 +196,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="gone"
-                android:id="@+id/dropdown_menu1"
+                android:id="@+id/membership_details_silver"
                 >
 
-
-
-
                 <Button
-                    android:id="@+id/lessdetailsbutton1"
+                    android:id="@+id/less_details_button_silver"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="top|center"
@@ -226,7 +217,8 @@
                     android:text="Lorem ipsum dolor sit amet."/>
 
                 <Button
-                    android:id="@+id/choosebutton1"
+                    android:id="@+id/selection_button_silver"
+                    android:layout_marginBottom="16dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="top|center"
@@ -236,8 +228,6 @@
 
             </LinearLayout>
 
-
-
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
@@ -252,30 +242,30 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:text="Advanced Membership Plan"
+                android:text="Advanced Membership"
                 android:layout_marginVertical="16dp"
                 android:layout_marginHorizontal="16dp"
-                android:id="@+id/writing2"
+                android:textAlignment="center"
+                android:id="@+id/viewed_feedback_gold"
                 />
 
             <TextView
+                android:id="@+id/selection_feedback_gold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:text="Gold Membership"
-                android:layout_marginVertical="16dp"
                 android:layout_marginHorizontal="16dp"
-                android:id="@+id/activationwriting2"
-                />
+                android:layout_marginVertical="16dp"
+                android:textAlignment="center"
+                android:textSize="30sp"
+                android:text="Gold" />
 
             <ImageView
-                android:id="@+id/advancedmembershippic"
+                android:id="@+id/gold_membership_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="125dp"
                 android:layout_gravity="center_horizontal"
@@ -283,15 +273,14 @@
                 android:layout_marginVertical="16dp"
                 app:srcCompat="@drawable/goldrounded" />
 
-
             <LinearLayout
-                android:id="@+id/arrow2"
+                android:id="@+id/down_arrow_gold"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
                 <Button
-                    android:id="@+id/pushme2"
+                    android:id="@+id/more_details_button_gold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -308,14 +297,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="gone"
-                android:id="@+id/dropdown_menu2"
+                android:id="@+id/membership_details_gold"
                 >
 
-
-
-
                 <Button
-                    android:id="@+id/lessdetailsbutton2"
+                    android:id="@+id/less_details_button_gold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="top|center"
@@ -332,7 +318,8 @@
                     android:text="Lorem ipsum dolor sit amet."/>
 
                 <Button
-                    android:id="@+id/choosebutton2"
+                    android:id="@+id/selection_button_gold"
+                    android:layout_marginBottom="16dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="top|center"
@@ -349,13 +336,57 @@
     </androidx.cardview.widget.CardView>
 
             <Button
-                android:id="@+id/checkoutbutton"
+                android:id="@+id/checkout_button_default"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:layout_gravity="bottom|center"
                 android:drawableTint="@color/white"
                 android:text="checkout with selected plan"
-                android:drawableRight="@drawable/ic_baseline_account_circle_24"/>
+                android:drawableRight="@drawable/ic_baseline_account_circle_24"
+                android:visibility="visible"/>
+
+            <Button
+                android:id="@+id/checkout_button_bronze"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_gravity="bottom|center"
+                android:drawableTint="@color/white"
+                android:text="checkout with bronze plan"
+                android:drawableRight="@drawable/ic_baseline_account_circle_24"
+                android:onClick="planBought"
+                android:visibility="gone"/>
+
+            <Button
+                android:id="@+id/checkout_button_silver"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_gravity="bottom|center"
+                android:drawableTint="@color/white"
+                android:text="checkout with silver plan"
+                android:drawableRight="@drawable/ic_baseline_account_circle_24"
+                android:onClick="planBought"
+                android:visibility="gone"/>
+
+            <Button
+                android:id="@+id/checkout_button_gold"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_gravity="bottom|center"
+                android:drawableTint="@color/white"
+                android:text="checkout with gold plan"
+                android:drawableRight="@drawable/ic_baseline_account_circle_24"
+                android:onClick="planBought"
+                android:visibility="gone"/>
+
+            <Button
+                android:id="@+id/checkout_button_no_selection"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_gravity="bottom|center"
+                android:drawableTint="@color/white"
+                android:text="please select a plan above to checkout"
+                android:drawableRight="@drawable/ic_baseline_account_circle_24"
+                android:visibility="gone"/>
 
         </LinearLayout>
 

@@ -24,7 +24,8 @@ public class PaymentActivityTest {
         mActivity = PaymentActivityTestRule.getActivity();
     }
 
-
+    /*Test if the user clicks on the view more button, test to see if the view set to gone is visible afterward
+    * Check to see what button */
 
     @Test
     public void testLaunchPaymentActivity() {

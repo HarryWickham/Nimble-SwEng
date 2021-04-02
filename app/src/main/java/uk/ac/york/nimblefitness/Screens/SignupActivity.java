@@ -40,7 +40,7 @@ public class SignupActivity extends AppCompatActivity {
 
         Button signUpButton = findViewById(R.id.sign_up_button);
         firebaseAuth = FirebaseAuth.getInstance();
-        progressBar = findViewById(R.id.progress_circular);
+        progressBar = findViewById(R.id.signup_progress_circular);
         userEmailLayout = findViewById((R.id.SignUpEmailLayout));
         userPasswordLayout = findViewById((R.id.SignUpPasswordLayout));
         userConfirmPasswordLayout = findViewById(R.id.SignUpPasswordConfirmLayout);
@@ -82,7 +82,7 @@ public class SignupActivity extends AppCompatActivity {
         signUpButton.setOnClickListener(v -> {
             String email1 = userEmail.getText().toString().trim();
             String password1 = userPassword.getText().toString().trim();
-            progressBar.setVisibility(View.VISIBLE);
+            //progressBar.setVisibility(View.VISIBLE);
             if(validateEmail(userDetails) & validatePassword(userDetails) & validateConfirmPassword(userDetails)) {
 
                 checkSignUpDetails(email1, password1);
@@ -104,10 +104,10 @@ public class SignupActivity extends AppCompatActivity {
                 user.sendEmailVerification().addOnSuccessListener(aVoid -> Toast.makeText(SignupActivity.this, "Verification Email Sent", Toast.LENGTH_SHORT).show()).addOnFailureListener(e -> {
                 });
                 Toast.makeText(SignupActivity.this, "User Created", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                startActivity(new Intent(getApplicationContext(), PaymentActivity.class));
 
             } else {
-                progressBar.setVisibility(View.GONE);
+                //progressBar.setVisibility(View.GONE);
                 userEmailLayout.setError(Objects.requireNonNull(task.getException()).getMessage());
             }
         });
