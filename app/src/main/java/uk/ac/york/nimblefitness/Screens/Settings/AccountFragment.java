@@ -23,7 +23,7 @@ public class AccountFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_account, container, false); //shows the fragment_settings.xml file in the frame view of the activity_main.xml
         requireActivity().setTitle("Account");
-        String[] account_options_list = {"Personal information", "Your Activity", "Favourites", "Notifications", "Security", "Help"}; //the text that goes in each different list view item
+        String[] account_options_list = {"Personal information", "Your Activity", "Favourites2", "Notifications", "Security", "Help", "test 2"}; //the text that goes in each different list view item
 
         ListView listView = view.findViewById(R.id.account_options_list); //find the list view from the fragment_settings.xml file
 
