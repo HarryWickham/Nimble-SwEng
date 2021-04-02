@@ -1,4 +1,6 @@
-package uk.ac.york.nimblefitness.Screens.Profile;
+package uk.ac.york.nimblefitness.Screens.Profile.Goal;
+
+import android.content.Context;
 
 import androidx.annotation.NonNull;
 
@@ -11,6 +13,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.Random;
+
+import uk.ac.york.nimblefitness.Adapters.MovesListAdapter;
+import uk.ac.york.nimblefitness.R;
 
 /*
  This class handles the logic and database aspects of the Goal tab in the profile page of the app.
@@ -82,13 +87,21 @@ public class GoalModel implements GoalContract.Model{
         });
         return userName;
     }
-/*  This method still needs working on so the list of completed moves fits into the MVP architecture.
-
+    // The data for the moves the user needs to complete today will be retrieved from the Firebase
+    // database and is used to populate this list in the Goal tab.
     @Override
-    public void todaysMoves() {
-        String[] moves_to_do = {"Plank", "Squats", "Sit-Ups", "Press-ups"}; //A list of the moves completed/in progress for the current day.
-        ArrayAdapter<String> ListViewAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, moves_to_do); //need to make a 'simple_list_item_1' replacement -> 'settings_list_layout' allow the use of images in the list view like in settings activity example
-        listView.setAdapter(ListViewAdapter);
+    public MovesListAdapter todaysMoves(Context context) {
+        MovesListAdapter listAdapter;
+        String[] movesToDo = {"Plank", "Squats", "Sit-ups", "Press-ups"};
+        String[] moveDetails = {"3 sets of 1 minute", "5 sets of 3 reps",
+                                "5 sets of 3 reps", "7 sets of 5 reps"};
+        String[] numberOfMoves = {"Moves: 3", "Moves: 15", "Moves: 15", "Moves: 35"};
+        int[] exerciseIcon = {R.drawable.ic_baseline_accessibility_24,
+                                R.drawable.ic_baseline_accessibility_24,
+                                R.drawable.ic_baseline_accessibility_24,
+                                R.drawable.ic_baseline_accessibility_24};
+        listAdapter = new MovesListAdapter(context, movesToDo, moveDetails, numberOfMoves,
+                                                                                exerciseIcon);
+        return listAdapter;
     }
-*/
 }

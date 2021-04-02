@@ -11,9 +11,10 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.tabs.TabLayout;
 
-import java.util.Objects;
-
 import uk.ac.york.nimblefitness.R;
+import uk.ac.york.nimblefitness.Screens.Profile.Calendar.CalendarFragment;
+import uk.ac.york.nimblefitness.Screens.Profile.Goal.GoalFragment;
+
 /*
  This class initialises the Tab Layout within the profile page and allows the user to switch and
  view the different tabs: Calendar, Favourites & Goals.
