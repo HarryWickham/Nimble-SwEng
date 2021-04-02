@@ -44,75 +44,14 @@ public class UserDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_details);
 
-        gender_selector = findViewById(R.id.gender_selector);
-        gender_selector_spinner = findViewById(R.id.gender_selector_spinner);
-        String[] arrayList_gender = {"Female", "Male", "Other"};
-        arrayAdapter_gender = new ArrayAdapter<>(getApplicationContext(), R.layout.material_spinner_layout, arrayList_gender);
-        gender_selector_spinner.setAdapter(arrayAdapter_gender);
+        textEntrySetup();
+        genderSelectorSetup();
+        activityLevelSelectorSetup();
+        exerciseTypeSelectorSetup();
+        firebaseSetup();
+    }
 
-        activity_level_selector = findViewById(R.id.activity_level_selector);
-        activity_level_selector_spinner = findViewById(R.id.activity_level_selector_spinner);
-        String[] arrayList_activity_level = {"None", "Less than 1 hour", "Between 1 and 2 hours",
-                "Between 2 and 4 hours", "Between 4 and 8 hours", "More than 8 hours"};
-        arrayAdapter_activity_level = new ArrayAdapter<>(getApplicationContext(), R.layout.material_spinner_layout, arrayList_activity_level);
-        activity_level_selector_spinner.setAdapter(arrayAdapter_activity_level);
-
-
-        exercise_type_selector = findViewById(R.id.exercise_type_selector);
-        exercise_type_selector_spinner = findViewById(R.id.exercise_type_selector_spinner);
-        String[] arrayList_exercise_type_selector = {"None", "Aerobic: cycling, running...", "Anaerobic: weight training...",
-                "Calisthenics: large muscle group exercises", "Strength Training: compound or isolated exercise", "Stretching Exercises"}; //the text that goes in each different list view item
-        arrayAdapter_exercise_type_selector = new ArrayAdapter<>(getApplicationContext(), R.layout.material_spinner_layout, arrayList_exercise_type_selector);
-        exercise_type_selector_spinner.setAdapter(arrayAdapter_exercise_type_selector);
-
-        save_user_details_button = findViewById(R.id.save_user_details);
-        user_account_first_name = findViewById(R.id.user_account_first_name);
-        user_account_first_name_edit_text = findViewById(R.id.user_account_first_name_edit_text);
-        user_account_last_name_edit_text = findViewById(R.id.user_account_last_name_edit_text);
-        user_account_age_edit_text = findViewById(R.id.user_account_age_edit_text);
-
-
-        user_account_last_name = findViewById(R.id.user_account_last_name);
-        user_account_age = findViewById(R.id.user_account_age);
-
-        Log.i("onCreate ", "previouslyEnteredValues");
-
-        user_account_first_name.getEditText().setOnFocusChangeListener((view, b) -> {
-            if(!b){
-                validateFirstName();
-            }
-        });
-
-        user_account_last_name.getEditText().setOnFocusChangeListener((view, b) -> {
-            if(!b){
-                validateLastName();
-            }
-        });
-
-        user_account_age.getEditText().setOnFocusChangeListener((view, b) -> {
-            if(!b){
-                validateAge();
-            }
-        });
-
-        gender_selector.getEditText().setOnFocusChangeListener((view, b) -> {
-            if(!b){
-                validateGender();
-            }
-        });
-
-        activity_level_selector.getEditText().setOnFocusChangeListener((view, b) -> {
-            if(!b){
-                validateExerciseDuration();
-            }
-        });
-
-        exercise_type_selector.getEditText().setOnFocusChangeListener((view, b) -> {
-            if(!b){
-                validateExerciseType();
-            }
-        });
-
+    private void firebaseSetup(){
         rootDatabase = FirebaseDatabase.getInstance();
         rootReference = rootDatabase.getReference("users");
 
@@ -143,7 +82,7 @@ public class UserDetailsActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 if (currentFirebaseUser != null) {
-                        helperClass = snapshot.child(currentFirebaseUser.getUid()).getValue(UserHelperClass.class);
+                    helperClass = snapshot.child(currentFirebaseUser.getUid()).getValue(UserHelperClass.class);
 
                     if (helperClass != null) {
                         user_account_first_name_edit_text.setText(helperClass.getFirstName());
@@ -162,7 +101,81 @@ public class UserDetailsActivity extends AppCompatActivity {
                 Toast.makeText(UserDetailsActivity.this, "Failed to get data.", Toast.LENGTH_SHORT).show();
             }
         });
+    }
 
+    private void textEntrySetup(){
+        save_user_details_button = findViewById(R.id.save_user_details);
+
+        user_account_first_name = findViewById(R.id.user_account_first_name);
+        user_account_first_name_edit_text = findViewById(R.id.user_account_first_name_edit_text);
+
+        user_account_last_name = findViewById(R.id.user_account_last_name);
+        user_account_last_name_edit_text = findViewById(R.id.user_account_last_name_edit_text);
+
+        user_account_age_edit_text = findViewById(R.id.user_account_age_edit_text);
+        user_account_age = findViewById(R.id.user_account_age);
+
+        user_account_first_name.getEditText().setOnFocusChangeListener((view, b) -> {
+            if(!b){
+                validateFirstName();
+            }
+        });
+
+        user_account_last_name.getEditText().setOnFocusChangeListener((view, b) -> {
+            if(!b){
+                validateLastName();
+            }
+        });
+
+        user_account_age.getEditText().setOnFocusChangeListener((view, b) -> {
+            if(!b){
+                validateAge();
+            }
+        });
+    }
+
+    private void genderSelectorSetup(){
+        gender_selector = findViewById(R.id.gender_selector);
+        gender_selector_spinner = findViewById(R.id.gender_selector_spinner);
+        String[] arrayList_gender = {"Female", "Male", "Other"};
+        arrayAdapter_gender = new ArrayAdapter<>(getApplicationContext(), R.layout.material_spinner_layout, arrayList_gender);
+        gender_selector_spinner.setAdapter(arrayAdapter_gender);
+
+        gender_selector.getEditText().setOnFocusChangeListener((view, b) -> {
+            if(!b){
+                validateGender();
+            }
+        });
+    }
+
+    private void activityLevelSelectorSetup(){
+        activity_level_selector = findViewById(R.id.activity_level_selector);
+        activity_level_selector_spinner = findViewById(R.id.activity_level_selector_spinner);
+        String[] arrayList_activity_level = {"None", "Less than 1 hour", "Between 1 and 2 hours",
+                "Between 2 and 4 hours", "Between 4 and 8 hours", "More than 8 hours"};
+        arrayAdapter_activity_level = new ArrayAdapter<>(getApplicationContext(), R.layout.material_spinner_layout, arrayList_activity_level);
+        activity_level_selector_spinner.setAdapter(arrayAdapter_activity_level);
+
+        activity_level_selector.getEditText().setOnFocusChangeListener((view, b) -> {
+            if(!b){
+                validateExerciseDuration();
+            }
+        });
+    }
+
+    private void exerciseTypeSelectorSetup(){
+        exercise_type_selector = findViewById(R.id.exercise_type_selector);
+        exercise_type_selector_spinner = findViewById(R.id.exercise_type_selector_spinner);
+        String[] arrayList_exercise_type_selector = {"None", "Aerobic: cycling, running...", "Anaerobic: weight training...",
+                "Calisthenics: large muscle group exercises", "Strength Training: compound or isolated exercise", "Stretching Exercises"}; //the text that goes in each different list view item
+        arrayAdapter_exercise_type_selector = new ArrayAdapter<>(getApplicationContext(), R.layout.material_spinner_layout, arrayList_exercise_type_selector);
+        exercise_type_selector_spinner.setAdapter(arrayAdapter_exercise_type_selector);
+
+        exercise_type_selector.getEditText().setOnFocusChangeListener((view, b) -> {
+            if(!b){
+                validateExerciseType();
+            }
+        });
     }
 
     private Boolean validateFirstName(){
