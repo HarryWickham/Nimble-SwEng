@@ -62,11 +62,12 @@ public class PaymentListAdapter extends BaseAdapter {
             LayoutInflater inflater = LayoutInflater.from(context);
             convertView = inflater.inflate(R.layout.moves_list_layout, parent, false);
 
+            /*Add these after renaming the IDs of the xml parts to something similar
             viewHolder.txtName = (TextView) convertView.findViewById(R.id.plan_title);
             viewHolder.txtDetails = (TextView) convertView.findViewById(R.id.plan_description);
             viewHolder.txtMoves = convertView.findViewById(R.id.more_details_button);
             viewHolder.icon = (ImageView) convertView.findViewById(R.id.plan_image);
-            viewHolder.membership_more_details = convertView.findViewById(R.id.membership_more_details);
+            viewHolder.membership_more_details = convertView.findViewById(R.id.membership_more_details);*/
 
             result = convertView;
             convertView.setTag(viewHolder);
