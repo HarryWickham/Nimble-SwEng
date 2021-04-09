@@ -245,3 +245,24 @@ public class PaymentActivity extends AppCompatActivity {
         finish();
     }
 }
+
+/*
+        String[] planTier = {"Basic Membership", "Intermediate Membership",
+                "Advanced Membership"};
+        String[] planTitle = {"Bronze", "Silver", "Gold"};
+        String[] detailsText = {"more details", "more details", "more details"};
+        int[] planImage = {R.drawable.bronzerounded,
+                R.drawable.silverrounded,
+                R.drawable.goldrounded};
+        /*int[] detailsIcon = {R.drawable.ic_baseline_keyboard_arrow_down_24,
+                R.drawable.ic_baseline_keyboard_arrow_up_24,
+                R.drawable.ic_baseline_keyboard_arrow_down_24,
+                R.drawable.ic_baseline_keyboard_arrow_up_24,
+                R.drawable.ic_baseline_keyboard_arrow_down_24,
+                R.drawable.ic_baseline_keyboard_arrow_up_24};*/
+
+    /*MovesListAdapter listAdapter = new MovesListAdapter(this, planTitle, planTier, detailsText,
+            planImage);
+
+        list = findViewById(R.id.expandingItem);
+                list.setAdapter(listAdapter);*/
