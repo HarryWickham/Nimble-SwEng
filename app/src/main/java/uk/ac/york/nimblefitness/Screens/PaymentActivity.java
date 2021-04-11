@@ -241,6 +241,25 @@ public class PaymentActivity extends AppCompatActivity {
             }
         });
 
+        String[] planTier = {"Basic Membership", "Intermediate Membership",
+                "Advanced Membership"};
+        String[] planTitle = {"Bronze", "Silver", "Gold"};
+        String[] detailsText = {"more details", "more details", "more details"};
+        int[] planImage = {R.drawable.bronzerounded,
+                R.drawable.silverrounded,
+                R.drawable.goldrounded};
+    /*int[] detailsIcon = {R.drawable.ic_baseline_keyboard_arrow_down_24,
+            R.drawable.ic_baseline_keyboard_arrow_up_24,
+            R.drawable.ic_baseline_keyboard_arrow_down_24,
+            R.drawable.ic_baseline_keyboard_arrow_up_24,
+            R.drawable.ic_baseline_keyboard_arrow_down_24,
+            R.drawable.ic_baseline_keyboard_arrow_up_24};*/
+
+        PaymentListAdapter listAdapter = new PaymentListAdapter(this, planTitle, planTier, detailsText, planImage);
+
+        ListView list = findViewById(R.id.expanding_item);
+
+
     }
 
     public void planBought(View view) {
@@ -249,24 +268,7 @@ public class PaymentActivity extends AppCompatActivity {
     }
 
 
-    String[] planTier = {"Basic Membership", "Intermediate Membership",
-            "Advanced Membership"};
-    String[] planTitle = {"Bronze", "Silver", "Gold"};
-    String[] detailsText = {"more details", "more details", "more details"};
-    int[] planImage = {R.drawable.bronzerounded,
-            R.drawable.silverrounded,
-            R.drawable.goldrounded};
-    /*int[] detailsIcon = {R.drawable.ic_baseline_keyboard_arrow_down_24,
-            R.drawable.ic_baseline_keyboard_arrow_up_24,
-            R.drawable.ic_baseline_keyboard_arrow_down_24,
-            R.drawable.ic_baseline_keyboard_arrow_up_24,
-            R.drawable.ic_baseline_keyboard_arrow_down_24,
-            R.drawable.ic_baseline_keyboard_arrow_up_24};*/
 
-    PaymentListAdapter listAdapter = new PaymentListAdapter(this, planTitle, planTier, detailsText, planImage);
-
-    ListView list = findViewById(R.id.expanding_item);
-    list.setAdapter(listAdapter);
 
 
 }
