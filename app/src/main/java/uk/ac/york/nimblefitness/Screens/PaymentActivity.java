@@ -5,10 +5,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import uk.ac.york.nimblefitness.Adapters.PaymentListAdapter;
 import uk.ac.york.nimblefitness.R;
 
 //Importing
@@ -42,6 +44,7 @@ public class PaymentActivity extends AppCompatActivity {
     //Declare TextView which displays selection status text for each membership plan
     TextView selectionFeedbackBronze, selectionFeedbackSilver, selectionFeedbackGold;
 
+
     //Runs when page is created (opened by user)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,38 +54,38 @@ public class PaymentActivity extends AppCompatActivity {
 
         //Links membershipDetails[plan] to the corresponding id in the xml
         membershipDetailsBronze = findViewById(R.id.membership_details_bronze);
-        membershipDetailsSilver = findViewById(R.id.membership_details_silver);
-        membershipDetailsGold = findViewById(R.id.membership_details_gold);
+        //membershipDetailsSilver = findViewById(R.id.membership_details_silver);
+        //membershipDetailsGold = findViewById(R.id.membership_details_gold);
 
         //Links downArrow[plan] to the corresponding id in the xml
         downArrowBronze = findViewById(R.id.down_arrow_bronze);
-        downArrowSilver = findViewById(R.id.down_arrow_silver);
-        downArrowGold = findViewById(R.id.down_arrow_gold);
+        //downArrowSilver = findViewById(R.id.down_arrow_silver);
+        //downArrowGold = findViewById(R.id.down_arrow_gold);
 
         //Links viewedFeedback[plan] to the corresponding id in the xml
         viewedFeedbackBronze = findViewById(R.id.viewed_feedback_bronze);
-        viewedFeedbackSilver = findViewById(R.id.viewed_feedback_silver);
-        viewedFeedbackGold = findViewById(R.id.viewed_feedback_gold);
+        //viewedFeedbackSilver = findViewById(R.id.viewed_feedback_silver);
+        //viewedFeedbackGold = findViewById(R.id.viewed_feedback_gold);
 
         //Links moreDetailsButton[plan] to the corresponding id in the xml
         moreDetailsButtonBronze = findViewById(R.id.more_details_button_bronze);
-        moreDetailsButtonSilver = findViewById(R.id.more_details_button_silver);
-        moreDetailsButtonGold = findViewById(R.id.more_details_button_gold);
+        //moreDetailsButtonSilver = findViewById(R.id.more_details_button_silver);
+        //moreDetailsButtonGold = findViewById(R.id.more_details_button_gold);
 
         //Links lessDetailsButton[plan] to the corresponding id in the xml
         lessDetailsButtonBronze = findViewById(R.id.less_details_button_bronze);
-        lessDetailsButtonSilver = findViewById(R.id.less_details_button_silver);
-        lessDetailsButtonGold = findViewById(R.id.less_details_button_gold);
+        //lessDetailsButtonSilver = findViewById(R.id.less_details_button_silver);
+        //lessDetailsButtonGold = findViewById(R.id.less_details_button_gold);
 
         //Links selectionButton[plan] to the corresponding id in the xml
         selectionButtonBronze = findViewById(R.id.selection_button_bronze);
-        selectionButtonSilver = findViewById(R.id.selection_button_silver);
-        selectionButtonGold = findViewById(R.id.selection_button_gold);
+        //selectionButtonSilver = findViewById(R.id.selection_button_silver);
+        //selectionButtonGold = findViewById(R.id.selection_button_gold);
 
         //Links selectionFeedback[plan] to the corresponding id in the xml
         selectionFeedbackBronze = findViewById(R.id.selection_feedback_bronze);
-        selectionFeedbackSilver = findViewById(R.id.selection_feedback_silver);
-        selectionFeedbackGold = findViewById(R.id.selection_feedback_gold);
+        //selectionFeedbackSilver = findViewById(R.id.selection_feedback_silver);
+        //selectionFeedbackGold = findViewById(R.id.selection_feedback_gold);
 
         //Links checkout buttons to the corresponding ids in the xml
         checkoutButtonDefault = findViewById(R.id.checkout_button_default);
@@ -95,8 +98,8 @@ public class PaymentActivity extends AppCompatActivity {
         this.setTitle("Membership Page");
 
         /*Upon clicking the more details button for each of the membership plans, set the
-        * more details button to be gone, set the less details button for that plan
-        * to be visible and the details paragraph to be visible.*/
+         * more details button to be gone, set the less details button for that plan
+         * to be visible and the details paragraph to be visible.*/
         moreDetailsButtonBronze.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -152,11 +155,11 @@ public class PaymentActivity extends AppCompatActivity {
         });
 
         /*For each membership plan's selection buttons, if it is clicked, set that membership plan's
-        * selection button to be gone and all other membership plan's selection buttons to be
-        * visible, also set the checkout button at the bottom of the screen to a button in correspondence
-        * to selected membership plan, if no plan is selected, a checkout button displaying text asking
-        * the user to select a plan will be set to be visible. In any of these cases, one button is
-        * set to visible and the rest set to be gone.*/
+         * selection button to be gone and all other membership plan's selection buttons to be
+         * visible, also set the checkout button at the bottom of the screen to a button in correspondence
+         * to selected membership plan, if no plan is selected, a checkout button displaying text asking
+         * the user to select a plan will be set to be visible. In any of these cases, one button is
+         * set to visible and the rest set to be gone.*/
         selectionButtonBronze.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -241,28 +244,29 @@ public class PaymentActivity extends AppCompatActivity {
     }
 
     public void planBought(View view) {
-        startActivity(new Intent(getApplicationContext(), UserDetailsActivity.class));//takes user the main page
+        startActivity(new Intent(getApplicationContext(), UserDetailsActivity.class));//takes user to the main page
         finish();
     }
+
+
+    String[] planTier = {"Basic Membership", "Intermediate Membership",
+            "Advanced Membership"};
+    String[] planTitle = {"Bronze", "Silver", "Gold"};
+    String[] detailsText = {"more details", "more details", "more details"};
+    int[] planImage = {R.drawable.bronzerounded,
+            R.drawable.silverrounded,
+            R.drawable.goldrounded};
+    /*int[] detailsIcon = {R.drawable.ic_baseline_keyboard_arrow_down_24,
+            R.drawable.ic_baseline_keyboard_arrow_up_24,
+            R.drawable.ic_baseline_keyboard_arrow_down_24,
+            R.drawable.ic_baseline_keyboard_arrow_up_24,
+            R.drawable.ic_baseline_keyboard_arrow_down_24,
+            R.drawable.ic_baseline_keyboard_arrow_up_24};*/
+
+    PaymentListAdapter listAdapter = new PaymentListAdapter(this, planTitle, planTier, detailsText, planImage);
+
+    ListView list = findViewById(R.id.expanding_item);
+    list.setAdapter(listAdapter);
+
+
 }
-
-/*
-        String[] planTier = {"Basic Membership", "Intermediate Membership",
-                "Advanced Membership"};
-        String[] planTitle = {"Bronze", "Silver", "Gold"};
-        String[] detailsText = {"more details", "more details", "more details"};
-        int[] planImage = {R.drawable.bronzerounded,
-                R.drawable.silverrounded,
-                R.drawable.goldrounded};
-        /*int[] detailsIcon = {R.drawable.ic_baseline_keyboard_arrow_down_24,
-                R.drawable.ic_baseline_keyboard_arrow_up_24,
-                R.drawable.ic_baseline_keyboard_arrow_down_24,
-                R.drawable.ic_baseline_keyboard_arrow_up_24,
-                R.drawable.ic_baseline_keyboard_arrow_down_24,
-                R.drawable.ic_baseline_keyboard_arrow_up_24};*/
-
-    /*MovesListAdapter listAdapter = new MovesListAdapter(this, planTitle, planTier, detailsText,
-            planImage);
-
-        list = findViewById(R.id.expandingItem);
-                list.setAdapter(listAdapter);*/

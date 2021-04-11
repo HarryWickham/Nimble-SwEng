@@ -12,9 +12,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.NimbleFitness">
+        <activity android:name=".Screens.MainActivity2"></activity>
         <activity android:name=".Screens.UserDetailsActivity" />
         <activity android:name=".Screens.PaymentActivity" />
-        <activity android:name=".Screens.MainActivity"/>
+        <activity android:name=".Screens.MainActivity" />
         <activity android:name=".Screens.SigninActivity" />
         <activity
             android:name=".Screens.SignupActivity"
@@ -26,7 +27,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
     </application>
 
 </manifest>
