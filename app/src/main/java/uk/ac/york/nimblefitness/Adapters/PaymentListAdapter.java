@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -13,31 +14,36 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import java.util.ArrayList;
+
+import uk.ac.york.nimblefitness.HelperClasses.PaymentCard;
 import uk.ac.york.nimblefitness.R;
+import uk.ac.york.nimblefitness.Screens.PaymentActivity;
+import uk.ac.york.nimblefitness.HelperClasses.PaymentCard;
 
 public class PaymentListAdapter extends BaseAdapter {
+    
     Context context;
-    private String[] planTitle;
+    private String[] planSubtitle;
     private String[] planTier;
-    private String[] buttonText;
     private int[] planImage;
-    private int[] buttonIcon;
+    private String[] membershipDetails;
 
-    private boolean visible = false;
+    
 
-    public PaymentListAdapter(Context context, String [] planTitle, String [] planTier,
-                            String[] buttonText, int [] planImage) {
+    public PaymentListAdapter(Context context, String[] planSubtitle, String[] planTier, int[] planImage) {
         this.context = context;
-        this.planTitle = planTitle;
+        this.planSubtitle = planSubtitle;
         this.planTier = planTier;
-        this.buttonText = buttonText;
         this.planImage = planImage;
-        //this.buttonIcon = buttonIcon;
+        //this.moreDetailsButton = moreDetailsButton;
+
+        //this.selectionButton = selectionButton;
     }
 
     @Override
     public int getCount() {
-        return planTitle.length;
+        return planTier.length;
     }
 
     @Override
@@ -50,7 +56,6 @@ public class PaymentListAdapter extends BaseAdapter {
         return position;
     }
 
-    @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         ViewHolder viewHolder;
@@ -60,14 +65,15 @@ public class PaymentListAdapter extends BaseAdapter {
             viewHolder = new ViewHolder();
 
             LayoutInflater inflater = LayoutInflater.from(context);
-            convertView = inflater.inflate(R.layout.moves_list_layout, parent, false);
+            convertView = inflater.inflate(R.layout.payment_list_layout, parent, false);
 
-            /*Add these after renaming the IDs of the xml parts to something similar
-            viewHolder.txtName = (TextView) convertView.findViewById(R.id.plan_title);
-            viewHolder.txtDetails = (TextView) convertView.findViewById(R.id.plan_description);
-            viewHolder.txtMoves = convertView.findViewById(R.id.more_details_button);
-            viewHolder.icon = (ImageView) convertView.findViewById(R.id.plan_image);
-            viewHolder.membership_more_details = convertView.findViewById(R.id.membership_more_details);*/
+            viewHolder.planSubtitle = convertView.findViewById(R.id.plan_subtitle);
+            viewHolder.planTier = convertView.findViewById(R.id.plan_tier);
+            viewHolder.planImage = convertView.findViewById(R.id.plan_image);
+            viewHolder.moreLessButton = convertView.findViewById(R.id.more_less_button);
+
+            //viewHolder.moreDetailsButton = convertView.findViewById(R.id.more_details_button);
+            //viewHolder.selectionButton = convertView.findViewById(R.id.selection_button);
 
             result = convertView;
             convertView.setTag(viewHolder);
@@ -76,14 +82,20 @@ public class PaymentListAdapter extends BaseAdapter {
             result = convertView;
         }
 
-        viewHolder.txtName.setText(planTitle[position]);
-        viewHolder.txtDetails.setText(planTier[position]);
-        viewHolder.txtMoves.setText(buttonText[position]);
-        viewHolder.icon.setImageResource(planImage[position]);
+        viewHolder.planTier.setText(planTier[position]);
+
+        viewHolder.planSubtitle.setText(planSubtitle[position]);
+
+        viewHolder.planImage.setImageResource(planImage[position]);
+
+
+
+        //viewHolder.selectionButton.setButton(selectionButton[position]);
         //viewHolder.buttonIcon.setImageResource(buttonIcon[position]);
 
-        View finalConvertView = convertView;
-        viewHolder.txtMoves.setOnClickListener(new View.OnClickListener() {
+        //View finalConvertView = convertView;
+
+        viewHolder.moreLessButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 moreLessSelector(viewHolder);
@@ -93,31 +105,30 @@ public class PaymentListAdapter extends BaseAdapter {
         return convertView;
     }
 
-    public String getExerciseTitleAtPosition(int position){
-        return planTitle[position];
+    public String getPlanTierAtPosition(int position){
+        return planTier[position];
     }
 
     private static class ViewHolder {
-        TextView txtName;
-        TextView txtDetails;
-        Button txtMoves;
-        ImageView icon;
-        LinearLayout membership_more_details;
+        ImageView planImage;
+        TextView planSubtitle;
+        TextView planTier;
+        Button moreLessButton;
+        LinearLayout moreDetailsButton;
+        LinearLayout selectionButton;
         //ImageView buttonIcon;
     }
 
     private void moreLessSelector(ViewHolder viewHolder){
-        if(visible){
-            viewHolder.membership_more_details.setVisibility(View.GONE);
-
-            viewHolder.txtMoves.setText("More Details");
+        if(viewHolder.moreLessButton.getVisibility() == View.VISIBLE){
+            viewHolder.moreLessButton.setVisibility(View.GONE);
+            viewHolder.moreLessButton.setText("More Details");
             //viewHolder.txtMoves.setCompoundDrawables(null,null, get , null);
-            visible = false;
-        }else{
-            viewHolder.membership_more_details.setVisibility(View.VISIBLE);
-            viewHolder.txtMoves.setText("Less Details");
+
+        }else if(viewHolder.moreLessButton.getVisibility() == View.GONE){
+            viewHolder.moreLessButton.setVisibility(View.VISIBLE);
+            viewHolder.moreLessButton.setText("Less Details");
             //viewHolder.txtMoves.setCompoundDrawables(null,null, convertView.getResources().getDrawable(R.drawable.ic_baseline_keyboard_arrow_down_24) , null);
-            visible = true;
         }
     }
 }
