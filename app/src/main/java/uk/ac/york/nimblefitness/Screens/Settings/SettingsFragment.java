@@ -53,7 +53,7 @@ public class SettingsFragment extends Fragment {
 
 
 
-        String[] settings_list_items = {"Billing Information", "Membership Plan", "Account", "Terms and Conditions", "Logout", "User Details"}; //the text that goes in each different list view item
+        String[] settings_list_items = {"Billing Information", "Membership Plan", "Account", "Terms and Conditions", "Logout", "User Details", "HandlerTestActivity"}; //the text that goes in each different list view item
 
         ListView listView = view.findViewById(R.id.settings_list); //find the list view from the fragment_settings.xml file
 
@@ -104,6 +104,11 @@ public class SettingsFragment extends Fragment {
                 }
                 case "User Details": { //if logout is clicked the user gets taken back to the login/signin screen will need to be changed to a case statement to allow for all items to be perform actions
                     Intent mIntent = new Intent(getActivity(), UserDetailsActivity.class);
+                    startActivity(mIntent);
+                    break;
+                }
+                case "HandlerTestActivity": { //if logout is clicked the user gets taken back to the login/signin screen will need to be changed to a case statement to allow for all items to be perform actions
+                    Intent mIntent = new Intent(getActivity(), HandlerTestActivity.class);
                     startActivity(mIntent);
                     break;
                 }

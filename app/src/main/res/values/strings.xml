@@ -42,5 +42,6 @@
     <string name="calendar_tab_txt">Calendar</string>
     <string name="favourites_tab_txt">favourites</string>
     <string name="goals_tab_txt">Goals</string>
+    <string name="title_activity_handler_test">HandlerTestActivity</string>
 
 </resources>
