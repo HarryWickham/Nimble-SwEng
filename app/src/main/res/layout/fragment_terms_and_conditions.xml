@@ -1,13 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".Screens.Settings.TermsAndConditionsFragment">
 
-    <ListView
-        android:id="@+id/terms_and_conditions_options_list"
+    <ImageButton
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_margin="8dp"
+        android:background="@color/white"
+        android:id="@+id/back_button_terms_and_conditions"
+        android:src="@drawable/ic_baseline_arrow_back_24"/>
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent"
+        android:text="@string/terms_and_conditions"/>
 
-</FrameLayout>
+</LinearLayout>
