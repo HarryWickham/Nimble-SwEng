@@ -2,7 +2,6 @@ package uk.ac.york.nimblefitness.Screens;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Toast;
@@ -43,7 +42,7 @@ public class UserDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_details);
-
+        setTitle("Account");
         textEntrySetup();
         genderSelectorSetup();
         activityLevelSelectorSetup();
@@ -140,6 +139,7 @@ public class UserDetailsActivity extends AppCompatActivity {
         String[] arrayList_gender = {"Female", "Male", "Other"};
         arrayAdapter_gender = new ArrayAdapter<>(getApplicationContext(), R.layout.material_spinner_layout, arrayList_gender);
         gender_selector_spinner.setAdapter(arrayAdapter_gender);
+
 
         gender_selector.getEditText().setOnFocusChangeListener((view, b) -> {
             if(!b){

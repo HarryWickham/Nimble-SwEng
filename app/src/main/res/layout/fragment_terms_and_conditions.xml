@@ -13,9 +13,13 @@
         android:background="@color/white"
         android:id="@+id/back_button_terms_and_conditions"
         android:src="@drawable/ic_baseline_arrow_back_24"/>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/terms_and_conditions"/>
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/terms_and_conditions"/>
+    </ScrollView>
 </LinearLayout>

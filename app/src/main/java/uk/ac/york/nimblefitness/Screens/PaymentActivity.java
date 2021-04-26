@@ -4,11 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -25,6 +22,7 @@ public class PaymentActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment);
+        setTitle("Membership Plan");
         String[] planSubtitle = {"Basic Membership", "Intermediate Membership",
                 "Advanced Membership"};
         String[] planTier = {"Bronze", "Silver", "Gold"};

@@ -43,6 +43,26 @@
     <string name="favourites_tab_txt">favourites</string>
     <string name="goals_tab_txt">Goals</string>
     <string name="title_activity_handler_test">HandlerTestActivity</string>
-    <string name="terms_and_conditions">Hello</string>
+    <string name="terms_and_conditions">
+        These rules and regulations are regarding and surrounding all aspects of contact with the Nimble fitness companion app including but not limited to use, both by the license holder and/or by another party or parties. Hereinafter, “you”, “client”, and “your” refer to you, the app license holder, “Party”, or “parties” refers to either the client or Nimble and “app” refers to the Nimble Fitness Companion application for Android. When referencing this document, any use of this terminology in different tenses, singular, plural, and with the addition of pronouns is to be taken as interchangeable for the purposes of this and all related documents.\n\n
+        Unless stated otherwise, Nimble owns the intellectual property rights for all material present on the Fitness Companion app. This refers to all material both visible to the end-user, and material visible only to Nimble employees, notably the source code. This app may be accessed for your own personal use subject to restrictions set in these terms and conditions.\n\n
+        You must not:\n
+        - Sub-license any material from the app.\n
+        - Attempt reverse-engineering of the app.\n
+        - Attempt any modifications to the app.\n
+        - Share any security exploits with anyone other than the Nimble support team.\n
+        - Redistribute, whether partially or fully, the app.\n
+        - Seek to mislead Nimble with purposely modified data.\n
+        - Use the app for personal financial gain.\n\n
+        Disclaimer\n
+        We exclude from this agreement as permitted by law.\n
+        By signing this agreement you are acknowledging and agreeing that neither we as an entity, nor any of our stakeholders, either personally, or in association with us, can be held liable for any of the following as a direct or indirect result of using or being a license holder of this app:\n
+        - Death\n
+        - Personal Injury\n
+        - Financial Loss\n
+        - Fraud\n\n
+        This document will be binding from the date of agreement hereof.\n\n
+        By selecting I agree, you also acknowledge that to the extent permitted by applicable law, we reserve the right to modify the contents of this agreement provided we have given you notice as permitted by law.
+    </string>
 
 </resources>

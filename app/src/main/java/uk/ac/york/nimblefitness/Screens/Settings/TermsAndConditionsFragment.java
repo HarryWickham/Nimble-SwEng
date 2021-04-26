@@ -25,6 +25,8 @@ public class TermsAndConditionsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_terms_and_conditions, container, false); //shows the fragment_settings.xml file in the frame view of the activity_main.xml
 
+        requireActivity().setTitle("Terms and Conditions");
+
         back_button = view.findViewById(R.id.back_button_terms_and_conditions);
         back_button.setOnClickListener(new View.OnClickListener() {
             @Override
