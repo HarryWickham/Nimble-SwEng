@@ -12,10 +12,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.NimbleFitness">
+        <activity android:name=".Screens.RoutineAndExercise.RoutineAndExerciseActivity"></activity>
         <activity
             android:name=".Screens.Settings.HandlerTestActivity"
             android:label="@string/title_activity_handler_test"
-            android:theme="@style/Theme.NimbleFitness.NoActionBar"></activity>
+            android:theme="@style/Theme.NimbleFitness.NoActionBar" />
         <activity android:name=".Screens.UserDetailsActivity" />
         <activity android:name=".Screens.PaymentActivity" />
         <activity android:name=".Screens.MainActivity" />

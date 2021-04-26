@@ -49,40 +49,22 @@ public class UserDetailsActivity extends AppCompatActivity {
         activityLevelSelectorSetup();
         exerciseTypeSelectorSetup();
         firebaseSetup();
+
     }
 
     private void firebaseSetup(){
+        
         rootDatabase = FirebaseDatabase.getInstance();
         rootReference = rootDatabase.getReference("users");
 
         FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-
-        save_user_details_button.setOnClickListener(view -> {
-            if(validateFirstName() & validateLastName() & validateAge() & validateGender() & validateExerciseDuration() & validateExerciseType()) {
-
-                String firstName = user_account_first_name.getEditText().getText().toString().trim();
-                String lastName = user_account_last_name.getEditText().getText().toString().trim();
-                String userAge = user_account_age.getEditText().getText().toString().trim();
-                String gender = gender_selector.getEditText().getText().toString();
-                String exerciseType = exercise_type_selector.getEditText().getText().toString();
-                String exerciseDuration = activity_level_selector.getEditText().getText().toString();
-
-                helperClass = new UserHelperClass(firstName, lastName, gender, exerciseType, exerciseDuration, userAge);
-                if (currentFirebaseUser != null) {
-                    rootReference.child(currentFirebaseUser.getUid()).setValue(helperClass);
-                }
-                Intent mIntent = new Intent(UserDetailsActivity.this, MainActivity.class);
-                startActivity(mIntent);
-                finish();
-            }
-        });
 
         rootReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 if (currentFirebaseUser != null) {
-                    helperClass = snapshot.child(currentFirebaseUser.getUid()).getValue(UserHelperClass.class);
+                    helperClass = snapshot.child(currentFirebaseUser.getUid()).child("userDetails").getValue(UserHelperClass.class);
 
                     if (helperClass != null) {
                         user_account_first_name_edit_text.setText(helperClass.getFirstName());
@@ -101,6 +83,28 @@ public class UserDetailsActivity extends AppCompatActivity {
                 Toast.makeText(UserDetailsActivity.this, "Failed to get data.", Toast.LENGTH_SHORT).show();
             }
         });
+
+        save_user_details_button.setOnClickListener(view -> {
+            if(validateFirstName() & validateLastName() & validateAge() & validateGender() & validateExerciseDuration() & validateExerciseType()) {
+
+                String firstName = user_account_first_name.getEditText().getText().toString().trim();
+                String lastName = user_account_last_name.getEditText().getText().toString().trim();
+                String userAge = user_account_age.getEditText().getText().toString().trim();
+                String gender = gender_selector.getEditText().getText().toString();
+                String exerciseType = exercise_type_selector.getEditText().getText().toString();
+                String exerciseDuration = activity_level_selector.getEditText().getText().toString();
+
+                helperClass = new UserHelperClass(firstName, lastName, gender, exerciseType, exerciseDuration, userAge, helperClass.getMembershipPlan());
+                if (currentFirebaseUser != null) {
+                    rootReference.child(currentFirebaseUser.getUid()).child("userDetails").setValue(helperClass);
+                }
+                Intent mIntent = new Intent(UserDetailsActivity.this, MainActivity.class);
+                startActivity(mIntent);
+                finish();
+            }
+        });
+
+
     }
 
     private void textEntrySetup(){
