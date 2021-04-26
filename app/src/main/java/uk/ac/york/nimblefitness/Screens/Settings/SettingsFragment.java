@@ -21,6 +21,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import uk.ac.york.nimblefitness.R;
 import uk.ac.york.nimblefitness.Screens.PaymentActivity;
+import uk.ac.york.nimblefitness.Screens.RoutineAndExercise.RoutineAndExerciseActivity;
 import uk.ac.york.nimblefitness.Screens.SigninActivity;
 import uk.ac.york.nimblefitness.Screens.UserDetailsActivity;
 
@@ -96,6 +97,11 @@ public class SettingsFragment extends Fragment {
                 }
                 case "HandlerTestActivity": { //if logout is clicked the user gets taken back to the login/signin screen will need to be changed to a case statement to allow for all items to be perform actions
                     Intent mIntent = new Intent(getActivity(), HandlerTestActivity.class);
+                    startActivity(mIntent);
+                    break;
+                }
+                case "RoutineAndExerciseActivity": { //if logout is clicked the user gets taken back to the login/signin screen will need to be changed to a case statement to allow for all items to be perform actions
+                    Intent mIntent = new Intent(getActivity(), RoutineAndExerciseActivity.class);
                     startActivity(mIntent);
                     break;
                 }

@@ -27,6 +27,9 @@ public class ShapeView extends View {
     RectF mOval;
     Paint mPaint;
 
+    public ArrayList<ShapeType> getShapeTypeArray() {
+        return shapeTypeArray;
+    }
 
     public ShapeView(Context context) {
         super(context);
