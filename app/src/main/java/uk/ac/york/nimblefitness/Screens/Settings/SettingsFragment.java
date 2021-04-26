@@ -46,7 +46,7 @@ public class SettingsFragment extends Fragment {
         View view; //shows the fragment_settings.xml file in the frame view of the activity_main.xml
         view = inflater.inflate(R.layout.fragment_settings, container, false);
 
-        String[] settings_list_items = {"Account", "Membership Plan", "Billing Information", "Terms and Conditions", "Logout", "HandlerTestActivity"}; //the text that goes in each different list view item
+        String[] settings_list_items = {"Account", "Membership Plan", "Billing Information", "Terms and Conditions", "Logout", "HandlerTestActivity", "RoutineAndExerciseActivity"}; //the text that goes in each different list view item
 
         ListView listView = view.findViewById(R.id.settings_list); //find the list view from the fragment_settings.xml file
 
