@@ -59,6 +59,7 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment:2.3.3'
     implementation 'androidx.navigation:navigation-ui:2.3.3'
     implementation 'com.google.firebase:firebase-database:19.6.0'
+    implementation 'com.nbsp:materialfilepicker:1.9.1'
 
     testImplementation 'junit:junit:4.13.2'
     testImplementation 'org.mockito:mockito-android:3.8.0'

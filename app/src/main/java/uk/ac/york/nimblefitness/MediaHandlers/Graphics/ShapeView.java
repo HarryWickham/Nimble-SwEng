@@ -1,6 +1,5 @@
 package uk.ac.york.nimblefitness.MediaHandlers.Graphics;
 
-
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -22,14 +21,12 @@ import java.util.ArrayList;
 public class ShapeView extends View {
 
     public ArrayList<ShapeType> shapeTypeArray = new ArrayList<>();
+    //public ArrayList<Paint> paintsArray = new ArrayList<>();
 
     Rect mRect;
     RectF mOval;
     Paint mPaint;
 
-    public ArrayList<ShapeType> getShapeTypeArray() {
-        return shapeTypeArray;
-    }
 
     public ShapeView(Context context) {
         super(context);
@@ -58,16 +55,21 @@ public class ShapeView extends View {
     }
 
 
-    public void addShape(int xStart, int yStart, int height, int width, float shadingX1, float shadingY1, float shadingX2, float shadingY2, int colour1, int colour2, Shader.TileMode shadingStyle, ShapeType.Shape shape, int duration){
+    /*public void addShape(int xStart, int yStart, int height, int width, float shadingX1, float shadingY1, float shadingX2, float shadingY2, int colour1, int colour2, Shader.TileMode shadingStyle, String shape, int duration){
         shapeTypeArray.add(new ShapeType(xStart, yStart, width, height, Color.RED, shape, new LinearGradient(shadingX1,shadingY1,shadingX2,shadingY2,colour1,colour2, shadingStyle), duration));
+    }*/
+
+    public void addShape(int xStart, int yStart, int height, int width, LinearGradient linearGradient, String shape, int duration){
+        shapeTypeArray.add(new ShapeType(xStart, yStart, width, height, Color.RED, shape, linearGradient, duration));
     }
 
-    public void addShape(int xStart, int yStart, int height, int width, int colour, ShapeType.Shape shape, int duration){
+
+    public void addShape(int xStart, int yStart, int height, int width, int colour, String shape, int duration){
         shapeTypeArray.add(new ShapeType(xStart, yStart, width, height, colour, shape, null, duration));
     }
 
     public void addLine(int xStart, int yStart, int xEnd, int yEnd, int colour, int duration){
-        shapeTypeArray.add(new ShapeType(xStart, yStart, xEnd, yEnd, colour, ShapeType.Shape.LINE, duration));
+        shapeTypeArray.add(new ShapeType(xStart, yStart, xEnd, yEnd, colour, "LINE", duration));
     }
 
     @Override
@@ -78,7 +80,7 @@ public class ShapeView extends View {
                 delay(shapeType);
             }
             if (shapeType.getShading() != null) {
-                if (shapeType.getShape_type().equals(ShapeType.Shape.RECTANGLE)) {
+                if (shapeType.getShape_type().equals("RECTANGLE")) {
                     mRect.left = shapeType.getxStart();
                     mRect.top = shapeType.getyStart();
                     mRect.right = mRect.left + shapeType.getWidth();
@@ -86,7 +88,7 @@ public class ShapeView extends View {
                     mPaint.setShader(shapeType.getShading());
                     canvas.drawRect(mRect, mPaint);
 
-                } else if (shapeType.getShape_type().equals(ShapeType.Shape.OVAL)) {
+                } else if (shapeType.getShape_type().equals("OVAL")) {
                     mOval.left = shapeType.getxStart();
                     mOval.top = shapeType.getyStart();
                     mOval.right = mOval.left + shapeType.getWidth();
@@ -95,7 +97,7 @@ public class ShapeView extends View {
                     canvas.drawOval(mOval, mPaint);
                 }
             } else{
-                if (shapeType.getShape_type().equals(ShapeType.Shape.RECTANGLE)) {
+                if (shapeType.getShape_type().equals("RECTANGLE")) {
                     mRect.left = shapeType.getxStart();
                     mRect.top = shapeType.getyStart();
                     mRect.right = mRect.left + shapeType.getWidth();
@@ -103,7 +105,7 @@ public class ShapeView extends View {
                     mPaint.setShader(shapeType.getShading());
                     mPaint.setColor(shapeType.getColour());
                     canvas.drawRect(mRect, mPaint);
-                } else if (shapeType.getShape_type().equals(ShapeType.Shape.OVAL)) {
+                } else if (shapeType.getShape_type().equals("OVAL")) {
                     mOval.left = shapeType.getxStart();
                     mOval.top = shapeType.getyStart();
                     mOval.right = mOval.left + shapeType.getWidth();
@@ -111,7 +113,7 @@ public class ShapeView extends View {
                     mPaint.setShader(shapeType.getShading());
                     mPaint.setColor(shapeType.getColour());
                     canvas.drawOval(mOval, mPaint);
-                } else if (shapeType.getShape_type().equals(ShapeType.Shape.LINE)) {
+                } else if (shapeType.getShape_type().equals("LINE")) {
                     mPaint.setShader(shapeType.getShading());
                     mPaint.setColor(shapeType.getColour());
                     canvas.drawLine(shapeType.getxStart(), shapeType.getyStart(), shapeType.getxEnd(), shapeType.getyEnd(), mPaint);

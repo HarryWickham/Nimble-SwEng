@@ -93,7 +93,7 @@ public class UserDetailsActivity extends AppCompatActivity {
                 String exerciseType = exercise_type_selector.getEditText().getText().toString();
                 String exerciseDuration = activity_level_selector.getEditText().getText().toString();
 
-                helperClass = new UserHelperClass(firstName, lastName, gender, exerciseType, exerciseDuration, userAge);
+                helperClass = new UserHelperClass(firstName, lastName, gender, exerciseType, exerciseDuration, userAge, helperClass.getMembershipPlan());
                 if (currentFirebaseUser != null) {
                     rootReference.child(currentFirebaseUser.getUid()).child("userDetails").setValue(helperClass);
                 }

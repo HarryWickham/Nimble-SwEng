@@ -11,4 +11,17 @@
         android:layout_height="match_parent"
         android:id="@+id/shapeView"/>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Download Example XML File"
+        android:id="@+id/downloadXMLFile"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Open file browser"
+        android:id="@+id/openFileBrowser"
+        android:layout_marginTop="40dp"/>
+
 </FrameLayout>

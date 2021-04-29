@@ -10,4 +10,6 @@
     <color name="grey">#99FFFFFF</color>
     <color name="colorPrimary">#0047BB</color>
     <color name="colorOnPrimary">@color/white</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
 </resources>
