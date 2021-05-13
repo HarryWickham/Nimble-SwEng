@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Screens.Settings.HandlerTestActivity">
+    tools:context=".Screens.Settings.HandlerTestActivity"
+    android:id="@+id/handlerTestFrame">
 
     <uk.ac.york.nimblefitness.MediaHandlers.Graphics.ShapeView
         android:layout_width="match_parent"

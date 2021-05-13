@@ -1,25 +1,24 @@
 package uk.ac.york.nimblefitness.Screens.Settings;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.LinearGradient;
 import android.graphics.Shader;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.NumberPicker;
+import android.widget.FrameLayout;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.nbsp.materialfilepicker.MaterialFilePicker;
 import com.nbsp.materialfilepicker.ui.FilePickerActivity;
@@ -37,13 +36,20 @@ import java.util.regex.Pattern;
 
 import uk.ac.york.nimblefitness.MediaHandlers.Graphics.ShapeType;
 import uk.ac.york.nimblefitness.MediaHandlers.Graphics.ShapeView;
+import uk.ac.york.nimblefitness.MediaHandlers.Text.TextLayout;
+import uk.ac.york.nimblefitness.MediaHandlers.Text.TextModule;
+import uk.ac.york.nimblefitness.MediaHandlers.Text.TextType;
+import uk.ac.york.nimblefitness.MediaHandlers.Video.VideoLayout;
+import uk.ac.york.nimblefitness.MediaHandlers.Video.VideoType;
 import uk.ac.york.nimblefitness.R;
-import uk.ac.york.nimblefitness.Screens.MainActivity;
 
 public class HandlerTestActivity extends AppCompatActivity {
     ShapeView shapeView;
     ArrayList<ShapeType> shapeTypes;
+    ArrayList<TextType> textTypes;
+    ArrayList<VideoType> videoTypes;
     Button openFileBrowser, downloadXMLFile;
+    FrameLayout frameLayout;
 
     private static final int STORAGE_PERMISSION_CODE = 101;
 
@@ -56,6 +62,13 @@ public class HandlerTestActivity extends AppCompatActivity {
         checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, STORAGE_PERMISSION_CODE);
         openFileBrowser = findViewById(R.id.openFileBrowser);
         downloadXMLFile = findViewById(R.id.downloadXMLFile);
+        frameLayout = findViewById(R.id.handlerTestFrame);
+
+        /*TextLayout textLayout = new TextLayout("Hello World", TextModule.fontFamily.sans_serif, "52", "#00ccff", TextModule.styleFamily.italic, 200, 1400, frameLayout, this);
+        textLayout.writeText();
+
+        VideoLayout videoLayout = new VideoLayout("https://www-users.york.ac.uk/~hew550/testvideo.mp4",1000,1000,200,200,"Video", 5,false,frameLayout,this);
+        videoLayout.PlayVideo();*/
 
         downloadXMLFile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,16 +108,23 @@ public class HandlerTestActivity extends AppCompatActivity {
     private void parseXML(XmlPullParser parser) throws XmlPullParserException, IOException {
         int eventType = parser.getEventType();
         ShapeType shapeType = null;
+        TextType textType = null;
+        VideoType videoType = null;
 
         while (eventType != XmlPullParser.END_DOCUMENT) {
             String name;
             switch (eventType) {
                 case XmlPullParser.START_DOCUMENT:
                     shapeTypes = new ArrayList();
+                    textTypes = new ArrayList();
+                    videoTypes = new ArrayList();
                     break;
                 case XmlPullParser.START_TAG:
                     name = parser.getName();
                     switch (name) {
+                        case "slide":
+                            Log.i("slide: ", "STARTING DOCUMENT");
+                            break;
                         case "shape":
                             shapeType = new ShapeType();
                             shapeType.setShape_type(parser.getAttributeValue(null, "type"));
@@ -131,14 +151,55 @@ public class HandlerTestActivity extends AppCompatActivity {
                             shapeType.setDuration(Integer.parseInt(parser.getAttributeValue(null, "duration")));
                             break;
                         case "text":
-
-
+                            textType = new TextType();
+                            textType.setFont(TextModule.fontFamily.valueOf(parser.getAttributeValue(null, "font")));
+                            textType.setFontcolour(parser.getAttributeValue(null, "fontcolour"));
+                            textType.setFontsize(parser.getAttributeValue(null, "fontsize"));
+                            textType.setStyle(TextModule.styleFamily.normal);
+                            textType.setXstart(Integer.parseInt(parser.getAttributeValue(null,"xstart")));
+                            textType.setYstart(Integer.parseInt(parser.getAttributeValue(null,"ystart")));
+                            if(parser.nextText() != null) {
+                                //Log.i("text :", String.valueOf(parser.nextText()));
+                                textType.setText(String.valueOf(parser.nextText()));
+                                Log.i("text :", String.valueOf(textType.getText()));
+                            }else{
+                                textType.setText("This hasn't worked");
+                            }
+                            break;
+                        case "b":
+                            assert textType != null;
+                            textType.setStyle(TextModule.styleFamily.bold);
+                            if(parser.nextText() != null) {
+                                //Log.i("text :", String.valueOf(parser.nextText()));
+                                textType.setText(String.valueOf(parser.nextText()));
+                                Log.i("text :", String.valueOf(textType.getText()));
+                            }else{
+                                textType.setText("This hasn't worked");
+                            }
+                            break;
+                        case "i":
+                            assert textType != null;
+                            textType.setStyle(TextModule.styleFamily.italic);
+                            if(parser.nextText() != null) {
+                                //Log.i("text :", String.valueOf(parser.nextText()));
+                                textType.setText(String.valueOf(parser.nextText()));
+                                Log.i("text :", String.valueOf(textType.getText()));
+                            }else{
+                                textType.setText("This hasn't worked");
+                            }
+                            //Not sure how to implement both italics and bold or some not bold/italic some bold/italic @todo
+                            break;
+                        default:
+                            throw new IllegalStateException("Unexpected value: " + name);
                     }
                     break;
                 case XmlPullParser.END_TAG:
                     name = parser.getName();
                     if ((name.equalsIgnoreCase("shape") || name.equalsIgnoreCase("line")) && shapeType != null) {
                         shapeTypes.add(shapeType);
+                    }
+                    if (name.equalsIgnoreCase("text") && textType != null) {
+                        textTypes.add(textType);
                     }
             }
             eventType = parser.next();
@@ -215,6 +276,10 @@ public class HandlerTestActivity extends AppCompatActivity {
                 } else if (shapeType.getShape_type().equals("LINE")) {
                     shapeView.addLine(shapeType.getxStart(), shapeType.getyStart(), shapeType.getxEnd(), shapeType.getyEnd(), shapeType.getColour(), shapeType.getDuration());
                 }
+            }
+            for (TextType textType : textTypes) {
+                TextLayout textLayout = new TextLayout(textType.getText(),textType.getFont(),textType.getFontsize(),textType.getFontcolour(),textType.getStyle(),textType.getXstart(),textType.getYstart(), frameLayout, this);
+                textLayout.writeText();
             }
 
         } catch (XmlPullParserException | IOException e) {

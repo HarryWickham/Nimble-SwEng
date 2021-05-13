@@ -30,7 +30,7 @@ public class VideoPlayer extends Activity {
         view.suspend();
     }
 
-    public void loadAndPlayVideo (Uri path, Boolean loop, VideoView outsideView, int xstart, int ystart, String id, int starttime, Context context) {
+    public void loadAndPlayVideo (Uri path, Boolean loop, VideoView outsideView, int xstart, int ystart, String id, int starttime) {
         this.xstart = xstart;
         this.ystart = ystart;
         this.id = id;
