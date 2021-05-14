@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class Routine {
     private String routineName;
     private int routineImage;
+    private int rating;
     private ArrayList<Exercise> exerciseArrayList;
 
     public Routine(String routineName, int routineImage) {
@@ -27,6 +28,10 @@ public class Routine {
     public void setRoutineImage(int routineImage) {
         this.routineImage = routineImage;
     }
+
+    public int getRating() { return rating; }
+
+    public void setRating(int rating) { this.rating = rating; }
 
     public int getNumberOfExercises() { return exerciseArrayList.size(); }
 
