@@ -18,13 +18,13 @@
             android:gravity="center|top"
             android:orientation="vertical"
             android:paddingHorizontal="40dp"
-            android:paddingBottom="10dp">
+            android:paddingBottom="0dp">
 
 
             <ImageView
                 android:id="@+id/signInHeaderImageView"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="194dp"
                 android:contentDescription="@string/nimble_logo_description"
                 app:srcCompat="@drawable/final_logo" />
 
@@ -33,7 +33,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:elevation="4dp"
-                android:paddingBottom="20dp"
+                android:paddingBottom="0dp"
                 android:text="@string/login"
                 android:textColor="#666666"
                 android:textSize="30sp"
@@ -74,14 +74,7 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <TextView
-                android:id="@+id/forgotten_password"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:clickable="true"
-                android:focusable="true"
-                android:onClick="onClickForgottenPassword"
-                android:text="@string/forgotten_password" />
+
             <ProgressBar
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -91,21 +84,37 @@
                 android:id="@+id/sign_in_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="0dp"
                 android:elevation="4dp"
                 android:text="@string/login" />
+            <TextView
+                android:id="@+id/forgotten_password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
+                android:onClick="onClickForgottenPassword"
+                android:text="@string/forgotten_password" />
 
             <com.google.android.gms.common.SignInButton
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="30dp"
                 android:id="@+id/googleSignIn"/>
+
+
+            <com.facebook.login.widget.LoginButton
+                android:id="@+id/fb_login_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp" />
 
             <TextView
                 android:id="@+id/new_member"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="0dp"
                 android:clickable="true"
                 android:focusable="true"
                 android:onClick="onClickGoToSignUp"

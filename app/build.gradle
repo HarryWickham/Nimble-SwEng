@@ -61,6 +61,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-database:19.6.0'
     implementation 'com.nbsp:materialfilepicker:1.9.1'
     implementation 'com.google.firebase:firebase-messaging:20.2.1'
+    implementation 'com.facebook.android:facebook-android-sdk:[5,6)'
 
     testImplementation 'junit:junit:4.13.2'
     testImplementation 'org.mockito:mockito-android:3.8.0'

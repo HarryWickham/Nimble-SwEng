@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.facebook.login.LoginManager;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.firebase.auth.FirebaseAuth;
@@ -81,9 +82,11 @@ public class SettingsFragment extends Fragment {
                 }
                 case "Logout": { //if logout is clicked the user gets taken back to the login/signin screen will need to be changed to a case statement to allow for all items to be perform actions
                     FirebaseAuth.getInstance().signOut();
+                    LoginManager.getInstance().logOut();
                     GoogleSignIn.getClient(getActivity(), new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).build()).signOut().addOnSuccessListener(aVoid ->
                             startActivity(new Intent(view.getContext(), SigninActivity.class))).addOnFailureListener(e ->
                             Toast.makeText(getActivity(), "Sign-out Failed", Toast.LENGTH_SHORT).show());
+
                     Intent mIntent = new Intent(getActivity(), SigninActivity.class);
                     startActivity(mIntent);
                     requireActivity().finish();//closes this activity so when the user logs in again they are taken to the profile page not settings (also conserves device memory)
