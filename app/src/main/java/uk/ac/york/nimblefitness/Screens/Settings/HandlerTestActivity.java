@@ -16,10 +16,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.facebook.share.Share;
 import com.nbsp.materialfilepicker.MaterialFilePicker;
 import com.nbsp.materialfilepicker.ui.FilePickerActivity;
 
@@ -34,6 +36,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
+import uk.ac.york.nimblefitness.HelperClasses.ShareService;
 import uk.ac.york.nimblefitness.MediaHandlers.Graphics.ShapeType;
 import uk.ac.york.nimblefitness.MediaHandlers.Graphics.ShapeView;
 import uk.ac.york.nimblefitness.MediaHandlers.Text.TextLayout;
@@ -52,6 +55,15 @@ public class HandlerTestActivity extends AppCompatActivity {
     FrameLayout frameLayout;
 
     private static final int STORAGE_PERMISSION_CODE = 101;
+
+    protected void onHandleIntent() {
+        Log.i("TAG", "onHandleIntent: ");
+        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+        sharingIntent.setType("text/plain");
+        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Subject Here");
+        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, "Tutorialspoint.com");
+        startActivity(Intent.createChooser(sharingIntent, "Sharing"));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,14 +85,16 @@ public class HandlerTestActivity extends AppCompatActivity {
         downloadXMLFile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Uri uri = Uri.parse("https://www-users.york.ac.uk/~hew550/");
+                startActivity(new ShareService("Subject", "Text", "Title").ShareContent());
+                /*Uri uri = Uri.parse("https://www-users.york.ac.uk/~hew550/");
                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                startActivity(intent);
+                startActivity(intent);*/
             }
         });
         openFileBrowser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                startXMLParsing("filePath");
                 new MaterialFilePicker()
                         .withActivity(HandlerTestActivity.this)
                         .withRequestCode(1000)
@@ -132,8 +146,12 @@ public class HandlerTestActivity extends AppCompatActivity {
                             shapeType.setyStart(Integer.parseInt(parser.getAttributeValue(null, "ystart")));
                             shapeType.setWidth(Integer.parseInt(parser.getAttributeValue(null, "width")));
                             shapeType.setHeight(Integer.parseInt(parser.getAttributeValue(null, "height")));
-                            shapeType.setColour(Color.parseColor(parser.getAttributeValue(null, "fillcolour")));
-                            shapeType.setDuration(Integer.parseInt(parser.getAttributeValue(null, "duration")));
+                            if(parser.getAttributeValue(null, "fillcolour") != null){
+                                shapeType.setColour(Color.parseColor(parser.getAttributeValue(null, "fillcolour")));
+                            }else{shapeType.setColour(Color.parseColor("#000000"));}
+                            if(parser.getAttributeValue(null, "duration") != null){
+                                shapeType.setDuration(Integer.parseInt(parser.getAttributeValue(null, "duration")));
+                            }else{shapeType.setDuration(0);}
                             break;
                         case "shading":
                             assert shapeType != null;
@@ -147,50 +165,64 @@ public class HandlerTestActivity extends AppCompatActivity {
                             shapeType.setyStart(Integer.parseInt(parser.getAttributeValue(null, "ystart")));
                             shapeType.setxEnd(Integer.parseInt(parser.getAttributeValue(null, "xend")));
                             shapeType.setyEnd(Integer.parseInt(parser.getAttributeValue(null, "yend")));
-                            shapeType.setColour(Color.parseColor(parser.getAttributeValue(null, "linecolour")));
-                            shapeType.setDuration(Integer.parseInt(parser.getAttributeValue(null, "duration")));
+                            if(parser.getAttributeValue(null, "linecolour") != null){
+                                shapeType.setColour(Color.parseColor(parser.getAttributeValue(null, "linecolour")));
+                            }else{shapeType.setColour(Color.parseColor("#000000"));}
+                            if(parser.getAttributeValue(null, "duration") != null){
+                                shapeType.setDuration(Integer.parseInt(parser.getAttributeValue(null, "duration")));
+                            }else{shapeType.setDuration(0);}
+
+
                             break;
                         case "text":
                             textType = new TextType();
-                            textType.setFont(TextModule.fontFamily.valueOf(parser.getAttributeValue(null, "font")));
-                            textType.setFontcolour(parser.getAttributeValue(null, "fontcolour"));
-                            textType.setFontsize(parser.getAttributeValue(null, "fontsize"));
                             textType.setStyle(TextModule.styleFamily.normal);
                             textType.setXstart(Integer.parseInt(parser.getAttributeValue(null,"xstart")));
                             textType.setYstart(Integer.parseInt(parser.getAttributeValue(null,"ystart")));
-                            if(parser.nextText() != null) {
-                                //Log.i("text :", String.valueOf(parser.nextText()));
-                                textType.setText(String.valueOf(parser.nextText()));
-                                Log.i("text :", String.valueOf(textType.getText()));
-                            }else{
-                                textType.setText("This hasn't worked");
-                            }
+                            if(parser.getAttributeValue(null, "font") != null){
+                                textType.setFont(TextModule.fontFamily.valueOf(parser.getAttributeValue(null, "font")));
+                            }else{textType.setFont(TextModule.fontFamily.monospace);}
+                            if(parser.getAttributeValue(null, "fontcolour") != null){
+                                textType.setFontcolour(parser.getAttributeValue(null, "fontcolour"));
+                            }else{textType.setFontcolour("#000000");}
+                            if(parser.getAttributeValue(null, "fontsize") != null){
+                                textType.setFontsize(parser.getAttributeValue(null, "fontsize"));
+                            }else{textType.setFontsize("20");}
                             break;
-                        case "b":
+                        /*case "b":
                             assert textType != null;
                             textType.setStyle(TextModule.styleFamily.bold);
-                            if(parser.nextText() != null) {
-                                //Log.i("text :", String.valueOf(parser.nextText()));
-                                textType.setText(String.valueOf(parser.nextText()));
-                                Log.i("text :", String.valueOf(textType.getText()));
-                            }else{
-                                textType.setText("This hasn't worked");
-                            }
                             break;
                         case "i":
                             assert textType != null;
                             textType.setStyle(TextModule.styleFamily.italic);
-                            if(parser.nextText() != null) {
-                                //Log.i("text :", String.valueOf(parser.nextText()));
-                                textType.setText(String.valueOf(parser.nextText()));
-                                Log.i("text :", String.valueOf(textType.getText()));
-                            }else{
-                                textType.setText("This hasn't worked");
-                            }
                             //Not sure how to implement both italics and bold or some not bold/italic some bold/italic @todo
+                            break;*/
+                        case "video":
+                            videoType = new VideoType();
+                            videoType.setUriPath(String.valueOf(parser.getAttributeValue(null, "urlname")));
+                            videoType.setStarttime(Integer.parseInt(parser.getAttributeValue(null, "starttime")));
+                            videoType.setLoop(Boolean.parseBoolean(parser.getAttributeValue(null, "loop")));
+                            videoType.setXstart(Integer.parseInt(parser.getAttributeValue(null, "xstart")));
+                            videoType.setYstart(Integer.parseInt(parser.getAttributeValue(null, "ystart")));
+                            if(parser.getAttributeValue(null, "width") != null) {
+                                videoType.setWidth(Integer.parseInt(parser.getAttributeValue(null, "width")));
+                            }else{videoType.setWidth(0);}
+                            if(parser.getAttributeValue(null, "height") != null) {
+                                videoType.setHeight(Integer.parseInt(parser.getAttributeValue(null, "height")));
+                            }else{videoType.setHeight(0);}
+                            videoTypes.add(videoType);
+                            Log.i("videoTypes :", String.valueOf(videoType.getUriPath()));
                             break;
                         default:
                             throw new IllegalStateException("Unexpected value: " + name);
+                    }
+                    if(textType != null) {
+                        //Log.i("text :", String.valueOf(parser.nextText()));
+                        textType.setText(String.valueOf(parser.nextText()));
+                        Log.i("textType :", String.valueOf(textType.getText()));
+                        textTypes.add(textType);
+                        break;
                     }
                     break;
                 case XmlPullParser.END_TAG:
@@ -198,7 +230,11 @@ public class HandlerTestActivity extends AppCompatActivity {
                     if ((name.equalsIgnoreCase("shape") || name.equalsIgnoreCase("line")) && shapeType != null) {
                         shapeTypes.add(shapeType);
                     }
-                    if (name.equalsIgnoreCase("text") && textType != null) {
+                    else if (name.equalsIgnoreCase("video") && videoType != null) {
+
+                    }
+                    else if (name.equalsIgnoreCase("text") && textType != null) {
+                        Log.i("END_TAG: textType :", String.valueOf(textType.getText()));
                         textTypes.add(textType);
                     }
             }
@@ -280,6 +316,10 @@ public class HandlerTestActivity extends AppCompatActivity {
             for (TextType textType : textTypes) {
                 TextLayout textLayout = new TextLayout(textType.getText(),textType.getFont(),textType.getFontsize(),textType.getFontcolour(),textType.getStyle(),textType.getXstart(),textType.getYstart(), frameLayout, this);
                 textLayout.writeText();
+            }
+            for (VideoType videoType : videoTypes) {
+                VideoLayout videoLayout = new VideoLayout(videoType.getUriPath(),videoType.getWidth(),videoType.getHeight(),videoType.getXstart(),videoType.getYstart(),videoType.getId(),videoType.getStarttime(),videoType.isLoop(), frameLayout, this);
+                videoLayout.PlayVideo();
             }
 
         } catch (XmlPullParserException | IOException e) {

@@ -39,7 +39,9 @@ public class VideoLayout {
         videoView.setLayoutParams(params);
 
         parentLayout.addView(videoView);
-        videoView.resizeVideo(this.width,this.height);
+        if(this.width != 0 && this.height != 0) {
+            videoView.resizeVideo(this.width, this.height);
+        }
         videoPlayer.loadAndPlayVideo(UrlPath,this.loop,videoView,this.xstart,this.ystart,this.id,this.starttime);
     }
 }

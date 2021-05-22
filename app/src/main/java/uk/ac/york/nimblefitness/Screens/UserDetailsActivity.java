@@ -37,6 +37,9 @@ public class UserDetailsActivity extends AppCompatActivity {
     DatabaseReference rootReference;
 
     UserHelperClass helperClass;
+    UserHelperClass helperClass2;
+
+    String membershipPlan;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +67,7 @@ public class UserDetailsActivity extends AppCompatActivity {
 
                 if (currentFirebaseUser != null) {
                     helperClass = snapshot.child(currentFirebaseUser.getUid()).child("userDetails").getValue(UserHelperClass.class);
-
+                    membershipPlan = snapshot.child(currentFirebaseUser.getUid()).child("userDetails").child("membershipPlan").getValue(String.class);
                     if (helperClass != null) {
                         user_account_first_name_edit_text.setText(helperClass.getFirstName());
                         user_account_last_name_edit_text.setText(helperClass.getLastName());
@@ -93,9 +96,9 @@ public class UserDetailsActivity extends AppCompatActivity {
                 String exerciseType = exercise_type_selector.getEditText().getText().toString();
                 String exerciseDuration = activity_level_selector.getEditText().getText().toString();
 
-                helperClass = new UserHelperClass(firstName, lastName, gender, exerciseType, exerciseDuration, userAge, helperClass.getMembershipPlan());
+                helperClass2 = new UserHelperClass(firstName, lastName, gender, exerciseType, exerciseDuration, userAge, membershipPlan);
                 if (currentFirebaseUser != null) {
-                    rootReference.child(currentFirebaseUser.getUid()).child("userDetails").setValue(helperClass);
+                    rootReference.child(currentFirebaseUser.getUid()).child("userDetails").setValue(helperClass2);
                 }
                 Intent mIntent = new Intent(UserDetailsActivity.this, MainActivity.class);
                 startActivity(mIntent);
