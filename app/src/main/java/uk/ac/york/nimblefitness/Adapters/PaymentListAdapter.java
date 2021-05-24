@@ -26,16 +26,18 @@ public class PaymentListAdapter extends BaseAdapter {
     private String[] planTier;
     private int[] planImage;
     private String[] membershipDetailsText;
+    private MyActionCallback mActionCallback;
 
     
 
-    public PaymentListAdapter(Context context, String[] planSubtitle, String[] planTier, int[] planImage, String[] membershipDetailsText) {
+    public PaymentListAdapter(Context context, String[] planSubtitle, String[] planTier, int[] planImage, String[] membershipDetailsText, MyActionCallback actionCallback) {
         this.context = context;
         this.planSubtitle = planSubtitle;
         this.planTier = planTier;
         this.planImage = planImage;
         //this.moreDetailsButton = moreDetailsButton;
         this.membershipDetailsText = membershipDetailsText;
+        mActionCallback = actionCallback;
 
         //this.selectionButton = selectionButton;
     }
@@ -111,10 +113,9 @@ public class PaymentListAdapter extends BaseAdapter {
             @Override
             public void onClick(View view) {
                 Log.i("selectedPlan", "onClick: ");
-                SharedPreferences prefs = getDefaultSharedPreferences(context);
-                SharedPreferences.Editor editor = prefs.edit();
-                editor.putString("selectedPlan", selectedPlan(viewHolder));
-                editor.apply();
+                Log.i("selectedPlan", selectedPlan(viewHolder));
+                mActionCallback.onActionPerformed(selectedPlan(viewHolder));
+                notifyDataSetChanged();
             }
         });
 
@@ -156,5 +157,9 @@ public class PaymentListAdapter extends BaseAdapter {
                 return "Bronze";
         }
         return "Error";
+    }
+
+    public interface MyActionCallback{
+        void onActionPerformed(String position);
     }
 }

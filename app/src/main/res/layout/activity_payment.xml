@@ -9,37 +9,33 @@
 
     <TextView
         app:layout_constraintTop_toTopOf="parent"
-        android:padding="16dp"
+        android:paddingHorizontal="16dp"
         android:id="@+id/tipbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginHorizontal="16dp"
-        android:layout_marginVertical="16dp"
+        android:layout_marginVertical="4dp"
         android:textAlignment="center"
         android:text="Use panels below to view or select membership plans. Scroll to checkout button at the bottom of this page to go to payment."/>
 
 
         <ListView
             app:layout_constraintTop_toBottomOf="@id/tipbar"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:paddingBottom="16dp"
+            app:layout_constraintBottom_toTopOf="@id/checkout_button"
             android:id="@+id/expanding_item"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:visibility="visible"
-            />
-
-
-
+            android:divider="@null"/>
 
     <Button
         app:layout_constraintBottom_toBottomOf="parent"
-        android:id="@+id/selection_button"
-        android:layout_marginHorizontal="8dp"
+        android:id="@+id/checkout_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center"
+        android:layout_marginHorizontal="8dp"
         android:drawableTint="@color/white"
         android:text="please select a plan above to checkout"
         android:drawableRight="@drawable/ic_baseline_account_circle_24"
@@ -50,4 +46,3 @@
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-

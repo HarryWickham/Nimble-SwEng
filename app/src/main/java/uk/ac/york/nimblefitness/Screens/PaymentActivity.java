@@ -22,7 +22,7 @@ import static com.facebook.FacebookSdk.getApplicationContext;
 
 //Importing
 
-public class PaymentActivity extends AppCompatActivity {
+public class PaymentActivity extends AppCompatActivity implements PaymentListAdapter.MyActionCallback {
 
     //Runs when page is created (opened by user)
     @Override
@@ -48,7 +48,7 @@ public class PaymentActivity extends AppCompatActivity {
         //String[] selectionButton = {"select1", "select2", "select3"};
 
 
-        PaymentListAdapter listAdapter = new PaymentListAdapter(this, planSubtitle, planTier, planImage, moreDetailsButton);
+        PaymentListAdapter listAdapter = new PaymentListAdapter(this, planSubtitle, planTier, planImage, moreDetailsButton, this);
         /**Context context, String [] planSubtitle, String [] planTier, int [] planImage,
          int [] moreDetailsButton, String[] membershipDetails,
          int [] selectionButton**/
@@ -56,19 +56,8 @@ public class PaymentActivity extends AppCompatActivity {
         ListView list = findViewById(R.id.expanding_item);
 
         list.setAdapter(listAdapter);//setListViewHeightBasedOnChildren(list);
-        SharedPreferences prefs = getDefaultSharedPreferences(getApplicationContext());
-        SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
-            @Override
-            public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
-                Log.i("onShared", "onSharedPreferenceChanged: ");
-                if (s.equals("selectedPlan")){
-                    Log.i("onShared", "selectedPlan: ");
-                    Button selectionButton = findViewById(R.id.selection_button);
-                    selectionButton.setText(prefs.getString("selectedPlan", "Error Plan Selection Error"));
-                    Log.i("Button text", String.valueOf(selectionButton.getText()));
-                }
-            }
-        };
+
+
 
 
 
@@ -79,25 +68,9 @@ public class PaymentActivity extends AppCompatActivity {
         finish();
     }
 
-
-    public static void setListViewHeightBasedOnChildren (ListView listView) {
-        ListAdapter listAdapter = listView.getAdapter();
-        if (listAdapter == null) return;
-        int desiredWidth = View.MeasureSpec.makeMeasureSpec(listView.getWidth(), View.MeasureSpec.UNSPECIFIED);
-        int totalHeight = 0;
-        View view = null;
-        for (int i = 0; i < listAdapter.getCount(); i++) {
-            view = listAdapter.getView(i, view, listView);
-            if (i == 0) view.setLayoutParams(new ViewGroup.LayoutParams(desiredWidth, ViewGroup.LayoutParams.WRAP_CONTENT));
-            view.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
-            totalHeight += view.getMeasuredHeight();
-        }
-
-        ViewGroup.LayoutParams params = listView.getLayoutParams();
-
-        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
-
-        listView.setLayoutParams(params);
-        listView.requestLayout();
+    @Override
+    public void onActionPerformed(String position) {
+        Button checkout = findViewById(R.id.checkout_button);
+        checkout.setText(position);
     }
 }
