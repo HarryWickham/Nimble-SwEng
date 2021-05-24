@@ -1,16 +1,24 @@
 package uk.ac.york.nimblefitness.Screens;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.facebook.share.Share;
+
 import uk.ac.york.nimblefitness.Adapters.PaymentListAdapter;
 import uk.ac.york.nimblefitness.R;
+
+import static android.preference.PreferenceManager.getDefaultSharedPreferences;
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 //Importing
 
@@ -37,18 +45,32 @@ public class PaymentActivity extends AppCompatActivity {
             R.drawable.ic_baseline_keyboard_arrow_down_24,
             R.drawable.ic_baseline_keyboard_arrow_up_24};*/
         String[] moreDetailsButton = {"more details", "more details", "more details"};
-        String[] selectionButton = {"select1", "select2", "select3"};
+        //String[] selectionButton = {"select1", "select2", "select3"};
 
 
-        PaymentListAdapter listAdapter = new PaymentListAdapter(this, planSubtitle, planTier, planImage, selectionButton);
+        PaymentListAdapter listAdapter = new PaymentListAdapter(this, planSubtitle, planTier, planImage, moreDetailsButton);
         /**Context context, String [] planSubtitle, String [] planTier, int [] planImage,
          int [] moreDetailsButton, String[] membershipDetails,
          int [] selectionButton**/
 
         ListView list = findViewById(R.id.expanding_item);
 
-        list.setAdapter(listAdapter);
-        setListViewHeightBasedOnChildren(list);
+        list.setAdapter(listAdapter);//setListViewHeightBasedOnChildren(list);
+        SharedPreferences prefs = getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
+            @Override
+            public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
+                Log.i("onShared", "onSharedPreferenceChanged: ");
+                if (s.equals("selectedPlan")){
+                    Log.i("onShared", "selectedPlan: ");
+                    Button selectionButton = findViewById(R.id.selection_button);
+                    selectionButton.setText(prefs.getString("selectedPlan", "Error Plan Selection Error"));
+                    Log.i("Button text", String.valueOf(selectionButton.getText()));
+                }
+            }
+        };
+
+
 
     }
 
