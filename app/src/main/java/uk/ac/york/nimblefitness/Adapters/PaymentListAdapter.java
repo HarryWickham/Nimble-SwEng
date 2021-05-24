@@ -27,16 +27,17 @@ public class PaymentListAdapter extends BaseAdapter {
     private String[] planSubtitle;
     private String[] planTier;
     private int[] planImage;
-    private String[] membershipDetails;
+    private String[] membershipDetailsText;
 
     
 
-    public PaymentListAdapter(Context context, String[] planSubtitle, String[] planTier, int[] planImage) {
+    public PaymentListAdapter(Context context, String[] planSubtitle, String[] planTier, int[] planImage, String[] membershipDetailsText) {
         this.context = context;
         this.planSubtitle = planSubtitle;
         this.planTier = planTier;
         this.planImage = planImage;
         //this.moreDetailsButton = moreDetailsButton;
+        this.membershipDetailsText = membershipDetailsText;
 
         //this.selectionButton = selectionButton;
     }
@@ -71,6 +72,8 @@ public class PaymentListAdapter extends BaseAdapter {
             viewHolder.planTier = convertView.findViewById(R.id.plan_tier);
             viewHolder.planImage = convertView.findViewById(R.id.plan_image);
             viewHolder.moreLessButton = convertView.findViewById(R.id.more_less_button);
+            viewHolder.membershipDetailsTextView = convertView.findViewById(R.id.membership_details_text);
+            viewHolder.membershipDetailsLayout = convertView.findViewById(R.id.membership_details);
 
             //viewHolder.moreDetailsButton = convertView.findViewById(R.id.more_details_button);
             //viewHolder.selectionButton = convertView.findViewById(R.id.selection_button);
@@ -114,19 +117,20 @@ public class PaymentListAdapter extends BaseAdapter {
         TextView planSubtitle;
         TextView planTier;
         Button moreLessButton;
-        LinearLayout moreDetailsButton;
+        TextView membershipDetailsTextView;
+        LinearLayout membershipDetailsLayout;
         LinearLayout selectionButton;
         //ImageView buttonIcon;
     }
 
     private void moreLessSelector(ViewHolder viewHolder){
-        if(viewHolder.moreLessButton.getVisibility() == View.VISIBLE){
-            viewHolder.moreLessButton.setVisibility(View.GONE);
+        if(viewHolder.moreLessButton.getText().equals("Less Details")){
+            viewHolder.membershipDetailsLayout.setVisibility(View.GONE);//todo change planSubtitle to the membershipDetails
             viewHolder.moreLessButton.setText("More Details");
             //viewHolder.txtMoves.setCompoundDrawables(null,null, get , null);
 
-        }else if(viewHolder.moreLessButton.getVisibility() == View.GONE){
-            viewHolder.moreLessButton.setVisibility(View.VISIBLE);
+        }else if(viewHolder.moreLessButton.getText().equals("More Details")){
+            viewHolder.membershipDetailsLayout.setVisibility(View.VISIBLE);
             viewHolder.moreLessButton.setText("Less Details");
             //viewHolder.txtMoves.setCompoundDrawables(null,null, convertView.getResources().getDrawable(R.drawable.ic_baseline_keyboard_arrow_down_24) , null);
         }
