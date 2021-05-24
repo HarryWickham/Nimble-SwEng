@@ -155,6 +155,14 @@
                 android:text="Save"
                 android:layout_marginBottom="20dp"/>
 
+            <Button
+                android:backgroundTint="#e94035"
+                android:id="@+id/delete_user_details"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Delete Account"
+                android:layout_marginBottom="20dp"/>
+
 
         </LinearLayout>
 

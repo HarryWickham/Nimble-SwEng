@@ -1,18 +1,37 @@
 package uk.ac.york.nimblefitness.Screens;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.InputType;
+import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.facebook.AccessToken;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.SignInAccount;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.EmailAuthProvider;
+import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -22,6 +41,8 @@ import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
 import uk.ac.york.nimblefitness.HelperClasses.UserHelperClass;
 import uk.ac.york.nimblefitness.R;
+
+import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 
 public class UserDetailsActivity extends AppCompatActivity {
 
@@ -51,6 +72,7 @@ public class UserDetailsActivity extends AppCompatActivity {
         activityLevelSelectorSetup();
         exerciseTypeSelectorSetup();
         firebaseSetup();
+        deleteAccount();
 
     }
 
@@ -95,6 +117,14 @@ public class UserDetailsActivity extends AppCompatActivity {
                 String gender = gender_selector.getEditText().getText().toString();
                 String exerciseType = exercise_type_selector.getEditText().getText().toString();
                 String exerciseDuration = activity_level_selector.getEditText().getText().toString();
+
+                String userFullName = String.format("%s %s", firstName, lastName);
+                SharedPreferences prefs = getDefaultSharedPreferences(getApplicationContext());
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putString(currentFirebaseUser+"userFullName", userFullName);
+                editor.apply();
+
+                Log.i(currentFirebaseUser+"userFullName ", "firebaseSetup: " + prefs.getString(currentFirebaseUser+"userFullName", "Error getting name"));
 
                 helperClass2 = new UserHelperClass(firstName, lastName, gender, exerciseType, exerciseDuration, userAge, membershipPlan);
                 if (currentFirebaseUser != null) {
@@ -269,4 +299,101 @@ public class UserDetailsActivity extends AppCompatActivity {
         }
     }
 
+
+    private void deleteAccount() {
+        Button deleteAccount = findViewById(R.id.delete_user_details);
+        deleteAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                reAuthenticateUser();
+            }
+        });
+    }
+
+    private void deleteAccountAlertBuilder(AuthCredential credential){
+        new MaterialAlertDialogBuilder(this, R.style.AlertDialogStyle)
+        .setTitle("Are you sure you would like to delete your account?")
+        .setMessage("This cannot be undone!")
+        .setCancelable(true)
+        .setPositiveButton("Yes, Delete", (dialog, id) -> {
+            final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+            user.reauthenticate(credential).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    Log.i("PositiveButton", " attempting account deletion");
+                    user.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                Log.i("onComplete", " account deleted");
+                                startActivity(new Intent(UserDetailsActivity.this, SignupActivity.class));
+                                finish();
+                            }else{
+                                Log.i("onComplete", " account NOT deleted FAILED");
+                            }
+                        }
+                    });
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(UserDetailsActivity.this, "Incorrect Password, Please Try Again", Toast.LENGTH_LONG).show();
+                    reAuthenticateUser();
+                }
+            });
+
+        })
+
+        .setNegativeButton("Cancel", (dialog, id) -> {
+            dialog.cancel();
+        })
+        // create alert dialog
+        .show();
+    }
+
+    private void reAuthenticateUser(){
+        String provider = FirebaseAuth.getInstance().getCurrentUser().getIdToken(false).getResult().getSignInProvider(); //Currently only outputs firebase as provider????
+        String password;
+        AuthCredential credential = null;
+        Log.i("reAuthenticateUser", " : "+provider);
+        switch (provider) {
+            case "google.com":
+                GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(UserDetailsActivity.this);
+                credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
+                deleteAccountAlertBuilder(credential);
+                break;
+            case "facebook.com":
+                AccessToken token = AccessToken.getCurrentAccessToken();
+                credential = FacebookAuthProvider.getCredential(token.getToken());
+                deleteAccountAlertBuilder(credential);
+                break;
+            case "password":
+                EditText passwordInput = new EditText(UserDetailsActivity.this);
+                passwordInput.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);//ensures that text box can only take one line
+
+                AlertDialog.Builder passwordResetDialog = new AlertDialog.Builder(UserDetailsActivity.this);
+                passwordResetDialog.setTitle("ReAuthenticate to Delete Account");
+                passwordResetDialog.setMessage("Please Enter Your Password");
+                passwordResetDialog.setView(passwordInput);
+
+                passwordResetDialog.setPositiveButton("Submit", (dialog, which) -> {
+                    AuthCredential credential2 = EmailAuthProvider.getCredential(FirebaseAuth.getInstance().getCurrentUser().getEmail(), passwordInput.getText().toString());
+                    deleteAccountAlertBuilder(credential2);
+
+                });
+                passwordResetDialog.setNegativeButton("Cancel", (dialog, which) -> {
+
+                });
+                passwordResetDialog.show();
+                Log.i("reAuthenticateUser", FirebaseAuth.getInstance().getCurrentUser().getEmail());
+
+                break;
+            default:
+                Log.i("reAuthenticateUser", "Default");
+                break;
+        }
+    }
+
 }
+

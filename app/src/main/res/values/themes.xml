@@ -15,6 +15,13 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="AlertDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorOnPrimary">#0047BB</item>
+        <item name="colorOnSecondary">#0047BB</item>
+
+    </style>
+
+
     <style name="Theme.NimbleFitness.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
