@@ -24,6 +24,7 @@ import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class PaymentActivity extends AppCompatActivity implements PaymentListAdapter.MyActionCallback {
 
+    Button checkout;
     //Runs when page is created (opened by user)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +48,7 @@ public class PaymentActivity extends AppCompatActivity implements PaymentListAda
         String[] moreDetailsButton = {"more details", "more details", "more details"};
         //String[] selectionButton = {"select1", "select2", "select3"};
 
+        checkout = findViewById(R.id.checkout_button);
 
         PaymentListAdapter listAdapter = new PaymentListAdapter(this, planSubtitle, planTier, planImage, moreDetailsButton, this);
         /**Context context, String [] planSubtitle, String [] planTier, int [] planImage,
@@ -57,7 +59,12 @@ public class PaymentActivity extends AppCompatActivity implements PaymentListAda
 
         list.setAdapter(listAdapter);//setListViewHeightBasedOnChildren(list);
 
-
+        checkout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(PaymentActivity.this, UserDetailsActivity.class));
+            }
+        });
 
 
 
@@ -70,7 +77,7 @@ public class PaymentActivity extends AppCompatActivity implements PaymentListAda
 
     @Override
     public void onActionPerformed(String position) {
-        Button checkout = findViewById(R.id.checkout_button);
+
         checkout.setText(position);
     }
 }

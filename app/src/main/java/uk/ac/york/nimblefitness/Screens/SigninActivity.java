@@ -50,27 +50,23 @@ public class SigninActivity extends AppCompatActivity {
     private TextInputLayout userEmailLayout, userPasswordLayout;
     private CallbackManager mCallbackManager;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signin);
 
-        //Initilise Firebase
+        //Initialise Firebase
         firebaseAuth = FirebaseAuth.getInstance();
-
-        InitiallizeEmailLogin();
-        InitiallizeGoogleLogin();
-        InitiallizeFacebook();
-
         if (firebaseAuth.getCurrentUser() != null) {
             startActivity(new Intent(getApplicationContext(), MainActivity.class));
             finish();
         }
-
+        InitialiseEmailLogin();
+        InitialiseGoogleLogin();
+        InitialiseFacebook();
     }
 
-    private void InitiallizeEmailLogin(){
+    private void InitialiseEmailLogin(){
         userEmail = findViewById(R.id.SignInEmail);
         userPassword = findViewById(R.id.SignInPassword);
         Button login_button = findViewById(R.id.sign_in_button);
@@ -118,7 +114,7 @@ public class SigninActivity extends AppCompatActivity {
         });
     }
 
-    private void InitiallizeGoogleLogin() {
+    private void InitialiseGoogleLogin() {
         SignInButton googleSignIn = findViewById(R.id.googleSignIn);
         googleSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -147,7 +143,7 @@ public class SigninActivity extends AppCompatActivity {
         });
     }
 
-    private void InitiallizeFacebook() {
+    private void InitialiseFacebook() {
         LoginButton loginButton = findViewById(R.id.fb_login_button);
         mCallbackManager=CallbackManager.Factory.create();
 

@@ -293,7 +293,6 @@ public class HandlerTestActivity extends AppCompatActivity {
             pullParserFactory = XmlPullParserFactory.newInstance();
             XmlPullParser parser = pullParserFactory.newPullParser();
 
-            //InputStream inputStream = new FileInputStream(new File(getApplicationContext().getFilesDir().getPath() + "/data.xml"));
             InputStream inputStream = new FileInputStream(new File(filePath));
 
             parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
