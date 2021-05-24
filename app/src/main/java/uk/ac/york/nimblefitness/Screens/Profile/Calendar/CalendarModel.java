@@ -1,6 +1,10 @@
 package uk.ac.york.nimblefitness.Screens.Profile.Calendar;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
@@ -19,6 +23,9 @@ import java.util.Locale;
 
 import uk.ac.york.nimblefitness.Adapters.MovesListAdapter;
 import uk.ac.york.nimblefitness.R;
+
+import static android.preference.PreferenceManager.getDefaultSharedPreferences;
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class CalendarModel implements CalendarContract.Model {
 
@@ -101,23 +108,9 @@ public class CalendarModel implements CalendarContract.Model {
     // Calendar tab of the profile page.
     @Override
     public String currentUser() {
-        rootReference.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (currentFirebaseUser != null) {
-                    String user_firstName = snapshot.child(
-                            currentFirebaseUser.getUid()).child("firstName").getValue(String.class);
-                    String user_lastName = snapshot.child(
-                            currentFirebaseUser.getUid()).child("lastName").getValue(String.class);
-                    //The user's name is set in the section of the layout above the moves list.
-                    userName = String.format("%s %s", user_firstName, user_lastName);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        });
+        SharedPreferences prefs = getDefaultSharedPreferences(getApplicationContext());
+        userName = prefs.getString(currentFirebaseUser+"userFullName", "Error Getting Name");
+        Log.i(TAG, " Full name : "+userName);
         return userName;
     }
 

@@ -2,16 +2,21 @@ package uk.ac.york.nimblefitness.Screens.Profile.Calendar;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CalendarView;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
+import uk.ac.york.nimblefitness.HelperClasses.ShareService;
 import uk.ac.york.nimblefitness.R;
 
 public class CalendarFragment extends Fragment implements CalendarContract.CalendarView{
@@ -48,6 +53,16 @@ public class CalendarFragment extends Fragment implements CalendarContract.Calen
         ListView listView = (ListView) view.findViewById(R.id.completed_moves_list);
         listView.setAdapter(calendarPresenter.setCompletedMovesList());
 
+        ImageButton shareButton = view.findViewById(R.id.share_icon);
+        shareButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new ShareService("Look at my workout", "I have just completed all of this exercise", "Share your workout - "+ dayNumber.getText()).ShareContent());
+            }
+        });
+
+        setListViewHeightBasedOnChildren(listView);
+
 // This toast event still requires refactoring into MVP architecture?
         // On click of a list item, the corresponding exercise title is displayed as a toast.
         listView.setOnItemClickListener((parent, view1, position, id) -> {
@@ -64,5 +79,26 @@ public class CalendarFragment extends Fragment implements CalendarContract.Calen
     @Override
     public Context getContext() {
         return getActivity();
+    }
+
+    public static void setListViewHeightBasedOnChildren (ListView listView) {
+        ListAdapter listAdapter = listView.getAdapter();
+        if (listAdapter == null) return;
+        int desiredWidth = View.MeasureSpec.makeMeasureSpec(listView.getWidth(), View.MeasureSpec.UNSPECIFIED);
+        int totalHeight = 0;
+        View view = null;
+        for (int i = 0; i < listAdapter.getCount(); i++) {
+            view = listAdapter.getView(i, view, listView);
+            if (i == 0) view.setLayoutParams(new ViewGroup.LayoutParams(desiredWidth, ViewGroup.LayoutParams.WRAP_CONTENT));
+            view.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
+            totalHeight += view.getMeasuredHeight();
+        }
+
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+
+        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+
+        listView.setLayoutParams(params);
+        listView.requestLayout();
     }
 }

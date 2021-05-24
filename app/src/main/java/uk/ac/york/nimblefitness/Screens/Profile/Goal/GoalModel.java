@@ -1,6 +1,7 @@
 package uk.ac.york.nimblefitness.Screens.Profile.Goal;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 
 import androidx.annotation.NonNull;
 
@@ -16,6 +17,9 @@ import java.util.Random;
 
 import uk.ac.york.nimblefitness.Adapters.MovesListAdapter;
 import uk.ac.york.nimblefitness.R;
+
+import static android.preference.PreferenceManager.getDefaultSharedPreferences;
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 /*
  This class handles the logic and database aspects of the Goal tab in the profile page of the app.
@@ -64,27 +68,9 @@ public class GoalModel implements GoalContract.Model{
     // tab of the profile page.
     @Override
     public String currentUser() {
-        FirebaseDatabase rootDatabase = FirebaseDatabase.getInstance();
-        DatabaseReference rootReference = rootDatabase.getReference("users");
         FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-
-        rootReference.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (currentFirebaseUser != null) {
-                    String user_firstName = snapshot.child(
-                            currentFirebaseUser.getUid()).child("firstName").getValue(String.class);
-                    String user_lastName = snapshot.child(
-                            currentFirebaseUser.getUid()).child("lastName").getValue(String.class);
-                    //The user's name is set in the section of the layout above the moves list.
-                    userName = String.format("%s %s", user_firstName, user_lastName);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        });
+        SharedPreferences prefs = getDefaultSharedPreferences(getApplicationContext());
+        userName = prefs.getString(currentFirebaseUser+"userFullName", "Error Getting Name");
         return userName;
     }
     // The data for the moves the user needs to complete today will be retrieved from the Firebase
