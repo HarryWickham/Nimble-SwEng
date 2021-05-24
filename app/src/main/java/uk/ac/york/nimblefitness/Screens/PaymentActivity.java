@@ -40,7 +40,7 @@ public class PaymentActivity extends AppCompatActivity {
         String[] selectionButton = {"select1", "select2", "select3"};
 
 
-        PaymentListAdapter listAdapter = new PaymentListAdapter(this, planSubtitle, planTier, planImage);
+        PaymentListAdapter listAdapter = new PaymentListAdapter(this, planSubtitle, planTier, planImage, selectionButton);
         /**Context context, String [] planSubtitle, String [] planTier, int [] planImage,
          int [] moreDetailsButton, String[] membershipDetails,
          int [] selectionButton**/

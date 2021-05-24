@@ -61,7 +61,7 @@
                     android:layout_marginBottom="16dp"
                     android:drawableRight="@drawable/ic_baseline_keyboard_arrow_down_24"
                     android:drawableTint="@color/white"
-                    android:text="more details">
+                    android:text="More Details">
                 </Button>
 
             </LinearLayout>
@@ -71,9 +71,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:visibility="visible">
+                android:visibility="gone">
 
                 <TextView
+                    android:id="@+id/membership_details_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
