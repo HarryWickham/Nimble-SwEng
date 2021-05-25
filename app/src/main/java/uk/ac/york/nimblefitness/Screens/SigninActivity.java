@@ -116,12 +116,7 @@ public class SigninActivity extends AppCompatActivity {
 
     private void InitialiseGoogleLogin() {
         SignInButton googleSignIn = findViewById(R.id.googleSignIn);
-        googleSignIn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                googleLogin();
-            }
-        });
+        googleLogin();
     }
 
     private void googleLogin() {

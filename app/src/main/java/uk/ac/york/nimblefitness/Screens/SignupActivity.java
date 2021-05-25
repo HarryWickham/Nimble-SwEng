@@ -141,13 +141,8 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     private void InitialiseGoogleLogin() {
-        SignInButton googleSignIn = findViewById(R.id.googleSignUp);
-        googleSignIn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                googleLogin();
-            }
-        });
+        SignInButton googleSignIn = findViewById(R.id.googleSignIn);
+        googleLogin();
     }
 
     private void googleLogin() {
