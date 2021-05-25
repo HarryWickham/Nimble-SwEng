@@ -40,8 +40,8 @@
                 android:textStyle="bold" />
 
             <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:id="@+id/SignInEmailLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:elevation="4dp"
@@ -57,8 +57,8 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:id="@+id/SignInPasswordLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:elevation="4dp"
@@ -66,7 +66,7 @@
                 android:paddingVertical="5dp"
                 app:endIconMode="password_toggle">
 
-                 <com.google.android.material.textfield.TextInputEditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/SignInPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -76,10 +76,11 @@
 
 
             <ProgressBar
+                android:id="@+id/signin_progress_circular"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/signin_progress_circular"
-                android:visibility="gone"/>
+                android:visibility="gone" />
+
             <Button
                 android:id="@+id/sign_in_button"
                 android:layout_width="match_parent"
@@ -87,6 +88,7 @@
                 android:layout_marginTop="0dp"
                 android:elevation="4dp"
                 android:text="@string/login" />
+
             <TextView
                 android:id="@+id/forgotten_password"
                 android:layout_width="wrap_content"
@@ -97,10 +99,10 @@
                 android:text="@string/forgotten_password" />
 
             <com.google.android.gms.common.SignInButton
+                android:id="@+id/googleSignIn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:id="@+id/googleSignIn"/>
+                android:layout_marginTop="30dp" />
 
 
             <com.facebook.login.widget.LoginButton
@@ -108,7 +110,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp" />
+                android:paddingLeft="10dp"
+                android:layout_marginBottom="10dp"
+                android:paddingTop="11dp"
+                android:paddingBottom="11dp" />
 
             <TextView
                 android:id="@+id/new_member"
@@ -119,8 +124,6 @@
                 android:focusable="true"
                 android:onClick="onClickGoToSignUp"
                 android:text="@string/new_member" />
-
-
 
 
         </LinearLayout>
