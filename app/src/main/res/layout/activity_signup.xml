@@ -18,7 +18,7 @@
             android:gravity="center|top"
             android:orientation="vertical"
             android:paddingHorizontal="40dp"
-            android:paddingBottom="10dp">
+            android:paddingBottom="5dp">
 
             <ImageView
                 android:id="@+id/signUpHeaderImageView"
@@ -32,7 +32,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:elevation="4dp"
-                android:paddingBottom="20dp"
+                android:paddingBottom="10dp"
                 android:text="@string/sign_up"
                 android:textColor="#666666"
                 android:textSize="30sp"
@@ -105,9 +105,26 @@
                 android:id="@+id/sign_up_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="5dp"
                 android:elevation="4dp"
                 android:text="@string/sign_up" />
+
+            <com.google.android.gms.common.SignInButton
+                android:id="@+id/googleSignUp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp" />
+
+
+            <com.facebook.login.widget.LoginButton
+                android:id="@+id/fb_SignUp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:paddingLeft="10dp"
+                android:layout_marginBottom="10dp"
+                android:paddingTop="11dp"
+                android:paddingBottom="11dp" />
 
             <TextView
                 android:id="@+id/login_button"
