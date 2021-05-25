@@ -79,26 +79,22 @@ public class UserDetailsActivity extends AppCompatActivity {
     private void firebaseSetup(){
         
         rootDatabase = FirebaseDatabase.getInstance();
-        rootReference = rootDatabase.getReference("users");
-
         FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-
+        rootReference = rootDatabase.getReference("users").child(currentFirebaseUser.getUid());
         rootReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                if (currentFirebaseUser != null) {
-                    helperClass = snapshot.child(currentFirebaseUser.getUid()).child("userDetails").getValue(UserHelperClass.class);
-                    membershipPlan = snapshot.child(currentFirebaseUser.getUid()).child("userDetails").child("membershipPlan").getValue(String.class);
-                    if (helperClass != null) {
-                        user_account_first_name_edit_text.setText(helperClass.getFirstName());
-                        user_account_last_name_edit_text.setText(helperClass.getLastName());
-                        user_account_age_edit_text.setText(helperClass.getAge());
-                        gender_selector_spinner.setText(helperClass.getGender());
-                        activity_level_selector_spinner.setText(helperClass.getExerciseDuration());
-                        exercise_type_selector_spinner.setText(helperClass.getExerciseType());
+                helperClass = snapshot.child("userDetails").getValue(UserHelperClass.class);
+                membershipPlan = snapshot.child("userDetails").child("membershipPlan").getValue(String.class);
+                if (helperClass != null) {
+                    user_account_first_name_edit_text.setText(helperClass.getFirstName());
+                    user_account_last_name_edit_text.setText(helperClass.getLastName());
+                    user_account_age_edit_text.setText(helperClass.getAge());
+                    gender_selector_spinner.setText(helperClass.getGender());
+                    activity_level_selector_spinner.setText(helperClass.getExerciseDuration());
+                    exercise_type_selector_spinner.setText(helperClass.getExerciseType());
 
-                    }
                 }
             }
 
@@ -127,11 +123,8 @@ public class UserDetailsActivity extends AppCompatActivity {
                 Log.i(currentFirebaseUser+"userFullName ", "firebaseSetup: " + prefs.getString(currentFirebaseUser+"userFullName", "Error getting name"));
 
                 helperClass2 = new UserHelperClass(firstName, lastName, gender, exerciseType, exerciseDuration, userAge, membershipPlan);
-                if (currentFirebaseUser != null) {
-                    rootReference.child(currentFirebaseUser.getUid()).child("userDetails").setValue(helperClass2);
-                }
-                Intent mIntent = new Intent(UserDetailsActivity.this, MainActivity.class);
-                startActivity(mIntent);
+                rootReference.child("userDetails").setValue(helperClass2);
+                startActivity(new Intent(UserDetailsActivity.this, MainActivity.class));
                 finish();
             }
         });
@@ -317,7 +310,7 @@ public class UserDetailsActivity extends AppCompatActivity {
         .setCancelable(true)
         .setPositiveButton("Yes, Delete", (dialog, id) -> {
             final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
+            rootReference.removeValue();
             user.reauthenticate(credential).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {
