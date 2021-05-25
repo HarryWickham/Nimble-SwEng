@@ -2,7 +2,7 @@ package uk.ac.york.nimblefitness.HelperClasses;
 
 public class UserHelperClass {
 
-    String firstName, lastName, gender, exerciseType, exerciseDuration, age, membershipPlan;
+    String firstName, lastName, gender, exerciseType, exerciseDuration, age, membershipPlan, weeklyGoal;
 
     public UserHelperClass() {
     }
@@ -11,7 +11,7 @@ public class UserHelperClass {
         this.membershipPlan = membershipPlan;
     }
 
-    public UserHelperClass(String firstName, String lastName, String gender, String exerciseType, String exerciseDuration, String age, String membershipPlan) {
+    public UserHelperClass(String firstName, String lastName, String gender, String exerciseType, String exerciseDuration, String age, String membershipPlan, String weeklyGoal) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;
@@ -19,6 +19,7 @@ public class UserHelperClass {
         this.exerciseDuration = exerciseDuration;
         this.age = age;
         this.membershipPlan = membershipPlan;
+        this.weeklyGoal = weeklyGoal;
     }
 
     public String getFirstName() {
@@ -75,5 +76,13 @@ public class UserHelperClass {
 
     public void setMembershipPlan(String membershipPlan) {
         this.membershipPlan = membershipPlan;
+    }
+
+    public String getWeeklyGoal() {
+        return weeklyGoal;
+    }
+
+    public void setWeeklyGoal(String weeklyGoal) {
+        this.weeklyGoal = weeklyGoal;
     }
 }

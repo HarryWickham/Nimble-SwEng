@@ -148,6 +148,20 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:id="@+id/user_account_goal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="4dp">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/user_account_goal_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:hint="Suggested Weekly Goal"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
             <Button
                 android:id="@+id/save_user_details"
                 android:layout_width="match_parent"

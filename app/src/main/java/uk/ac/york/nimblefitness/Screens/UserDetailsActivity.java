@@ -3,9 +3,12 @@ package uk.ac.york.nimblefitness.Screens;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.InputType;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,7 +21,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.facebook.AccessToken;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.SignInAccount;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -47,10 +49,10 @@ import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 public class UserDetailsActivity extends AppCompatActivity {
 
     Button save_user_details_button;
-    TextInputLayout user_account_first_name, user_account_last_name, user_account_age,  gender_selector, activity_level_selector, exercise_type_selector;
+    TextInputLayout user_account_first_name, user_account_last_name, user_account_age,  gender_selector, activity_level_selector, exercise_type_selector, user_account_goal;
     MaterialBetterSpinner gender_selector_spinner, activity_level_selector_spinner, exercise_type_selector_spinner;
 
-    TextInputEditText user_account_first_name_edit_text, user_account_last_name_edit_text, user_account_age_edit_text;
+    TextInputEditText user_account_first_name_edit_text, user_account_last_name_edit_text, user_account_age_edit_text, user_account_goal_edit_text;
 
     ArrayAdapter<String> arrayAdapter_gender, arrayAdapter_activity_level, arrayAdapter_exercise_type_selector;
 
@@ -71,6 +73,7 @@ public class UserDetailsActivity extends AppCompatActivity {
         genderSelectorSetup();
         activityLevelSelectorSetup();
         exerciseTypeSelectorSetup();
+        weeklyGoalDisplay();
         firebaseSetup();
         deleteAccount();
 
@@ -113,16 +116,18 @@ public class UserDetailsActivity extends AppCompatActivity {
                 String gender = gender_selector.getEditText().getText().toString();
                 String exerciseType = exercise_type_selector.getEditText().getText().toString();
                 String exerciseDuration = activity_level_selector.getEditText().getText().toString();
+                String weeklyGoal = user_account_goal.getEditText().getText().toString().trim();
 
                 String userFullName = String.format("%s %s", firstName, lastName);
                 SharedPreferences prefs = getDefaultSharedPreferences(getApplicationContext());
                 SharedPreferences.Editor editor = prefs.edit();
                 editor.putString(currentFirebaseUser+"userFullName", userFullName);
+                editor.putString(currentFirebaseUser+"weeklyGoal", weeklyGoal);
                 editor.apply();
 
                 Log.i(currentFirebaseUser+"userFullName ", "firebaseSetup: " + prefs.getString(currentFirebaseUser+"userFullName", "Error getting name"));
 
-                helperClass2 = new UserHelperClass(firstName, lastName, gender, exerciseType, exerciseDuration, userAge, membershipPlan);
+                helperClass2 = new UserHelperClass(firstName, lastName, gender, exerciseType, exerciseDuration, userAge, membershipPlan, weeklyGoal);
                 rootReference.child("userDetails").setValue(helperClass2);
                 startActivity(new Intent(UserDetailsActivity.this, MainActivity.class));
                 finish();
@@ -186,6 +191,23 @@ public class UserDetailsActivity extends AppCompatActivity {
         arrayAdapter_activity_level = new ArrayAdapter<>(getApplicationContext(), R.layout.material_spinner_layout, arrayList_activity_level);
         activity_level_selector_spinner.setAdapter(arrayAdapter_activity_level);
 
+        activity_level_selector.getEditText().addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                weeklyGoalDisplay();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
         activity_level_selector.getEditText().setOnFocusChangeListener((view, b) -> {
             if(!b){
                 validateExerciseDuration();
@@ -201,11 +223,44 @@ public class UserDetailsActivity extends AppCompatActivity {
         arrayAdapter_exercise_type_selector = new ArrayAdapter<>(getApplicationContext(), R.layout.material_spinner_layout, arrayList_exercise_type_selector);
         exercise_type_selector_spinner.setAdapter(arrayAdapter_exercise_type_selector);
 
+        exercise_type_selector.getEditText().addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                weeklyGoalDisplay();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
         exercise_type_selector.getEditText().setOnFocusChangeListener((view, b) -> {
             if(!b){
                 validateExerciseType();
+
             }
         });
+    }
+
+    private void weeklyGoalDisplay(){
+        user_account_goal = findViewById(R.id.user_account_goal);
+        user_account_goal_edit_text = findViewById(R.id.user_account_goal_edit_text);
+        Log.i("exercise_type_selector", String.valueOf((!exercise_type_selector.getEditText().getText().toString().trim().equals(""))));
+        Log.i("activity_level_selector", String.valueOf((!activity_level_selector.getEditText().getText().toString().trim().equals(""))));
+        if((!exercise_type_selector.getEditText().getText().toString().trim().equals(""))&&(!activity_level_selector.getEditText().getText().toString().trim().equals(""))){
+            user_account_goal_edit_text.setText(weeklyGoalCalculation());
+        }
+    }
+
+    private String weeklyGoalCalculation(){
+        //todo complete algorithm to give user an accurate goal
+        return "50";
     }
 
     private Boolean validateFirstName(){
