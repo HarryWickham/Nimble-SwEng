@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Filter;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -79,14 +80,18 @@ public class ExerciseFragment extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                arrayAdapter.getFilter().filter(newText);
                 nothingFound = view.findViewById(R.id.nothingfoundmessage);
-                if (arrayAdapter.getCount() == 0) {
-                    nothingFound.setVisibility(View.VISIBLE);
-                }
-                else{
-                    nothingFound.setVisibility(View.GONE);
-                }
+                arrayAdapter.getFilter().filter(newText, new Filter.FilterListener() {
+                    @Override
+                    public void onFilterComplete(int i) {
+                        if (i == 0) {
+                            nothingFound.setVisibility(View.VISIBLE);
+                        }
+                        else{
+                            nothingFound.setVisibility(View.GONE);
+                        }
+                    }
+                });
                 return false;
             }
         });
