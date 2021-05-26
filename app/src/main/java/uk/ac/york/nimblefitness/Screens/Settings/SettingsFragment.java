@@ -47,7 +47,7 @@ public class SettingsFragment extends Fragment {
         View view; //shows the fragment_settings.xml file in the frame view of the activity_main.xml
         view = inflater.inflate(R.layout.fragment_settings, container, false);
 
-        String[] settings_list_items = {"Account", "Membership Plan", "Billing Information", "Terms and Conditions", "Logout", "HandlerTestActivity", "RoutineAndExerciseActivity"}; //the text that goes in each different list view item
+        String[] settings_list_items = {"Account", "Membership Plan", "Billing Information", "Report a Problem", "Terms and Conditions", "Logout", "HandlerTestActivity", "RoutineAndExerciseActivity"}; //the text that goes in each different list view item
 
         ListView listView = view.findViewById(R.id.settings_list); //find the list view from the fragment_settings.xml file
 
@@ -80,6 +80,14 @@ public class SettingsFragment extends Fragment {
                     fr.commit();
                     break;
                 }
+
+                case "Report a Problem":{
+                    FragmentTransaction fr = getParentFragmentManager().beginTransaction();
+                    fr.replace(R.id.main_frame, new ReportProblemFragment());
+                    fr.commit();
+                    break;
+                }
+
                 case "Logout": { //if logout is clicked the user gets taken back to the login/signin screen will need to be changed to a case statement to allow for all items to be perform actions
                     FirebaseAuth.getInstance().signOut();
                     LoginManager.getInstance().logOut();
