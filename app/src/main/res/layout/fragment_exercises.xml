@@ -13,18 +13,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Search Page" />
-
     <ListView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/list"
         android:dividerHeight="2dp"
         android:divider="@android:color/white"
         android:layout_below="@+id/etSearch" />
+
+    <TextView
+        android:id="@+id/nothingfoundmessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="That exercise does not exist. Try another"
+        android:visibility="gone"/>
 
 
 </LinearLayout>
