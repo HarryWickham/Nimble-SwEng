@@ -56,14 +56,7 @@ public class HandlerTestActivity extends AppCompatActivity {
 
     private static final int STORAGE_PERMISSION_CODE = 101;
 
-    protected void onHandleIntent() {
-        Log.i("TAG", "onHandleIntent: ");
-        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
-        sharingIntent.setType("text/plain");
-        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Subject Here");
-        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, "Tutorialspoint.com");
-        startActivity(Intent.createChooser(sharingIntent, "Sharing"));
-    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

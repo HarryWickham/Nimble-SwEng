@@ -22,7 +22,8 @@
             android:theme="@style/Theme.NimbleFitness.NoActionBar" />
         <activity android:name=".Screens.UserDetailsActivity" />
         <activity android:name=".Screens.PaymentActivity" />
-        <activity android:name=".Screens.MainActivity" />
+        <activity android:name=".Screens.MainActivity"
+            android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".Screens.SigninActivity" />
         <activity
             android:name=".Screens.SignupActivity"
