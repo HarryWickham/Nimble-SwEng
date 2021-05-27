@@ -13,6 +13,10 @@ import android.widget.ListView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.facebook.share.Share;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import uk.ac.york.nimblefitness.Adapters.PaymentListAdapter;
 import uk.ac.york.nimblefitness.R;
@@ -25,6 +29,8 @@ import static com.facebook.FacebookSdk.getApplicationContext;
 public class PaymentActivity extends AppCompatActivity implements PaymentListAdapter.MyActionCallback {
 
     Button checkout;
+    String checkoutTier;
+
     //Runs when page is created (opened by user)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,11 +52,11 @@ public class PaymentActivity extends AppCompatActivity implements PaymentListAda
             R.drawable.ic_baseline_keyboard_arrow_down_24,
             R.drawable.ic_baseline_keyboard_arrow_up_24};*/
         String[] moreDetailsButton = {"more details", "more details", "more details"};
-        //String[] selectionButton = {"select1", "select2", "select3"};
+        String[] selectionButton = {"select this plan (£1.99)", "select this plan (£3.99)", "select this plan (£5.99)"};
 
         checkout = findViewById(R.id.checkout_button);
 
-        PaymentListAdapter listAdapter = new PaymentListAdapter(this, planSubtitle, planTier, planImage, moreDetailsButton, this);
+        PaymentListAdapter listAdapter = new PaymentListAdapter(this, planSubtitle, planTier, planImage, moreDetailsButton, this, selectionButton);
         /**Context context, String [] planSubtitle, String [] planTier, int [] planImage,
          int [] moreDetailsButton, String[] membershipDetails,
          int [] selectionButton**/
@@ -62,6 +68,11 @@ public class PaymentActivity extends AppCompatActivity implements PaymentListAda
         checkout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                FirebaseDatabase rootDatabase = FirebaseDatabase.getInstance();
+                FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+                DatabaseReference rootReference = rootDatabase.getReference("users").child(currentFirebaseUser.getUid());
+                rootReference.child("userDetails").child("membershipPlan").setValue(checkoutTier);
+
                 startActivity(new Intent(PaymentActivity.this, UserDetailsActivity.class));
             }
         });
@@ -81,6 +92,11 @@ public class PaymentActivity extends AppCompatActivity implements PaymentListAda
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString("membershipPlan", position);
         editor.apply();
-        checkout.setText(position);
+        checkout.setText("Check out with the " + position + " plan");
+        setCheckoutTier(position);
+    }
+
+    public void setCheckoutTier(String checkoutTier) {
+        this.checkoutTier = checkoutTier;
     }
 }
