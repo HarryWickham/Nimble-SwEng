@@ -1,44 +1,36 @@
 package uk.ac.york.nimblefitness.Adapters;
+import android.content.Context;
+import android.graphics.Typeface;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.BaseExpandableListAdapter;
+import android.widget.ImageView;
+import android.widget.TextView;
 
-/*public class RoutineListAdapter extends BaseExpandableListAdapter {
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import uk.ac.york.nimblefitness.HelperClasses.Routine;
+import uk.ac.york.nimblefitness.R;
+
+public class RoutineListAdapter extends BaseExpandableListAdapter {
 
     private Context mContext;
-    int mResource;
     ArrayList<Routine> routineList;
 
-    public RoutineListAdapter(@NonNull Context context, int resource, @NonNull ArrayList<Routine> objects) {
-        super(context, resource, objects);
+    public RoutineListAdapter(@NonNull Context context, @NonNull ArrayList<Routine> routines, Typeface ttff) {
         mContext = context;
-        mResource = resource;
-        objects = routineList;
-    }
+        routineList = routines;
 
-   /* @NonNull
-    @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        String routineName = getItem(position).getRoutineName();
-        int routineImage = getItem(position).getRoutineImage();
-
-        LayoutInflater inflater = LayoutInflater.from(mContext);
-        convertView = inflater.inflate(mResource, parent, false);
-
-        TextView tvRoutineName = (TextView) convertView.findViewById(R.id.routines_activity_name);
-        ImageView ivRoutineImage = (ImageView) convertView.findViewById(R.id.routines_image);
-
-        tvRoutineName.setText(routineName);
-        ivRoutineImage.setImageResource(routineImage);
-
-        return convertView;
     }
 
     @Override
-    public boolean isEnabled(int position) {
-        return false;
-    }*/
-
-    //Above is the previous code, below is the code for using a BaseExpandableListAdapter
-
-    /*@Override
     public int getGroupCount() {
         //Return no. of routines
         return routineList.size();
@@ -96,23 +88,10 @@ package uk.ac.york.nimblefitness.Adapters;
     public boolean isChildSelectable(int i, int i1) {
         return false;
     }
-}*/
+}
 
-import android.content.Context;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
-import java.util.ArrayList;
-
-import uk.ac.york.nimblefitness.HelperClasses.Routine;
-import uk.ac.york.nimblefitness.R;
+/*
 
 public class RoutineListAdapter extends ArrayAdapter<Routine> {
 
@@ -148,3 +127,4 @@ public class RoutineListAdapter extends ArrayAdapter<Routine> {
         return false;
     }
 }
+*/

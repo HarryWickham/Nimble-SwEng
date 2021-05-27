@@ -6,6 +6,7 @@ public class Routine {
     private String routineName;
     private int routineImage;
     private int rating;
+    private boolean favourite;
     private ArrayList<Exercise> exerciseArrayList;
 
     public Routine(String routineName, int routineImage) {
@@ -32,6 +33,10 @@ public class Routine {
     public int getRating() { return rating; }
 
     public void setRating(int rating) { this.rating = rating; }
+
+    public boolean isFavourite() { return favourite; }
+
+    public void setFavourite(boolean favourite) { this.favourite = favourite; }
 
     public int getNumberOfExercises() { return exerciseArrayList.size(); }
 
