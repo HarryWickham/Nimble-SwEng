@@ -1,5 +1,7 @@
 package uk.ac.york.nimblefitness.Screens.Profile.Goal;
 
+import android.widget.ListView;
+
 import uk.ac.york.nimblefitness.Adapters.MovesListAdapter;
 
 /*
@@ -40,4 +42,8 @@ public class GoalPresenter implements GoalContract.Presenter{
         return goalModel.todaysMoves(goalView.getContext());
     }
 
+    @Override
+    public void setListViewHeightBasedOnChildren(ListView listView) {
+        goalModel.setListViewHeightBasedOnChildren(listView);
+    }
 }

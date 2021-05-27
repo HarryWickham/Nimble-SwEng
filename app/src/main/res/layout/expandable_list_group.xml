@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="8dp"
+    android:background="#0000ff">
+
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="2dip"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="0dp"
+        android:background="@color/black" />
+
+    <ImageView
+        android:id="@+id/imgViewHeader"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_alignParentLeft="true"
+        android:padding="8dp"
+        tools:srcCompat="@drawable/bird_mk2" />
+
+    <TextView
+        android:id="@+id/routineName"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:textColor="#FFFFFF"
+        android:padding="8dp"
+        android:gravity="center"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="90dp"
+        android:layout_marginTop="10dp"
+        android:textSize="30sp" />
+
+
+</LinearLayout>

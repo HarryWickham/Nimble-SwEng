@@ -78,10 +78,10 @@ public class HandlerTestActivity extends AppCompatActivity {
         downloadXMLFile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new ShareService("Subject", "Text", "Title").ShareContent());
-                /*Uri uri = Uri.parse("https://www-users.york.ac.uk/~hew550/");
+                //startActivity(new ShareService("Subject", "Text", "Title").ShareContent());
+                Uri uri = Uri.parse("https://www-users.york.ac.uk/~hew550/");
                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                startActivity(intent);*/
+                startActivity(intent);
             }
         });
         openFileBrowser.setOnClickListener(new View.OnClickListener() {
@@ -169,7 +169,7 @@ public class HandlerTestActivity extends AppCompatActivity {
                             break;
                         case "text":
                             textType = new TextType();
-                            textType.setStyle(TextModule.styleFamily.normal);
+                            textType.setStyle(TextModule.styleFamily.bold);
                             textType.setXstart(Integer.parseInt(parser.getAttributeValue(null,"xstart")));
                             textType.setYstart(Integer.parseInt(parser.getAttributeValue(null,"ystart")));
                             if(parser.getAttributeValue(null, "font") != null){

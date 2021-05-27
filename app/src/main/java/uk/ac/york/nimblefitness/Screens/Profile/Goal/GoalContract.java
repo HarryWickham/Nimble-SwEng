@@ -1,6 +1,7 @@
 package uk.ac.york.nimblefitness.Screens.Profile.Goal;
 
 import android.content.Context;
+import android.widget.ListView;
 
 import uk.ac.york.nimblefitness.Adapters.MovesListAdapter;
 
@@ -20,6 +21,7 @@ public interface GoalContract {
         int updateGauge(int currentValue, int valueAdded);
         int gaugeEndValue();
         MovesListAdapter todaysMoves(Context context);
+        void setListViewHeightBasedOnChildren (ListView listView);
     }
 
     interface Presenter {
@@ -28,5 +30,6 @@ public interface GoalContract {
         int displayGaugeInfo();
         int setGaugeEndValue();
         MovesListAdapter setTodaysMovesList();
+        void setListViewHeightBasedOnChildren (ListView listView);
     }
 }

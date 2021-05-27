@@ -1,5 +1,6 @@
 package uk.ac.york.nimblefitness.Screens.Profile.Calendar;
 
+import android.widget.ListView;
 import android.widget.Toast;
 
 import uk.ac.york.nimblefitness.Adapters.MovesListAdapter;
@@ -37,5 +38,10 @@ public class CalendarPresenter implements CalendarContract.Presenter{
     @Override
     public MovesListAdapter setCompletedMovesList() {
         return calendarModel.completedMoves(calendarView.getContext());
+    }
+
+    @Override
+    public void setListViewHeightBasedOnChildren (ListView listView){
+        calendarModel.setListViewHeightBasedOnChildren(listView);
     }
 }
