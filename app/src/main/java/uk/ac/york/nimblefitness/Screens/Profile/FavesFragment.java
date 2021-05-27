@@ -21,7 +21,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-import uk.ac.york.nimblefitness.Adapters.RoutineListAdapter;
 import uk.ac.york.nimblefitness.HelperClasses.Routine;
 import uk.ac.york.nimblefitness.R;
 
@@ -83,8 +82,8 @@ public class FavesFragment extends Fragment {
                         //FavouritesArrayList.add(routine4);
 
 
-                        RoutineListAdapter adapter = new RoutineListAdapter(requireContext(), R.layout.routines_list_layout, FavouritesArrayList);
-                        FavouritesListView.setAdapter(adapter);
+                        /*RoutineListAdapter adapter = new RoutineListAdapter(requireContext(), R.layout.routines_list_layout, FavouritesArrayList);
+                        FavouritesListView.setAdapter(adapter);*/
                     } else { // If there are no favourite routines found
                         String[] settings_list_items = {"Favourites"}; //Adds a simple list with the title "favourites" to show that is where they will go when favourited
 
