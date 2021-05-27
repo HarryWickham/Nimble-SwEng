@@ -77,7 +77,10 @@ public class PaymentActivity extends AppCompatActivity implements PaymentListAda
 
     @Override
     public void onActionPerformed(String position) {
-
+        SharedPreferences prefs = getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("membershipPlan", position);
+        editor.apply();
         checkout.setText(position);
     }
 }

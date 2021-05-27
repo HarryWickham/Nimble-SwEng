@@ -1,6 +1,8 @@
 package uk.ac.york.nimblefitness.Screens.Profile;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,11 +17,15 @@ import uk.ac.york.nimblefitness.R;
 import uk.ac.york.nimblefitness.Screens.Profile.Calendar.CalendarFragment;
 import uk.ac.york.nimblefitness.Screens.Profile.Goal.GoalFragment;
 
+import static android.preference.PreferenceManager.getDefaultSharedPreferences;
+import static com.facebook.FacebookSdk.getApplicationContext;
+
 /*
  This class initialises the Tab Layout within the profile page and allows the user to switch and
  view the different tabs: Calendar, Favourites & Goals.
 */
 public class ProfileTabsFragment extends Fragment {
+    View view;
     // This method initialises the fragment.
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -33,7 +39,15 @@ public class ProfileTabsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         requireActivity().setTitle("Profile");
-        View view = inflater.inflate(R.layout.fragment_profile_tabs, container, false);
+
+        SharedPreferences prefs = getDefaultSharedPreferences(getApplicationContext());
+        Log.i("onCreateView", prefs.getString("membershipPlan", "bronze"));
+
+        if(prefs.getString("membershipPlan", "bronze").equals("gold")) {
+            view = inflater.inflate(R.layout.fragment_profile_tabs_gold, container, false);
+        }else{
+            view = inflater.inflate(R.layout.fragment_profile_tabs, container, false);
+        }
         TabLayout profileTabs = (TabLayout) view.findViewById(R.id.profile_tabs); //Finds where in the fragment the tab layout should go.
         //This listener listens for when a user selects a new tab and shows the respective fragment.
         profileTabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -49,6 +63,9 @@ public class ProfileTabsFragment extends Fragment {
                         break;
                     case 2:
                         fragment = new GoalFragment();
+                        break;
+                    case 3:
+                        fragment = new LeaderBoardFragment();
                         break;
                     default:
                         Toast.makeText(getActivity(), "Error", Toast.LENGTH_SHORT).show();
