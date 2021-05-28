@@ -1,21 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Screens.RoutineAndExercise.CounterFragment"
-    android:orientation="vertical">
+    tools:context=".Screens.RoutineAndExercise.CounterFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/ExerciseTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/activity_vertical_margin"
+            android:text="Exercise"
+            android:textSize="30sp" />
+
+        <LinearLayout
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/MuscleImage"
+                android:layout_width="150dp"
+                android:layout_height="200dp"
+                android:layout_gravity="bottom"
+                android:layout_margin="@dimen/activity_vertical_margin"
+                android:src="@drawable/final_logo" />
+
+            <TextView
+                android:id="@+id/PointsEarntOutput"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|center"
+                android:layout_margin="@dimen/activity_horizontal_margin"
+                android:text="Points Earnt"
+                android:outlineAmbientShadowColor="@color/black"
+                android:textSize="30sp" />
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+            android:layout_marginVertical="@dimen/default_padding_bottom"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/TextOutput"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Test Output"
+                android:textSize="50sp" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/SetCounter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            android:text="Set: 0 out of 10"
+            android:textSize="30sp" />
+
+        <TextView
+            android:id="@+id/RepCounter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+            android:text="Rep: 0 out of 10"
+            android:textSize="30sp" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/CounterButtons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_gravity="bottom">
 
-    <Button
-        android:id="@+id/toFinishPage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Finish page" />
+        <Button
+            android:id="@+id/ReturnButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+            android:text="Return" />
 
-</LinearLayout>
+        <Button
+            android:id="@+id/MuteButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+            android:text="Mute" />
+
+        <Button
+            android:id="@+id/toFinishPage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+            android:text="Pause" />
+    </FrameLayout>
+
+
+
+
+</FrameLayout>
