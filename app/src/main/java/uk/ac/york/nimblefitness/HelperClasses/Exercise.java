@@ -1,19 +1,55 @@
 package uk.ac.york.nimblefitness.HelperClasses;
 
 public class Exercise {
+    private String muscleGroupImage;
+    private String exerciseVideo;
     private String exerciseName;
-    private int exerciseImage;
+    private String exerciseDescription;
+    private int reps;
+    private int movesPerRep;
+    private int restAfterFinish;
+    private int icon;
 
-    public Exercise(String exerciseName, int exerciseImage) {
+    public Exercise(String muscleGroupImage, String exerciseVideo, String exerciseName, String exerciseDescription, int reps, int movesPerRep, int restAfterFinish, int icon) {
+        this.muscleGroupImage = muscleGroupImage;
+        this.exerciseVideo = exerciseVideo;
         this.exerciseName = exerciseName;
-        this.exerciseImage = exerciseImage;
+        this.exerciseDescription = exerciseDescription;
+        this.reps = reps;
+        this.movesPerRep = movesPerRep;
+        this.restAfterFinish = restAfterFinish;
+        this.icon = icon;
     }
 
-    public String getExerciseName() { return exerciseName; }
+    public String getMuscleGroupImage() {
+        return muscleGroupImage;
+    }
 
-    public void setExerciseName(String exerciseName) { this.exerciseName = exerciseName; }
+    public String getExerciseVideo() {
+        return exerciseVideo;
+    }
 
-    public int getExerciseImage() { return exerciseImage; }
+    public String getExerciseName() {
+        return exerciseName;
+    }
 
-    public void setExerciseImage(int exerciseImage) { this.exerciseImage = exerciseImage; }
+    public String getExerciseDescription() {
+        return exerciseDescription;
+    }
+
+    public int getReps() {
+        return reps;
+    }
+
+    public int getMovesPerRep() {
+        return movesPerRep;
+    }
+
+    public int getRestAfterFinish() {
+        return restAfterFinish;
+    }
+
+    public int getIcon() {
+        return icon;
+    }
 }

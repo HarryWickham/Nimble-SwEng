@@ -20,11 +20,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
 import uk.ac.york.nimblefitness.Adapters.MovesListAdapter;
+import uk.ac.york.nimblefitness.HelperClasses.Exercise;
 import uk.ac.york.nimblefitness.R;
 
 import static android.preference.PreferenceManager.getDefaultSharedPreferences;
@@ -130,8 +132,13 @@ public class CalendarModel implements CalendarContract.Model {
                 R.drawable.ic_baseline_accessibility_24,
                 R.drawable.ic_baseline_accessibility_24,
                 R.drawable.ic_baseline_accessibility_24};
-        listAdapter = new MovesListAdapter(context, completedMoves, moveDetails, numberOfMoves,
-                exerciseIcon);
+        ArrayList<Exercise> exercises = new ArrayList<>();
+        exercises.add(new Exercise("","","Plank","",60,1,0, R.drawable.ic_baseline_accessibility_24));
+        exercises.add(new Exercise("","","Squats","",20,1,0, R.drawable.ic_baseline_accessibility_24));
+        exercises.add(new Exercise("","","Sit-ups","",15,1,0, R.drawable.ic_baseline_accessibility_24));
+        exercises.add(new Exercise("","","Press-ups","",10,1,0, R.drawable.ic_baseline_accessibility_24));
+
+        listAdapter = new MovesListAdapter(context, exercises);
         return listAdapter;
     }
 

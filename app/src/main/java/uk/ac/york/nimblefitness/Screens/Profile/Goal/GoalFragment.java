@@ -46,10 +46,10 @@ public class GoalFragment extends Fragment implements GoalContract.GoalView {
         // Sets the maximum value of the gauge.
         gauge.setEndValue(goalPresenter.setGaugeEndValue());
         // Sets the current value of the gauge and subsequently how much it's filled.
-        gauge.setValue(goalPresenter.displayGaugeInfo());
+        gauge.setValue(goalPresenter.displayGaugeInfo()>goalPresenter.setGaugeEndValue()?goalPresenter.setGaugeEndValue():goalPresenter.displayGaugeInfo());
         // The value of the gauge is displayed as text.
         TextView gaugeNumber = view.findViewById(R.id.moves_counter);
-        gaugeNumber.setText(String.format(Locale.UK,"%d/%d", gauge.getValue(), gauge.getEndValue()));
+        gaugeNumber.setText(String.format(Locale.UK,"%d/%d", goalPresenter.displayGaugeInfo(), gauge.getEndValue()));
         // Finds where the quote should go in this layout.
         TextView motivationQuote = view.findViewById(R.id.motivation);
         motivationQuote.setText(goalPresenter.displayQuote()); // Sets the quote.
@@ -59,6 +59,7 @@ public class GoalFragment extends Fragment implements GoalContract.GoalView {
         // The list of exercises to do for today.
         ListView listView = view.findViewById(R.id.todays_moves);
         listView.setAdapter(goalPresenter.setTodaysMovesList()); // Sets the list of today's moves.
+        goalPresenter.sendNotification(goalPresenter.displayGaugeInfo(), goalPresenter.setGaugeEndValue());
         goalPresenter.setListViewHeightBasedOnChildren(listView);
         return view;
     }

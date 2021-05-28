@@ -6,7 +6,13 @@ import android.widget.ListView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.Locale;
+
 import uk.ac.york.nimblefitness.Adapters.MovesListAdapter;
+import uk.ac.york.nimblefitness.HelperClasses.CreateNotification;
+import uk.ac.york.nimblefitness.HelperClasses.ShareService;
+import uk.ac.york.nimblefitness.R;
+import uk.ac.york.nimblefitness.Screens.MainActivity;
 
 import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 import static com.facebook.FacebookSdk.getApplicationContext;
@@ -55,5 +61,9 @@ public class GoalPresenter implements GoalContract.Presenter{
     @Override
     public void setListViewHeightBasedOnChildren(ListView listView) {
         goalModel.setListViewHeightBasedOnChildren(listView);
+    }
+
+    public void sendNotification(int displayGaugeInfo, int setGaugeEndValue) {
+        CreateNotification createNotification = new CreateNotification(R.drawable.final_logo,"Congratulations!","You have reached your weekly. Your current moves are: " + String.format(Locale.UK,"%d/%d", displayGaugeInfo, setGaugeEndValue), MainActivity.class,"goalReachedChannelID",1,getApplicationContext());
     }
 }

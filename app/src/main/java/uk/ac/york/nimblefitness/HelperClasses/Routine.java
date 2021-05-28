@@ -3,44 +3,49 @@ package uk.ac.york.nimblefitness.HelperClasses;
 import java.util.ArrayList;
 
 public class Routine {
+    private String routineImage;
     private String routineName;
-    private int routineImage;
+    private String routineSummary;
     private int rating;
-    private boolean favourite;
+    private int sets;
+    private int restBetweenSets;
     private ArrayList<Exercise> exerciseArrayList;
 
-    public Routine(String routineName, int routineImage) {
-        this.routineName = routineName;
+    public Routine(String routineImage, String routineName, String routineSummary, int rating, int sets, int restBetweenSets, ArrayList<Exercise> exerciseArrayList) {
         this.routineImage = routineImage;
+        this.routineName = routineName;
+        this.routineSummary = routineSummary;
+        this.rating = rating;
+        this.sets = sets;
+        this.restBetweenSets = restBetweenSets;
+        this.exerciseArrayList = exerciseArrayList;
+    }
+
+    public String getRoutineImage() {
+        return routineImage;
     }
 
     public String getRoutineName() {
         return routineName;
     }
 
-    public void setRoutineName(String routineName) {
-        this.routineName = routineName;
+    public String getRoutineSummary() {
+        return routineSummary;
     }
 
-    public int getRoutineImage() {
-        return routineImage;
+    public int getRating() {
+        return rating;
     }
 
-    public void setRoutineImage(int routineImage) {
-        this.routineImage = routineImage;
+    public int getSets() {
+        return sets;
     }
 
-    public int getRating() { return rating; }
+    public int getRestBetweenSets() {
+        return restBetweenSets;
+    }
 
-    public void setRating(int rating) { this.rating = rating; }
-
-    public boolean isFavourite() { return favourite; }
-
-    public void setFavourite(boolean favourite) { this.favourite = favourite; }
-
-    public int getNumberOfExercises() { return exerciseArrayList.size(); }
-
-    public Exercise getExercise(int i) { return exerciseArrayList.get(i); }
-
-
+    public ArrayList<Exercise> getExerciseArrayList() {
+        return exerciseArrayList;
+    }
 }

@@ -31,5 +31,6 @@ public interface GoalContract {
         int setGaugeEndValue();
         MovesListAdapter setTodaysMovesList();
         void setListViewHeightBasedOnChildren (ListView listView);
+        void sendNotification(int displayGaugeInfo, int setGaugeEndValue);
     }
 }

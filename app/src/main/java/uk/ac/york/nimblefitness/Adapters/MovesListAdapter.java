@@ -11,6 +11,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import java.util.ArrayList;
+import java.util.Locale;
+
+import uk.ac.york.nimblefitness.HelperClasses.Exercise;
 import uk.ac.york.nimblefitness.R;
 
 /*
@@ -22,23 +26,16 @@ import uk.ac.york.nimblefitness.R;
 public class MovesListAdapter extends BaseAdapter {
 
     Context context;
-    private String[] exerciseTitle;
-    private String[] exerciseDetails;
-    private String[] numberOfMoves;
-    private int[] exerciseIcon;
+    private ArrayList<Exercise> exercise;
 
-    public MovesListAdapter(Context context, String [] exerciseTitle, String [] exerciseDetails,
-                            String[] numberOfMoves, int [] exerciseIcon) {
+    public MovesListAdapter(Context context, ArrayList<Exercise> exercise) {
         this.context = context;
-        this.exerciseTitle = exerciseTitle;
-        this.exerciseDetails = exerciseDetails;
-        this.numberOfMoves = numberOfMoves;
-        this.exerciseIcon = exerciseIcon;
+        this.exercise = exercise;
     }
 
     @Override
     public int getCount() {
-        return exerciseTitle.length;
+        return exercise.size();
     }
 
     @Override
@@ -75,15 +72,15 @@ public class MovesListAdapter extends BaseAdapter {
             result = convertView;
         }
 
-        viewHolder.txtName.setText(exerciseTitle[position]);
-        viewHolder.txtDetails.setText(exerciseDetails[position]);
-        viewHolder.txtMoves.setText(numberOfMoves[position]);
-        viewHolder.icon.setImageResource(exerciseIcon[position]);
+        viewHolder.txtName.setText(exercise.get(position).getExerciseName());
+        viewHolder.txtDetails.setText(String.format(Locale.UK,"%d reps", exercise.get(position).getReps()));
+        viewHolder.txtMoves.setText(String.format(Locale.UK,"Moves: %d", exercise.get(position).getMovesPerRep()*exercise.get(position).getReps()));
+        viewHolder.icon.setImageResource(exercise.get(position).getIcon());
         return convertView;
     }
 
     public String getExerciseTitleAtPosition(int position){
-        return exerciseTitle[position];
+        return exercise.get(position).getExerciseName();
     }
 
     private static class ViewHolder {

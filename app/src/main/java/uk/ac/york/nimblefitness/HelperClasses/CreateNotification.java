@@ -49,10 +49,10 @@ public class CreateNotification {
         notificationBuilder = new NotificationCompat.Builder(context, channelID)
                 .setSmallIcon(notificationIcon)
                 .setContentTitle(notificationTitle)
-                .setContentText(notificationContent)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setContentIntent(pendingIntent)
-                .setAutoCancel(true);
+                .setAutoCancel(true)
+                .setStyle(new NotificationCompat.BigTextStyle().bigText(notificationContent));
 
         notificationManagerCompat = NotificationManagerCompat.from(context);
         notificationManagerCompat.notify(notificationID,notificationBuilder.build());
