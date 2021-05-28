@@ -47,8 +47,6 @@
                             android:paddingTop="8dp"
                             app:gaugeStartAngle="135"
                             app:gaugeSweepAngle="270"
-                            app:gaugeStartValue="0"
-                            app:gaugeEndValue="100"
                             app:gaugePointStartColor="@color/purple_200"
                             app:gaugePointEndColor="@color/purple_700"
                             app:gaugeStrokeCap="ROUND"
@@ -61,7 +59,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textAlignment="center"
-                            android:textSize="64sp"
+                            android:textSize="45sp"
                             android:textStyle="bold"
                             android:textColor="@color/purple_200"
                             android:text="">

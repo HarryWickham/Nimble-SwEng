@@ -2,6 +2,7 @@ package uk.ac.york.nimblefitness.Screens.Profile.Goal;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListAdapter;
@@ -49,8 +50,10 @@ public class GoalModel implements GoalContract.Model{
 
     @Override
     public int gaugeEndValue() {
-        int endValue = 100;
-        return endValue;
+        FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        SharedPreferences prefs = getDefaultSharedPreferences(getApplicationContext());
+        Log.i("gaugeEndValue", String.valueOf(prefs.getInt(currentFirebaseUser+"weeklyGoal", 0)));
+        return prefs.getInt(currentFirebaseUser+"weeklyGoal", 0);
     }
     // A random motivational quote is chosen to be displayed on the Goal tab of the profile page.
     @Override

@@ -131,6 +131,7 @@ public class UserDetailsActivity extends AppCompatActivity {
                 editor.putString(currentFirebaseUser + "membershipPlan", membershipPlan);
                 editor.putString(currentFirebaseUser + "userFullName", userFullName);
                 editor.putInt(currentFirebaseUser + "weeklyGoal", weeklyGoal);
+                editor.putInt(currentFirebaseUser + "currentMoves", currentMoves);
                 editor.apply();
                 startActivity(new Intent(UserDetailsActivity.this, MainActivity.class));
                 finish();

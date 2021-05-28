@@ -2,6 +2,7 @@ package uk.ac.york.nimblefitness.Screens.Profile.Goal;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+
+import java.util.Locale;
 
 import pl.pawelkleczkowski.customgauge.CustomGauge;
 import uk.ac.york.nimblefitness.Adapters.MovesListAdapter;
@@ -39,14 +42,14 @@ public class GoalFragment extends Fragment implements GoalContract.GoalView {
         requireActivity().setTitle("Profile"); // The title that appears at the top of the page
         View view = inflater.inflate(R.layout.fragment_goal, container, false);
         // The gauge which shows the number of goals completed and to do.
-        CustomGauge gauge = (CustomGauge) view.findViewById(R.id.gauge);
-        // Sets the current value of the gauge and subsequently how much it's filled.
-        gauge.setValue(goalPresenter.displayGaugeInfo());
+        CustomGauge gauge = view.findViewById(R.id.gauge);
         // Sets the maximum value of the gauge.
         gauge.setEndValue(goalPresenter.setGaugeEndValue());
+        // Sets the current value of the gauge and subsequently how much it's filled.
+        gauge.setValue(goalPresenter.displayGaugeInfo());
         // The value of the gauge is displayed as text.
         TextView gaugeNumber = view.findViewById(R.id.moves_counter);
-        gaugeNumber.setText(String.valueOf(goalPresenter.displayGaugeInfo()));
+        gaugeNumber.setText(String.format(Locale.UK,"%d/%d", gauge.getValue(), gauge.getEndValue()));
         // Finds where the quote should go in this layout.
         TextView motivationQuote = view.findViewById(R.id.motivation);
         motivationQuote.setText(goalPresenter.displayQuote()); // Sets the quote.
@@ -54,7 +57,7 @@ public class GoalFragment extends Fragment implements GoalContract.GoalView {
         TextView userName = view.findViewById(R.id.user_name);
         userName.setText(goalPresenter.displayUserName()); // Displays the user's name.
         // The list of exercises to do for today.
-        ListView listView = (ListView) view.findViewById(R.id.todays_moves);
+        ListView listView = view.findViewById(R.id.todays_moves);
         listView.setAdapter(goalPresenter.setTodaysMovesList()); // Sets the list of today's moves.
         goalPresenter.setListViewHeightBasedOnChildren(listView);
         return view;
