@@ -45,6 +45,7 @@ import uk.ac.york.nimblefitness.HelperClasses.UserHelperClass;
 import uk.ac.york.nimblefitness.R;
 
 import static android.preference.PreferenceManager.getDefaultSharedPreferences;
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class UserDetailsActivity extends AppCompatActivity {
 
@@ -63,6 +64,7 @@ public class UserDetailsActivity extends AppCompatActivity {
     UserHelperClass helperClass2;
 
     String membershipPlan;
+    int currentMoves;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,14 +91,15 @@ public class UserDetailsActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 helperClass = snapshot.child("userDetails").getValue(UserHelperClass.class);
-                membershipPlan = snapshot.child("userDetails").child("membershipPlan").getValue(String.class);
                 if (helperClass != null) {
                     user_account_first_name_edit_text.setText(helperClass.getFirstName());
                     user_account_last_name_edit_text.setText(helperClass.getLastName());
-                    user_account_age_edit_text.setText(helperClass.getAge());
+                    user_account_age_edit_text.setText(String.valueOf(helperClass.getAge()).equals("0") ? "":String.valueOf(helperClass.getAge()));
                     gender_selector_spinner.setText(helperClass.getGender());
                     activity_level_selector_spinner.setText(helperClass.getExerciseDuration());
                     exercise_type_selector_spinner.setText(helperClass.getExerciseType());
+                    currentMoves = helperClass.getCurrentMoves();
+                    membershipPlan = helperClass.getMembershipPlan();
 
                 }
             }
@@ -112,23 +115,23 @@ public class UserDetailsActivity extends AppCompatActivity {
 
                 String firstName = user_account_first_name.getEditText().getText().toString().trim();
                 String lastName = user_account_last_name.getEditText().getText().toString().trim();
-                String userAge = user_account_age.getEditText().getText().toString().trim();
+                int userAge = Integer.parseInt(user_account_age.getEditText().getText().toString().trim());
                 String gender = gender_selector.getEditText().getText().toString();
                 String exerciseType = exercise_type_selector.getEditText().getText().toString();
                 String exerciseDuration = activity_level_selector.getEditText().getText().toString();
-                String weeklyGoal = user_account_goal.getEditText().getText().toString().trim();
+                int weeklyGoal = Integer.parseInt(user_account_goal.getEditText().getText().toString().trim());
+
+                helperClass2 = new UserHelperClass(firstName, lastName, gender, exerciseType, exerciseDuration, userAge, membershipPlan, weeklyGoal, currentMoves);
+                rootReference.child("userDetails").setValue(helperClass2);
 
                 String userFullName = String.format("%s %s", firstName, lastName);
+
                 SharedPreferences prefs = getDefaultSharedPreferences(getApplicationContext());
                 SharedPreferences.Editor editor = prefs.edit();
-                editor.putString(currentFirebaseUser+"userFullName", userFullName);
-                editor.putString(currentFirebaseUser+"weeklyGoal", weeklyGoal);
+                editor.putString(currentFirebaseUser + "membershipPlan", membershipPlan);
+                editor.putString(currentFirebaseUser + "userFullName", userFullName);
+                editor.putInt(currentFirebaseUser + "weeklyGoal", weeklyGoal);
                 editor.apply();
-
-                Log.i(currentFirebaseUser+"userFullName ", "firebaseSetup: " + prefs.getString(currentFirebaseUser+"userFullName", "Error getting name"));
-
-                helperClass2 = new UserHelperClass(firstName, lastName, gender, exerciseType, exerciseDuration, userAge, membershipPlan, weeklyGoal);
-                rootReference.child("userDetails").setValue(helperClass2);
                 startActivity(new Intent(UserDetailsActivity.this, MainActivity.class));
                 finish();
             }

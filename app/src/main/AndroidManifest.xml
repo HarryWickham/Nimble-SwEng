@@ -15,6 +15,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.NimbleFitness">
+        <activity android:name=".Screens.SplashScreen"
+            android:theme="@style/Theme.NimbleFitness.NoActionBar">
+            <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+        </activity>
         <activity android:name=".Screens.RoutineAndExercise.RoutineAndExerciseActivity" />
         <activity
             android:name=".Screens.Settings.HandlerTestActivity"
@@ -22,8 +30,9 @@
             android:theme="@style/Theme.NimbleFitness.NoActionBar" />
         <activity android:name=".Screens.UserDetailsActivity" />
         <activity android:name=".Screens.PaymentActivity" />
-        <activity android:name=".Screens.MainActivity"
-            android:windowSoftInputMode="adjustPan"/>
+        <activity
+            android:name=".Screens.MainActivity"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".Screens.SigninActivity"
             android:theme="@style/Theme.NimbleFitness.NoActionBar" />
@@ -31,11 +40,7 @@
             android:name=".Screens.SignupActivity"
             android:label="@string/app_name"
             android:theme="@style/Theme.NimbleFitness.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <meta-data

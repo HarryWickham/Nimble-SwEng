@@ -74,16 +74,9 @@ public class PaymentActivity extends AppCompatActivity implements PaymentListAda
                 rootReference.child("userDetails").child("membershipPlan").setValue(checkoutTier);
 
                 startActivity(new Intent(PaymentActivity.this, UserDetailsActivity.class));
+                finish();
             }
         });
-
-
-
-    }
-
-    public void planBought(View view) {
-        startActivity(new Intent(getApplicationContext(), UserDetailsActivity.class));//takes user to the main page
-        finish();
     }
 
     @Override

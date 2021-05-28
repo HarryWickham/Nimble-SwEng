@@ -62,7 +62,6 @@ public class PaymentListAdapter extends BaseAdapter {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         ViewHolder viewHolder;
-        final View result;
 
 
         if (convertView == null) {
@@ -82,11 +81,9 @@ public class PaymentListAdapter extends BaseAdapter {
                     //viewHolder.moreDetailsButton = convertView.findViewById(R.id.more_details_button);
             //viewHolder.selectionButton = convertView.findViewById(R.id.selection_button);
 
-            result = convertView;
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
-            result = convertView;
         }
 
         viewHolder.planTier.setText(planTier[position]);
