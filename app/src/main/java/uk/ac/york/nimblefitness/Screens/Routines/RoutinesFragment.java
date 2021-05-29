@@ -41,7 +41,7 @@ public class RoutinesFragment extends Fragment {
 
         prepareListData();
 
-        listAdapter = new CustomExpandableListAdapter(getContext(), listDataHeader, listDataChild);
+        listAdapter = new CustomExpandableListAdapter(getContext(), listImageHeader, listDataHeader, listDataChild);
 
         // setting list adapter
         routineListView.setAdapter(listAdapter);
@@ -85,6 +85,8 @@ public class RoutinesFragment extends Fragment {
         listDataHeader = new ArrayList<>();
         listDataChild = new HashMap<>();
 
+        listImageHeader = new ArrayList<>();
+
         // Adding parent data
         listDataHeader.add("Beginners Upper Body");
         listDataHeader.add("Beginners Lower Body");
@@ -98,6 +100,16 @@ public class RoutinesFragment extends Fragment {
         listDataHeader.add("Hard Upper Body");
         listDataHeader.add("Hard Lower Body");
         listDataHeader.add("Hard Core");
+
+        listImageHeader.add(R.drawable.upperbody);
+        listImageHeader.add(R.drawable.lowerbody);
+        listImageHeader.add(R.drawable.core);
+        listImageHeader.add(R.drawable.upperbody);
+        listImageHeader.add(R.drawable.lowerbody);
+        listImageHeader.add(R.drawable.core);
+        listImageHeader.add(R.drawable.upperbody);
+        listImageHeader.add(R.drawable.lowerbody);
+        listImageHeader.add(R.drawable.core);
 
         // Adding child data
         List<String> routine1 = new ArrayList<String>();

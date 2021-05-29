@@ -5,7 +5,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.HashMap;
 import java.util.List;
@@ -15,11 +19,13 @@ import uk.ac.york.nimblefitness.R;
 public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
 
     Context context;
+    List<Integer> listImage;
     List<String> listGroup;
     HashMap<String,List<String>> listItem;
 
-    public CustomExpandableListAdapter(Context context, List<String> listGroup, HashMap<String, List<String>> listItem) {
+    public CustomExpandableListAdapter(Context context, List<Integer> listImage, List<String> listGroup, HashMap<String, List<String>> listItem) {
         this.context = context;
+        this.listImage = listImage;
         this.listGroup = listGroup;
         this.listItem = listItem;
     }
@@ -67,8 +73,19 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
             convertView = layoutInflater.inflate(R.layout.expandable_list_group, null);
         }
 
-        TextView routineName = convertView.findViewById(R.id.routineName);
+        Button expand_routines_button = convertView.findViewById(R.id.expand_routines_button);
+        expand_routines_button.setFocusable(false);
+        expand_routines_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(context, "Button Clicked", Toast.LENGTH_SHORT).show();
+            }
+        });
+        TextView routineName = convertView.findViewById(R.id.routines_activity_name);
         routineName.setText(group);
+        ImageView routineImage = convertView.findViewById(R.id.routines_image);
+        routineImage.setImageAlpha(listImage.get(groupPosition));
+
         return convertView;
     }
 
@@ -79,8 +96,9 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
             LayoutInflater layoutInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = layoutInflater.inflate(R.layout.expandable_list_item, null);
         }
-        TextView exerciseName = convertView.findViewById(R.id.exerciseName);
+        TextView exerciseName = convertView.findViewById(R.id.exercise_name);
         exerciseName.setText(child);
+
         return convertView;
     }
 
