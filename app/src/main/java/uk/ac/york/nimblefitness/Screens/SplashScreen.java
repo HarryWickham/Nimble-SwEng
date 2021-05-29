@@ -18,6 +18,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.IOException;
+
 import uk.ac.york.nimblefitness.HelperClasses.UserHelperClass;
 import uk.ac.york.nimblefitness.R;
 
@@ -33,14 +35,7 @@ public class SplashScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
-        receiveData();
-        Handler handler = new Handler(Looper.getMainLooper());
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                routing();
-            }
-        }, 1500);
+            receiveData();
 
     }
 
@@ -71,6 +66,7 @@ public class SplashScreen extends AppCompatActivity {
                         editor.putInt(currentFirebaseUser + "currentMoves", userDetails.getCurrentMoves());
                         editor.apply();
 
+                        routing();
                     }
                 }
 
@@ -79,6 +75,14 @@ public class SplashScreen extends AppCompatActivity {
 
                 }
             });
+        } else{
+            Handler handler = new Handler(Looper.getMainLooper());
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    routing();
+                }
+            }, 1500);
         }
     }
 
