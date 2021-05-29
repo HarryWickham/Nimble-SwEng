@@ -84,7 +84,7 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
         TextView routineName = convertView.findViewById(R.id.routines_activity_name);
         routineName.setText(group);
         ImageView routineImage = convertView.findViewById(R.id.routines_image);
-        routineImage.setImageAlpha(listImage.get(groupPosition));
+        routineImage.setImageResource(listImage.get(groupPosition));
 
         return convertView;
     }
