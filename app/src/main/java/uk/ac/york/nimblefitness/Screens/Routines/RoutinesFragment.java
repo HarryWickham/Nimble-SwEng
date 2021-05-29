@@ -110,6 +110,9 @@ public class RoutinesFragment extends Fragment {
         listImageHeader.add(R.drawable.upperbody);
         listImageHeader.add(R.drawable.lowerbody);
         listImageHeader.add(R.drawable.core);
+        listImageHeader.add(R.drawable.upperbody);
+        listImageHeader.add(R.drawable.lowerbody);
+        listImageHeader.add(R.drawable.core);
 
         // Adding child data
         List<String> routine1 = new ArrayList<String>();
