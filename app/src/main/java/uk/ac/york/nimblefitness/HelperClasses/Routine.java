@@ -50,16 +50,12 @@ public class Routine {
         return exerciseArrayList;
     }
 
-    public void setRoutineImage(String routineImage) {
+    public void setRoutineImage(Integer routineImage) {
         this.routineImage = routineImage;
     }
 
     public void setRoutineName(String routineName) {
         this.routineName = routineName;
-    }
-
-    public void setRoutineSummary(String routineSummary) {
-        this.routineSummary = routineSummary;
     }
 
     public void setRating(int rating) {
