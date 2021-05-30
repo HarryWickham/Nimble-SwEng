@@ -52,4 +52,36 @@ public class Exercise {
     public int getIcon() {
         return icon;
     }
+
+    public void setMuscleGroupImage(String muscleGroupImage) {
+        this.muscleGroupImage = muscleGroupImage;
+    }
+
+    public void setExerciseVideo(String exerciseVideo) {
+        this.exerciseVideo = exerciseVideo;
+    }
+
+    public void setExerciseName(String exerciseName) {
+        this.exerciseName = exerciseName;
+    }
+
+    public void setExerciseDescription(String exerciseDescription) {
+        this.exerciseDescription = exerciseDescription;
+    }
+
+    public void setReps(int reps) {
+        this.reps = reps;
+    }
+
+    public void setMovesPerRep(int movesPerRep) {
+        this.movesPerRep = movesPerRep;
+    }
+
+    public void setRestAfterFinish(int restAfterFinish) {
+        this.restAfterFinish = restAfterFinish;
+    }
+
+    public void setIcon(int icon) {
+        this.icon = icon;
+    }
 }

@@ -65,7 +65,7 @@ public class GoalPresenter implements GoalContract.Presenter{
 
     public void sendNotification(int displayGaugeInfo, int setGaugeEndValue) {
         if(displayGaugeInfo >= setGaugeEndValue) {
-            CreateNotification createNotification = new CreateNotification(R.drawable.final_logo, "Congratulations!", "You have reached your weekly. Your current moves are: " + String.format(Locale.UK, "%d/%d", displayGaugeInfo, setGaugeEndValue), MainActivity.class, "goalReachedChannelID", 1, getApplicationContext());
+            CreateNotification createNotification = new CreateNotification(R.drawable.ic_stat_name, "Congratulations!", "You have reached your weekly goal. Your current moves are: " + String.format(Locale.UK, "%d/%d", displayGaugeInfo, setGaugeEndValue), MainActivity.class, "goalReachedChannelID", 1, getApplicationContext());
         }
     }
 }

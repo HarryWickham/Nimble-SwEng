@@ -48,4 +48,32 @@ public class Routine {
     public ArrayList<Exercise> getExerciseArrayList() {
         return exerciseArrayList;
     }
+
+    public void setRoutineImage(String routineImage) {
+        this.routineImage = routineImage;
+    }
+
+    public void setRoutineName(String routineName) {
+        this.routineName = routineName;
+    }
+
+    public void setRoutineSummary(String routineSummary) {
+        this.routineSummary = routineSummary;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
+
+    public void setSets(int sets) {
+        this.sets = sets;
+    }
+
+    public void setRestBetweenSets(int restBetweenSets) {
+        this.restBetweenSets = restBetweenSets;
+    }
+
+    public void setExerciseArrayList(ArrayList<Exercise> exerciseArrayList) {
+        this.exerciseArrayList = exerciseArrayList;
+    }
 }
