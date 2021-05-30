@@ -18,6 +18,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.IOException;
+
 import uk.ac.york.nimblefitness.HelperClasses.UserHelperClass;
 import uk.ac.york.nimblefitness.R;
 
@@ -26,42 +28,27 @@ import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class SplashScreen extends AppCompatActivity {
 
-    FirebaseUser currentFirebaseUser;
-    DatabaseReference rootReference;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
-        receiveData();
-        Handler handler = new Handler(Looper.getMainLooper());
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                routing();
-            }
-        }, 1500);
+            receiveData();
 
     }
 
     private void receiveData(){
         FirebaseDatabase rootDatabase = FirebaseDatabase.getInstance();
-        currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         if(currentFirebaseUser != null) {
             Log.i("currentFirebaseUser", currentFirebaseUser.getUid());
             Log.i("currentFirebaseUser", " not null :)");
-            rootReference = rootDatabase.getReference("users").child(currentFirebaseUser.getUid());
+            DatabaseReference rootReference = rootDatabase.getReference("users").child(currentFirebaseUser.getUid());
             rootReference.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     UserHelperClass userDetails = snapshot.child("userDetails").getValue(UserHelperClass.class);
-                    Log.i("onDataChange", " not null :)");
-                    Log.i("userDetails", String.valueOf(userDetails));
                     if (userDetails != null) {
-
                         String userFullName = String.format("%s %s", userDetails.getFirstName(), userDetails.getLastName());
-
-                        Log.i("userFullName", userFullName);
 
                         SharedPreferences prefs = getDefaultSharedPreferences(getApplicationContext());
                         SharedPreferences.Editor editor = prefs.edit();
@@ -72,6 +59,7 @@ public class SplashScreen extends AppCompatActivity {
                         editor.apply();
 
                     }
+                    routing(currentFirebaseUser);
                 }
 
                 @Override
@@ -79,27 +67,38 @@ public class SplashScreen extends AppCompatActivity {
 
                 }
             });
+        } else{
+            Handler handler = new Handler(Looper.getMainLooper());
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    routing(null);
+                }
+            }, 1500);
         }
     }
 
-    private void routing(){
+    private void routing(FirebaseUser currentFirebaseUser){
         SharedPreferences prefs = getDefaultSharedPreferences(getApplicationContext());
         String userName = prefs.getString(currentFirebaseUser+"userFullName", "error");
         String membershipPlan = prefs.getString(currentFirebaseUser+"membershipPlan", "error");
         if(currentFirebaseUser == null){
-            Log.i("routing FirebaseUser", String.valueOf(currentFirebaseUser));
             startActivity(new Intent(SplashScreen.this,SignupActivity.class));
+            finish();
         } else if(currentFirebaseUser != null && membershipPlan.equals("error")){
             Log.i("routing membershipPlan ", membershipPlan);
             startActivity(new Intent(SplashScreen.this,PaymentActivity.class));
+            finish();
         } else if(currentFirebaseUser != null && (userName.equals("error") || userName.equals("null null"))){
             Log.i("routing userName", userName);
             startActivity(new Intent(SplashScreen.this,UserDetailsActivity.class));
+            finish();
         } else {
             Log.i("routing FirebaseUser", String.valueOf(currentFirebaseUser));
             Log.i("routing membershipPlan", membershipPlan);
             Log.i("routing userName", userName);
             startActivity(new Intent(SplashScreen.this,MainActivity.class));
+            finish();
         }
     }
 }
