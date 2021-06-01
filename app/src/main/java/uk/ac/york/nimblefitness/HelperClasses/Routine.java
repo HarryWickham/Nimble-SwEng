@@ -3,14 +3,15 @@ package uk.ac.york.nimblefitness.HelperClasses;
 import java.util.ArrayList;
 
 public class Routine {
-    private Integer routineImage;
+    private int routineImage;
     private String routineName;
+    private String routineSummary;
     private int rating;
     private int sets;
     private int restBetweenSets;
     private ArrayList<Exercise> exerciseArrayList;
 
-    public Routine(Integer routineImage, String routineName, int rating, int sets, int restBetweenSets, ArrayList<Exercise> exerciseArrayList) {
+    public Routine(int routineImage, String routineName, int rating, int sets, int restBetweenSets, ArrayList<Exercise> exerciseArrayList) {
         this.routineImage = routineImage;
         this.routineName = routineName;
         this.rating = rating;
@@ -19,14 +20,14 @@ public class Routine {
         this.exerciseArrayList = exerciseArrayList;
     }
 
-    public Routine(Integer routineImage, String routineName, int sets, ArrayList<Exercise> exerciseArrayList) {
+    public Routine(int routineImage, String routineName, int sets, ArrayList<Exercise> exerciseArrayList) {
         this.routineImage = routineImage;
         this.routineName = routineName;
         this.sets = sets;
         this.exerciseArrayList = exerciseArrayList;
     }
 
-    public Integer getRoutineImage() {
+    public int getRoutineImage() {
         return routineImage;
     }
 
@@ -50,7 +51,7 @@ public class Routine {
         return exerciseArrayList;
     }
 
-    public void setRoutineImage(Integer routineImage) {
+    public void setRoutineImage(int routineImage) {
         this.routineImage = routineImage;
     }
 

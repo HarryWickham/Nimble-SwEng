@@ -1,31 +1,38 @@
 package uk.ac.york.nimblefitness.HelperClasses;
 
+import uk.ac.york.nimblefitness.MediaHandlers.Text.TextLayout;
+import uk.ac.york.nimblefitness.MediaHandlers.Video.VideoLayout;
+
 public class Exercise {
     private String muscleGroupImage;
-    private String exerciseVideo;
     private String exerciseName;
     private String exerciseDescription;
     private int reps;
     private int movesPerRep;
     private int restAfterFinish;
     private int icon;
+    private VideoLayout exerciseVideo;
+    private TextLayout exerciseNameLayout;
+    private TextLayout exerciseDescriptionLayout;
 
-    public Exercise(String muscleGroupImage, String exerciseVideo, String exerciseName, String exerciseDescription, int reps, int movesPerRep, int restAfterFinish, int icon) {
+    public Exercise(String muscleGroupImage, String exerciseName, String exerciseDescription, int reps, int movesPerRep, int restAfterFinish, int icon, VideoLayout exerciseVideo, TextLayout exerciseNameLayout, TextLayout exerciseDescriptionLayout) {
         this.muscleGroupImage = muscleGroupImage;
-        this.exerciseVideo = exerciseVideo;
         this.exerciseName = exerciseName;
         this.exerciseDescription = exerciseDescription;
         this.reps = reps;
         this.movesPerRep = movesPerRep;
         this.restAfterFinish = restAfterFinish;
         this.icon = icon;
+        this.exerciseVideo = exerciseVideo;
+        this.exerciseNameLayout = exerciseNameLayout;
+        this.exerciseDescriptionLayout = exerciseDescriptionLayout;
     }
 
     public String getMuscleGroupImage() {
         return muscleGroupImage;
     }
 
-    public String getExerciseVideo() {
+    public VideoLayout getExerciseVideo() {
         return exerciseVideo;
     }
 
@@ -57,7 +64,7 @@ public class Exercise {
         this.muscleGroupImage = muscleGroupImage;
     }
 
-    public void setExerciseVideo(String exerciseVideo) {
+    public void setExerciseVideo(VideoLayout exerciseVideo) {
         this.exerciseVideo = exerciseVideo;
     }
 
@@ -83,5 +90,21 @@ public class Exercise {
 
     public void setIcon(int icon) {
         this.icon = icon;
+    }
+
+    public TextLayout getExerciseNameLayout() {
+        return exerciseNameLayout;
+    }
+
+    public void setExerciseNameLayout(TextLayout exerciseNameLayout) {
+        this.exerciseNameLayout = exerciseNameLayout;
+    }
+
+    public TextLayout getExerciseDescriptionLayout() {
+        return exerciseDescriptionLayout;
+    }
+
+    public void setExerciseDescriptionLayout(TextLayout exerciseDescriptionLayout) {
+        this.exerciseDescriptionLayout = exerciseDescriptionLayout;
     }
 }
