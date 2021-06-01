@@ -1,13 +1,16 @@
 package uk.ac.york.nimblefitness.Screens.Exercises;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Filter;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -21,6 +24,7 @@ public class ExerciseFragment extends Fragment {
 
     ListView list;
     SearchView exercises;
+    TextView nothingFound;
 
 
     @Override
@@ -43,14 +47,32 @@ public class ExerciseFragment extends Fragment {
         exercises.setIconified(false);
 
         ArrayList<String> arrayList = new ArrayList<>();
-        arrayList.add("Push Ups");
+        arrayList.add("Normal Push Up");
+        arrayList.add("Wide Push Up");
+        arrayList.add("Closed Push Up");
+        arrayList.add("Spiderman Push Up");
+        arrayList.add("Tricep Dip");
+        arrayList.add("Plank");
+        arrayList.add("Side Plank");
+        arrayList.add("Flutter Kicks");
+        arrayList.add("Cross Kicks");
+        arrayList.add("Russian Twist");
+        arrayList.add("Ankle Taps");
         arrayList.add("Sit Ups");
-        arrayList.add("Crunches");
+        arrayList.add("Superman");
         arrayList.add("Squats");
+        arrayList.add("Lunges");
+        arrayList.add("Calf Raises");
+        arrayList.add("Hip Thruster");
+        arrayList.add("Side Plank Kicks");
+        arrayList.add("Burpees");
+        arrayList.add("Step Ups");
+
         final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getContext(),
                 android.R.layout.simple_list_item_1,
                 arrayList);
         list.setAdapter(arrayAdapter);
+
 
         exercises.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -60,7 +82,19 @@ public class ExerciseFragment extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                arrayAdapter.getFilter().filter(newText);
+                Log.i("exercises", newText);
+                nothingFound = view.findViewById(R.id.nothingfoundmessage);
+                arrayAdapter.getFilter().filter(newText, new Filter.FilterListener() {
+                    @Override
+                    public void onFilterComplete(int i) {
+                        if (i == 0) {
+                            nothingFound.setVisibility(View.VISIBLE);
+                        }
+                        else{
+                            nothingFound.setVisibility(View.GONE);
+                        }
+                    }
+                });
                 return false;
             }
         });
