@@ -44,6 +44,7 @@
             android:theme="@style/Theme.NimbleFitness.NoActionBar">
 
         </activity>
+        <service android:name=".MediaHandlers.Audio.Audio" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
