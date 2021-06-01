@@ -94,7 +94,7 @@ public class RoutinesFragment extends Fragment {
         ArrayList<Exercise> exerciseList;
         exerciseList = new ArrayList<>();
 
-        Routine routine1 = new Routine(R.drawable.upperbody, "Beginners Upper Body", 4, exerciseList);
+        //Routine routine1 = new Routine(R.drawable.upperbody, "Beginners Upper Body", 4, exerciseList);
 
 
         // Adding parent data
@@ -125,11 +125,12 @@ public class RoutinesFragment extends Fragment {
         listImageHeader.add(R.drawable.core);
 
         // Adding child data
-        /*routine1.add("5 Push Ups");
+        List<String> routine1 = new ArrayList<String>();
+        routine1.add("5 Push Ups");
         routine1.add("20 second Plank");
         routine1.add("5 Tricep Dips over Chair");
         routine1.add("5 Superman Raises");
-*/
+
         List<String> routine2 = new ArrayList<String>();
         routine2.add("5 Bodyweight Squats");
         routine2.add("10 Bodyweight Lunges");
@@ -214,7 +215,7 @@ public class RoutinesFragment extends Fragment {
         routine12.add("10 Sit Ups");
         routine12.add("Flutter Kicks for 30 seconds");
 
-        //listDataChild.put(listDataHeader.get(0), routine1); // Header, Child data
+        listDataChild.put(listDataHeader.get(0), routine1); // Header, Child data
         listDataChild.put(listDataHeader.get(1), routine2);
         listDataChild.put(listDataHeader.get(2), routine3);
         listDataChild.put(listDataHeader.get(3), routine4);
