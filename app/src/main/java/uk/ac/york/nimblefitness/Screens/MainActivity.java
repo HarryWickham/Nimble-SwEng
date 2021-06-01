@@ -10,10 +10,11 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import io.sentry.Sentry;
 import uk.ac.york.nimblefitness.R;
+import uk.ac.york.nimblefitness.Screens.Exercises.ExerciseFragment;
 import uk.ac.york.nimblefitness.Screens.Profile.ProfileTabsFragment;
 import uk.ac.york.nimblefitness.Screens.Routines.RoutinesFragment;
-import uk.ac.york.nimblefitness.Screens.Exercises.ExerciseFragment;
 import uk.ac.york.nimblefitness.Screens.Settings.SettingsFragment;
 
 public class MainActivity extends AppCompatActivity {
@@ -55,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
             return false;
         });
 
+        Sentry.captureMessage("testing SDK setup");
 
 
     }
