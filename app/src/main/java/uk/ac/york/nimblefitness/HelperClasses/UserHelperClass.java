@@ -2,16 +2,13 @@ package uk.ac.york.nimblefitness.HelperClasses;
 
 public class UserHelperClass {
 
-    String firstName, lastName, gender, exerciseType, exerciseDuration, age, membershipPlan;
+    String firstName, lastName, gender, exerciseType, exerciseDuration, membershipPlan;
+    int currentMoves, age, weeklyGoal;
 
     public UserHelperClass() {
     }
 
-    public UserHelperClass(String membershipPlan) {
-        this.membershipPlan = membershipPlan;
-    }
-
-    public UserHelperClass(String firstName, String lastName, String gender, String exerciseType, String exerciseDuration, String age, String membershipPlan) {
+    public UserHelperClass(String firstName, String lastName, String gender, String exerciseType, String exerciseDuration, int age, String membershipPlan, int weeklyGoal, int currentMoves) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;
@@ -19,6 +16,8 @@ public class UserHelperClass {
         this.exerciseDuration = exerciseDuration;
         this.age = age;
         this.membershipPlan = membershipPlan;
+        this.weeklyGoal = weeklyGoal;
+        this.currentMoves = currentMoves;
     }
 
     public String getFirstName() {
@@ -61,11 +60,11 @@ public class UserHelperClass {
         this.exerciseDuration = exerciseDuration;
     }
 
-    public String getAge() {
+    public int getAge() {
         return age;
     }
 
-    public void setAge(String age) {
+    public void setAge(int age) {
         this.age = age;
     }
 
@@ -75,5 +74,21 @@ public class UserHelperClass {
 
     public void setMembershipPlan(String membershipPlan) {
         this.membershipPlan = membershipPlan;
+    }
+
+    public int getWeeklyGoal() {
+        return weeklyGoal;
+    }
+
+    public void setWeeklyGoal(int weeklyGoal) {
+        this.weeklyGoal = weeklyGoal;
+    }
+
+    public int getCurrentMoves() {
+        return currentMoves;
+    }
+
+    public void setCurrentMoves(int currentMoves) {
+        this.currentMoves = currentMoves;
     }
 }

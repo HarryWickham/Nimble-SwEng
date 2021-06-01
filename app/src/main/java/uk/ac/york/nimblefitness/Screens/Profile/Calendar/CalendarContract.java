@@ -1,6 +1,7 @@
 package uk.ac.york.nimblefitness.Screens.Profile.Calendar;
 
 import android.content.Context;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import uk.ac.york.nimblefitness.Adapters.MovesListAdapter;
@@ -21,6 +22,7 @@ public interface CalendarContract {
         String selectedDay(int month, int dayOfMonth);
         String currentUser();
         MovesListAdapter completedMoves(Context context);
+        void setListViewHeightBasedOnChildren (ListView listView);
     }
 
     interface Presenter {
@@ -29,5 +31,6 @@ public interface CalendarContract {
         String displaySelectedDay(int month, int dayOfMonth);
         String displayUserName();
         MovesListAdapter setCompletedMovesList();
+        void setListViewHeightBasedOnChildren (ListView listView);
     }
 }

@@ -32,7 +32,6 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
-import uk.ac.york.nimblefitness.HelperClasses.ShareService;
 import uk.ac.york.nimblefitness.MediaHandlers.Graphics.ShapeType;
 import uk.ac.york.nimblefitness.MediaHandlers.Graphics.ShapeView;
 import uk.ac.york.nimblefitness.MediaHandlers.Images.ImageLayout;
@@ -53,14 +52,7 @@ public class HandlerTestActivity extends AppCompatActivity {
 
     private static final int STORAGE_PERMISSION_CODE = 101;
 
-    protected void onHandleIntent() {
-        Log.i("TAG", "onHandleIntent: ");
-        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
-        sharingIntent.setType("text/plain");
-        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Subject Here");
-        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, "Tutorialspoint.com");
-        startActivity(Intent.createChooser(sharingIntent, "Sharing"));
-    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,10 +76,10 @@ public class HandlerTestActivity extends AppCompatActivity {
         downloadXMLFile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new ShareService("Subject", "Text", "Title").ShareContent());
-                /*Uri uri = Uri.parse("https://www-users.york.ac.uk/~hew550/");
+                //startActivity(new ShareService("Subject", "Text", "Title").ShareContent());
+                Uri uri = Uri.parse("https://www-users.york.ac.uk/~hew550/");
                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                startActivity(intent);*/
+                startActivity(intent);
             }
         });
         openFileBrowser.setOnClickListener(new View.OnClickListener() {
@@ -118,7 +110,7 @@ public class HandlerTestActivity extends AppCompatActivity {
         }
     }
 
-    private void parseXML(XmlPullParser parser) throws XmlPullParserException, IOException {
+    void parseXML(XmlPullParser parser) throws XmlPullParserException, IOException {
         int eventType = parser.getEventType();
         ShapeType shapeType = null;
         TextType textType = null;
@@ -186,9 +178,11 @@ public class HandlerTestActivity extends AppCompatActivity {
                             }else{textType.setFontcolour("#000000");}
                             if(parser.getAttributeValue(null, "fontsize") != null){
                                 textType.setFontsize(parser.getAttributeValue(null, "fontsize"));
-                            }else{textType.setFontsize("20");}
+                            }else{
+                                textType.setFontsize("20");
+                            }
                             break;
-                        /*case "b":
+                        case "b":
                             assert textType != null;
                             textType.setStyle(TextModule.styleFamily.bold);
                             break;
@@ -196,7 +190,7 @@ public class HandlerTestActivity extends AppCompatActivity {
                             assert textType != null;
                             textType.setStyle(TextModule.styleFamily.italic);
                             //Not sure how to implement both italics and bold or some not bold/italic some bold/italic @todo
-                            break;*/
+                            break;
                         case "video":
                             videoType = new VideoType();
                             videoType.setUriPath(String.valueOf(parser.getAttributeValue(null, "urlname")));
@@ -216,25 +210,24 @@ public class HandlerTestActivity extends AppCompatActivity {
                         default:
                             throw new IllegalStateException("Unexpected value: " + name);
                     }
-                    if(textType != null) {
-                        //Log.i("text :", String.valueOf(parser.nextText()));
-                        textType.setText(String.valueOf(parser.nextText()));
-                        Log.i("textType :", String.valueOf(textType.getText()));
-                        textTypes.add(textType);
-                        break;
-                    }
                     break;
                 case XmlPullParser.END_TAG:
                     name = parser.getName();
                     if ((name.equalsIgnoreCase("shape") || name.equalsIgnoreCase("line")) && shapeType != null) {
                         shapeTypes.add(shapeType);
+                        shapeType = null;
                     }
                     else if (name.equalsIgnoreCase("video") && videoType != null) {
-
+                        videoType = null;
                     }
                     else if (name.equalsIgnoreCase("text") && textType != null) {
                         Log.i("END_TAG: textType :", String.valueOf(textType.getText()));
                         textTypes.add(textType);
+                        textType = null;
+                    }
+                case XmlPullParser.TEXT:
+                    if (textType != null) {
+                        textType.addText(parser.getText());
                     }
             }
             eventType = parser.next();

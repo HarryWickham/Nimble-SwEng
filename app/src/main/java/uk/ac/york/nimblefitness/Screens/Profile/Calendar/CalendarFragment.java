@@ -61,7 +61,7 @@ public class CalendarFragment extends Fragment implements CalendarContract.Calen
             }
         });
 
-        setListViewHeightBasedOnChildren(listView);
+        calendarPresenter.setListViewHeightBasedOnChildren(listView);
 
 // This toast event still requires refactoring into MVP architecture?
         // On click of a list item, the corresponding exercise title is displayed as a toast.
@@ -81,24 +81,5 @@ public class CalendarFragment extends Fragment implements CalendarContract.Calen
         return getActivity();
     }
 
-    public static void setListViewHeightBasedOnChildren (ListView listView) {
-        ListAdapter listAdapter = listView.getAdapter();
-        if (listAdapter == null) return;
-        int desiredWidth = View.MeasureSpec.makeMeasureSpec(listView.getWidth(), View.MeasureSpec.UNSPECIFIED);
-        int totalHeight = 0;
-        View view = null;
-        for (int i = 0; i < listAdapter.getCount(); i++) {
-            view = listAdapter.getView(i, view, listView);
-            if (i == 0) view.setLayoutParams(new ViewGroup.LayoutParams(desiredWidth, ViewGroup.LayoutParams.WRAP_CONTENT));
-            view.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
-            totalHeight += view.getMeasuredHeight();
-        }
 
-        ViewGroup.LayoutParams params = listView.getLayoutParams();
-
-        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
-
-        listView.setLayoutParams(params);
-        listView.requestLayout();
-    }
 }

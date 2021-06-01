@@ -12,4 +12,5 @@
     <color name="colorOnPrimary">@color/white</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="fb_blue">#4267B2</color>
 </resources>

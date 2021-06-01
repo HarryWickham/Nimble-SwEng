@@ -2,6 +2,11 @@ package uk.ac.york.nimblefitness.Screens.Profile.Goal;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 
@@ -13,9 +18,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import uk.ac.york.nimblefitness.Adapters.MovesListAdapter;
+import uk.ac.york.nimblefitness.HelperClasses.Exercise;
 import uk.ac.york.nimblefitness.R;
 
 import static android.preference.PreferenceManager.getDefaultSharedPreferences;
@@ -45,8 +52,10 @@ public class GoalModel implements GoalContract.Model{
 
     @Override
     public int gaugeEndValue() {
-        int endValue = 100;
-        return endValue;
+        FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        SharedPreferences prefs = getDefaultSharedPreferences(getApplicationContext());
+        Log.i("gaugeEndValue", String.valueOf(prefs.getInt(currentFirebaseUser+"weeklyGoal", 0)));
+        return prefs.getInt(currentFirebaseUser+"weeklyGoal", 0);
     }
     // A random motivational quote is chosen to be displayed on the Goal tab of the profile page.
     @Override
@@ -86,8 +95,36 @@ public class GoalModel implements GoalContract.Model{
                                 R.drawable.ic_baseline_accessibility_24,
                                 R.drawable.ic_baseline_accessibility_24,
                                 R.drawable.ic_baseline_accessibility_24};
-        listAdapter = new MovesListAdapter(context, movesToDo, moveDetails, numberOfMoves,
-                                                                                exerciseIcon);
+
+        ArrayList<Exercise> exercises = new ArrayList<>();
+        exercises.add(new Exercise("","","Plank","",60,1,0, R.drawable.ic_baseline_accessibility_24));
+        exercises.add(new Exercise("","","Squats","",20,1,0, R.drawable.ic_baseline_accessibility_24));
+        exercises.add(new Exercise("","","Sit-ups","",15,1,0, R.drawable.ic_baseline_accessibility_24));
+        exercises.add(new Exercise("","","Press-ups","",10,1,0, R.drawable.ic_baseline_accessibility_24));
+
+        listAdapter = new MovesListAdapter(context, exercises);
         return listAdapter;
+    }
+
+    @Override
+    public void setListViewHeightBasedOnChildren (ListView listView) {
+        ListAdapter listAdapter = listView.getAdapter();
+        if (listAdapter == null) return;
+        int desiredWidth = View.MeasureSpec.makeMeasureSpec(listView.getWidth(), View.MeasureSpec.UNSPECIFIED);
+        int totalHeight = 0;
+        View view = null;
+        for (int i = 0; i < listAdapter.getCount(); i++) {
+            view = listAdapter.getView(i, view, listView);
+            if (i == 0) view.setLayoutParams(new ViewGroup.LayoutParams(desiredWidth, ViewGroup.LayoutParams.WRAP_CONTENT));
+            view.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
+            totalHeight += view.getMeasuredHeight();
+        }
+
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+
+        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+
+        listView.setLayoutParams(params);
+        listView.requestLayout();
     }
 }

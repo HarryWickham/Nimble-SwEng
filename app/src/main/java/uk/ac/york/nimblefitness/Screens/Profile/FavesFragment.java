@@ -21,7 +21,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-import uk.ac.york.nimblefitness.Adapters.RoutineListAdapter;
+import uk.ac.york.nimblefitness.HelperClasses.Exercise;
 import uk.ac.york.nimblefitness.HelperClasses.Routine;
 import uk.ac.york.nimblefitness.R;
 
@@ -51,9 +51,11 @@ public class FavesFragment extends Fragment {
 
         ListView FavouritesList = view.findViewById(R.id.FavouritesList);
 
-        mDatabase = FirebaseDatabase.getInstance().getReference("users"); // Finding the "users" child in the firebase
-
         FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();  // Getting the unique ID for the current user for their information
+
+        mDatabase = FirebaseDatabase.getInstance().getReference("users").child(currentFirebaseUser.getUid()); // Finding the "users" child in the firebase
+
+
 
         // Listener to gather information out of the firebase
         mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -61,7 +63,7 @@ public class FavesFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (currentFirebaseUser != null) { // If the firebase is detected
                     // Importing the favourited routine name into the favourites list to be displayed
-                    favourite = snapshot.child(currentFirebaseUser.getUid()).child("favouriteRoutines").getValue(String.class);
+                    favourite = snapshot.child("favouriteRoutines").getValue(String.class);
                     Log.i("TAG", "" + favourite); // Console output
                     // Outputs the found name of the favourite routine in a list using the pre made routine card
                     ListView FavouritesListView = view.findViewById(R.id.FavouritesList);
@@ -70,21 +72,28 @@ public class FavesFragment extends Fragment {
                     if (favourite != null) {
                         Log.i("TAG", "" + currentFirebaseUser.getUid()); // Console output
                         // Makes a new routine and names it the name of the saved favourite routine
-                        Routine routine1 = new Routine(favourite, R.drawable.final_logo);
+                        //Routine routine1 = new Routine(favourite, R.drawable.final_logo);
                         //Routine routine2 = new Routine("Routine2", R.drawable.final_logo);
                         //Routine routine3 = new Routine("Routine3", R.drawable.final_logo);
                         //Routine routine4 = new Routine("Routine4", R.drawable.final_logo);
 
+                        ArrayList<Exercise> exercises = new ArrayList<>();
+
+                        exercises.add(new Exercise("Image","Video","Press-up","Description",10,15,10, R.drawable.ic_baseline_accessibility_24));
+                        exercises.add(new Exercise("Image","Video","Sit-up","Description",10,15,10, R.drawable.ic_baseline_accessibility_24));
+
+                        Routine routine = new Routine("Image","Name","Summary",0,5,10,exercises);
+
                         // Creates an array for the favourite routines to go into
-                        ArrayList<Routine> FavouritesArrayList = new ArrayList<>();
-                        FavouritesArrayList.add(routine1); // Adding the routine to the list for favourites
+                        //ArrayList<Routine> FavouritesArrayList = new ArrayList<>();
+                        //FavouritesArrayList.add(routine1); // Adding the routine to the list for favourites
                         //FavouritesArrayList.add(routine2);
                         //FavouritesArrayList.add(routine3);
                         //FavouritesArrayList.add(routine4);
 
 
-                        RoutineListAdapter adapter = new RoutineListAdapter(requireContext(), R.layout.routines_list_layout, FavouritesArrayList);
-                        FavouritesListView.setAdapter(adapter);
+                        /*RoutineListAdapter adapter = new RoutineListAdapter(requireContext(), R.layout.routines_list_layout, FavouritesArrayList);
+                        FavouritesListView.setAdapter(adapter);*/
                     } else { // If there are no favourite routines found
                         String[] settings_list_items = {"Favourites"}; //Adds a simple list with the title "favourites" to show that is where they will go when favourited
 

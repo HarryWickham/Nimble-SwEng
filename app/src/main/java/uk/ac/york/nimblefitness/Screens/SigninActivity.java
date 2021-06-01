@@ -104,7 +104,7 @@ public class SigninActivity extends AppCompatActivity {
                 firebaseAuth.signInWithEmailAndPassword(userDetails.getEmail(),userDetails.getPassword()).addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         Toast.makeText(SigninActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(getApplicationContext(), MainActivity.class));//takes user the main page
+                        startActivity(new Intent(getApplicationContext(), PaymentActivity.class));//takes user the main page
                     } else {
                         invalidUser();
                     }
@@ -116,12 +116,7 @@ public class SigninActivity extends AppCompatActivity {
 
     private void InitialiseGoogleLogin() {
         SignInButton googleSignIn = findViewById(R.id.googleSignIn);
-        googleSignIn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                googleLogin();
-            }
-        });
+        googleLogin();
     }
 
     private void googleLogin() {

@@ -27,10 +27,11 @@ public class PaymentListAdapter extends BaseAdapter {
     private int[] planImage;
     private String[] membershipDetailsText;
     private MyActionCallback mActionCallback;
+    private String[] selectionButton;
 
     
 
-    public PaymentListAdapter(Context context, String[] planSubtitle, String[] planTier, int[] planImage, String[] membershipDetailsText, MyActionCallback actionCallback) {
+    public PaymentListAdapter(Context context, String[] planSubtitle, String[] planTier, int[] planImage, String[] membershipDetailsText, MyActionCallback actionCallback, String[] selectionButton) {
         this.context = context;
         this.planSubtitle = planSubtitle;
         this.planTier = planTier;
@@ -38,6 +39,7 @@ public class PaymentListAdapter extends BaseAdapter {
         //this.moreDetailsButton = moreDetailsButton;
         this.membershipDetailsText = membershipDetailsText;
         mActionCallback = actionCallback;
+        this.selectionButton = selectionButton;
 
         //this.selectionButton = selectionButton;
     }
@@ -60,7 +62,6 @@ public class PaymentListAdapter extends BaseAdapter {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         ViewHolder viewHolder;
-        final View result;
 
 
         if (convertView == null) {
@@ -80,11 +81,9 @@ public class PaymentListAdapter extends BaseAdapter {
                     //viewHolder.moreDetailsButton = convertView.findViewById(R.id.more_details_button);
             //viewHolder.selectionButton = convertView.findViewById(R.id.selection_button);
 
-            result = convertView;
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
-            result = convertView;
         }
 
         viewHolder.planTier.setText(planTier[position]);
@@ -93,7 +92,7 @@ public class PaymentListAdapter extends BaseAdapter {
 
         viewHolder.planImage.setImageResource(planImage[position]);
 
-
+    viewHolder.selectedPlan.setText(selectionButton[position]);
 
 
 
@@ -140,7 +139,7 @@ public class PaymentListAdapter extends BaseAdapter {
 
     private void moreLessSelector(ViewHolder viewHolder){
         if(viewHolder.moreLessButton.getText().equals("Less Details")){
-            viewHolder.membershipDetailsLayout.setVisibility(View.GONE);//todo change planSubtitle to the membershipDetails
+            viewHolder.membershipDetailsLayout.setVisibility(View.GONE);
             viewHolder.moreLessButton.setText("More Details");
             //viewHolder.txtMoves.setCompoundDrawables(null,null, get , null);
 
@@ -153,10 +152,14 @@ public class PaymentListAdapter extends BaseAdapter {
 
     private String selectedPlan(ViewHolder viewHolder){
         switch (viewHolder.selectedPlan.getText().toString()) {
-            case "select this plan (£2.99)":
-                return "Bronze";
+            case "select this plan (£1.99)":
+                return "bronze";
+            case "select this plan (£3.99)":
+                return "silver";
+            case "select this plan (£5.99)":
+                return "gold";
         }
-        return "Error";
+        return "error";
     }
 
     public interface MyActionCallback{

@@ -15,6 +15,10 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="TabText" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">14sp</item>
+    </style>
+
     <style name="AlertDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="colorOnPrimary">#0047BB</item>
         <item name="colorOnSecondary">#0047BB</item>

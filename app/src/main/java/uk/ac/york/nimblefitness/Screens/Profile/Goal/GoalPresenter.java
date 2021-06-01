@@ -1,6 +1,21 @@
 package uk.ac.york.nimblefitness.Screens.Profile.Goal;
 
+import android.content.SharedPreferences;
+import android.widget.ListView;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
+import java.util.Locale;
+
 import uk.ac.york.nimblefitness.Adapters.MovesListAdapter;
+import uk.ac.york.nimblefitness.HelperClasses.CreateNotification;
+import uk.ac.york.nimblefitness.HelperClasses.ShareService;
+import uk.ac.york.nimblefitness.R;
+import uk.ac.york.nimblefitness.Screens.MainActivity;
+
+import static android.preference.PreferenceManager.getDefaultSharedPreferences;
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 /*
  This class is used to interface between the View and Model associated with the Goal tab.
@@ -27,7 +42,10 @@ public class GoalPresenter implements GoalContract.Presenter{
 
     @Override
     public int displayGaugeInfo() {
-        return goalModel.updateGauge(0,68);
+        FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        SharedPreferences prefs = getDefaultSharedPreferences(getApplicationContext());
+        int currentMoves = prefs.getInt(currentFirebaseUser+"currentMoves", 0);
+        return goalModel.updateGauge(0,currentMoves);
     }
 
     @Override
@@ -40,4 +58,14 @@ public class GoalPresenter implements GoalContract.Presenter{
         return goalModel.todaysMoves(goalView.getContext());
     }
 
+    @Override
+    public void setListViewHeightBasedOnChildren(ListView listView) {
+        goalModel.setListViewHeightBasedOnChildren(listView);
+    }
+
+    public void sendNotification(int displayGaugeInfo, int setGaugeEndValue) {
+        if(displayGaugeInfo >= setGaugeEndValue) {
+            CreateNotification createNotification = new CreateNotification(R.drawable.ic_stat_name, "Congratulations!", "You have reached your weekly goal. Your current moves are: " + String.format(Locale.UK, "%d/%d", displayGaugeInfo, setGaugeEndValue), MainActivity.class, "goalReachedChannelID", 1, getApplicationContext());
+        }
+    }
 }
