@@ -118,17 +118,9 @@ public class ImageModule extends AppCompatImageView {
 
     public void setImage(){
 
-        String fileSource = imageSource;
-        //Sets Image Source
+        //Instantiating image with glide
         Glide.with(getContext()).load(imageSource).override(width, height).into(this);
-
-
-        //Sets the image height and width
-        //setImageWidth(width);
-        //setImageHeight(height);
-
 
     }
 
-    //public void removeImage()
 }
