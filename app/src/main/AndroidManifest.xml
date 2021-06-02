@@ -66,9 +66,14 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
+
+
         <meta-data android:name="io.sentry.dsn"
             android:value="https://273a53c2acc54f998657ce3edcc3512c@o516837.ingest.sentry.io/5623806" />
 
+        <meta-data android:name="io.sentry.release" android:value="io.example@1.1.0" />
+
+        <meta-data android:name="io.sentry.traces.sample-rate" android:value="1.0" />
     </application>
 
 </manifest>
