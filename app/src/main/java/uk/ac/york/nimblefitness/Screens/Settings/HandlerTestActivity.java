@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.LinearGradient;
 import android.graphics.Shader;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -37,6 +38,7 @@ import uk.ac.york.nimblefitness.MediaHandlers.Audio.AudioType;
 import uk.ac.york.nimblefitness.MediaHandlers.Graphics.ShapeType;
 import uk.ac.york.nimblefitness.MediaHandlers.Graphics.ShapeView;
 import uk.ac.york.nimblefitness.MediaHandlers.Images.ImageLayout;
+import uk.ac.york.nimblefitness.MediaHandlers.Images.ImageType;
 import uk.ac.york.nimblefitness.MediaHandlers.Text.TextLayout;
 import uk.ac.york.nimblefitness.MediaHandlers.Text.TextModule;
 import uk.ac.york.nimblefitness.MediaHandlers.Text.TextType;
@@ -67,14 +69,14 @@ public class HandlerTestActivity extends AppCompatActivity {
         /*TextLayout textLayout = new TextLayout("Hello World", TextModule.fontFamily.sans_serif, "52", "#00ccff", TextModule.styleFamily.italic, 200, 1400, frameLayout, this);
         textLayout.writeText();
 
-        VideoLayout videoLayout = new VideoLayout("https://www-users.york.ac.uk/~hew550/testvideo.mp4",1000,1000,200,200,"Video", 5,false,frameLayout,this);
+        VideoLayout videoLayout = new VideoLayout("https://www-users.york.ac.uk/~hew550/testvideo.mp4",1000,1000,200,200,"VidVideo", 5,false,frameLayout,this);
         videoLayout.PlayVideo();
 
         AudioType audioType = new AudioType("https://www-users.york.ac.uk/~hmt519/Levitating.wav",0,true,"id",this);
-        audioType.play();*/
+        audioType.play();
 
         ImageLayout imageLayout = new ImageLayout(0,0, 3100, 1740, 1, "https://static.wikia.nocookie.net/reddwarf/images/6/69/Ainsley_Harriott.jpg/revision/latest/scale-to-width-down/310?cb=20180223100130",frameLayout, this);
-
+*/
         downloadXMLFile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -118,6 +120,7 @@ public class HandlerTestActivity extends AppCompatActivity {
         TextType textType = null;
         VideoType videoType = null;
         AudioType audioType = null;
+        ImageType imageType = null;
 
         while (eventType != XmlPullParser.END_DOCUMENT) {
             String name;
@@ -235,6 +238,19 @@ public class HandlerTestActivity extends AppCompatActivity {
                                 audioType.setId("");
                             }
                             break;
+                        case "image":
+                            imageType = new ImageType();
+                            imageType.setImageSource(String.valueOf(parser.getAttributeValue(null, "urlname")));
+                            imageType.setXCoordinate(Integer.parseInt(parser.getAttributeValue(null, "xstart")));
+                            imageType.setYCoordinate(Integer.parseInt(parser.getAttributeValue(null, "ystart")));
+                            imageType.setImageHeight(Integer.parseInt(parser.getAttributeValue(null, "height")));
+                            imageType.setImageWidth(Integer.parseInt(parser.getAttributeValue(null, "width")));
+                            if(parser.getAttributeValue(null, "duration") != null) {
+                                imageType.setImageDuration(Integer.parseInt(parser.getAttributeValue(null, "duration")));
+                            }else{
+                                imageType.setImageDuration(0);
+                            }
+                            break;
                         default:
                             throw new IllegalStateException("Unexpected value: " + name);
                     }
@@ -273,6 +289,10 @@ public class HandlerTestActivity extends AppCompatActivity {
                         AudioType audioType1 = new AudioType(audioType.getUrl(),audioType.getStarttime(),audioType.isLoop(),audioType.getId(), this);
                         audioType1.play();
                         audioType = null;
+                    }
+                    else if (name.equalsIgnoreCase("image") && imageType != null){
+                        ImageLayout imageLayout = new ImageLayout(imageType.getXCoordinate(),imageType.getYCoordinate(), imageType.getImageWidth(), imageType.getImageHeight(), imageType.getImageDuration(), imageType.getImageSource(),frameLayout, this);
+                        imageType = null;
                     }
 
             }
