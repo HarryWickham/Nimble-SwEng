@@ -305,7 +305,7 @@ public class HandlerTestActivity extends AppCompatActivity {
                         videoType = null;
                     }
                     else if (name.equalsIgnoreCase("text") && textType != null) {
-                        TextLayout textLayout = new TextLayout(textType.getText(),textType.getFont(),textType.getFontsize(),textType.getFontcolour(),textType.getStyle(),textType.getXstart(),textType.getYstart(), frameLayout, this);
+                        TextLayout textLayout = new TextLayout(textType.getText(),textType.getFont(),textType.getFontsize(),textType.getFontcolour(),textType.getXstart(),textType.getYstart(), frameLayout, this);
                         textLayout.writeText();
                         textType = null;
                     }

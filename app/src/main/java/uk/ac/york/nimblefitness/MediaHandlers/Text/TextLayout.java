@@ -15,8 +15,7 @@ public class TextLayout {
     TextModule textModule;
     Context context;
 
-    public TextLayout(String text, TextModule.fontFamily font, String fontsize, String fontcolour, TextModule.styleFamily style, int xstart, int ystart, FrameLayout parentLayout, Context context) {
-        this.style = style;
+    public TextLayout(String text, TextModule.fontFamily font, String fontsize, String fontcolour, int xstart, int ystart, FrameLayout parentLayout, Context context) {
         this.font = font;
         this.text = text;
         this.fontsize = fontsize;
