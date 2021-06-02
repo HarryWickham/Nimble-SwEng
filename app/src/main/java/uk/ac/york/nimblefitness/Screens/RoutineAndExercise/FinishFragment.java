@@ -1,6 +1,7 @@
 package uk.ac.york.nimblefitness.Screens.RoutineAndExercise;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -44,8 +45,10 @@ public class FinishFragment extends Fragment {
         TextLayout exerciseNameLayout = null;
         TextLayout exerciseDescriptionLayout = null;
         VideoLayout exerciseVideoLayout = null;
-        exercises.add(new Exercise("","","Plank",0,60,1,R.drawable.ic_baseline_accessibility_24, exerciseVideoLayout , exerciseNameLayout, exerciseDescriptionLayout));
-        exercises.add(new Exercise("","","Squats",0,20,1,R.drawable.ic_baseline_accessibility_24, exerciseVideoLayout, exerciseNameLayout, exerciseDescriptionLayout));
+        exercises.add(new Exercise("","","Plank",0,60,1, Color.parseColor("#ffffff"), exerciseVideoLayout , exerciseNameLayout, exerciseDescriptionLayout, 0));
+        exercises.add(new Exercise("","","Squats",0,20,1,Color.parseColor("#ffffff"), exerciseVideoLayout, exerciseNameLayout, exerciseDescriptionLayout, 0));
+        exercises.add(new Exercise("","","Sit-ups",0,15,1,Color.parseColor("#ffffff"), exerciseVideoLayout, exerciseNameLayout, exerciseDescriptionLayout, 0));
+        exercises.add(new Exercise("","","Press-ups",0,10,1,Color.parseColor("#ffffff"), exerciseVideoLayout, exerciseNameLayout, exerciseDescriptionLayout, 0));
 
         //Routine routine = new Routine("Image","Name","Summary",0,5,10,exercises);
 
@@ -57,8 +60,10 @@ public class FinishFragment extends Fragment {
 
 
 
-        exercises.add(new Exercise("","","Sit-ups",0,15,1,R.drawable.ic_baseline_accessibility_24, exerciseVideoLayout, exerciseNameLayout, exerciseDescriptionLayout));
-        exercises.add(new Exercise("","","Press-ups",0,10,1,R.drawable.ic_baseline_accessibility_24, exerciseVideoLayout, exerciseNameLayout, exerciseDescriptionLayout));
+        exercises.add(new Exercise("","","Plank",0,60,1, Color.parseColor("#ffffff"), exerciseVideoLayout , exerciseNameLayout, exerciseDescriptionLayout, 0));
+        exercises.add(new Exercise("","","Squats",0,20,1,Color.parseColor("#ffffff"), exerciseVideoLayout, exerciseNameLayout, exerciseDescriptionLayout, 0));
+        exercises.add(new Exercise("","","Sit-ups",0,15,1,Color.parseColor("#ffffff"), exerciseVideoLayout, exerciseNameLayout, exerciseDescriptionLayout, 0));
+        exercises.add(new Exercise("","","Press-ups",0,10,1,Color.parseColor("#ffffff"), exerciseVideoLayout, exerciseNameLayout, exerciseDescriptionLayout, 0));
 
         MovesListAdapter movesListAdapter = new MovesListAdapter(getContext(), exercises);
 

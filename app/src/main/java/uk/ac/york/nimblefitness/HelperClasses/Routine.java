@@ -9,15 +9,17 @@ public class Routine {
     private int rating;
     private int sets;
     private int restBetweenSets;
+    private int setsRemaining;
     private ArrayList<Exercise> exerciseArrayList;
 
-    public Routine(int routineImage, String routineName, String routineSummary, int rating, int sets, int restBetweenSets, ArrayList<Exercise> exerciseArrayList) {
+    public Routine(int routineImage, String routineName, String routineSummary, int rating, int sets, int restBetweenSets, int setsRemaining, ArrayList<Exercise> exerciseArrayList) {
         this.routineImage = routineImage;
         this.routineName = routineName;
         this.routineSummary = routineSummary;
         this.rating = rating;
         this.sets = sets;
         this.restBetweenSets = restBetweenSets;
+        this.setsRemaining = setsRemaining;
         this.exerciseArrayList = exerciseArrayList;
     }
 
@@ -82,5 +84,13 @@ public class Routine {
 
     public void setRoutineSummary(String routineSummary) {
         this.routineSummary = routineSummary;
+    }
+
+    public int getSetsRemaining() {
+        return setsRemaining;
+    }
+
+    public void setSetsRemaining(int setsRemaining) {
+        this.setsRemaining = setsRemaining;
     }
 }

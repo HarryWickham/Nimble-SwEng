@@ -1,5 +1,7 @@
 package uk.ac.york.nimblefitness.HelperClasses;
 
+import android.graphics.Color;
+
 import uk.ac.york.nimblefitness.MediaHandlers.Text.TextLayout;
 import uk.ac.york.nimblefitness.MediaHandlers.Video.VideoLayout;
 
@@ -10,22 +12,24 @@ public class Exercise {
     private int reps;
     private int movesPerRep;
     private int restAfterFinish;
-    private int icon;
+    private int colour;
     private VideoLayout exerciseVideo;
     private TextLayout exerciseNameLayout;
     private TextLayout exerciseDescriptionLayout;
+    private int currentExercise;
 
-    public Exercise(String muscleGroupImage, String exerciseName, String exerciseDescription, int reps, int movesPerRep, int restAfterFinish, int icon, VideoLayout exerciseVideo, TextLayout exerciseNameLayout, TextLayout exerciseDescriptionLayout) {
+    public Exercise(String muscleGroupImage, String exerciseName, String exerciseDescription, int reps, int movesPerRep, int restAfterFinish, int colour, VideoLayout exerciseVideo, TextLayout exerciseNameLayout, TextLayout exerciseDescriptionLayout, int currentExercise) {
         this.muscleGroupImage = muscleGroupImage;
         this.exerciseName = exerciseName;
         this.exerciseDescription = exerciseDescription;
         this.reps = reps;
         this.movesPerRep = movesPerRep;
         this.restAfterFinish = restAfterFinish;
-        this.icon = icon;
+        this.colour = colour;
         this.exerciseVideo = exerciseVideo;
         this.exerciseNameLayout = exerciseNameLayout;
         this.exerciseDescriptionLayout = exerciseDescriptionLayout;
+        this.currentExercise = currentExercise;
     }
 
     public String getMuscleGroupImage() {
@@ -56,8 +60,8 @@ public class Exercise {
         return restAfterFinish;
     }
 
-    public int getIcon() {
-        return icon;
+    public int getColour() {
+        return colour;
     }
 
     public void setMuscleGroupImage(String muscleGroupImage) {
@@ -88,8 +92,8 @@ public class Exercise {
         this.restAfterFinish = restAfterFinish;
     }
 
-    public void setIcon(int icon) {
-        this.icon = icon;
+    public void setColour(int colour) {
+        this.colour = colour;
     }
 
     public TextLayout getExerciseNameLayout() {
@@ -106,5 +110,13 @@ public class Exercise {
 
     public void setExerciseDescriptionLayout(TextLayout exerciseDescriptionLayout) {
         this.exerciseDescriptionLayout = exerciseDescriptionLayout;
+    }
+
+    public int getCurrentExercise() {
+        return currentExercise;
+    }
+
+    public void setCurrentExercise(int currentExercise) {
+        this.currentExercise = currentExercise;
     }
 }

@@ -1,6 +1,7 @@
 package uk.ac.york.nimblefitness.Screens.RoutineAndExercise;
 
 import android.annotation.SuppressLint;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -14,11 +15,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 import uk.ac.york.nimblefitness.Adapters.MovesListAdapter;
 import uk.ac.york.nimblefitness.HelperClasses.Exercise;
 import uk.ac.york.nimblefitness.HelperClasses.Routine;
+import uk.ac.york.nimblefitness.MediaHandlers.Text.TextLayout;
+import uk.ac.york.nimblefitness.MediaHandlers.Video.VideoLayout;
 import uk.ac.york.nimblefitness.R;
 
 public class StartSummaryFragment extends Fragment {
@@ -37,8 +39,8 @@ public class StartSummaryFragment extends Fragment {
         getActivity().setTitle("Start Summary");
 
         ArrayList<Exercise> exercises = new ArrayList<>();
-
-        Routine routine = new Routine(0,"Name","Summary",3,4,0,exercises);
+        int setsRemaining = 1;
+        Routine routine = new Routine(0,"Name","Summary",3,4,0, setsRemaining, exercises);
 
         TextView routineName = view.findViewById(R.id.routine_name);
         routineName.setText(routine.getRoutineName());
@@ -51,11 +53,14 @@ public class StartSummaryFragment extends Fragment {
 
         TextView routineSets = view.findViewById(R.id.sets);
         routineSets.setText(String.format("%d sets", routine.getSets()));
+        TextLayout exerciseNameLayout = null;
+        TextLayout exerciseDescriptionLayout = null;
+        VideoLayout exerciseVideoLayout = null;
 
-        exercises.add(new Exercise("","Plank","Plank",1,60,1, R.drawable.ic_baseline_accessibility_24,null,null,null));
-        exercises.add(new Exercise("","Squats","Squats",1,20,1, R.drawable.ic_baseline_accessibility_24,null,null,null));
-        exercises.add(new Exercise("","Sit-ups","Sit-ups",1,15,1, R.drawable.ic_baseline_accessibility_24,null,null,null));
-        exercises.add(new Exercise("","Press-ups","Press-ups",1,10,1, R.drawable.ic_baseline_accessibility_24,null,null,null));
+        exercises.add(new Exercise("","","Plank",0,60,1, Color.parseColor("#ffffff"), exerciseVideoLayout , exerciseNameLayout, exerciseDescriptionLayout, 0));
+        exercises.add(new Exercise("","","Squats",0,20,1,Color.parseColor("#ffffff"), exerciseVideoLayout, exerciseNameLayout, exerciseDescriptionLayout, 0));
+        exercises.add(new Exercise("","","Sit-ups",0,15,1,Color.parseColor("#ffffff"), exerciseVideoLayout, exerciseNameLayout, exerciseDescriptionLayout, 0));
+        exercises.add(new Exercise("","","Press-ups",0,10,1,Color.parseColor("#ffffff"), exerciseVideoLayout, exerciseNameLayout, exerciseDescriptionLayout, 0));
 
         ListView listView = view.findViewById(R.id.start_summary_list_view);
 
