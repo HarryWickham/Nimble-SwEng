@@ -29,14 +29,12 @@ public class TextLayout {
 
     public void writeText(){
         textModule = new TextModule(this.context);
-
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.leftMargin=this.xstart;
         params.topMargin=this.ystart;
         textModule.setLayoutParams(params);
-
         parentLayout.addView(textModule);
-        textModule.setall(this.text,this.font,this.fontsize,this.fontcolour,this.style,this.xstart,this.ystart);
+        textModule.setall(this.text,this.font,this.fontsize,this.fontcolour,this.xstart,this.ystart);
         textModule.writeText();
     }
 }

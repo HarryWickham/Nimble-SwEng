@@ -197,11 +197,19 @@ public class HandlerTestActivity extends AppCompatActivity {
                             break;
                         case "b":
                             assert textType != null;
-                            textType.setStyle(TextModule.styleFamily.bold);
+                            if (textType.getStyle() == TextModule.styleFamily.italic || textType.getStyle() == TextModule.styleFamily.bold_italic) {
+                                textType.setStyle(TextModule.styleFamily.bold_italic);
+                            } else{
+                                textType.setStyle(TextModule.styleFamily.bold);
+                            }
                             break;
                         case "i":
                             assert textType != null;
-                            textType.setStyle(TextModule.styleFamily.italic);
+                            if (textType.getStyle() == TextModule.styleFamily.bold || textType.getStyle() == TextModule.styleFamily.bold_italic) {
+                                textType.setStyle(TextModule.styleFamily.bold_italic);
+                            } else{
+                                textType.setStyle(TextModule.styleFamily.italic);
+                            }
                             //Not sure how to implement both italics and bold or some not bold/italic some bold/italic @todo
                             break;
                         case "video":
@@ -257,7 +265,23 @@ public class HandlerTestActivity extends AppCompatActivity {
                     break;
                 case XmlPullParser.TEXT:
                     if (textType != null && !parser.getText().equals("null")) {
-                        textType.addText(parser.getText());
+
+                        //textType.addText(parser.getText());
+
+                        switch(textType.getStyle()) {
+                            case normal:
+                                textType.addText(parser.getText());
+                                break;
+                            case bold:
+                                textType.addText("<b>" + parser.getText() + "</b>");
+                                break;
+                            case italic:
+                                textType.addText("<i>" + parser.getText() + "</i>");
+                                break;
+                            case bold_italic:
+                                textType.addText("<b><i>" + parser.getText() + "</i></b>");
+                                break;
+                        }
                     }
                     break;
                 case XmlPullParser.END_TAG:
@@ -293,6 +317,12 @@ public class HandlerTestActivity extends AppCompatActivity {
                     else if (name.equalsIgnoreCase("image") && imageType != null){
                         ImageLayout imageLayout = new ImageLayout(imageType.getXCoordinate(),imageType.getYCoordinate(), imageType.getImageWidth(), imageType.getImageHeight(), imageType.getImageDuration(), imageType.getImageSource(),frameLayout, this);
                         imageType = null;
+                    }
+                    else if (name.equalsIgnoreCase("b") && textType != null){
+                        textType.setStyle(TextModule.styleFamily.normal);
+                    }
+                    else if (name.equalsIgnoreCase("i") && textType != null){
+                        textType.setStyle(TextModule.styleFamily.normal);
                     }
 
             }

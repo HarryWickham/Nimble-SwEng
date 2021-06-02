@@ -3,6 +3,7 @@ package uk.ac.york.nimblefitness.MediaHandlers.Text;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.text.Html;
 import android.util.AttributeSet;
 
 public class TextModule extends androidx.appcompat.widget.AppCompatTextView {
@@ -41,9 +42,9 @@ public class TextModule extends androidx.appcompat.widget.AppCompatTextView {
         return text;
     }
 
-    public void setText(String text) {
+    /*public void setText(String text) {
         this.text = text;
-    }
+    }*/
 
     public fontFamily getFont() {
         return font;
@@ -93,12 +94,11 @@ public class TextModule extends androidx.appcompat.widget.AppCompatTextView {
         this.ystart = ystart;
     }
 
-    public void setall(String text, fontFamily font, String fontsize, String fontcolour, styleFamily style, int xstart, int ystart) {
-        setText(text);
+    public void setall(String text, fontFamily font, String fontsize, String fontcolour, int xstart, int ystart) {
+        this.setText(Html.fromHtml(text));
         setFont(font);
         setFontsize(fontsize);
         setFontcolour(fontcolour);
-        setStyle(style);
         setXstart(xstart);
         setYstart(ystart);
     }
@@ -106,7 +106,6 @@ public class TextModule extends androidx.appcompat.widget.AppCompatTextView {
     // Method which calls for an update in Typeface and then appends the text
     public void writeText() {
         updateTypeface();
-        append(text);
     }
     // Updates text colour by taking the String from the constructor and converting it into an integer for setTextColor method
     public void updateTextColour() {
@@ -119,30 +118,6 @@ public class TextModule extends androidx.appcompat.widget.AppCompatTextView {
         int size = Integer.parseInt(fontsize);
         setTextSize(size);
         System.out.println(size);
-    }
-
-    /**
-     * Updates text style using a switch case for bold, italic and bold italic
-     * @return styleNumber: used for setting up the typeface in updateTypeface
-     */
-    public int updateTextStyle() {
-        int styleNumber;
-        switch (style) {
-            case bold:
-                styleNumber = 1;
-                break;
-            case italic:
-                styleNumber = 2;
-                break;
-            case bold_italic:
-                styleNumber = 3;
-                break;
-            case normal:
-            default:
-                styleNumber = 0;
-                break;
-        }
-        return styleNumber;
     }
 
     /**
@@ -175,10 +150,6 @@ public class TextModule extends androidx.appcompat.widget.AppCompatTextView {
     public void updateTypeface() {
         updateTextColour();
         updateTextSize();
-        int styleNumber = updateTextStyle();
-        Typeface family = updateTextFont();
-
-        Typeface tf = Typeface.create(family, styleNumber);
-        setTypeface(tf);
+        setTypeface(updateTextFont());
     }
 }
