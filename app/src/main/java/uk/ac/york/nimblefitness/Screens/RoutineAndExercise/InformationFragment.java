@@ -6,7 +6,6 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,7 +48,7 @@ public class InformationFragment extends Fragment {
     }
 
     public void layoutSetup(View view){
-        // This variable will be passed here from the 'StartSummaryFragment'.
+        /*// This variable will be passed here from the 'StartSummaryFragment'.
         String chosenRoutine = "Hard Core";
 
         // Shared parameters between all sections of text, the video, and image.
@@ -69,7 +68,7 @@ public class InformationFragment extends Fragment {
         titleLayout.writeText();
 
         // Displays the exercise video on the screen.
-        String videoUri = selectedRoutine(chosenRoutine).getExerciseVideo();
+        //String videoUri = selectedRoutine(chosenRoutine).getExerciseVideo();
         int videoWidth = screenWidth - 2*borderSize; // There is a border/margin either side of the video.
         int videoHeight = (int) Math.round(videoWidth*0.5625); // The video resolution is kept at a 16:9 aspect ratio.
         int videoX = borderSize;
@@ -100,7 +99,7 @@ public class InformationFragment extends Fragment {
                         "https://www-users.york.ac.uk/~hew550/NimbleAssets/exercisevideos/Normal-Push-Up.mp4",
                         "Normal Push Ups",
                         "With your hands placed a shoulder width apart and a straight back, lower yourself to the ground keeping your elbows tucked in. Hold the position. Then push off of the floor to your start position to complete a rep.",
-                        4,5,0,0);
+                        4,5,0,0, exerciseNameLayout, exerciseDescriptionLayout);
                 switch (routineName){
                     case "Easy Upper Body": case "Intermediate Upper Body":
                         exercise.setMovesPerRep(10);
@@ -119,7 +118,7 @@ public class InformationFragment extends Fragment {
                         "https://www-users.york.ac.uk/~hew550/NimbleAssets/exercisevideos/Squats.mp4",
                         "Bodyweight Squats",
                         "From a standing position, space your legs about a shoulder width apart, toes facing forwards and bend at the knee to lower your body. Ensure that you do not arch your back; keep it straight, and bend sufficiently at the knee to lower yourself. Then, raise yourself by engaging leg and core muscles back to the start position to complete a rep.",
-                        4,5,0,0);
+                        4,5,0,0, exerciseNameLayout, exerciseDescriptionLayout);
                 switch (routineName){
                     case "Easy Lower Body": case "Intermediate Lower Body":
                         exercise.setMovesPerRep(10);
@@ -138,7 +137,7 @@ public class InformationFragment extends Fragment {
                         "https://www-users.york.ac.uk/~hew550/NimbleAssets/exercisevideos/Plank.mp4",
                         "Plank",
                         "From a normal push up position, lower yourself down so that your weight is resting on your forearms. With a straight back, hold this position by engaging your core muscles.",
-                        4,20,0,0);
+                        4,20,0,0, exerciseNameLayout, exerciseDescriptionLayout);
                 switch (routineName){
                     case "Easy Core":
                         exercise.setMovesPerRep(25);
@@ -158,7 +157,7 @@ public class InformationFragment extends Fragment {
                 throw new IllegalStateException("Unexpected value: " + routineName);
         }
         currentExercise = exercise;
-        return exercise;
+        return exercise;*/
     }
 
     // After the first exercise is completed, the next exercise and its associated information is loaded into the fragment. This is passed here by the 'FinishFragment'.

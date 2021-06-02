@@ -2,22 +2,17 @@ package uk.ac.york.nimblefitness.Screens.Profile.Calendar;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
-
-import androidx.annotation.NonNull;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -27,6 +22,8 @@ import java.util.Locale;
 
 import uk.ac.york.nimblefitness.Adapters.MovesListAdapter;
 import uk.ac.york.nimblefitness.HelperClasses.Exercise;
+import uk.ac.york.nimblefitness.MediaHandlers.Text.TextLayout;
+import uk.ac.york.nimblefitness.MediaHandlers.Video.VideoLayout;
 import uk.ac.york.nimblefitness.R;
 
 import static android.preference.PreferenceManager.getDefaultSharedPreferences;
@@ -133,10 +130,13 @@ public class CalendarModel implements CalendarContract.Model {
                 R.drawable.ic_baseline_accessibility_24,
                 R.drawable.ic_baseline_accessibility_24};
         ArrayList<Exercise> exercises = new ArrayList<>();
-        exercises.add(new Exercise("","","Plank","",60,1,0, R.drawable.ic_baseline_accessibility_24));
-        exercises.add(new Exercise("","","Squats","",20,1,0, R.drawable.ic_baseline_accessibility_24));
-        exercises.add(new Exercise("","","Sit-ups","",15,1,0, R.drawable.ic_baseline_accessibility_24));
-        exercises.add(new Exercise("","","Press-ups","",10,1,0, R.drawable.ic_baseline_accessibility_24));
+        TextLayout exerciseNameLayout = null;
+        TextLayout exerciseDescriptionLayout = null;
+        VideoLayout exerciseVideoLayout = null;
+        exercises.add(new Exercise("","","Plank",0,60,1, Color.parseColor("#ffffff"), exerciseVideoLayout , exerciseNameLayout, exerciseDescriptionLayout, 0));
+        exercises.add(new Exercise("","","Squats",0,20,1,Color.parseColor("#ffffff"), exerciseVideoLayout, exerciseNameLayout, exerciseDescriptionLayout, 0));
+        exercises.add(new Exercise("","","Sit-ups",0,15,1,Color.parseColor("#ffffff"), exerciseVideoLayout, exerciseNameLayout, exerciseDescriptionLayout, 0));
+        exercises.add(new Exercise("","","Press-ups",0,10,1,Color.parseColor("#ffffff"), exerciseVideoLayout, exerciseNameLayout, exerciseDescriptionLayout, 0));
 
         listAdapter = new MovesListAdapter(context, exercises);
         return listAdapter;

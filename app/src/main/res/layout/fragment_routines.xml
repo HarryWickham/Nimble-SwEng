@@ -6,6 +6,11 @@
     android:orientation="vertical"
     tools:context=".Screens.Routines.RoutinesFragment">
 
+    <SearchView
+        android:id="@+id/routine_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
     <ExpandableListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"

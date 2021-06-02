@@ -1,4 +1,4 @@
-package uk.ac.york.nimblefitness.MediaHandlers;
+package uk.ac.york.nimblefitness.MediaHandlers.Audio;
 
 import android.app.Service;
 import android.content.Intent;
@@ -8,6 +8,7 @@ import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
@@ -17,7 +18,6 @@ import java.io.IOException;
 public class Audio extends Service {
     MediaPlayer myPlayer;
     SharedPreferences prefs;
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
 
     @Override
     public void onCreate() {
@@ -25,7 +25,7 @@ public class Audio extends Service {
         myPlayer.setAudioAttributes(
                 new AudioAttributes.Builder()
                         .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                        .setUsage(AudioAttributes.USAGE_MEDIA)
+                        .setUsage(AudioAttributes.USAGE_GAME)
                         .build()
         );
         prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());

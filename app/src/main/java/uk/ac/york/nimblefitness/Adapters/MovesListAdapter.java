@@ -75,7 +75,7 @@ public class MovesListAdapter extends BaseAdapter {
         viewHolder.txtName.setText(exercise.get(position).getExerciseName());
         viewHolder.txtDetails.setText(String.format(Locale.UK,"%d reps", exercise.get(position).getReps()));
         viewHolder.txtMoves.setText(String.format(Locale.UK,"Moves: %d", exercise.get(position).getMovesPerRep()*exercise.get(position).getReps()));
-        viewHolder.icon.setImageResource(exercise.get(position).getIcon());
+        //CHANGE TO COLOUR ONCE MOVES LAYOUT HAS BEEN CHANGED viewHolder.icon.setImageResource(exercise.get(position).getIcon());
         return convertView;
     }
 
