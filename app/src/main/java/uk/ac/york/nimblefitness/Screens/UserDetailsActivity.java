@@ -266,8 +266,82 @@ public class UserDetailsActivity extends AppCompatActivity {
     }
 
     private String weeklyGoalCalculation(){
-        //todo complete algorithm to give user an accurate goal
-        return "50";
+
+            switch (activity_level_selector.getEditText().getText().toString()){
+                case "None":
+                    switch (exercise_type_selector.getEditText().getText().toString()) {
+                        case "None":
+                        case "Aerobic: cycling, running...":
+                        case "Anaerobic: weight training...":
+                        case "Calisthenics: large muscle group exercises":
+                        case "Strength Training: compound or isolated exercise":
+                        case "Stretching Exercises":
+                            return "450";
+                    }
+                case "Less than 1 hour":
+                    switch (exercise_type_selector.getEditText().getText().toString()){
+                        case "None":
+                            return "450";
+                        case "Aerobic: cycling, running...":
+                        case "Strength Training: compound or isolated exercise":
+                        case "Stretching Exercises":
+                            return "825";
+                        case "Anaerobic: weight training...":
+                        case "Calisthenics: large muscle group exercises":
+                            return "1080";
+                    }
+                case "Between 1 and 2 hours":
+                    switch (exercise_type_selector.getEditText().getText().toString()){
+                        case "None":
+                            return "450";
+                        case "Aerobic: cycling, running...":
+                        case "Strength Training: compound or isolated exercise":
+                        case "Stretching Exercises":
+                            return "1080";
+                        case "Anaerobic: weight training...":
+                        case "Calisthenics: large muscle group exercises":
+                            return "1260";
+                    }
+                case "Between 2 and 4 hours":
+                    switch (exercise_type_selector.getEditText().getText().toString()){
+                        case "None":
+                            return "450";
+                        case "Aerobic: cycling, running...":
+                        case "Strength Training: compound or isolated exercise":
+                        case "Stretching Exercises":
+                            return "1260";
+                        case "Anaerobic: weight training...":
+                        case "Calisthenics: large muscle group exercises":
+                            return "1710";
+                    }
+                case "Between 4 and 8 hours":
+                    switch (exercise_type_selector.getEditText().getText().toString()){
+                        case "None":
+                        return "450";
+                        case "Aerobic: cycling, running...":
+                        case "Strength Training: compound or isolated exercise":
+                        case "Stretching Exercises":
+                            return "1710";
+                        case "Anaerobic: weight training...":
+                        case "Calisthenics: large muscle group exercises":
+                            return "2610";
+                    }
+                case "More than 8 hours":
+                    switch (exercise_type_selector.getEditText().getText().toString()){
+                        case "None":
+                            return "450";
+                        case "Aerobic: cycling, running...":
+                        case "Strength Training: compound or isolated exercise":
+                        case "Stretching Exercises":
+                            return "2610";
+                        case "Anaerobic: weight training...":
+                        case "Calisthenics: large muscle group exercises":
+                            return "3780";
+                    }
+                default:
+                    return "0";
+            }
+
     }
 
     private Boolean validateFirstName(){
