@@ -57,7 +57,11 @@ public class InformationFragment extends Fragment {
     }
 
     public void loadExercise(View view) {
-        RoutinesFragment routinesFragment = new RoutinesFragment();
+
+        /**
+         * Need to talk to Elliott about this
+         */
+        /*RoutinesFragment routinesFragment = new RoutinesFragment();
         List<Exercise> testRoutine = routinesFragment.setUpTestRoutine(view.findViewById(R.id.infoPage), this.getContext());
         int lastExercise = testRoutine.size();
         Exercise exercise = testRoutine.get(getCurrentExercise());
@@ -71,7 +75,7 @@ public class InformationFragment extends Fragment {
         exercise.getExerciseNameLayout().writeText();
         exercise.getExerciseVideo().PlayVideo();
         exercise.getExerciseDescriptionLayout().writeText();
-        exercise.getMuscleGroupImage().setImage();
+        exercise.getMuscleGroupImage().setImage();*/
         //setCurrentExercise(1);
     }
 }

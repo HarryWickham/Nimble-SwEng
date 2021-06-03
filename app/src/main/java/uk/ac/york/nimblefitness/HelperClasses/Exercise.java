@@ -45,8 +45,8 @@ public class Exercise implements Serializable {
         this.muscleGroupImage = muscleGroupImage;
     }
 
-    public void setExerciseVideo(VideoLayout exerciseVideo) {
-        this.exerciseVideo = exerciseVideo;
+    public String getExerciseName() {
+        return exerciseName;
     }
 
     public void setExerciseName(String exerciseName) {
@@ -131,5 +131,13 @@ public class Exercise implements Serializable {
 
     public void setExerciseDescriptionLayout(TextLayout exerciseDescriptionLayout) {
         this.exerciseDescriptionLayout = exerciseDescriptionLayout;
+    }
+
+    public int getCurrentExercise() {
+        return currentExercise;
+    }
+
+    public void setCurrentExercise(int currentExercise) {
+        this.currentExercise = currentExercise;
     }
 }

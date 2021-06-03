@@ -5,6 +5,7 @@ import android.graphics.Color;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import uk.ac.york.nimblefitness.MediaHandlers.Images.ImageLayout;
 import uk.ac.york.nimblefitness.MediaHandlers.Text.TextLayout;
 import uk.ac.york.nimblefitness.MediaHandlers.Text.TextModule;
 import uk.ac.york.nimblefitness.MediaHandlers.Video.VideoLayout;
@@ -118,7 +119,7 @@ public class Routine implements Serializable {
     public Routine getExampleRoutine(){
         ArrayList<Exercise> exercises = new ArrayList<>();
 
-        exercises.add(new Exercise("http://www-users.york.ac.uk/~hew550/NimbleAssets/exercisemusclegroups/normal_push_up.png",
+        exercises.add(new Exercise(null,
                 "Push Ups",
                 "With your hands placed a shoulder width apart and a straight back, lower yourself to the ground keeping your elbows tucked in. Hold the position. Then push off of the floor to your start position to complete a rep.",
                 "number",
@@ -154,7 +155,7 @@ public class Routine implements Serializable {
                         null,
                         null)));
 
-        exercises.add(new Exercise("http://www-users.york.ac.uk/~hew550/NimbleAssets/exercisemusclegroups/plank.png",
+        exercises.add(new Exercise(null,
                 "Plank",
                 "From a normal push up position, lower yourself down so that your weight is resting on your forearms. With a straight back, hold this position by engaging your core muscles.",
                 "time",
@@ -190,7 +191,7 @@ public class Routine implements Serializable {
                         null,
                         null)));
 
-        exercises.add(new Exercise("http://www-users.york.ac.uk/~hew550/NimbleAssets/exercisemusclegroups/tricep_dip.png",
+        exercises.add(new Exercise(null,
                 "Tricep Dip",
                 "Using a chair, put your weight onto your hands then lower yourself slowly down so that your legs are straight and your body forms an 'L' shape. Push off of the chair to return to your start position to complete a rep.",
                 "number",
@@ -226,7 +227,7 @@ public class Routine implements Serializable {
                         null,
                         null)));
 
-        exercises.add(new Exercise("http://www-users.york.ac.uk/~hew550/NimbleAssets/exercisemusclegroups/superman.png",
+        exercises.add(new Exercise(null,
                 "Superman",
                 "Start by laying on your front. Raise your legs off of the floor while simultaneously raising your arms off of the floor using your shoulder and back muscles. Hold this position.",
                 "number",
