@@ -38,4 +38,12 @@ public class TextLayout implements Serializable {
         textModule.setall(this.text,this.font,this.fontsize,this.fontcolour,this.xstart,this.ystart);
         textModule.writeText();
     }
+
+    public void setParentLayout(FrameLayout parentLayout) {
+        this.parentLayout = parentLayout;
+    }
+
+    public void setContext(Context context) {
+        this.context = context;
+    }
 }

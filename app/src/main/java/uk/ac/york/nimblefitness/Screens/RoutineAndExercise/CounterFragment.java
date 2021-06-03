@@ -9,6 +9,8 @@ import android.widget.Button;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import java.util.ArrayList;
+
 import uk.ac.york.nimblefitness.HelperClasses.Routine;
 import uk.ac.york.nimblefitness.R;
 
@@ -40,7 +42,7 @@ public class CounterFragment extends Fragment {
             }
         });
 
-        Routine routine = new Routine().getExampleRoutine();
+        Routine routine = (Routine) getArguments().getSerializable("routine");
 
         Button toFinishPage = view.findViewById(R.id.toFinishPage);
         FinishFragment finishFragment = new FinishFragment();

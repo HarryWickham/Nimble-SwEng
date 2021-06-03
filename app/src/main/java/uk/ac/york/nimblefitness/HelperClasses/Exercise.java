@@ -1,5 +1,6 @@
 package uk.ac.york.nimblefitness.HelperClasses;
 
+import uk.ac.york.nimblefitness.MediaHandlers.Graphics.ShapeView;
 import uk.ac.york.nimblefitness.MediaHandlers.Images.ImageLayout;
 import java.io.Serializable;
 
@@ -8,6 +9,7 @@ import uk.ac.york.nimblefitness.MediaHandlers.Video.VideoLayout;
 
 public class Exercise implements Serializable {
     private ImageLayout muscleGroupImage;
+    private ShapeView backgroundShape;
     private String exerciseName;
     private String exerciseDescription;
     private String repType; //"time" or "number"
@@ -21,8 +23,9 @@ public class Exercise implements Serializable {
     private TextLayout exerciseDescriptionLayout;
     private int currentExercise;
 
-    public Exercise(ImageLayout muscleGroupImage, String exerciseName, String exerciseDescription, String repType, int reps, int timePerRep, int movesPerRep, int restAfterFinish, int colour, VideoLayout exerciseVideo, TextLayout exerciseNameLayout, TextLayout exerciseDescriptionLayout) {
+    public Exercise(ImageLayout muscleGroupImage, ShapeView backgroundShape, String exerciseName, String exerciseDescription, String repType, int reps, int timePerRep, int movesPerRep, int restAfterFinish, int colour, VideoLayout exerciseVideo, TextLayout exerciseNameLayout, TextLayout exerciseDescriptionLayout) {
         this.muscleGroupImage = muscleGroupImage;
+        this.backgroundShape = backgroundShape;
         this.exerciseName = exerciseName;
         this.exerciseDescription = exerciseDescription;
         this.repType = repType;
@@ -139,5 +142,13 @@ public class Exercise implements Serializable {
 
     public void setCurrentExercise(int currentExercise) {
         this.currentExercise = currentExercise;
+    }
+
+    public ShapeView getBackgroundShape() {
+        return backgroundShape;
+    }
+
+    public void setBackgroundShape(ShapeView backgroundShape) {
+        this.backgroundShape = backgroundShape;
     }
 }

@@ -60,7 +60,7 @@ public class FinishFragment extends Fragment {
         ArrayList<Exercise> allExercises;
         allExercises = routine.getExerciseArrayList();
 
-        routine.setCurrentExercise(routine.getCurrentExercise()+1);
+        routine.setCurrentExercise(routine.getCurrentExercise() + 1);
 
         ArrayList<Exercise> remainingExercises = remainingExerciseList(allExercises, routine);
 
@@ -139,7 +139,7 @@ public class FinishFragment extends Fragment {
     }
 
     public ArrayList<Exercise> remainingExerciseList(ArrayList<Exercise> remainingExercises, Routine routine){
-        for (int i = 0; i < routine.getCurrentExercise(); i++){
+        for (int i = 0; i <= routine.getCurrentExercise(); i++){
             remainingExercises.remove(0);
         }
         return remainingExercises;
