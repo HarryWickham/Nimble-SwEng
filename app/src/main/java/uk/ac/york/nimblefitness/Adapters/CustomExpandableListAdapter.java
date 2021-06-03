@@ -14,6 +14,7 @@ import android.widget.Toast;
 import java.util.HashMap;
 import java.util.List;
 
+import uk.ac.york.nimblefitness.HelperClasses.Exercise;
 import uk.ac.york.nimblefitness.R;
 
 public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
@@ -21,9 +22,9 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
     Context context;
     List<Integer> listImage;
     List<String> listGroup;
-    HashMap<String,List<String>> listItem;
+    HashMap<String,List<Exercise>> listItem;
 
-    public CustomExpandableListAdapter(Context context, List<Integer> listImage, List<String> listGroup, HashMap<String, List<String>> listItem) {
+    public CustomExpandableListAdapter(Context context, List<Integer> listImage, List<String> listGroup, HashMap<String, List<Exercise>> listItem) {
         this.context = context;
         this.listImage = listImage;
         this.listGroup = listGroup;
@@ -91,13 +92,15 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-        String child = (String) getChild(groupPosition, childPosition);
+        Exercise child = (Exercise) getChild(groupPosition, childPosition);
         if(convertView==null){
             LayoutInflater layoutInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = layoutInflater.inflate(R.layout.expandable_list_item, null);
         }
         TextView exerciseName = convertView.findViewById(R.id.exercise_name);
-        exerciseName.setText(child);
+        exerciseName.setText(child.getExerciseName());
+        TextView exerciseMoves = convertView.findViewById(R.id.number_of_moves);
+        exerciseMoves.setText("Moves: " + child.getMovesPerRep()*child.getReps());
 
         return convertView;
     }

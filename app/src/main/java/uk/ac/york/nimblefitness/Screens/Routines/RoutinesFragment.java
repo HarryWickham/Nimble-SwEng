@@ -25,14 +25,19 @@ import uk.ac.york.nimblefitness.MediaHandlers.Text.TextModule;
 import uk.ac.york.nimblefitness.MediaHandlers.Video.VideoLayout;
 import uk.ac.york.nimblefitness.R;
 import uk.ac.york.nimblefitness.Screens.Exercises.ExerciseFragment;
+/*
+Fragment for displaying the routines in an expandable list view
+Each Parent element is a routine, and the children elements are the exercises in said routine
+The routine information is loaded in through xml, and is passed onto the RoutineExerciseActivity for when the user starts a routine
 
+ */
 public class RoutinesFragment extends Fragment {
 
 
     CustomExpandableListAdapter listAdapter;
     List<String> listDataHeader;
     List<Integer> listImageHeader;
-    HashMap<String, List<String>> listDataChild;
+    HashMap<String, List<Exercise>> listDataChild;
     TextView nothingFound;
 
 
@@ -55,7 +60,7 @@ public class RoutinesFragment extends Fragment {
         routineSearch.onActionViewExpanded();
         routineSearch.setIconified(false);
 
-        prepareListData();
+        setUpRoutines();
 
         listAdapter = new CustomExpandableListAdapter(getContext(), listImageHeader, listDataHeader, listDataChild);
 
@@ -119,7 +124,7 @@ public class RoutinesFragment extends Fragment {
         return view;
     }
 
-    private void prepareListData() {
+    /*private void prepareListData() {
         listDataHeader = new ArrayList<>();
         listDataChild = new HashMap<>();
 
@@ -264,157 +269,36 @@ public class RoutinesFragment extends Fragment {
         listDataChild.put(listDataHeader.get(10), routine11);
         listDataChild.put(listDataHeader.get(11), routine12);
     }
+*/
 
-    /*public List<Exercise> setUpTestRoutine() {
-        List<Exercise> testRoutine = new ArrayList<>();
+    public ArrayList<Routine> setUpRoutines() {
+        //Instantiate variables for collecting data of each routine to display
+        ArrayList<Routine> listOfRoutines = new ArrayList<>();
+        listDataChild = new HashMap<>();
+        listDataHeader = new ArrayList<>();
+        listImageHeader = new ArrayList<>();
 
-        Exercise pushUpTestRoutine = new Exercise("http://www-users.york.ac.uk/~hew550/NimbleAssets/exercisemusclegroups/normal_push_up.png",
-                "Push Ups",
-                "With your hands placed a shoulder width apart and a straight back, lower yourself to the ground keeping your elbows tucked in. Hold the position. Then push off of the floor to your start position to complete a rep.",
-                5,
-                1,
-                30,
-                Color.parseColor("#008080"),
-                new VideoLayout("https://www-users.york.ac.uk/~hew550/NimbleAssets/exercisevideos/Normal-Push-Up.mp4",
-                        500,
-                        500,
-                        50,
-                        150,
-                        "",
-                        0,
-                        false,
-                        null,
-                        null),
-                new TextLayout("Push Ups",
-                        TextModule.fontFamily.sans_serif,
-                        "16",
-                        "#000000",
-                        TextModule.styleFamily.normal,
-                        50,
-                        50,
-                        null,
-                        null),
-                new TextLayout("\"With your hands placed a shoulder width apart and a straight back, lower yourself to the ground keeping your elbows tucked in. Hold the position. Then push off of the floor to your start position to complete a rep.",
-                        TextModule.fontFamily.sans_serif,
-                        "16",
-                        "#000000",
-                        TextModule.styleFamily.italic,
-                        50,
-                        100,
-                        null,
-                        null),
-                0);
+        //Sets up an array of routines with the data loaded into each routine
+        for (int i = 0; i < 12; i++) {
+            Routine routine = new Routine();
+            routine = routine.getExampleRoutine();
+            listOfRoutines.add(routine);
+            System.out.println(i);
+            System.out.println(listOfRoutines.get(i).getRoutineName());
+        }
 
-        Exercise plankTestRoutine = new Exercise("http://www-users.york.ac.uk/~hew550/NimbleAssets/exercisemusclegroups/plank.png",
-                "Plank",
-                "From a normal push up position, lower yourself down so that your weight is resting on your forearms. With a straight back, hold this position by engaging your core muscles.",
-                20,
-                1,
-                30,
-                Color.parseColor("#FF2400"),
-                new VideoLayout("https://www-users.york.ac.uk/~hew550/NimbleAssets/exercisevideos/Plank.mp4",
-                        500,
-                        500,
-                        50,
-                        150,
-                        "",
-                        0,
-                        false,
-                        null,
-                        null),
-                new TextLayout("Plank",
-                        TextModule.fontFamily.sans_serif,
-                        "16",
-                        "#000000",
-                        TextModule.styleFamily.normal,
-                        50,
-                        50,
-                        null,
-                        null),
-                new TextLayout("From a normal push up position, lower yourself down so that your weight is resting on your forearms. With a straight back, hold this position by engaging your core muscles.",
-                        TextModule.fontFamily.sans_serif,
-                        "16",
-                        "#000000",
-                        TextModule.styleFamily.italic,
-                        50,
-                        100,
-                        null,
-                        null),
-                0);
+        //Cycle through each routine to extract data
+        for (int i = 0; i < listOfRoutines.size(); i++) {
+            //Sets routine as a variable to simplify code
+            Routine routine = listOfRoutines.get(i);
+            //Gets routine name and image
+            listDataHeader.add(routine.getRoutineName());
+            listImageHeader.add(routine.getRoutineImage());
 
-        Exercise tricepDipTestRoutine = new Exercise("http://www-users.york.ac.uk/~hew550/NimbleAssets/exercisemusclegroups/tricep_dip.png",
-                "Tricep Dip",
-                "Using a chair, put your weight onto your hands then lower yourself slowly down so that your legs are straight and your body forms an 'L' shape. Push off of the chair to return to your start position to complete a rep.",
-                5,
-                1,
-                30,
-                Color.parseColor("#FFDB58"),
-                new VideoLayout("https://www-users.york.ac.uk/~hew550/NimbleAssets/exercisevideos/Tricep-Dip.mp4",
-                        500,
-                        500,
-                        50,
-                        150,
-                        "",
-                        0,
-                        false,
-                        null,
-                        null),
-                new TextLayout("Tricep Dip",
-                        TextModule.fontFamily.sans_serif,
-                        "16",
-                        "#000000",
-                        TextModule.styleFamily.normal,
-                        50,
-                        50,
-                        null,
-                        null),
-                new TextLayout("Using a chair, put your weight onto your hands then lower yourself slowly down so that your legs are straight and your body forms an 'L' shape. Push off of the chair to return to your start position to complete a rep.",
-                        TextModule.fontFamily.sans_serif,
-                        "16",
-                        "#000000",
-                        TextModule.styleFamily.italic,
-                        50,
-                        100,
-                        null,
-                        null),
-                0);
-
-        Exercise supermanTestRoutine = new Exercise("http://www-users.york.ac.uk/~hew550/NimbleAssets/exercisemusclegroups/superman.png",
-                "Superman",
-                "Start by laying on your front. Raise your legs off of the floor while simultaneously raising your arms off of the floor using your shoulder and back muscles. Hold this position.",
-                5,
-                1,
-                30,
-                Color.parseColor("#BFFF00"),
-                new VideoLayout("https://www-users.york.ac.uk/~hew550/NimbleAssets/exercisevideos/Superman.mp4",
-                        500,
-                        500,
-                        50,
-                        150,
-                        "",
-                        0,
-                        false,
-                        null,
-                        null),
-                new TextLayout("Superman",
-                        TextModule.fontFamily.sans_serif,
-                        "16",
-                        "#000000",
-                        TextModule.styleFamily.normal,
-                        50,
-                        50,
-                        null,
-                        null),
-                new TextLayout("Start by laying on your front. Raise your legs off of the floor while simultaneously raising your arms off of the floor using your shoulder and back muscles. Hold this position.",
-                        TextModule.fontFamily.sans_serif,
-                        "16",
-                        "#000000",
-                        TextModule.styleFamily.italic,
-                        50,
-                        100,
-                        null,
-                        null),
-                0);
-        return testRoutine;
-    }*/
+            //Adds exercise data to a HashMap
+            listDataChild.put(listDataHeader.get(i), routine.getExerciseArrayList());
+            System.out.println(routine.getRoutineName());
+        }
+        return listOfRoutines;
+    }
 }
