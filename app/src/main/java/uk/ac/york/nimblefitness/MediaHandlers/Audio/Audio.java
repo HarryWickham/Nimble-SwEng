@@ -21,6 +21,7 @@ public class Audio extends Service {
 
     @Override
     public void onCreate() {
+        //Set up media player
         myPlayer = new MediaPlayer();
         myPlayer.setAudioAttributes(
                 new AudioAttributes.Builder()
@@ -28,13 +29,17 @@ public class Audio extends Service {
                         .setUsage(AudioAttributes.USAGE_GAME)
                         .build()
         );
+        //Set up shared preferences to allow URL and Looping function to be passed to service
         prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+
         String URL = prefs.getString("url","");
+        //To catch an invalid URL
         try {
             myPlayer.setDataSource(URL);
         } catch (IOException e) {
             e.printStackTrace();
         }
+        //To catch if not fully downloaded audio file
         try {
             myPlayer.prepare();
         } catch (IllegalStateException | IOException e) {
@@ -46,15 +51,14 @@ public class Audio extends Service {
     }
    @Override
     public void onStart(Intent intent, int startid) {
+        //Set the looping value
        Boolean loop = prefs.getBoolean("loop",false);
        myPlayer.start();
-       Toast.makeText(this, "Service Started and Playing Music", Toast.LENGTH_LONG).show();
        myPlayer.setLooping(loop);
 
     }
-    @Override
+    @Override // When the app stops
     public void onDestroy() {
-        Toast.makeText(this, "Service Stopped and Music Stopped", Toast.LENGTH_LONG).show();
         myPlayer.stop();
     }
     @Override
