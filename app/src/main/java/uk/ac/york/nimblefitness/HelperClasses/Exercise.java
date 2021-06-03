@@ -1,12 +1,13 @@
 package uk.ac.york.nimblefitness.HelperClasses;
 
+import uk.ac.york.nimblefitness.MediaHandlers.Images.ImageLayout;
 import java.io.Serializable;
 
 import uk.ac.york.nimblefitness.MediaHandlers.Text.TextLayout;
 import uk.ac.york.nimblefitness.MediaHandlers.Video.VideoLayout;
 
 public class Exercise implements Serializable {
-    private String muscleGroupImage;
+    private ImageLayout muscleGroupImage;
     private String exerciseName;
     private String exerciseDescription;
     private String repType; //"time" or "number"
@@ -18,8 +19,9 @@ public class Exercise implements Serializable {
     private VideoLayout exerciseVideo;
     private TextLayout exerciseNameLayout;
     private TextLayout exerciseDescriptionLayout;
+    private int currentExercise;
 
-    public Exercise(String muscleGroupImage, String exerciseName, String exerciseDescription, String repType, int reps, int timePerRep, int movesPerRep, int restAfterFinish, int colour, VideoLayout exerciseVideo, TextLayout exerciseNameLayout, TextLayout exerciseDescriptionLayout) {
+    public Exercise(ImageLayout muscleGroupImage, String exerciseName, String exerciseDescription, String repType, int reps, int timePerRep, int movesPerRep, int restAfterFinish, int colour, VideoLayout exerciseVideo, TextLayout exerciseNameLayout, TextLayout exerciseDescriptionLayout) {
         this.muscleGroupImage = muscleGroupImage;
         this.exerciseName = exerciseName;
         this.exerciseDescription = exerciseDescription;
@@ -32,19 +34,19 @@ public class Exercise implements Serializable {
         this.exerciseVideo = exerciseVideo;
         this.exerciseNameLayout = exerciseNameLayout;
         this.exerciseDescriptionLayout = exerciseDescriptionLayout;
-
+        this.currentExercise = currentExercise;
     }
 
-    public String getMuscleGroupImage() {
+    public ImageLayout getMuscleGroupImage() {
         return muscleGroupImage;
     }
 
-    public void setMuscleGroupImage(String muscleGroupImage) {
+    public void setMuscleGroupImage(ImageLayout muscleGroupImage) {
         this.muscleGroupImage = muscleGroupImage;
     }
 
-    public String getExerciseName() {
-        return exerciseName;
+    public void setExerciseVideo(VideoLayout exerciseVideo) {
+        this.exerciseVideo = exerciseVideo;
     }
 
     public void setExerciseName(String exerciseName) {
