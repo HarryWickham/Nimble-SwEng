@@ -17,5 +17,12 @@
         android:id="@+id/routine_exp_list"
         />
 
+    <TextView
+        android:id="@+id/nothing_found_routines"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="That routine does not exist. Try another"
+        android:visibility="gone"/>
+
 </LinearLayout>
 

@@ -36,8 +36,8 @@ public class RoutinesFragment extends Fragment {
 
     CustomExpandableListAdapter listAdapter;
     List<String> listDataHeader;
-    List<Integer> listImageHeader;
     HashMap<String, List<Exercise>> listDataChild;
+    ArrayList<Routine> routineArrayList;
     TextView nothingFound;
 
 
@@ -56,13 +56,13 @@ public class RoutinesFragment extends Fragment {
         ExpandableListView routineListView = view.findViewById(R.id.routine_exp_list);
         SearchView routineSearch = view.findViewById(R.id.routine_search);
         routineSearch.setActivated(true);
-        routineSearch.setQueryHint("Search for exercises");
+        routineSearch.setQueryHint("Search for Routines");
         routineSearch.onActionViewExpanded();
         routineSearch.setIconified(false);
 
-        setUpRoutines();
 
-        listAdapter = new CustomExpandableListAdapter(getContext(), listImageHeader, listDataHeader, listDataChild);
+        routineArrayList = setUpRoutines();
+        listAdapter = new CustomExpandableListAdapter(getContext(), routineArrayList);
 
         // setting list adapter
         routineListView.setAdapter(listAdapter);
@@ -72,9 +72,9 @@ public class RoutinesFragment extends Fragment {
 
             @Override
             public boolean onChildClick(ExpandableListView parent, View v,int groupPosition, int childPosition, long id) {
-                Toast.makeText(getContext(),listDataHeader.get(groupPosition)
+                Toast.makeText(getContext(),routineArrayList.get(groupPosition).getRoutineName()
                         + " : "
-                        + listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition), Toast.LENGTH_SHORT).show();
+                        + routineArrayList.get(groupPosition).getExerciseArrayList().get(childPosition).getExerciseName(), Toast.LENGTH_SHORT).show();
                 return false;
             }
         });
@@ -84,7 +84,7 @@ public class RoutinesFragment extends Fragment {
 
             @Override
             public void onGroupExpand(int groupPosition) {
-                Toast.makeText(getContext(),listDataHeader.get(groupPosition) + " Expanded",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(),routineArrayList.get(groupPosition).getRoutineName() + " Expanded",Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -93,7 +93,7 @@ public class RoutinesFragment extends Fragment {
 
             @Override
             public void onGroupCollapse(int groupPosition) {
-                Toast.makeText(getContext(),listDataHeader.get(groupPosition) + " Collapsed",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(),routineArrayList.get(groupPosition).getRoutineName() + " Collapsed",Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -105,8 +105,8 @@ public class RoutinesFragment extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                nothingFound = view.findViewById(R.id.nothingfoundmessage);
-                /*CustomExpandableListAdapter.getFilter().filter(newText, new Filter.FilterListener() {
+                nothingFound = view.findViewById(R.id.nothing_found_routines);
+                /*CustomExpandableListAdapter. .filter(newText, new Filter.FilterListener() {
                     @Override
                     public void onFilterComplete(int i) {
                         if (i == 0) {
@@ -274,30 +274,12 @@ public class RoutinesFragment extends Fragment {
     public ArrayList<Routine> setUpRoutines() {
         //Instantiate variables for collecting data of each routine to display
         ArrayList<Routine> listOfRoutines = new ArrayList<>();
-        listDataChild = new HashMap<>();
-        listDataHeader = new ArrayList<>();
-        listImageHeader = new ArrayList<>();
 
         //Sets up an array of routines with the data loaded into each routine
         for (int i = 0; i < 12; i++) {
             Routine routine = new Routine();
             routine = routine.getExampleRoutine();
             listOfRoutines.add(routine);
-            System.out.println(i);
-            System.out.println(listOfRoutines.get(i).getRoutineName());
-        }
-
-        //Cycle through each routine to extract data
-        for (int i = 0; i < listOfRoutines.size(); i++) {
-            //Sets routine as a variable to simplify code
-            Routine routine = listOfRoutines.get(i);
-            //Gets routine name and image
-            listDataHeader.add(routine.getRoutineName());
-            listImageHeader.add(routine.getRoutineImage());
-
-            //Adds exercise data to a HashMap
-            listDataChild.put(listDataHeader.get(i), routine.getExerciseArrayList());
-            System.out.println(routine.getRoutineName());
         }
         return listOfRoutines;
     }
