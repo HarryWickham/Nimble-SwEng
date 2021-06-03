@@ -65,17 +65,19 @@ public class FinishFragment extends Fragment {
         ArrayList<Exercise> remainingExercises = remainingExerciseList(allExercises, routine);
 
 
-        if (routine.getSetsRemaining()==0){
+        if (routine.getSetsRemaining()==1 && remainingExercises.size()==0){
             nextExercise.setVisibility(View.GONE);
             finishText.setText(String.format(Locale.UK,"Congratulations you have completed all the sets for this routine"));
             toEndSummary.setVisibility(View.VISIBLE);
-        }
-
-        if (remainingExercises.size()==0){
+        } else if (remainingExercises.size()==0){
             nextExercise.setText("Continue to next set");
-            finishText.setText(String.format(Locale.UK,"Congratulations you have completed all the exercises for this set"));
-            routine.setCurrentExercise(0);
             routine.setSetsRemaining(routine.getSetsRemaining()-1);
+            if(routine.getSetsRemaining()==1){
+                finishText.setText(String.format(Locale.UK,"Congratulations you have completed all the exercises for this set. You have %d set remaining",routine.getSetsRemaining()));
+            } else {
+                finishText.setText(String.format(Locale.UK, "Congratulations you have completed all the exercises for this set. You have %d sets remaining", routine.getSetsRemaining()));
+            }
+            routine.setCurrentExercise(0);
         }
 
         MovesListAdapter movesListAdapter = new MovesListAdapter(getContext(), remainingExercises);
