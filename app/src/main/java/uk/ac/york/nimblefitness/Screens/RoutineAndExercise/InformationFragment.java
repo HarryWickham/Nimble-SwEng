@@ -44,7 +44,12 @@ public class InformationFragment extends Fragment {
         getActivity().setTitle("Information Fragment");
 
         Button toCounterPage = view.findViewById(R.id.toCounterPage);
+        Routine routine = (Routine) getArguments().getSerializable("routine");
+
         CounterFragment counterFragment = new CounterFragment();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("routine",routine);
+        counterFragment.setArguments(bundle);
         toCounterPage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -53,16 +58,12 @@ public class InformationFragment extends Fragment {
                 fragmentTransaction.commit();
             }
         });
-        loadExercise(view);
+        loadExercise(view, routine);
         return view;
     }
 
-    public void loadExercise(View view) {
+    public void loadExercise(View view, Routine routine) {
 
-        /**
-         * Need to talk to Elliott about this
-         */
-        Routine routine = new Routine().getExampleRoutine();
         Exercise exercise = routine.getExerciseArrayList().get(routine.getCurrentExercise());
 
         // Add rectangles around video(?), description & image.
@@ -71,9 +72,20 @@ public class InformationFragment extends Fragment {
         rectangles.addShape(50,50,50,50, Color.parseColor("#008080"), "RECTANGLE", 10);
         rectangles.draw(canvas);
 
+        exercise.getExerciseNameLayout().setContext(getActivity());
+        exercise.getExerciseNameLayout().setParentLayout(view.findViewById(R.id.infoPage));
         exercise.getExerciseNameLayout().writeText();
+
+        exercise.getExerciseVideo().setContext(getActivity());
+        exercise.getExerciseVideo().setParentLayout(view.findViewById(R.id.infoPage));
         exercise.getExerciseVideo().PlayVideo();
+
+        exercise.getExerciseDescriptionLayout().setContext(getActivity());
+        exercise.getExerciseDescriptionLayout().setParentLayout(view.findViewById(R.id.infoPage));
         exercise.getExerciseDescriptionLayout().writeText();
+
+        exercise.getMuscleGroupImage().setContext(getActivity());
+        exercise.getMuscleGroupImage().setParentLayout(view.findViewById(R.id.infoPage));
         exercise.getMuscleGroupImage().setImage();
         //setCurrentExercise(1);
     }

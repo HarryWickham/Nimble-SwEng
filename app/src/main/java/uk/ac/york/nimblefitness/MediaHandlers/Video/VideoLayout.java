@@ -46,4 +46,13 @@ public class VideoLayout implements Serializable {
         }
         videoPlayer.loadAndPlayVideo(UrlPath,this.loop,videoView,this.xstart,this.ystart,this.id,this.starttime);
     }
+
+
+    public void setParentLayout(FrameLayout parentLayout) {
+        this.parentLayout = parentLayout;
+    }
+
+    public void setContext(Context context) {
+        this.context = context;
+    }
 }

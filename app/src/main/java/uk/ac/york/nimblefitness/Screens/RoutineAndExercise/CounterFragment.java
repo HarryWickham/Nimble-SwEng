@@ -42,14 +42,7 @@ public class CounterFragment extends Fragment {
             }
         });
 
-        ArrayList<Routine> routineArrayList = new ArrayList<>();
-
-        Routine routine = new Routine().getExampleRoutine();
-        Routine routine2 = new Routine().getExampleRoutine();
-
-        routineArrayList.add(routine);
-        routineArrayList.add(routine2);
-
+        Routine routine = (Routine) getArguments().getSerializable("routine");
 
         Button toFinishPage = view.findViewById(R.id.toFinishPage);
         FinishFragment finishFragment = new FinishFragment();
