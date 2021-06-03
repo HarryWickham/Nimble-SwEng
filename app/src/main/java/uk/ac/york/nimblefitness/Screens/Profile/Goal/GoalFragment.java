@@ -59,7 +59,6 @@ public class GoalFragment extends Fragment implements GoalContract.GoalView {
         // The list of exercises to do for today.
         ListView listView = view.findViewById(R.id.todays_moves);
         listView.setAdapter(goalPresenter.setTodaysMovesList()); // Sets the list of today's moves.
-        goalPresenter.sendNotification(goalPresenter.displayGaugeInfo(), goalPresenter.setGaugeEndValue());
         goalPresenter.setListViewHeightBasedOnChildren(listView);
         return view;
     }

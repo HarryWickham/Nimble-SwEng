@@ -98,6 +98,9 @@ public class UserDetailsActivity extends AppCompatActivity {
                     gender_selector_spinner.setText(helperClass.getGender());
                     activity_level_selector_spinner.setText(helperClass.getExerciseDuration());
                     exercise_type_selector_spinner.setText(helperClass.getExerciseType());
+                    if(helperClass.getWeeklyGoal() != 0) {
+                        user_account_goal_edit_text.setText(String.valueOf(helperClass.getWeeklyGoal()));
+                    }
                     currentMoves = helperClass.getCurrentMoves();
                     membershipPlan = helperClass.getMembershipPlan();
 

@@ -6,16 +6,43 @@
     tools:context=".Screens.RoutineAndExercise.StartSummaryFragment"
     android:orientation="vertical">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/hello_blank_fragment" />
+        android:gravity="center_horizontal"
+        >
+
 
     <Button
         android:id="@+id/toInfoPage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Info page" />
+        android:text="start routine"
+        android:layout_marginHorizontal="8dp">
+
+    </Button>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/routine_summary"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/star_rating"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/sets"/>
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/start_summary_list_view"
+        android:divider="@color/transparent"/>
 
 </LinearLayout>

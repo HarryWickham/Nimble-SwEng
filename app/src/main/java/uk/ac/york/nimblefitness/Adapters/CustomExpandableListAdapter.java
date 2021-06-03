@@ -1,6 +1,7 @@
 package uk.ac.york.nimblefitness.Adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,43 +12,41 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import uk.ac.york.nimblefitness.HelperClasses.Exercise;
+import uk.ac.york.nimblefitness.HelperClasses.Routine;
 import uk.ac.york.nimblefitness.R;
 
 public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
 
     Context context;
-    List<Integer> listImage;
-    List<String> listGroup;
-    HashMap<String,List<String>> listItem;
+    List<Routine> originalRoutineArrayList;
+    List<Routine> routineArrayList;
 
-    public CustomExpandableListAdapter(Context context, List<Integer> listImage, List<String> listGroup, HashMap<String, List<String>> listItem) {
+    public CustomExpandableListAdapter(Context context, ArrayList<Routine> routineArrayList) {
         this.context = context;
-        this.listImage = listImage;
-        this.listGroup = listGroup;
-        this.listItem = listItem;
+        this.routineArrayList = routineArrayList;
     }
 
     @Override
     public int getGroupCount() {
-        return this.listGroup.size();
+        return this.routineArrayList.size();
     }
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        return this.listItem.get(this.listGroup.get(groupPosition)).size();
+        return routineArrayList.get(groupPosition).getExerciseArrayList().size();
     }
 
     @Override
-    public Object getGroup(int groupPosition) {
-        return this.listGroup.get(groupPosition);
-    }
+    public Object getGroup(int groupPosition) { return routineArrayList.get(groupPosition); }
 
     @Override
     public Object getChild(int groupPosition, int childPosition) {
-        return this.listItem.get(this.listGroup.get(groupPosition)).get(childPosition);
+        return routineArrayList.get(groupPosition).getExerciseArrayList().get(childPosition);
     }
 
     @Override
@@ -67,7 +66,7 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-        String group = (String) getGroup(groupPosition);
+        Routine group = (Routine) getGroup(groupPosition);
         if(convertView==null){
             LayoutInflater layoutInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = layoutInflater.inflate(R.layout.expandable_list_group, null);
@@ -82,22 +81,24 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
             }
         });
         TextView routineName = convertView.findViewById(R.id.routines_activity_name);
-        routineName.setText(group);
+        routineName.setText(group.getRoutineName());
         ImageView routineImage = convertView.findViewById(R.id.routines_image);
-        routineImage.setImageResource(listImage.get(groupPosition));
+        routineImage.setImageResource(group.getRoutineImage());
 
         return convertView;
     }
 
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-        String child = (String) getChild(groupPosition, childPosition);
+        Exercise child = (Exercise) getChild(groupPosition, childPosition);
         if(convertView==null){
             LayoutInflater layoutInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = layoutInflater.inflate(R.layout.expandable_list_item, null);
         }
         TextView exerciseName = convertView.findViewById(R.id.exercise_name);
-        exerciseName.setText(child);
+        exerciseName.setText(child.getExerciseName());
+        TextView exerciseMoves = convertView.findViewById(R.id.number_of_moves);
+        exerciseMoves.setText("Moves: " + child.getMovesPerRep()*child.getReps());
 
         return convertView;
     }
@@ -105,5 +106,19 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return true;
+    }
+
+    public void filterData(String query) {
+        query = query.toLowerCase();
+        Log.v("MyListAdapter", String.valueOf(originalRoutineArrayList.size()));
+        routineArrayList.clear();
+
+        if (query.isEmpty()) {
+            routineArrayList = originalRoutineArrayList;
+        } else {
+
+        }
+
+
     }
 }

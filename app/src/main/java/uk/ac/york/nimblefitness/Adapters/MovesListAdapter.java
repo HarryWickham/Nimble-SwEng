@@ -1,6 +1,7 @@
 package uk.ac.york.nimblefitness.Adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,7 +64,7 @@ public class MovesListAdapter extends BaseAdapter {
             viewHolder.txtName = (TextView) convertView.findViewById(R.id.exercise_name);
             viewHolder.txtDetails = (TextView) convertView.findViewById(R.id.sets_of_reps);
             viewHolder.txtMoves = (TextView) convertView.findViewById(R.id.number_of_moves);
-            viewHolder.icon = (ImageView) convertView.findViewById(R.id.exercise_icon);
+            viewHolder.colourBar = convertView.findViewById(R.id.moves_list_colour_bar);
 
             result = convertView;
             convertView.setTag(viewHolder);
@@ -73,9 +74,13 @@ public class MovesListAdapter extends BaseAdapter {
         }
 
         viewHolder.txtName.setText(exercise.get(position).getExerciseName());
-        viewHolder.txtDetails.setText(String.format(Locale.UK,"%d reps", exercise.get(position).getReps()));
+        if(exercise.get(position).getRepType().equalsIgnoreCase("time")){
+            viewHolder.txtDetails.setText(String.format(Locale.UK,"%d seconds", exercise.get(position).getReps()));
+        }else if (exercise.get(position).getRepType().equalsIgnoreCase("number")){
+            viewHolder.txtDetails.setText(String.format(Locale.UK,"%d reps", exercise.get(position).getReps()));
+        }
         viewHolder.txtMoves.setText(String.format(Locale.UK,"Moves: %d", exercise.get(position).getMovesPerRep()*exercise.get(position).getReps()));
-        viewHolder.icon.setImageResource(exercise.get(position).getIcon());
+        viewHolder.colourBar.setBackgroundColor(exercise.get(position).getColour());
         return convertView;
     }
 
@@ -87,6 +92,6 @@ public class MovesListAdapter extends BaseAdapter {
         TextView txtName;
         TextView txtDetails;
         TextView txtMoves;
-        ImageView icon;
+        View colourBar;
     }
 }

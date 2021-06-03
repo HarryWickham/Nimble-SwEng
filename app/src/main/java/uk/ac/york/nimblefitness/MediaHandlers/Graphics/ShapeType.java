@@ -2,7 +2,9 @@ package uk.ac.york.nimblefitness.MediaHandlers.Graphics;
 
 import android.graphics.LinearGradient;
 
-public class ShapeType {
+import java.io.Serializable;
+
+public class ShapeType implements Serializable {
 
     private int yStart;
     private int xStart;

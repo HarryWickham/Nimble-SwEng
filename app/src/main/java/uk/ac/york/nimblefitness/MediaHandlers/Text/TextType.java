@@ -3,7 +3,7 @@ package uk.ac.york.nimblefitness.MediaHandlers.Text;
 public class TextType {
     TextModule.styleFamily style;
     TextModule.fontFamily font;
-    String text, fontsize, fontcolour;
+    String text = "", fontsize, fontcolour;
     int xstart, ystart;
 
     public TextType() {
@@ -29,8 +29,8 @@ public class TextType {
         return text;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void addText(String text) {
+        this.text = this.text + text;
     }
 
     public String getFontsize() {

@@ -1,10 +1,14 @@
 package uk.ac.york.nimblefitness.Screens.Routines;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
+import android.widget.Filter;
+import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -16,15 +20,25 @@ import java.util.List;
 import uk.ac.york.nimblefitness.Adapters.CustomExpandableListAdapter;
 import uk.ac.york.nimblefitness.HelperClasses.Exercise;
 import uk.ac.york.nimblefitness.HelperClasses.Routine;
+import uk.ac.york.nimblefitness.MediaHandlers.Text.TextLayout;
+import uk.ac.york.nimblefitness.MediaHandlers.Text.TextModule;
+import uk.ac.york.nimblefitness.MediaHandlers.Video.VideoLayout;
 import uk.ac.york.nimblefitness.R;
+import uk.ac.york.nimblefitness.Screens.Exercises.ExerciseFragment;
+/*
+Fragment for displaying the routines in an expandable list view
+Each Parent element is a routine, and the children elements are the exercises in said routine
+The routine information is loaded in through xml, and is passed onto the RoutineExerciseActivity for when the user starts a routine
 
+ */
 public class RoutinesFragment extends Fragment {
 
 
     CustomExpandableListAdapter listAdapter;
     List<String> listDataHeader;
-    List<Integer> listImageHeader;
-    HashMap<String, List<String>> listDataChild;
+    HashMap<String, List<Exercise>> listDataChild;
+    ArrayList<Routine> routineArrayList;
+    TextView nothingFound;
 
 
     @Override
@@ -40,10 +54,15 @@ public class RoutinesFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_routines, container, false); //shows the fragment_settings.xml file in the frame view of the activity_main.xml
 
         ExpandableListView routineListView = view.findViewById(R.id.routine_exp_list);
+        SearchView routineSearch = view.findViewById(R.id.routine_search);
+        routineSearch.setActivated(true);
+        routineSearch.setQueryHint("Search for Routines");
+        routineSearch.onActionViewExpanded();
+        routineSearch.setIconified(false);
 
-        prepareListData();
 
-        listAdapter = new CustomExpandableListAdapter(getContext(), listImageHeader, listDataHeader, listDataChild);
+        routineArrayList = setUpRoutines();
+        listAdapter = new CustomExpandableListAdapter(getContext(), routineArrayList);
 
         // setting list adapter
         routineListView.setAdapter(listAdapter);
@@ -53,9 +72,9 @@ public class RoutinesFragment extends Fragment {
 
             @Override
             public boolean onChildClick(ExpandableListView parent, View v,int groupPosition, int childPosition, long id) {
-                Toast.makeText(getContext(),listDataHeader.get(groupPosition)
+                Toast.makeText(getContext(),routineArrayList.get(groupPosition).getRoutineName()
                         + " : "
-                        + listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition), Toast.LENGTH_SHORT).show();
+                        + routineArrayList.get(groupPosition).getExerciseArrayList().get(childPosition).getExerciseName(), Toast.LENGTH_SHORT).show();
                 return false;
             }
         });
@@ -65,7 +84,7 @@ public class RoutinesFragment extends Fragment {
 
             @Override
             public void onGroupExpand(int groupPosition) {
-                Toast.makeText(getContext(),listDataHeader.get(groupPosition) + " Expanded",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(),routineArrayList.get(groupPosition).getRoutineName() + " Expanded",Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -74,16 +93,38 @@ public class RoutinesFragment extends Fragment {
 
             @Override
             public void onGroupCollapse(int groupPosition) {
-                Toast.makeText(getContext(),listDataHeader.get(groupPosition) + " Collapsed",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(),routineArrayList.get(groupPosition).getRoutineName() + " Collapsed",Toast.LENGTH_SHORT).show();
 
             }
         });
+        routineSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
 
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                nothingFound = view.findViewById(R.id.nothing_found_routines);
+                /*CustomExpandableListAdapter. .filter(newText, new Filter.FilterListener() {
+                    @Override
+                    public void onFilterComplete(int i) {
+                        if (i == 0) {
+                            nothingFound.setVisibility(View.VISIBLE);
+                        }
+                        else{
+                            nothingFound.setVisibility(View.GONE);
+                        }
+                    }
+                });*/
+                return false;
+            }
+        });
 
         return view;
     }
 
-    private void prepareListData() {
+    /*private void prepareListData() {
         listDataHeader = new ArrayList<>();
         listDataChild = new HashMap<>();
 
@@ -94,7 +135,7 @@ public class RoutinesFragment extends Fragment {
         ArrayList<Exercise> exerciseList;
         exerciseList = new ArrayList<>();
 
-        Routine routine1 = new Routine(R.drawable.upperbody, "Beginners Upper Body", 4, exerciseList);
+        //Routine routine1 = new Routine(R.drawable.upperbody, "Beginners Upper Body", 4, exerciseList);
 
 
         // Adding parent data
@@ -125,11 +166,12 @@ public class RoutinesFragment extends Fragment {
         listImageHeader.add(R.drawable.core);
 
         // Adding child data
-        /*routine1.add("5 Push Ups");
+        List<String> routine1 = new ArrayList<String>();
+        routine1.add("5 Push Ups");
         routine1.add("20 second Plank");
         routine1.add("5 Tricep Dips over Chair");
         routine1.add("5 Superman Raises");
-*/
+
         List<String> routine2 = new ArrayList<String>();
         routine2.add("5 Bodyweight Squats");
         routine2.add("10 Bodyweight Lunges");
@@ -214,7 +256,7 @@ public class RoutinesFragment extends Fragment {
         routine12.add("10 Sit Ups");
         routine12.add("Flutter Kicks for 30 seconds");
 
-        //listDataChild.put(listDataHeader.get(0), routine1); // Header, Child data
+        listDataChild.put(listDataHeader.get(0), routine1); // Header, Child data
         listDataChild.put(listDataHeader.get(1), routine2);
         listDataChild.put(listDataHeader.get(2), routine3);
         listDataChild.put(listDataHeader.get(3), routine4);
@@ -226,5 +268,19 @@ public class RoutinesFragment extends Fragment {
         listDataChild.put(listDataHeader.get(9), routine10);
         listDataChild.put(listDataHeader.get(10), routine11);
         listDataChild.put(listDataHeader.get(11), routine12);
+    }
+*/
+
+    public ArrayList<Routine> setUpRoutines() {
+        //Instantiate variables for collecting data of each routine to display
+        ArrayList<Routine> listOfRoutines = new ArrayList<>();
+
+        //Sets up an array of routines with the data loaded into each routine
+        for (int i = 0; i < 12; i++) {
+            Routine routine = new Routine();
+            routine = routine.getExampleRoutine();
+            listOfRoutines.add(routine);
+        }
+        return listOfRoutines;
     }
 }

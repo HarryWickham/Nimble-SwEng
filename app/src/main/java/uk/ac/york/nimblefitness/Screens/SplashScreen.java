@@ -64,7 +64,7 @@ public class SplashScreen extends AppCompatActivity {
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
-
+                    Log.i("onCancelled", String.valueOf(error));
                 }
             });
         } else{
@@ -85,11 +85,11 @@ public class SplashScreen extends AppCompatActivity {
         if(currentFirebaseUser == null){
             startActivity(new Intent(SplashScreen.this,SignupActivity.class));
             finish();
-        } else if(currentFirebaseUser != null && membershipPlan.equals("error")){
+        } else if(membershipPlan.equals("error")){
             Log.i("routing membershipPlan ", membershipPlan);
             startActivity(new Intent(SplashScreen.this,PaymentActivity.class));
             finish();
-        } else if(currentFirebaseUser != null && (userName.equals("error") || userName.equals("null null"))){
+        } else if((userName.equals("error") || userName.equals("null null"))){
             Log.i("routing userName", userName);
             startActivity(new Intent(SplashScreen.this,UserDetailsActivity.class));
             finish();

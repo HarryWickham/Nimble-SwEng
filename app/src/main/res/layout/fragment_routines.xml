@@ -6,11 +6,23 @@
     android:orientation="vertical"
     tools:context=".Screens.Routines.RoutinesFragment">
 
+    <SearchView
+        android:id="@+id/routine_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
     <ExpandableListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/routine_exp_list"
         />
+
+    <TextView
+        android:id="@+id/nothing_found_routines"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="That routine does not exist. Try another"
+        android:visibility="gone"/>
 
 </LinearLayout>
 

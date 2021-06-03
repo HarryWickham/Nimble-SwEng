@@ -5,9 +5,11 @@ import android.net.Uri;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import java.io.Serializable;
+
 import uk.ac.york.nimblefitness.MediaHandlers.Text.TextModule;
 
-public class VideoLayout {
+public class VideoLayout implements Serializable {
     String uriPath, id;
     int width, height, xstart, ystart, starttime;
     boolean loop;
@@ -43,5 +45,14 @@ public class VideoLayout {
             videoView.resizeVideo(this.width, this.height);
         }
         videoPlayer.loadAndPlayVideo(UrlPath,this.loop,videoView,this.xstart,this.ystart,this.id,this.starttime);
+    }
+
+
+    public void setParentLayout(FrameLayout parentLayout) {
+        this.parentLayout = parentLayout;
+    }
+
+    public void setContext(Context context) {
+        this.context = context;
     }
 }

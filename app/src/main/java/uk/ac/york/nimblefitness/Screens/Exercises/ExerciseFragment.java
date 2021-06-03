@@ -1,6 +1,7 @@
 package uk.ac.york.nimblefitness.Screens.Exercises;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -72,6 +73,7 @@ public class ExerciseFragment extends Fragment {
                 arrayList);
         list.setAdapter(arrayAdapter);
 
+
         exercises.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -80,6 +82,7 @@ public class ExerciseFragment extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
+                Log.i("exercises", newText);
                 nothingFound = view.findViewById(R.id.nothingfoundmessage);
                 arrayAdapter.getFilter().filter(newText, new Filter.FilterListener() {
                     @Override
@@ -107,6 +110,5 @@ public class ExerciseFragment extends Fragment {
 
 
     }
-
 
 }

@@ -1,5 +1,6 @@
 package uk.ac.york.nimblefitness.Screens.Profile;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,8 +22,11 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+import uk.ac.york.nimblefitness.Adapters.MovesListAdapter;
 import uk.ac.york.nimblefitness.HelperClasses.Exercise;
 import uk.ac.york.nimblefitness.HelperClasses.Routine;
+import uk.ac.york.nimblefitness.MediaHandlers.Text.TextLayout;
+import uk.ac.york.nimblefitness.MediaHandlers.Video.VideoLayout;
 import uk.ac.york.nimblefitness.R;
 
 // NOTE
@@ -79,10 +83,7 @@ public class FavesFragment extends Fragment {
 
                         ArrayList<Exercise> exercises = new ArrayList<>();
 
-                        exercises.add(new Exercise("Image","Video","Press-up","Description",10,15,10, R.drawable.ic_baseline_accessibility_24));
-                        exercises.add(new Exercise("Image","Video","Sit-up","Description",10,15,10, R.drawable.ic_baseline_accessibility_24));
-
-                        Routine routine = new Routine("Image","Name","Summary",0,5,10,exercises);
+                        Routine routine = new Routine().getExampleRoutine();
 
                         // Creates an array for the favourite routines to go into
                         //ArrayList<Routine> FavouritesArrayList = new ArrayList<>();
