@@ -1,12 +1,11 @@
 package uk.ac.york.nimblefitness.HelperClasses;
 
-import android.graphics.Color;
-
+import uk.ac.york.nimblefitness.MediaHandlers.Images.ImageLayout;
 import uk.ac.york.nimblefitness.MediaHandlers.Text.TextLayout;
 import uk.ac.york.nimblefitness.MediaHandlers.Video.VideoLayout;
 
 public class Exercise {
-    private String muscleGroupImage;
+    private ImageLayout muscleGroupImage;
     private String exerciseName;
     private String exerciseDescription;
     private int reps;
@@ -18,7 +17,7 @@ public class Exercise {
     private TextLayout exerciseDescriptionLayout;
     private int currentExercise;
 
-    public Exercise(String muscleGroupImage, String exerciseName, String exerciseDescription, int reps, int movesPerRep, int restAfterFinish, int colour, VideoLayout exerciseVideo, TextLayout exerciseNameLayout, TextLayout exerciseDescriptionLayout, int currentExercise) {
+    public Exercise(ImageLayout muscleGroupImage, String exerciseName, String exerciseDescription, int reps, int movesPerRep, int restAfterFinish, int colour, VideoLayout exerciseVideo, TextLayout exerciseNameLayout, TextLayout exerciseDescriptionLayout, int currentExercise) {
         this.muscleGroupImage = muscleGroupImage;
         this.exerciseName = exerciseName;
         this.exerciseDescription = exerciseDescription;
@@ -32,7 +31,7 @@ public class Exercise {
         this.currentExercise = currentExercise;
     }
 
-    public String getMuscleGroupImage() {
+    public ImageLayout getMuscleGroupImage() {
         return muscleGroupImage;
     }
 
@@ -64,7 +63,7 @@ public class Exercise {
         return colour;
     }
 
-    public void setMuscleGroupImage(String muscleGroupImage) {
+    public void setMuscleGroupImage(ImageLayout muscleGroupImage) {
         this.muscleGroupImage = muscleGroupImage;
     }
 

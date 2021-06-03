@@ -1,5 +1,6 @@
 package uk.ac.york.nimblefitness.Screens.Routines;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -7,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 import android.widget.Filter;
+import android.widget.FrameLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,6 +22,7 @@ import java.util.List;
 import uk.ac.york.nimblefitness.Adapters.CustomExpandableListAdapter;
 import uk.ac.york.nimblefitness.HelperClasses.Exercise;
 import uk.ac.york.nimblefitness.HelperClasses.Routine;
+import uk.ac.york.nimblefitness.MediaHandlers.Images.ImageLayout;
 import uk.ac.york.nimblefitness.MediaHandlers.Text.TextLayout;
 import uk.ac.york.nimblefitness.MediaHandlers.Text.TextModule;
 import uk.ac.york.nimblefitness.MediaHandlers.Video.VideoLayout;
@@ -92,7 +95,7 @@ public class RoutinesFragment extends Fragment {
 
             }
         });
-        routineSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+/*        routineSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 return false;
@@ -115,7 +118,7 @@ public class RoutinesFragment extends Fragment {
                 return false;
             }
         });
-
+*/
         return view;
     }
 
@@ -265,10 +268,18 @@ public class RoutinesFragment extends Fragment {
         listDataChild.put(listDataHeader.get(11), routine12);
     }
 
-    public List<Exercise> setUpTestRoutine() {
+    public List<Exercise> setUpTestRoutine(FrameLayout frameLayout, Context context) {
         List<Exercise> testRoutine = new ArrayList<>();
 
-        Exercise pushUpTestRoutine = new Exercise("http://www-users.york.ac.uk/~hew550/NimbleAssets/exercisemusclegroups/normal_push_up.png",
+        Exercise pushUpTestRoutine = new Exercise(
+                new ImageLayout(50,
+                        807+200, // descriptionYStart + 50
+                        720,
+                        405,
+                        0,
+                        "http://www-users.york.ac.uk/~hew550/NimbleAssets/exercisemusclegroups/normal_push_up.png",
+                        frameLayout,
+                        context),
                 "Push Ups",
                 "With your hands placed a shoulder width apart and a straight back, lower yourself to the ground keeping your elbows tucked in. Hold the position. Then push off of the floor to your start position to complete a rep.",
                 5,
@@ -276,36 +287,45 @@ public class RoutinesFragment extends Fragment {
                 30,
                 Color.parseColor("#008080"),
                 new VideoLayout("https://www-users.york.ac.uk/~hew550/NimbleAssets/exercisevideos/Normal-Push-Up.mp4",
-                        500,
-                        500,
+                        720,
+                        405, // 16:9 aspect ratio
                         50,
-                        150,
+                        302, // 50 + 6*42 : titleYStart + 6*titleFontSize
                         "",
                         0,
                         false,
-                        null,
-                        null),
+                        frameLayout,
+                        context),
                 new TextLayout("Push Ups",
                         TextModule.fontFamily.sans_serif,
-                        "16",
+                        "42",
                         "#000000",
-                        TextModule.styleFamily.normal,
+                        /*TextModule.styleFamily.normal,*/
                         50,
                         50,
-                        null,
-                        null),
-                new TextLayout("\"With your hands placed a shoulder width apart and a straight back, lower yourself to the ground keeping your elbows tucked in. Hold the position. Then push off of the floor to your start position to complete a rep.",
+                        frameLayout,
+                        context),
+                new TextLayout("With your hands placed a shoulder width apart and a straight back, lower yourself to the ground keeping your elbows tucked in. Hold the position. Then push off of the floor to your start position to complete a rep.",
                         TextModule.fontFamily.sans_serif,
                         "16",
                         "#000000",
-                        TextModule.styleFamily.italic,
+                        /*TextModule.styleFamily.italic,*/
                         50,
-                        100,
-                        null,
-                        null),
+                        757, // videoYStart + videoHeight
+                        frameLayout,
+                        context),
                 0);
+        testRoutine.add(pushUpTestRoutine);
 
-        Exercise plankTestRoutine = new Exercise("http://www-users.york.ac.uk/~hew550/NimbleAssets/exercisemusclegroups/plank.png",
+        Exercise plankTestRoutine = new Exercise(
+                new ImageLayout(50,
+                        807, // descriptionYStart + 50
+                        720,
+                        405,
+                        8,
+                        "http://www-users.york.ac.uk/~hew550/NimbleAssets/exercisemusclegroups/plank.png",
+                        frameLayout,
+                        context),
                 "Plank",
                 "From a normal push up position, lower yourself down so that your weight is resting on your forearms. With a straight back, hold this position by engaging your core muscles.",
                 20,
@@ -320,29 +340,38 @@ public class RoutinesFragment extends Fragment {
                         "",
                         0,
                         false,
-                        null,
-                        null),
+                        frameLayout,
+                        context),
                 new TextLayout("Plank",
                         TextModule.fontFamily.sans_serif,
                         "16",
                         "#000000",
-                        TextModule.styleFamily.normal,
+                        /*TextModule.styleFamily.normal,*/
                         50,
                         50,
-                        null,
-                        null),
+                        frameLayout,
+                        context),
                 new TextLayout("From a normal push up position, lower yourself down so that your weight is resting on your forearms. With a straight back, hold this position by engaging your core muscles.",
                         TextModule.fontFamily.sans_serif,
                         "16",
                         "#000000",
-                        TextModule.styleFamily.italic,
+                        /*TextModule.styleFamily.italic,*/
                         50,
                         100,
-                        null,
-                        null),
-                0);
+                        frameLayout,
+                        context),
+                1);
+        testRoutine.add(plankTestRoutine);
 
-        Exercise tricepDipTestRoutine = new Exercise("http://www-users.york.ac.uk/~hew550/NimbleAssets/exercisemusclegroups/tricep_dip.png",
+        Exercise tricepDipTestRoutine = new Exercise(
+                new ImageLayout(50,
+                        807, // descriptionYStart + 50
+                        720,
+                        405,
+                        8,
+                        "http://www-users.york.ac.uk/~hew550/NimbleAssets/exercisemusclegroups/tricep_dip.png",
+                        frameLayout,
+                        context),
                 "Tricep Dip",
                 "Using a chair, put your weight onto your hands then lower yourself slowly down so that your legs are straight and your body forms an 'L' shape. Push off of the chair to return to your start position to complete a rep.",
                 5,
@@ -357,29 +386,38 @@ public class RoutinesFragment extends Fragment {
                         "",
                         0,
                         false,
-                        null,
-                        null),
+                        frameLayout,
+                        context),
                 new TextLayout("Tricep Dip",
                         TextModule.fontFamily.sans_serif,
                         "16",
                         "#000000",
-                        TextModule.styleFamily.normal,
+                        /*TextModule.styleFamily.normal,*/
                         50,
                         50,
-                        null,
-                        null),
+                        frameLayout,
+                        context),
                 new TextLayout("Using a chair, put your weight onto your hands then lower yourself slowly down so that your legs are straight and your body forms an 'L' shape. Push off of the chair to return to your start position to complete a rep.",
                         TextModule.fontFamily.sans_serif,
                         "16",
                         "#000000",
-                        TextModule.styleFamily.italic,
+                        /*TextModule.styleFamily.italic,*/
                         50,
                         100,
-                        null,
-                        null),
-                0);
+                        frameLayout,
+                        context),
+                2);
+        testRoutine.add(tricepDipTestRoutine);
 
-        Exercise supermanTestRoutine = new Exercise("http://www-users.york.ac.uk/~hew550/NimbleAssets/exercisemusclegroups/superman.png",
+        Exercise supermanTestRoutine = new Exercise(
+                new ImageLayout(50,
+                        807, // descriptionYStart + 50
+                        720,
+                        405,
+                        8,
+                        "http://www-users.york.ac.uk/~hew550/NimbleAssets/exercisemusclegroups/superman.png",
+                        frameLayout,
+                        context),
                 "Superman",
                 "Start by laying on your front. Raise your legs off of the floor while simultaneously raising your arms off of the floor using your shoulder and back muscles. Hold this position.",
                 5,
@@ -394,27 +432,28 @@ public class RoutinesFragment extends Fragment {
                         "",
                         0,
                         false,
-                        null,
-                        null),
+                        frameLayout,
+                        context),
                 new TextLayout("Superman",
                         TextModule.fontFamily.sans_serif,
                         "16",
                         "#000000",
-                        TextModule.styleFamily.normal,
+                        /*TextModule.styleFamily.normal,*/
                         50,
                         50,
-                        null,
-                        null),
+                        frameLayout,
+                        context),
                 new TextLayout("Start by laying on your front. Raise your legs off of the floor while simultaneously raising your arms off of the floor using your shoulder and back muscles. Hold this position.",
                         TextModule.fontFamily.sans_serif,
                         "16",
                         "#000000",
-                        TextModule.styleFamily.italic,
+                        /*TextModule.styleFamily.italic,*/
                         50,
                         100,
-                        null,
-                        null),
-                0);
+                        frameLayout,
+                        context),
+                3);
+        testRoutine.add(supermanTestRoutine);
         return testRoutine;
     }
 }

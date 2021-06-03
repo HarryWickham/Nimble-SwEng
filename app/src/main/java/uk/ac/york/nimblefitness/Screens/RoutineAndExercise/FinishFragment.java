@@ -19,6 +19,7 @@ import java.util.ArrayList;
 
 import uk.ac.york.nimblefitness.Adapters.MovesListAdapter;
 import uk.ac.york.nimblefitness.HelperClasses.Exercise;
+import uk.ac.york.nimblefitness.MediaHandlers.Images.ImageLayout;
 import uk.ac.york.nimblefitness.MediaHandlers.Text.TextLayout;
 import uk.ac.york.nimblefitness.MediaHandlers.Video.VideoLayout;
 import uk.ac.york.nimblefitness.R;
@@ -41,14 +42,14 @@ public class FinishFragment extends Fragment {
         getActivity().setTitle("Finish Page");
 
         ArrayList<Exercise> exercises = new ArrayList<>();
-
+        ImageLayout muscleGroupImage = null;
         TextLayout exerciseNameLayout = null;
         TextLayout exerciseDescriptionLayout = null;
         VideoLayout exerciseVideoLayout = null;
-        exercises.add(new Exercise("","","Plank",0,60,1, Color.parseColor("#ffffff"), exerciseVideoLayout , exerciseNameLayout, exerciseDescriptionLayout, 0));
-        exercises.add(new Exercise("","","Squats",0,20,1,Color.parseColor("#ffffff"), exerciseVideoLayout, exerciseNameLayout, exerciseDescriptionLayout, 0));
-        exercises.add(new Exercise("","","Sit-ups",0,15,1,Color.parseColor("#ffffff"), exerciseVideoLayout, exerciseNameLayout, exerciseDescriptionLayout, 0));
-        exercises.add(new Exercise("","","Press-ups",0,10,1,Color.parseColor("#ffffff"), exerciseVideoLayout, exerciseNameLayout, exerciseDescriptionLayout, 0));
+        exercises.add(new Exercise(muscleGroupImage,"","Plank",0,60,1, Color.parseColor("#ffffff"), exerciseVideoLayout , exerciseNameLayout, exerciseDescriptionLayout, 0));
+        exercises.add(new Exercise(muscleGroupImage,"","Squats",0,20,1,Color.parseColor("#ffffff"), exerciseVideoLayout, exerciseNameLayout, exerciseDescriptionLayout, 0));
+        exercises.add(new Exercise(muscleGroupImage,"","Sit-ups",0,15,1,Color.parseColor("#ffffff"), exerciseVideoLayout, exerciseNameLayout, exerciseDescriptionLayout, 0));
+        exercises.add(new Exercise(muscleGroupImage,"","Press-ups",0,10,1,Color.parseColor("#ffffff"), exerciseVideoLayout, exerciseNameLayout, exerciseDescriptionLayout, 0));
 
         //Routine routine = new Routine("Image","Name","Summary",0,5,10,exercises);
 
@@ -60,10 +61,10 @@ public class FinishFragment extends Fragment {
 
 
 
-        exercises.add(new Exercise("","","Plank",0,60,1, Color.parseColor("#ffffff"), exerciseVideoLayout , exerciseNameLayout, exerciseDescriptionLayout, 0));
-        exercises.add(new Exercise("","","Squats",0,20,1,Color.parseColor("#ffffff"), exerciseVideoLayout, exerciseNameLayout, exerciseDescriptionLayout, 0));
-        exercises.add(new Exercise("","","Sit-ups",0,15,1,Color.parseColor("#ffffff"), exerciseVideoLayout, exerciseNameLayout, exerciseDescriptionLayout, 0));
-        exercises.add(new Exercise("","","Press-ups",0,10,1,Color.parseColor("#ffffff"), exerciseVideoLayout, exerciseNameLayout, exerciseDescriptionLayout, 0));
+        exercises.add(new Exercise(muscleGroupImage,"","Plank",0,60,1, Color.parseColor("#ffffff"), exerciseVideoLayout , exerciseNameLayout, exerciseDescriptionLayout, 0));
+        exercises.add(new Exercise(muscleGroupImage,"","Squats",0,20,1,Color.parseColor("#ffffff"), exerciseVideoLayout, exerciseNameLayout, exerciseDescriptionLayout, 0));
+        exercises.add(new Exercise(muscleGroupImage,"","Sit-ups",0,15,1,Color.parseColor("#ffffff"), exerciseVideoLayout, exerciseNameLayout, exerciseDescriptionLayout, 0));
+        exercises.add(new Exercise(muscleGroupImage,"","Press-ups",0,10,1,Color.parseColor("#ffffff"), exerciseVideoLayout, exerciseNameLayout, exerciseDescriptionLayout, 0));
 
         MovesListAdapter movesListAdapter = new MovesListAdapter(getContext(), exercises);
 
@@ -84,6 +85,18 @@ public class FinishFragment extends Fragment {
             public void onClick(View view) {
                 FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.RoutineAndExerciseFrame, endSummaryFragment);
+                fragmentTransaction.commit();
+            }
+        });
+
+        InformationFragment informationFragment = new InformationFragment();
+        NextExercise.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view1) {
+                int inc = informationFragment.getCurrentExercise() + 1;
+                informationFragment.setCurrentExercise(inc);
+                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.RoutineAndExerciseFrame, informationFragment);
                 fragmentTransaction.commit();
             }
         });

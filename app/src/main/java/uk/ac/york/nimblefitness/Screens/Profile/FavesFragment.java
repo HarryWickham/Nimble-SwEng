@@ -23,6 +23,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 import uk.ac.york.nimblefitness.HelperClasses.Exercise;
+import uk.ac.york.nimblefitness.MediaHandlers.Images.ImageLayout;
 import uk.ac.york.nimblefitness.MediaHandlers.Text.TextLayout;
 import uk.ac.york.nimblefitness.MediaHandlers.Video.VideoLayout;
 import uk.ac.york.nimblefitness.R;
@@ -80,14 +81,14 @@ public class FavesFragment extends Fragment {
                         //Routine routine4 = new Routine("Routine4", R.drawable.final_logo);
 
                         ArrayList<Exercise> exercises = new ArrayList<>();
-
+                        ImageLayout muscleGroupImage = null;
                         TextLayout exerciseNameLayout = null;
                         TextLayout exerciseDescriptionLayout = null;
                         VideoLayout exerciseVideoLayout = null;
-                        exercises.add(new Exercise("","","Plank",0,60,1, Color.parseColor("#ffffff"), exerciseVideoLayout , exerciseNameLayout, exerciseDescriptionLayout, 0));
-                        exercises.add(new Exercise("","","Squats",0,20,1,Color.parseColor("#ffffff"), exerciseVideoLayout, exerciseNameLayout, exerciseDescriptionLayout, 0));
-                        exercises.add(new Exercise("","","Sit-ups",0,15,1,Color.parseColor("#ffffff"), exerciseVideoLayout, exerciseNameLayout, exerciseDescriptionLayout, 0));
-                        exercises.add(new Exercise("","","Press-ups",0,10,1,Color.parseColor("#ffffff"), exerciseVideoLayout, exerciseNameLayout, exerciseDescriptionLayout, 0));
+                        exercises.add(new Exercise(muscleGroupImage,"","Plank",0,60,1, Color.parseColor("#ffffff"), exerciseVideoLayout , exerciseNameLayout, exerciseDescriptionLayout, 0));
+                        exercises.add(new Exercise(muscleGroupImage,"","Squats",0,20,1,Color.parseColor("#ffffff"), exerciseVideoLayout, exerciseNameLayout, exerciseDescriptionLayout, 0));
+                        exercises.add(new Exercise(muscleGroupImage,"","Sit-ups",0,15,1,Color.parseColor("#ffffff"), exerciseVideoLayout, exerciseNameLayout, exerciseDescriptionLayout, 0));
+                        exercises.add(new Exercise(muscleGroupImage,"","Press-ups",0,10,1,Color.parseColor("#ffffff"), exerciseVideoLayout, exerciseNameLayout, exerciseDescriptionLayout, 0));
 
                         //Routine routine = new Routine("Image","Name","Summary",0,5,10,exercises);
 
