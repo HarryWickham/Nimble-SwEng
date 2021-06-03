@@ -36,14 +36,10 @@ public class StartSummaryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_start_summary, container, false);
-        getActivity().setTitle("Start Summary");
 
-        ArrayList<Exercise> exercises = new ArrayList<>();
-        int setsRemaining = 1;
-        Routine routine = new Routine(0,"Name","Summary",3,4,0, setsRemaining, exercises);
+        Routine routine = new Routine().getExampleRoutine();
 
-        TextView routineName = view.findViewById(R.id.routine_name);
-        routineName.setText(routine.getRoutineName());
+        getActivity().setTitle(routine.getRoutineName());
 
         TextView routineSummary = view.findViewById(R.id.routine_summary);
         routineSummary.setText(routine.getRoutineSummary());
@@ -53,16 +49,9 @@ public class StartSummaryFragment extends Fragment {
 
         TextView routineSets = view.findViewById(R.id.sets);
         routineSets.setText(String.format("%d sets", routine.getSets()));
-        TextLayout exerciseNameLayout = null;
-        TextLayout exerciseDescriptionLayout = null;
-        VideoLayout exerciseVideoLayout = null;
-
-        exercises.add(new Exercise("","","Plank",0,60,1, Color.parseColor("#ffffff"), exerciseVideoLayout , exerciseNameLayout, exerciseDescriptionLayout, 0));
-        exercises.add(new Exercise("","","Squats",0,20,1,Color.parseColor("#ffffff"), exerciseVideoLayout, exerciseNameLayout, exerciseDescriptionLayout, 0));
-        exercises.add(new Exercise("","","Sit-ups",0,15,1,Color.parseColor("#ffffff"), exerciseVideoLayout, exerciseNameLayout, exerciseDescriptionLayout, 0));
-        exercises.add(new Exercise("","","Press-ups",0,10,1,Color.parseColor("#ffffff"), exerciseVideoLayout, exerciseNameLayout, exerciseDescriptionLayout, 0));
 
         ListView listView = view.findViewById(R.id.start_summary_list_view);
+        listView.setEnabled(false);
 
         MovesListAdapter movesListAdapter = new MovesListAdapter(getContext(), routine.getExerciseArrayList());
 

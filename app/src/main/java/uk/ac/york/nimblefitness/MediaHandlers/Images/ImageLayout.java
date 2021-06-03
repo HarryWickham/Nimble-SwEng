@@ -5,7 +5,9 @@ import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
-public class ImageLayout  {
+import java.io.Serializable;
+
+public class ImageLayout implements Serializable {
 
     //Declaring the variables for the image
     private int xCoordinate;
@@ -29,8 +31,6 @@ public class ImageLayout  {
         this.imageSource = imageSource;
         this.parentLayout = parentLayout;
         this.context = context;
-
-        setImage();
     }
 
     public void setImage(){

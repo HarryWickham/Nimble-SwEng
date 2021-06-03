@@ -22,7 +22,9 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+import uk.ac.york.nimblefitness.Adapters.MovesListAdapter;
 import uk.ac.york.nimblefitness.HelperClasses.Exercise;
+import uk.ac.york.nimblefitness.HelperClasses.Routine;
 import uk.ac.york.nimblefitness.MediaHandlers.Text.TextLayout;
 import uk.ac.york.nimblefitness.MediaHandlers.Video.VideoLayout;
 import uk.ac.york.nimblefitness.R;
@@ -81,15 +83,7 @@ public class FavesFragment extends Fragment {
 
                         ArrayList<Exercise> exercises = new ArrayList<>();
 
-                        TextLayout exerciseNameLayout = null;
-                        TextLayout exerciseDescriptionLayout = null;
-                        VideoLayout exerciseVideoLayout = null;
-                        exercises.add(new Exercise("","","Plank",0,60,1, Color.parseColor("#ffffff"), exerciseVideoLayout , exerciseNameLayout, exerciseDescriptionLayout, 0));
-                        exercises.add(new Exercise("","","Squats",0,20,1,Color.parseColor("#ffffff"), exerciseVideoLayout, exerciseNameLayout, exerciseDescriptionLayout, 0));
-                        exercises.add(new Exercise("","","Sit-ups",0,15,1,Color.parseColor("#ffffff"), exerciseVideoLayout, exerciseNameLayout, exerciseDescriptionLayout, 0));
-                        exercises.add(new Exercise("","","Press-ups",0,10,1,Color.parseColor("#ffffff"), exerciseVideoLayout, exerciseNameLayout, exerciseDescriptionLayout, 0));
-
-                        //Routine routine = new Routine("Image","Name","Summary",0,5,10,exercises);
+                        Routine routine = new Routine().getExampleRoutine();
 
                         // Creates an array for the favourite routines to go into
                         //ArrayList<Routine> FavouritesArrayList = new ArrayList<>();

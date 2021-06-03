@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,9 +17,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 import uk.ac.york.nimblefitness.Adapters.MovesListAdapter;
 import uk.ac.york.nimblefitness.HelperClasses.Exercise;
+import uk.ac.york.nimblefitness.HelperClasses.Routine;
 import uk.ac.york.nimblefitness.MediaHandlers.Text.TextLayout;
 import uk.ac.york.nimblefitness.MediaHandlers.Video.VideoLayout;
 import uk.ac.york.nimblefitness.R;
@@ -38,47 +41,71 @@ public class FinishFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_finish, container, false);
 
-        getActivity().setTitle("Finish Page");
+        Routine routine = (Routine) getArguments().getSerializable("routine");
 
-        ArrayList<Exercise> exercises = new ArrayList<>();
-
-        TextLayout exerciseNameLayout = null;
-        TextLayout exerciseDescriptionLayout = null;
-        VideoLayout exerciseVideoLayout = null;
-        exercises.add(new Exercise("","","Plank",0,60,1, Color.parseColor("#ffffff"), exerciseVideoLayout , exerciseNameLayout, exerciseDescriptionLayout, 0));
-        exercises.add(new Exercise("","","Squats",0,20,1,Color.parseColor("#ffffff"), exerciseVideoLayout, exerciseNameLayout, exerciseDescriptionLayout, 0));
-        exercises.add(new Exercise("","","Sit-ups",0,15,1,Color.parseColor("#ffffff"), exerciseVideoLayout, exerciseNameLayout, exerciseDescriptionLayout, 0));
-        exercises.add(new Exercise("","","Press-ups",0,10,1,Color.parseColor("#ffffff"), exerciseVideoLayout, exerciseNameLayout, exerciseDescriptionLayout, 0));
-
-        //Routine routine = new Routine("Image","Name","Summary",0,5,10,exercises);
-
+        getActivity().setTitle(routine.getRoutineName());
         Button toEndSummary = view.findViewById(R.id.toEndSummary);
-        Button NextExercise = view.findViewById(R.id.continue_button);
-        Button ExitToProfile = view.findViewById(R.id.exit_button);
+        Button nextExercise = view.findViewById(R.id.continue_button);
+        Button exitToProfile = view.findViewById(R.id.exit_button);
         TextView finishText = view.findViewById(R.id.finish_text);
         ListView finishListView = view.findViewById(R.id.finish_list_view);
+        finishListView.setEnabled(false);
+
+        if(routine.getExerciseArrayList().get(routine.getCurrentExercise()).getRepType().equalsIgnoreCase("time")){
+            finishText.setText(String.format(Locale.UK,"Congratulations you have completed %d seconds of %s",routine.getExerciseArrayList().get(routine.getCurrentExercise()).getReps(), routine.getExerciseArrayList().get(routine.getCurrentExercise()).getExerciseName()));
+        }else if (routine.getExerciseArrayList().get(routine.getCurrentExercise()).getRepType().equalsIgnoreCase("number")){
+            finishText.setText(String.format(Locale.UK,"Congratulations you have completed %d %s",routine.getExerciseArrayList().get(routine.getCurrentExercise()).getReps(), routine.getExerciseArrayList().get(routine.getCurrentExercise()).getExerciseName()));
+        }
+
+        ArrayList<Exercise> allExercises;
+        allExercises = routine.getExerciseArrayList();
+
+        routine.setCurrentExercise(routine.getCurrentExercise()+1);
+
+        ArrayList<Exercise> remainingExercises = remainingExerciseList(allExercises, routine);
 
 
+        if (routine.getSetsRemaining()==0){
+            nextExercise.setVisibility(View.GONE);
+            finishText.setText(String.format(Locale.UK,"Congratulations you have completed all the sets for this routine"));
+            toEndSummary.setVisibility(View.VISIBLE);
+        }
 
-        exercises.add(new Exercise("","","Plank",0,60,1, Color.parseColor("#ffffff"), exerciseVideoLayout , exerciseNameLayout, exerciseDescriptionLayout, 0));
-        exercises.add(new Exercise("","","Squats",0,20,1,Color.parseColor("#ffffff"), exerciseVideoLayout, exerciseNameLayout, exerciseDescriptionLayout, 0));
-        exercises.add(new Exercise("","","Sit-ups",0,15,1,Color.parseColor("#ffffff"), exerciseVideoLayout, exerciseNameLayout, exerciseDescriptionLayout, 0));
-        exercises.add(new Exercise("","","Press-ups",0,10,1,Color.parseColor("#ffffff"), exerciseVideoLayout, exerciseNameLayout, exerciseDescriptionLayout, 0));
+        if (remainingExercises.size()==0){
+            nextExercise.setText("Continue to next set");
+            finishText.setText(String.format(Locale.UK,"Congratulations you have completed all the exercises for this set"));
+            routine.setCurrentExercise(0);
+            routine.setSetsRemaining(routine.getSetsRemaining()-1);
+        }
 
-        MovesListAdapter movesListAdapter = new MovesListAdapter(getContext(), exercises);
+        MovesListAdapter movesListAdapter = new MovesListAdapter(getContext(), remainingExercises);
 
         finishListView.setAdapter(movesListAdapter);
         setListViewHeightBasedOnChildren(finishListView);
-        //finishText.setText(String.format(Locale.UK,"Congratulations you have completed %d %ss",routine.getExerciseArrayList().get(0).getReps(), routine.getExerciseArrayList().get(0).getExerciseName()));
 
-        ExitToProfile.setOnClickListener(new View.OnClickListener() {
+        exitToProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getActivity(), MainActivity.class));//takes user the main page
             }
         });
 
+        InformationFragment informationFragment = new InformationFragment();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("routine",routine);
+        informationFragment.setArguments(bundle);
+        nextExercise.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.RoutineAndExerciseFrame, informationFragment);
+                fragmentTransaction.commit();
+            }
+        });
+
+
         EndSummaryFragment endSummaryFragment = new EndSummaryFragment();
+        endSummaryFragment.setArguments(bundle);
         toEndSummary.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -109,5 +136,12 @@ public class FinishFragment extends Fragment {
 
         listView.setLayoutParams(params);
         listView.requestLayout();
+    }
+
+    public ArrayList<Exercise> remainingExerciseList(ArrayList<Exercise> remainingExercises, Routine routine){
+        for (int i = 0; i < routine.getCurrentExercise(); i++){
+            remainingExercises.remove(0);
+        }
+        return remainingExercises;
     }
 }

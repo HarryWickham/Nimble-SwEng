@@ -5,7 +5,9 @@ import android.util.AttributeSet;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
-public class TextLayout {
+import java.io.Serializable;
+
+public class TextLayout implements Serializable {
 
     TextModule.styleFamily style;
     TextModule.fontFamily font;

@@ -22,6 +22,7 @@ import java.util.Locale;
 
 import uk.ac.york.nimblefitness.Adapters.MovesListAdapter;
 import uk.ac.york.nimblefitness.HelperClasses.Exercise;
+import uk.ac.york.nimblefitness.HelperClasses.Routine;
 import uk.ac.york.nimblefitness.MediaHandlers.Text.TextLayout;
 import uk.ac.york.nimblefitness.MediaHandlers.Video.VideoLayout;
 import uk.ac.york.nimblefitness.R;
@@ -121,24 +122,9 @@ public class CalendarModel implements CalendarContract.Model {
     @Override
     public MovesListAdapter completedMoves(Context context) {
         MovesListAdapter listAdapter;
-        String[] completedMoves = {"Press-ups", "Sit-ups", "Plank", "Crunches"};
-        String[] moveDetails = {"5 sets of 10 reps", "5 sets of 30 reps",
-                                "5 sets of 1 minute", "5 sets of 30 reps"};
-        String[] numberOfMoves = {"Moves: 50", "Moves: 150", "Moves: 100", "Moves: 150"};
-        int[] exerciseIcon = {R.drawable.ic_baseline_accessibility_24,
-                R.drawable.ic_baseline_accessibility_24,
-                R.drawable.ic_baseline_accessibility_24,
-                R.drawable.ic_baseline_accessibility_24};
-        ArrayList<Exercise> exercises = new ArrayList<>();
-        TextLayout exerciseNameLayout = null;
-        TextLayout exerciseDescriptionLayout = null;
-        VideoLayout exerciseVideoLayout = null;
-        exercises.add(new Exercise("","","Plank",0,60,1, Color.parseColor("#ffffff"), exerciseVideoLayout , exerciseNameLayout, exerciseDescriptionLayout, 0));
-        exercises.add(new Exercise("","","Squats",0,20,1,Color.parseColor("#ffffff"), exerciseVideoLayout, exerciseNameLayout, exerciseDescriptionLayout, 0));
-        exercises.add(new Exercise("","","Sit-ups",0,15,1,Color.parseColor("#ffffff"), exerciseVideoLayout, exerciseNameLayout, exerciseDescriptionLayout, 0));
-        exercises.add(new Exercise("","","Press-ups",0,10,1,Color.parseColor("#ffffff"), exerciseVideoLayout, exerciseNameLayout, exerciseDescriptionLayout, 0));
 
-        listAdapter = new MovesListAdapter(context, exercises);
+        Routine routine = new Routine().getExampleRoutine();
+        listAdapter = new MovesListAdapter(context, routine.getExerciseArrayList());
         return listAdapter;
     }
 

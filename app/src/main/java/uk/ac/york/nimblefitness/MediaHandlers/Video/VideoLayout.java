@@ -5,9 +5,11 @@ import android.net.Uri;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import java.io.Serializable;
+
 import uk.ac.york.nimblefitness.MediaHandlers.Text.TextModule;
 
-public class VideoLayout {
+public class VideoLayout implements Serializable {
     String uriPath, id;
     int width, height, xstart, ystart, starttime;
     boolean loop;

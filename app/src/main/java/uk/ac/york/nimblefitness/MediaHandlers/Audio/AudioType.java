@@ -6,7 +6,9 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
-public class AudioType {
+import java.io.Serializable;
+
+public class AudioType implements Serializable {
     String url;
     int starttime;
     boolean loop;

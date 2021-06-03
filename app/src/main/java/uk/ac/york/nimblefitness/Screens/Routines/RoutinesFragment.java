@@ -101,7 +101,7 @@ public class RoutinesFragment extends Fragment {
             @Override
             public boolean onQueryTextChange(String newText) {
                 nothingFound = view.findViewById(R.id.nothingfoundmessage);
-                CustomExpandableListAdapter.getFilter().filter(newText, new Filter.FilterListener() {
+                /*CustomExpandableListAdapter.getFilter().filter(newText, new Filter.FilterListener() {
                     @Override
                     public void onFilterComplete(int i) {
                         if (i == 0) {
@@ -111,7 +111,7 @@ public class RoutinesFragment extends Fragment {
                             nothingFound.setVisibility(View.GONE);
                         }
                     }
-                });
+                });*/
                 return false;
             }
         });
@@ -265,7 +265,7 @@ public class RoutinesFragment extends Fragment {
         listDataChild.put(listDataHeader.get(11), routine12);
     }
 
-    public List<Exercise> setUpTestRoutine() {
+    /*public List<Exercise> setUpTestRoutine() {
         List<Exercise> testRoutine = new ArrayList<>();
 
         Exercise pushUpTestRoutine = new Exercise("http://www-users.york.ac.uk/~hew550/NimbleAssets/exercisemusclegroups/normal_push_up.png",
@@ -416,5 +416,5 @@ public class RoutinesFragment extends Fragment {
                         null),
                 0);
         return testRoutine;
-    }
+    }*/
 }
