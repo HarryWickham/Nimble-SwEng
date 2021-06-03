@@ -15,6 +15,7 @@ import android.widget.Button;
 import java.util.List;
 
 import uk.ac.york.nimblefitness.HelperClasses.Exercise;
+import uk.ac.york.nimblefitness.HelperClasses.Routine;
 import uk.ac.york.nimblefitness.MediaHandlers.Graphics.ShapeView;
 import uk.ac.york.nimblefitness.R;
 import uk.ac.york.nimblefitness.Screens.Routines.RoutinesFragment;
@@ -61,10 +62,8 @@ public class InformationFragment extends Fragment {
         /**
          * Need to talk to Elliott about this
          */
-        /*RoutinesFragment routinesFragment = new RoutinesFragment();
-        List<Exercise> testRoutine = routinesFragment.setUpTestRoutine(view.findViewById(R.id.infoPage), this.getContext());
-        int lastExercise = testRoutine.size();
-        Exercise exercise = testRoutine.get(getCurrentExercise());
+        Routine routine = new Routine().getExampleRoutine();
+        Exercise exercise = routine.getExerciseArrayList().get(routine.getCurrentExercise());
 
         // Add rectangles around video(?), description & image.
         Canvas canvas = new Canvas();
@@ -75,7 +74,7 @@ public class InformationFragment extends Fragment {
         exercise.getExerciseNameLayout().writeText();
         exercise.getExerciseVideo().PlayVideo();
         exercise.getExerciseDescriptionLayout().writeText();
-        exercise.getMuscleGroupImage().setImage();*/
+        exercise.getMuscleGroupImage().setImage();
         //setCurrentExercise(1);
     }
 }
