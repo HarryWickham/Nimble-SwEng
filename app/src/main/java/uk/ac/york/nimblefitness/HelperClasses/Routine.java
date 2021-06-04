@@ -125,7 +125,7 @@ public class Routine implements Serializable {
         final double videoAspectRatio = 0.5625; // Ensures the video has a 16:9 aspect ratio.
         final double titleScaling = 0.03; // Scales the title font size depending on screen size
         final double descriptionScaling = 0.0118; // Scales the description text font size depending on screen size.
-        int imageAndVideoHeight = (int) Math.round((screenWidth - 100)*videoAspectRatio); // Common height of image and video.
+        int imageAndVideoHeight = (int) Math.round((screenWidth - 100) * videoAspectRatio); // Common height of image and video.
         int imageWidth = (int) (imageAndVideoHeight * imageAspectRatio);
         int videoYstart = 100 + 5*(int) (screenWidth * titleScaling); // whitespace above and below title + size of font.
         int imageYstart = videoYstart + imageAndVideoHeight + 75;

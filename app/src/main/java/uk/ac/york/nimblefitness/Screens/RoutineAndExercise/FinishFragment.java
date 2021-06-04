@@ -1,13 +1,11 @@
 package uk.ac.york.nimblefitness.Screens.RoutineAndExercise;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,8 +20,6 @@ import java.util.Locale;
 import uk.ac.york.nimblefitness.Adapters.MovesListAdapter;
 import uk.ac.york.nimblefitness.HelperClasses.Exercise;
 import uk.ac.york.nimblefitness.HelperClasses.Routine;
-import uk.ac.york.nimblefitness.MediaHandlers.Text.TextLayout;
-import uk.ac.york.nimblefitness.MediaHandlers.Video.VideoLayout;
 import uk.ac.york.nimblefitness.R;
 import uk.ac.york.nimblefitness.Screens.MainActivity;
 
@@ -48,6 +44,7 @@ public class FinishFragment extends Fragment {
         Button nextExercise = view.findViewById(R.id.continue_button);
         Button exitToProfile = view.findViewById(R.id.exit_button);
         TextView finishText = view.findViewById(R.id.finish_text);
+        TextView remainingListText = view.findViewById(R.id.remaining_exercises);
         ListView finishListView = view.findViewById(R.id.finish_list_view);
         finishListView.setEnabled(false);
 
@@ -67,16 +64,19 @@ public class FinishFragment extends Fragment {
 
         if (routine.getSetsRemaining()==1 && remainingExercises.size()==0){
             nextExercise.setVisibility(View.GONE);
-            finishText.setText(String.format(Locale.UK,"Congratulations you have completed all the sets for this routine"));
+            finishText.setText(String.format(Locale.UK,"Congratulations you have completed all the sets for this routine."));
             toEndSummary.setVisibility(View.VISIBLE);
+            remainingListText.setText("");
         } else if (remainingExercises.size()==0){
             nextExercise.setText("Continue to next set");
+            remainingListText.setText("");
             routine.setSetsRemaining(routine.getSetsRemaining()-1);
             if(routine.getSetsRemaining()==1){
-                finishText.setText(String.format(Locale.UK,"Congratulations you have completed all the exercises for this set. You have %d set remaining",routine.getSetsRemaining()));
+                finishText.setText(String.format(Locale.UK,"Congratulations you have completed all the exercises for this set. You have %d set remaining.",routine.getSetsRemaining()));
             } else {
-                finishText.setText(String.format(Locale.UK, "Congratulations you have completed all the exercises for this set. You have %d sets remaining", routine.getSetsRemaining()));
+                finishText.setText(String.format(Locale.UK, "Congratulations you have completed all the exercises for this set. You have %d sets remaining.", routine.getSetsRemaining()));
             }
+            remainingListText.setText("");
             routine.setCurrentExercise(0);
         }
 

@@ -1,7 +1,6 @@
 package uk.ac.york.nimblefitness.Screens.RoutineAndExercise;
 
 import android.annotation.SuppressLint;
-import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -14,13 +13,8 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-
 import uk.ac.york.nimblefitness.Adapters.MovesListAdapter;
-import uk.ac.york.nimblefitness.HelperClasses.Exercise;
 import uk.ac.york.nimblefitness.HelperClasses.Routine;
-import uk.ac.york.nimblefitness.MediaHandlers.Text.TextLayout;
-import uk.ac.york.nimblefitness.MediaHandlers.Video.VideoLayout;
 import uk.ac.york.nimblefitness.R;
 
 public class StartSummaryFragment extends Fragment {

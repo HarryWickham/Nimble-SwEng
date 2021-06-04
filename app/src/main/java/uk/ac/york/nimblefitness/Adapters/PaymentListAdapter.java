@@ -1,7 +1,6 @@
 package uk.ac.york.nimblefitness.Adapters;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,8 +15,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import uk.ac.york.nimblefitness.R;
-
-import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 
 public class PaymentListAdapter extends BaseAdapter {
     
@@ -91,6 +88,8 @@ public class PaymentListAdapter extends BaseAdapter {
         viewHolder.planSubtitle.setText(planSubtitle[position]);
 
         viewHolder.planImage.setImageResource(planImage[position]);
+
+        viewHolder.membershipDetailsTextView.setText(membershipDetailsText[position]);
 
     viewHolder.selectedPlan.setText(selectionButton[position]);
 

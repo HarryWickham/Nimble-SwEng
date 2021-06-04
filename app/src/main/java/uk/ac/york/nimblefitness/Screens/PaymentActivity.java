@@ -3,16 +3,12 @@ package uk.ac.york.nimblefitness.Screens;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.facebook.share.Share;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -22,7 +18,6 @@ import uk.ac.york.nimblefitness.Adapters.PaymentListAdapter;
 import uk.ac.york.nimblefitness.R;
 
 import static android.preference.PreferenceManager.getDefaultSharedPreferences;
-import static com.facebook.FacebookSdk.getApplicationContext;
 
 //Importing
 
@@ -41,7 +36,7 @@ public class PaymentActivity extends AppCompatActivity implements PaymentListAda
         String[] planSubtitle = {"Basic Membership", "Intermediate Membership",
                 "Advanced Membership"};
         String[] planTier = {"Bronze", "Silver", "Gold"};
-        String[] membershipDetails = {"more details", "more details", "more details"};
+        String[] membershipDetails = {"20 routines/month", "40 routines/month", "Unlimited routines/month"};
         int[] planImage = {R.drawable.bronzerounded,
                 R.drawable.silverrounded,
                 R.drawable.goldrounded};
@@ -56,7 +51,7 @@ public class PaymentActivity extends AppCompatActivity implements PaymentListAda
 
         checkout = findViewById(R.id.checkout_button);
 
-        PaymentListAdapter listAdapter = new PaymentListAdapter(this, planSubtitle, planTier, planImage, moreDetailsButton, this, selectionButton);
+        PaymentListAdapter listAdapter = new PaymentListAdapter(this, planSubtitle, planTier, planImage, membershipDetails, this, selectionButton);
         /**Context context, String [] planSubtitle, String [] planTier, int [] planImage,
          int [] moreDetailsButton, String[] membershipDetails,
          int [] selectionButton**/
