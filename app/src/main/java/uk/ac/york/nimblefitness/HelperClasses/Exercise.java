@@ -39,7 +39,7 @@ public class Exercise implements Serializable {
         this.colour = colour;
         this.exerciseVideo = exerciseVideo;
         this.textLayouts = textLayouts;
-        this.currentExercise = currentExercise;
+        this.currentExercise = 0;
     }
 
     public ImageLayout getMuscleGroupImage() {

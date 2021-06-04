@@ -5,6 +5,7 @@ import android.graphics.Color;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import uk.ac.york.nimblefitness.MediaHandlers.Graphics.ShapeType;
 import uk.ac.york.nimblefitness.MediaHandlers.Images.ImageLayout;
 import uk.ac.york.nimblefitness.MediaHandlers.Text.TextLayout;
 import uk.ac.york.nimblefitness.MediaHandlers.Text.TextModule;
@@ -118,7 +119,25 @@ public class Routine implements Serializable {
 
     public Routine getExampleRoutine(){
         ArrayList<Exercise> exercises = new ArrayList<>();
+        ArrayList<TextLayout> textLayouts = new ArrayList<>();
+        ArrayList<ShapeType> shapeTypes = new ArrayList<>();
 
+        textLayouts.add(new TextLayout("Push Ups",
+                TextModule.fontFamily.sans_serif,
+                "16",
+                "#000000",
+                50,
+                50,
+                null,
+                null));
+        textLayouts.add(new TextLayout("With your hands placed a shoulder width apart and a straight back, lower yourself to the ground keeping your elbows tucked in. Hold the position. Then push off of the floor to your start position to complete a rep.",
+                        TextModule.fontFamily.sans_serif,
+                        "16",
+                        "#000000",
+                        50,
+                        100,
+                        null,
+                        null));
         exercises.add(new Exercise(new ImageLayout(50,
                 807+200, // descriptionYStart + 50
                 720,
@@ -146,22 +165,25 @@ public class Routine implements Serializable {
                         false,
                         null,
                         null),
-                new TextLayout("Push Ups",
-                        TextModule.fontFamily.sans_serif,
-                        "16",
-                        "#000000",
-                        50,
-                        50,
-                        null,
-                        null),
-                new TextLayout("With your hands placed a shoulder width apart and a straight back, lower yourself to the ground keeping your elbows tucked in. Hold the position. Then push off of the floor to your start position to complete a rep.",
-                        TextModule.fontFamily.sans_serif,
-                        "16",
-                        "#000000",
-                        50,
-                        100,
-                        null,
-                        null)));
+                textLayouts
+                ));
+        textLayouts.clear();
+        textLayouts.add(new TextLayout("Plank",
+                TextModule.fontFamily.sans_serif,
+                "16",
+                "#000000",
+                50,
+                50,
+                null,
+                null));
+        textLayouts.add(new TextLayout("From a normal push up position, lower yourself down so that your weight is resting on your forearms. With a straight back, hold this position by engaging your core muscles.",
+                TextModule.fontFamily.sans_serif,
+                "16",
+                "#000000",
+                50,
+                100,
+                null,
+                null));
 
         exercises.add(new Exercise(new ImageLayout(50,
                 807, // descriptionYStart + 50
@@ -190,23 +212,26 @@ public class Routine implements Serializable {
                         false,
                         null,
                         null),
-                new TextLayout("Plank",
-                        TextModule.fontFamily.sans_serif,
-                        "16",
-                        "#000000",
-                        50,
-                        50,
-                        null,
-                        null),
-                new TextLayout("From a normal push up position, lower yourself down so that your weight is resting on your forearms. With a straight back, hold this position by engaging your core muscles.",
-                        TextModule.fontFamily.sans_serif,
-                        "16",
-                        "#000000",
-                        50,
-                        100,
-                        null,
-                        null)));
+                textLayouts
+                ));
 
+        textLayouts.clear();
+        textLayouts.add(new TextLayout("Tricep Dip",
+                TextModule.fontFamily.sans_serif,
+                "16",
+                "#000000",
+                50,
+                50,
+                null,
+                null));
+        textLayouts.add(new TextLayout("Using a chair, put your weight onto your hands then lower yourself slowly down so that your legs are straight and your body forms an 'L' shape. Push off of the chair to return to your start position to complete a rep.",
+                TextModule.fontFamily.sans_serif,
+                "16",
+                "#000000",
+                50,
+                100,
+                null,
+                null));
         exercises.add(new Exercise(new ImageLayout(50,
                 807, // descriptionYStart + 50
                 720,
@@ -234,23 +259,26 @@ public class Routine implements Serializable {
                         false,
                         null,
                         null),
-                new TextLayout("Tricep Dip",
-                        TextModule.fontFamily.sans_serif,
-                        "16",
-                        "#000000",
-                        50,
-                        50,
-                        null,
-                        null),
-                new TextLayout("Using a chair, put your weight onto your hands then lower yourself slowly down so that your legs are straight and your body forms an 'L' shape. Push off of the chair to return to your start position to complete a rep.",
-                        TextModule.fontFamily.sans_serif,
-                        "16",
-                        "#000000",
-                        50,
-                        100,
-                        null,
-                        null)));
+                textLayouts
+                ));
 
+        textLayouts.clear();
+        textLayouts.add(new TextLayout("Superman",
+                TextModule.fontFamily.sans_serif,
+                "16",
+                "#000000",
+                50,
+                50,
+                null,
+                null));
+        textLayouts.add(new TextLayout("Start by laying on your front. Raise your legs off of the floor while simultaneously raising your arms off of the floor using your shoulder and back muscles. Hold this position.",
+                TextModule.fontFamily.sans_serif,
+                "16",
+                "#000000",
+                50,
+                100,
+                null,
+                null));
         exercises.add(new Exercise(new ImageLayout(50,
                 807, // descriptionYStart + 50
                 720,
@@ -278,22 +306,8 @@ public class Routine implements Serializable {
                         false,
                         null,
                         null),
-                new TextLayout("Superman",
-                        TextModule.fontFamily.sans_serif,
-                        "16",
-                        "#000000",
-                        50,
-                        50,
-                        null,
-                        null),
-                new TextLayout("Start by laying on your front. Raise your legs off of the floor while simultaneously raising your arms off of the floor using your shoulder and back muscles. Hold this position.",
-                        TextModule.fontFamily.sans_serif,
-                        "16",
-                        "#000000",
-                        50,
-                        100,
-                        null,
-                        null)));
+                textLayouts
+                ));
 
         return new Routine(R.drawable.upperbody,"Beginners Upper Body","This is a test routine to ensure all routine related pages take the correct information from this single object",3,4, 60, 4,0, exercises);
     }
