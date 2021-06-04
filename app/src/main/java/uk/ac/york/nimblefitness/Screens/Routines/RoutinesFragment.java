@@ -116,7 +116,6 @@ public class RoutinesFragment extends Fragment {
             public boolean onQueryTextChange(String query) {
                 nothingFound = view.findViewById(R.id.nothing_found_routines);
                 boolean successfulSearch = listAdapter.filterData(query);
-                System.out.println(listAdapter.getRoutineArrayList().get(0).getRoutineName());
                 if (!successfulSearch) {
                     nothingFound.setVisibility(View.VISIBLE);
                 }
