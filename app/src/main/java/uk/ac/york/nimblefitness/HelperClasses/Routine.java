@@ -1,5 +1,6 @@
 package uk.ac.york.nimblefitness.HelperClasses;
 
+import android.content.res.Resources;
 import android.graphics.Color;
 
 import java.io.Serializable;
@@ -122,26 +123,23 @@ public class Routine implements Serializable {
         ArrayList<TextLayout> textLayouts = new ArrayList<>();
         ArrayList<ShapeType> shapeTypes = new ArrayList<>();
 
-        textLayouts.add(new TextLayout("Push Ups",
-                TextModule.fontFamily.sans_serif,
-                "16",
-                "#000000",
-                50,
-                50,
-                null,
-                null));
-        textLayouts.add(new TextLayout("With your hands placed a shoulder width apart and a straight back, lower yourself to the ground keeping your elbows tucked in. Hold the position. Then push off of the floor to your start position to complete a rep.",
-                        TextModule.fontFamily.sans_serif,
-                        "16",
-                        "#000000",
-                        50,
-                        100,
-                        null,
-                        null));
+        int screenWidth = Resources.getSystem().getDisplayMetrics().widthPixels;
+        final double imageAspectRatio = 1.32; // Preserves the image's original aspect ratio 70:53.
+        final double videoAspectRatio = 0.5625; // Ensures the video has a 16:9 aspect ratio.
+        final double titleScaling = 0.03; // Scales the title font size depending on screen size
+        final double descriptionScaling = 0.0118; // Scales the description text font size depending on screen size.
+        int imageAndVideoHeight = (int) Math.round((screenWidth - 100)*videoAspectRatio); // Common height of image and video.
+        int imageWidth = (int) (imageAndVideoHeight * imageAspectRatio);
+        int videoYstart = 100 + 5*(int) (screenWidth * titleScaling); // whitespace above and below title + size of font.
+        int imageYstart = videoYstart + imageAndVideoHeight + 75;
+        int descriptionYstart = imageYstart + imageAndVideoHeight + 75; // 75's tak into account the border's and element spacing.
+        String titleFontSize = Integer.toString((int) (screenWidth * titleScaling));
+        String descriptionFontSize = Integer.toString((int) (screenWidth * descriptionScaling));
+
         exercises.add(new Exercise(new ImageLayout(50,
-                807+200, // descriptionYStart + 50
-                720,
-                405,
+                imageYstart,
+                imageWidth,
+                imageAndVideoHeight,
                 0,
                 "https://www-users.york.ac.uk/~hew550/NimbleAssets/exercisemusclegroups/normal_push_up.png",
                 null,
@@ -156,39 +154,36 @@ public class Routine implements Serializable {
                 30,
                 Color.parseColor("#008080"),
                 new VideoLayout("https://www-users.york.ac.uk/~hew550/NimbleAssets/exercisevideos/Normal-Push-Up.mp4",
-                        500,
-                        500,
+                        screenWidth - 100, // The '-100' accounts for the rectangle 'border' behind the video.
+                        imageAndVideoHeight,
                         50,
-                        150,
+                        videoYstart,
                         "",
                         0,
                         false,
                         null,
                         null),
-                textLayouts
-                ));
-        textLayouts.clear();
-        textLayouts.add(new TextLayout("Plank",
-                TextModule.fontFamily.sans_serif,
-                "16",
-                "#000000",
-                50,
-                50,
-                null,
-                null));
-        textLayouts.add(new TextLayout("From a normal push up position, lower yourself down so that your weight is resting on your forearms. With a straight back, hold this position by engaging your core muscles.",
-                TextModule.fontFamily.sans_serif,
-                "16",
-                "#000000",
-                50,
-                100,
-                null,
-                null));
+                new TextLayout("Push Ups",
+                        TextModule.fontFamily.default_bold,
+                        titleFontSize,
+                        "#000000",
+                        50,
+                        50,
+                        null,
+                        null),
+                new TextLayout("With your hands placed a shoulder width apart and a straight back, lower yourself to the ground keeping your elbows tucked in. Hold the position. Then push off of the floor to your start position to complete a rep.",
+                        TextModule.fontFamily.sans_serif,
+                        descriptionFontSize,
+                        "#000000",
+                        50,
+                        descriptionYstart,
+                        null,
+                        null)));
 
         exercises.add(new Exercise(new ImageLayout(50,
-                807, // descriptionYStart + 50
-                720,
-                405,
+                imageYstart,
+                imageWidth,
+                imageAndVideoHeight,
                 8,
                 "https://www-users.york.ac.uk/~hew550/NimbleAssets/exercisemusclegroups/plank.png",
                 null,
@@ -203,39 +198,36 @@ public class Routine implements Serializable {
                 30,
                 Color.parseColor("#FF2400"),
                 new VideoLayout("https://www-users.york.ac.uk/~hew550/NimbleAssets/exercisevideos/Plank.mp4",
-                        500,
-                        500,
+                        screenWidth - 100, // The '-100' accounts for the rectangle 'border' behind the video.
+                        imageAndVideoHeight,
                         50,
-                        150,
+                        videoYstart,
                         "",
                         0,
                         false,
                         null,
                         null),
-                textLayouts
-                ));
+                new TextLayout("Plank",
+                        TextModule.fontFamily.default_bold,
+                        titleFontSize,
+                        "#000000",
+                        50,
+                        50,
+                        null,
+                        null),
+                new TextLayout("From a normal push up position, lower yourself down so that your weight is resting on your forearms. With a straight back, hold this position by engaging your core muscles.",
+                        TextModule.fontFamily.sans_serif,
+                        descriptionFontSize,
+                        "#000000",
+                        50,
+                        descriptionYstart,
+                        null,
+                        null)));
 
-        textLayouts.clear();
-        textLayouts.add(new TextLayout("Tricep Dip",
-                TextModule.fontFamily.sans_serif,
-                "16",
-                "#000000",
-                50,
-                50,
-                null,
-                null));
-        textLayouts.add(new TextLayout("Using a chair, put your weight onto your hands then lower yourself slowly down so that your legs are straight and your body forms an 'L' shape. Push off of the chair to return to your start position to complete a rep.",
-                TextModule.fontFamily.sans_serif,
-                "16",
-                "#000000",
-                50,
-                100,
-                null,
-                null));
         exercises.add(new Exercise(new ImageLayout(50,
-                807, // descriptionYStart + 50
-                720,
-                405,
+                imageYstart,
+                imageWidth,
+                imageAndVideoHeight,
                 8,
                 "https://www-users.york.ac.uk/~hew550/NimbleAssets/exercisemusclegroups/tricep_dip.png",
                 null,
@@ -250,39 +242,36 @@ public class Routine implements Serializable {
                 30,
                 Color.parseColor("#FFDB58"),
                 new VideoLayout("https://www-users.york.ac.uk/~hew550/NimbleAssets/exercisevideos/Tricep-Dip.mp4",
-                        500,
-                        500,
+                        screenWidth - 100, // The '-100' accounts for the rectangle 'border' behind the video.
+                        imageAndVideoHeight,
                         50,
-                        150,
+                        videoYstart,
                         "",
                         0,
                         false,
                         null,
                         null),
-                textLayouts
-                ));
+                new TextLayout("Tricep Dip",
+                        TextModule.fontFamily.sans_serif,
+                        "16",
+                        "#000000",
+                        50,
+                        50,
+                        null,
+                        null),
+                new TextLayout("Using a chair, put your weight onto your hands then lower yourself slowly down so that your legs are straight and your body forms an 'L' shape. Push off of the chair to return to your start position to complete a rep.",
+                        TextModule.fontFamily.sans_serif,
+                        "16",
+                        "#000000",
+                        50,
+                        100,
+                        null,
+                        null)));
 
-        textLayouts.clear();
-        textLayouts.add(new TextLayout("Superman",
-                TextModule.fontFamily.sans_serif,
-                "16",
-                "#000000",
-                50,
-                50,
-                null,
-                null));
-        textLayouts.add(new TextLayout("Start by laying on your front. Raise your legs off of the floor while simultaneously raising your arms off of the floor using your shoulder and back muscles. Hold this position.",
-                TextModule.fontFamily.sans_serif,
-                "16",
-                "#000000",
-                50,
-                100,
-                null,
-                null));
         exercises.add(new Exercise(new ImageLayout(50,
-                807, // descriptionYStart + 50
-                720,
-                405,
+                imageYstart,
+                imageWidth,
+                imageAndVideoHeight,
                 8,
                 "https://www-users.york.ac.uk/~hew550/NimbleAssets/exercisemusclegroups/superman.png",
                 null,
@@ -297,17 +286,31 @@ public class Routine implements Serializable {
                 30,
                 Color.parseColor("#BFFF00"),
                 new VideoLayout("https://www-users.york.ac.uk/~hew550/NimbleAssets/exercisevideos/Superman.mp4",
-                        500,
-                        500,
+                        screenWidth - 100, // The '-100' accounts for the rectangle 'border' behind the video.
+                        imageAndVideoHeight,
                         50,
-                        150,
+                        videoYstart,
                         "",
                         0,
                         false,
                         null,
                         null),
-                textLayouts
-                ));
+                new TextLayout("Superman",
+                        TextModule.fontFamily.default_bold,
+                        titleFontSize,
+                        "#000000",
+                        50,
+                        50,
+                        null,
+                        null),
+                new TextLayout("Start by laying on your front. Raise your legs off of the floor while simultaneously raising your arms off of the floor using your shoulder and back muscles. Hold this position.",
+                        TextModule.fontFamily.sans_serif,
+                        descriptionFontSize,
+                        "#000000",
+                        50,
+                        descriptionYstart,
+                        null,
+                        null)));
 
         return new Routine(R.drawable.upperbody,"Beginners Upper Body","This is a test routine to ensure all routine related pages take the correct information from this single object",3,4, 60, 4,0, exercises);
     }
