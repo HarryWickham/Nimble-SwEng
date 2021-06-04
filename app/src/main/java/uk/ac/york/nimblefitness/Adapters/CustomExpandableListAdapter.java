@@ -1,6 +1,8 @@
 package uk.ac.york.nimblefitness.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -19,16 +22,18 @@ import java.util.List;
 import uk.ac.york.nimblefitness.HelperClasses.Exercise;
 import uk.ac.york.nimblefitness.HelperClasses.Routine;
 import uk.ac.york.nimblefitness.R;
+import uk.ac.york.nimblefitness.Screens.RoutineAndExercise.RoutineAndExerciseActivity;
 
 public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
 
-    Context context;
-    List<Routine> originalRoutineArrayList;
-    List<Routine> routineArrayList;
+    private Context context;
+    private ArrayList<Routine> originalRoutineArrayList;
+    private ArrayList<Routine> routineArrayList;
 
     public CustomExpandableListAdapter(Context context, ArrayList<Routine> routineArrayList) {
         this.context = context;
         this.routineArrayList = routineArrayList;
+        this.originalRoutineArrayList = (ArrayList<Routine>) routineArrayList.clone();
     }
 
     @Override
@@ -78,6 +83,12 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
             @Override
             public void onClick(View view) {
                 Toast.makeText(context, "Button Clicked", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(context, RoutineAndExerciseActivity.class);
+
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("routine", routineArrayList.get(groupPosition));
+                intent.putExtras(bundle);
+                context.startActivity(intent);
             }
         });
         TextView routineName = convertView.findViewById(R.id.routines_activity_name);
@@ -108,17 +119,50 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
         return true;
     }
 
-    public void filterData(String query) {
+    public ArrayList<Routine> getRoutineArrayList() {
+        return routineArrayList;
+    }
+
+    /*
+        Function for searching the Routines with the SearchView input
+        Uses a copy of the
+         */
+    public boolean filterData(String query) {
+        boolean searched = true;
         query = query.toLowerCase();
         Log.v("MyListAdapter", String.valueOf(originalRoutineArrayList.size()));
         routineArrayList.clear();
 
         if (query.isEmpty()) {
-            routineArrayList = originalRoutineArrayList;
+            routineArrayList.addAll(originalRoutineArrayList);
+            searched = true;
         } else {
+            for (Routine routine : originalRoutineArrayList) {
+                ArrayList<Exercise> exerciseList = routine.getExerciseArrayList();
+                ArrayList<Exercise> searchList = new ArrayList<>();
+                boolean searchedRoutine = false;
 
+                if (routine.getRoutineName().toLowerCase().contains(query)) {
+                    routineArrayList.add(routine);
+                }
+
+                for (Exercise exercise : exerciseList) {
+                    if(exercise.getExerciseName().toLowerCase().contains(query)) {
+                        searchList.add(exercise);
+                    }
+                }
+                if (searchList.size() > 0) {
+                    Routine filteredRoutine = new Routine();
+                    filteredRoutine = filteredRoutine.getExampleRoutine();
+                    filteredRoutine.setExerciseArrayList(searchList);
+                    routineArrayList.add(filteredRoutine);
+                }
+            }
         }
-
-
+        notifyDataSetChanged();
+        if (routineArrayList.size() == 0) {
+            searched = false;
+        }
+        return searched;
     }
 }
