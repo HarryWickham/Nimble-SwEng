@@ -42,6 +42,9 @@ public class Exercise implements Serializable {
         this.currentExercise = 0;
     }
 
+    public Exercise() {
+    }
+
     public ImageLayout getMuscleGroupImage() {
         return muscleGroupImage;
     }
