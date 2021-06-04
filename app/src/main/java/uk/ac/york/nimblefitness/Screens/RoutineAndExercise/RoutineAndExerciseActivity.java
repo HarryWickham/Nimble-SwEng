@@ -6,10 +6,12 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 
+import java.io.Serializable;
+
 import uk.ac.york.nimblefitness.R;
 import uk.ac.york.nimblefitness.Screens.Profile.ProfileTabsFragment;
 
-public class RoutineAndExerciseActivity extends AppCompatActivity {
+public class RoutineAndExerciseActivity extends AppCompatActivity implements Serializable {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

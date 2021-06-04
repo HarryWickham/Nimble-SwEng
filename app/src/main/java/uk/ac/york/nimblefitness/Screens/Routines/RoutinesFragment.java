@@ -99,7 +99,7 @@ public class RoutinesFragment extends Fragment {
         routineSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                nothingFound = view.findViewById(R.id.nothing_found_routines);
+                /*nothingFound = view.findViewById(R.id.nothing_found_routines);
                 boolean successfulSearch = listAdapter.filterData(query);
                 if (!successfulSearch) {
                     nothingFound.setVisibility(View.VISIBLE);
@@ -107,7 +107,7 @@ public class RoutinesFragment extends Fragment {
                 else{
                     nothingFound.setVisibility(View.GONE);
                     expandAll();
-                }
+                }*/
 
                 return false;
             }

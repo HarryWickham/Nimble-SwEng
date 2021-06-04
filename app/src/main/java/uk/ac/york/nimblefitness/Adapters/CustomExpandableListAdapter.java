@@ -146,7 +146,7 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
                     routineArrayList.add(routine);
                 }
 
-                for (Exercise exercise : exerciseList) {
+                for (Exercise exercise : routine.getExerciseArrayList()) {
                     if(exercise.getExerciseName().toLowerCase().contains(query)) {
                         searchList.add(exercise);
                     }

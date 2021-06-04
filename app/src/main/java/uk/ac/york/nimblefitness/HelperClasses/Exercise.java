@@ -2,7 +2,6 @@ package uk.ac.york.nimblefitness.HelperClasses;
 
 import uk.ac.york.nimblefitness.MediaHandlers.Audio.AudioType;
 import uk.ac.york.nimblefitness.MediaHandlers.Graphics.ShapeType;
-import uk.ac.york.nimblefitness.MediaHandlers.Graphics.ShapeView;
 import uk.ac.york.nimblefitness.MediaHandlers.Images.ImageLayout;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -26,7 +25,7 @@ public class Exercise implements Serializable {
     private int currentExercise;
     private ArrayList<AudioType> audioTypes;
 
-    public Exercise(ImageLayout muscleGroupImage, ArrayList<ShapeType> backgroundShapes, String exerciseName, String exerciseDescription, String repType, int reps, int timePerRep, int movesPerRep, int restAfterFinish, int colour, VideoLayout exerciseVideo, ArrayList<TextLayout> textLayouts) {
+    public Exercise(ImageLayout muscleGroupImage, ArrayList<ShapeType> backgroundShapes, String exerciseName, String exerciseDescription, String repType, int reps, int timePerRep, int movesPerRep, int restAfterFinish, int colour, VideoLayout exerciseVideo, ArrayList<TextLayout> textLayouts, ArrayList<AudioType> audioTypes) {
         this.muscleGroupImage = muscleGroupImage;
         this.backgroundShapes = backgroundShapes;
         this.exerciseName = exerciseName;
@@ -39,6 +38,7 @@ public class Exercise implements Serializable {
         this.colour = colour;
         this.exerciseVideo = exerciseVideo;
         this.textLayouts = textLayouts;
+        this.audioTypes = audioTypes;
         this.currentExercise = 0;
     }
 
@@ -144,5 +144,13 @@ public class Exercise implements Serializable {
 
     public void setBackgroundShapes(ArrayList<ShapeType> backgroundShapes) {
         this.backgroundShapes = backgroundShapes;
+    }
+
+    public ArrayList<AudioType> getAudioTypes() {
+        return audioTypes;
+    }
+
+    public void setAudioTypes(ArrayList<AudioType> audioTypes) {
+        this.audioTypes = audioTypes;
     }
 }

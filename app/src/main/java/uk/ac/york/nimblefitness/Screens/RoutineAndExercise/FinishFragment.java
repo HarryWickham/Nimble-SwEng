@@ -88,7 +88,8 @@ public class FinishFragment extends Fragment {
         exitToProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), MainActivity.class));//takes user the main page
+                startActivity(new Intent(getActivity(), MainActivity.class));
+                getActivity().finish();//takes user the main page
             }
         });
 

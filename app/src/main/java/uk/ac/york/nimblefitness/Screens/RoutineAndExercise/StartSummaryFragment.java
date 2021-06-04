@@ -1,6 +1,7 @@
 package uk.ac.york.nimblefitness.Screens.RoutineAndExercise;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -37,7 +38,12 @@ public class StartSummaryFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_start_summary, container, false);
 
-        Routine routine = new Routine().getExampleRoutine();
+
+
+        Intent intent = getActivity().getIntent();
+        Bundle bundle = intent.getExtras();
+
+        Routine routine = (Routine) bundle.getSerializable("routine");
 
         getActivity().setTitle(routine.getRoutineName());
 
@@ -59,8 +65,8 @@ public class StartSummaryFragment extends Fragment {
 
         Button toInfoPage = view.findViewById(R.id.toInfoPage);
         InformationFragment informationFragment = new InformationFragment();
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("routine",routine);
+        Bundle bundle2 = new Bundle();
+        bundle2.putSerializable("routine",routine);
         informationFragment.setArguments(bundle);
         toInfoPage.setOnClickListener(new View.OnClickListener() {
             @Override
