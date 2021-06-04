@@ -6,7 +6,9 @@ import android.graphics.Typeface;
 import android.text.Html;
 import android.util.AttributeSet;
 
-public class TextModule extends androidx.appcompat.widget.AppCompatTextView {
+import java.io.Serializable;
+
+public class TextModule extends androidx.appcompat.widget.AppCompatTextView implements Serializable {
 
     public enum fontFamily {
         default_bold, monospace, sans_serif, serif
@@ -42,9 +44,9 @@ public class TextModule extends androidx.appcompat.widget.AppCompatTextView {
         return text;
     }
 
-    /*public void setText(String text) {
+    public void setText(String text) {
         this.text = text;
-    }*/
+    }
 
     public fontFamily getFont() {
         return font;

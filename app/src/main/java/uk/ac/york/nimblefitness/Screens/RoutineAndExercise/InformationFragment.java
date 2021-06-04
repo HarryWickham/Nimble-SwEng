@@ -14,7 +14,9 @@ import android.widget.Button;
 
 import uk.ac.york.nimblefitness.HelperClasses.Exercise;
 import uk.ac.york.nimblefitness.HelperClasses.Routine;
+import uk.ac.york.nimblefitness.MediaHandlers.Graphics.ShapeType;
 import uk.ac.york.nimblefitness.MediaHandlers.Graphics.ShapeView;
+import uk.ac.york.nimblefitness.MediaHandlers.Text.TextLayout;
 import uk.ac.york.nimblefitness.R;
 import uk.ac.york.nimblefitness.Screens.MainActivity;
 
@@ -73,11 +75,13 @@ public class InformationFragment extends Fragment {
             Routine object. */
         Exercise exercise = routine.getExerciseArrayList().get(routine.getCurrentExercise());
 
-        /*  Sets the context and parent layout for the current exercise's name and displays it in
+        /*  Sets the context and parent layout for the current exercise's name and description and displays it in
             the fragment. */
-        exercise.getExerciseNameLayout().setContext(getActivity());
-        exercise.getExerciseNameLayout().setParentLayout(view.findViewById(R.id.infoPage));
-        exercise.getExerciseNameLayout().writeText();
+        for (TextLayout textLayout : exercise.getTextLayouts()){
+            textLayout.setContext(getActivity());
+            textLayout.setParentLayout(view.findViewById(R.id.infoPage));
+            textLayout.writeText();
+        }
 
         /*  Sets the context and parent layout for the current exercise's video and displays it in
             the fragment. */
@@ -91,28 +95,10 @@ public class InformationFragment extends Fragment {
         exercise.getMuscleGroupImage().setParentLayout(view.findViewById(R.id.infoPage));
         exercise.getMuscleGroupImage().setImage();
 
-        /*  Sets the context and parent layout for the current exercise's description and displays
-            it in the fragment. */
-        exercise.getExerciseDescriptionLayout().setContext(getActivity());
-        exercise.getExerciseDescriptionLayout().setParentLayout(view.findViewById(R.id.infoPage));
-        exercise.getExerciseDescriptionLayout().writeText();
-
         // A rectangle is drawn behind the video and image.
         ShapeView rectangles = view.findViewById(R.id.information_shape_view);
-        rectangles.addShape(exercise.getExerciseVideo().getXstart() - 25,
-                exercise.getExerciseVideo().getYstart() - 25,
-                exercise.getExerciseVideo().getHeight() + 50,
-                exercise.getExerciseVideo().getWidth() + 50,
-                Color.parseColor("#303F9F"),
-                "RECTANGLE",
-                0);
-        rectangles.addShape(exercise.getMuscleGroupImage().getxCoordinate() - 25,
-                exercise.getMuscleGroupImage().getyCoordinate() - 25,
-                exercise.getMuscleGroupImage().getHeight() + 50,
-                exercise.getMuscleGroupImage().getWidth(),
-                Color.parseColor("#303F9F"),
-                "RECTANGLE",
-                0);
-        exercise.setBackgroundShape(rectangles);
+        for(ShapeType shapeType : exercise.getBackgroundShapes()){
+            rectangles.addShape(shapeType.getxStart(),shapeType.getyStart(),shapeType.getxEnd(),shapeType.getyEnd(),shapeType.getColour(),shapeType.getShape_type(),shapeType.getDuration());
+        }
     }
 }

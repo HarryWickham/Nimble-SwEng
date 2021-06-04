@@ -10,7 +10,9 @@ import android.view.View;
 import android.widget.MediaController;
 import android.widget.VideoView;
 
-public class VideoPlayer extends Activity {
+import java.io.Serializable;
+
+public class VideoPlayer extends Activity implements Serializable {
     private MediaController controller;
     private volatile VideoView view;
     private int xstart;

@@ -13,10 +13,11 @@ import com.bumptech.glide.Glide;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.net.URL;
 import java.net.URLConnection;
 
-public class ImageModule extends AppCompatImageView {
+public class ImageModule extends AppCompatImageView implements Serializable {
 
     //Declaring the variables for the image
     private int xCoordinate;

@@ -54,6 +54,7 @@ public class EndSummaryFragment extends Fragment {
                 Toast.makeText(getActivity(), String.valueOf(ratingBar.getRating()), Toast.LENGTH_LONG).show();
 
                 startActivity(new Intent(getActivity(), MainActivity.class));
+                getActivity().finish();
             }
         });
 

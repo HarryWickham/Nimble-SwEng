@@ -1,15 +1,17 @@
 package uk.ac.york.nimblefitness.HelperClasses;
 
-import uk.ac.york.nimblefitness.MediaHandlers.Graphics.ShapeView;
+import uk.ac.york.nimblefitness.MediaHandlers.Audio.AudioType;
+import uk.ac.york.nimblefitness.MediaHandlers.Graphics.ShapeType;
 import uk.ac.york.nimblefitness.MediaHandlers.Images.ImageLayout;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 import uk.ac.york.nimblefitness.MediaHandlers.Text.TextLayout;
 import uk.ac.york.nimblefitness.MediaHandlers.Video.VideoLayout;
 
 public class Exercise implements Serializable {
     private ImageLayout muscleGroupImage;
-    private ShapeView backgroundShape;
+    private ArrayList<ShapeType> backgroundShapes;
     private String exerciseName;
     private String exerciseDescription;
     private String repType; //"time" or "number"
@@ -19,12 +21,13 @@ public class Exercise implements Serializable {
     private int restAfterFinish;
     private int colour;
     private VideoLayout exerciseVideo;
-    private TextLayout exerciseNameLayout;
-    private TextLayout exerciseDescriptionLayout;
+    private ArrayList<TextLayout> textLayouts;
+    private int currentExercise;
+    private ArrayList<AudioType> audioTypes;
 
-    public Exercise(ImageLayout muscleGroupImage, ShapeView backgroundShape, String exerciseName, String exerciseDescription, String repType, int reps, int timePerRep, int movesPerRep, int restAfterFinish, int colour, VideoLayout exerciseVideo, TextLayout exerciseNameLayout, TextLayout exerciseDescriptionLayout) {
+    public Exercise(ImageLayout muscleGroupImage, ArrayList<ShapeType> backgroundShapes, String exerciseName, String exerciseDescription, String repType, int reps, int timePerRep, int movesPerRep, int restAfterFinish, int colour, VideoLayout exerciseVideo, ArrayList<TextLayout> textLayouts, ArrayList<AudioType> audioTypes) {
         this.muscleGroupImage = muscleGroupImage;
-        this.backgroundShape = backgroundShape;
+        this.backgroundShapes = backgroundShapes;
         this.exerciseName = exerciseName;
         this.exerciseDescription = exerciseDescription;
         this.repType = repType;
@@ -34,8 +37,9 @@ public class Exercise implements Serializable {
         this.restAfterFinish = restAfterFinish;
         this.colour = colour;
         this.exerciseVideo = exerciseVideo;
-        this.exerciseNameLayout = exerciseNameLayout;
-        this.exerciseDescriptionLayout = exerciseDescriptionLayout;
+        this.textLayouts = textLayouts;
+        this.audioTypes = audioTypes;
+        this.currentExercise = 0;
     }
 
     public ImageLayout getMuscleGroupImage() {
@@ -118,27 +122,35 @@ public class Exercise implements Serializable {
         this.exerciseVideo = exerciseVideo;
     }
 
-    public TextLayout getExerciseNameLayout() {
-        return exerciseNameLayout;
+    public ArrayList<TextLayout> getTextLayouts() {
+        return textLayouts;
     }
 
-    public void setExerciseNameLayout(TextLayout exerciseNameLayout) {
-        this.exerciseNameLayout = exerciseNameLayout;
+    public void setTextLayouts(ArrayList<TextLayout> textLayouts) {
+        this.textLayouts = textLayouts;
     }
 
-    public TextLayout getExerciseDescriptionLayout() {
-        return exerciseDescriptionLayout;
+    public int getCurrentExercise() {
+        return currentExercise;
     }
 
-    public void setExerciseDescriptionLayout(TextLayout exerciseDescriptionLayout) {
-        this.exerciseDescriptionLayout = exerciseDescriptionLayout;
+    public void setCurrentExercise(int currentExercise) {
+        this.currentExercise = currentExercise;
     }
 
-    public ShapeView getBackgroundShape() {
-        return backgroundShape;
+    public ArrayList<ShapeType> getBackgroundShapes() {
+        return backgroundShapes;
     }
 
-    public void setBackgroundShape(ShapeView backgroundShape) {
-        this.backgroundShape = backgroundShape;
+    public void setBackgroundShapes(ArrayList<ShapeType> backgroundShapes) {
+        this.backgroundShapes = backgroundShapes;
+    }
+
+    public ArrayList<AudioType> getAudioTypes() {
+        return audioTypes;
+    }
+
+    public void setAudioTypes(ArrayList<AudioType> audioTypes) {
+        this.audioTypes = audioTypes;
     }
 }
