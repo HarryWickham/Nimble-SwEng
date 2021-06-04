@@ -21,7 +21,6 @@ public class Exercise implements Serializable {
     private VideoLayout exerciseVideo;
     private TextLayout exerciseNameLayout;
     private TextLayout exerciseDescriptionLayout;
-    private int currentExercise;
 
     public Exercise(ImageLayout muscleGroupImage, ShapeView backgroundShape, String exerciseName, String exerciseDescription, String repType, int reps, int timePerRep, int movesPerRep, int restAfterFinish, int colour, VideoLayout exerciseVideo, TextLayout exerciseNameLayout, TextLayout exerciseDescriptionLayout) {
         this.muscleGroupImage = muscleGroupImage;
@@ -37,7 +36,6 @@ public class Exercise implements Serializable {
         this.exerciseVideo = exerciseVideo;
         this.exerciseNameLayout = exerciseNameLayout;
         this.exerciseDescriptionLayout = exerciseDescriptionLayout;
-        this.currentExercise = currentExercise;
     }
 
     public ImageLayout getMuscleGroupImage() {
@@ -134,14 +132,6 @@ public class Exercise implements Serializable {
 
     public void setExerciseDescriptionLayout(TextLayout exerciseDescriptionLayout) {
         this.exerciseDescriptionLayout = exerciseDescriptionLayout;
-    }
-
-    public int getCurrentExercise() {
-        return currentExercise;
-    }
-
-    public void setCurrentExercise(int currentExercise) {
-        this.currentExercise = currentExercise;
     }
 
     public ShapeView getBackgroundShape() {

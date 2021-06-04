@@ -47,12 +47,43 @@ public class VideoLayout implements Serializable {
         videoPlayer.loadAndPlayVideo(UrlPath,this.loop,videoView,this.xstart,this.ystart,this.id,this.starttime);
     }
 
-
     public void setParentLayout(FrameLayout parentLayout) {
         this.parentLayout = parentLayout;
     }
 
     public void setContext(Context context) {
         this.context = context;
+    }
+
+    public int getXstart() {
+        return this.xstart;
+    }
+
+    public void setXstart(int xstart) {
+        this.xstart = xstart;
+    }
+
+    public int getYstart() {
+        return this.ystart;
+    }
+
+    public void setYstart(int ystart) {
+        this.ystart = ystart;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
     }
 }
