@@ -16,18 +16,20 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class ShapeView extends View {
+public class ShapeView extends View implements Serializable {
 
     public ArrayList<ShapeType> shapeTypeArray = new ArrayList<>();
-    //public ArrayList<Paint> paintsArray = new ArrayList<>();
 
+    //Defines the rectangle, oval and paint objects that might be used in later methods
     Rect mRect;
     RectF mOval;
     Paint mPaint;
 
 
+    //The 4 creators implemented due to extending View
     public ShapeView(Context context) {
         super(context);
         init(null);
@@ -48,6 +50,8 @@ public class ShapeView extends View {
         init(attrs);
     }
 
+
+    //instantiates the previously defined objects with their constructors
     public void init(@Nullable AttributeSet set){
         mRect = new Rect();
         mOval = new RectF();
@@ -55,19 +59,17 @@ public class ShapeView extends View {
     }
 
 
-    /*public void addShape(int xStart, int yStart, int height, int width, float shadingX1, float shadingY1, float shadingX2, float shadingY2, int colour1, int colour2, Shader.TileMode shadingStyle, String shape, int duration){
-        shapeTypeArray.add(new ShapeType(xStart, yStart, width, height, Color.RED, shape, new LinearGradient(shadingX1,shadingY1,shadingX2,shadingY2,colour1,colour2, shadingStyle), duration));
-    }*/
-
+    //adding a shapeType to the shape array when the shape has a linear gradient
     public void addShape(int xStart, int yStart, int height, int width, LinearGradient linearGradient, String shape, int duration){
         shapeTypeArray.add(new ShapeType(xStart, yStart, width, height, Color.RED, shape, linearGradient, duration));
     }
 
-
+    //adding a shapeType to the shape array when the shape has a solid colour
     public void addShape(int xStart, int yStart, int height, int width, int colour, String shape, int duration){
         shapeTypeArray.add(new ShapeType(xStart, yStart, width, height, colour, shape, null, duration));
     }
 
+    //adding a shapeType to the shape array when the shape is a line
     public void addLine(int xStart, int yStart, int xEnd, int yEnd, int colour, int duration){
         shapeTypeArray.add(new ShapeType(xStart, yStart, xEnd, yEnd, colour, "LINE", duration));
     }
@@ -75,11 +77,14 @@ public class ShapeView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
 
+        //looping through the shapeTypeArray to draw the shapes
         for(ShapeType shapeType : shapeTypeArray){
             if(shapeType.getDuration() != 0) {
                 delay(shapeType);
             }
+            //drawing the shapes that have a linear gradient
             if (shapeType.getShading() != null) {
+                //drawing a rectangle using the drawRect method of canvas
                 if (shapeType.getShape_type().equals("RECTANGLE")) {
                     mRect.left = shapeType.getxStart();
                     mRect.top = shapeType.getyStart();
@@ -88,6 +93,7 @@ public class ShapeView extends View {
                     mPaint.setShader(shapeType.getShading());
                     canvas.drawRect(mRect, mPaint);
 
+                    //drawing an oval using the drawOval method of canvas
                 } else if (shapeType.getShape_type().equals("OVAL")) {
                     mOval.left = shapeType.getxStart();
                     mOval.top = shapeType.getyStart();
@@ -96,7 +102,9 @@ public class ShapeView extends View {
                     mPaint.setShader(shapeType.getShading());
                     canvas.drawOval(mOval, mPaint);
                 }
+                //drawing the shapes that have a solid fill
             } else{
+                //drawing a rectangle using the drawRect method of canvas
                 if (shapeType.getShape_type().equals("RECTANGLE")) {
                     mRect.left = shapeType.getxStart();
                     mRect.top = shapeType.getyStart();
@@ -105,6 +113,8 @@ public class ShapeView extends View {
                     mPaint.setShader(shapeType.getShading());
                     mPaint.setColor(shapeType.getColour());
                     canvas.drawRect(mRect, mPaint);
+
+                    //drawing an oval using the drawOval method of canvas
                 } else if (shapeType.getShape_type().equals("OVAL")) {
                     mOval.left = shapeType.getxStart();
                     mOval.top = shapeType.getyStart();
@@ -113,6 +123,8 @@ public class ShapeView extends View {
                     mPaint.setShader(shapeType.getShading());
                     mPaint.setColor(shapeType.getColour());
                     canvas.drawOval(mOval, mPaint);
+
+                    //drawing a line using the drawLine method of canvas
                 } else if (shapeType.getShape_type().equals("LINE")) {
                     mPaint.setShader(shapeType.getShading());
                     mPaint.setColor(shapeType.getColour());
@@ -122,10 +134,12 @@ public class ShapeView extends View {
         }
     }
 
+    //A method to allow the developer to clear the canvas of all shapes
     public void clearAll(){
         shapeTypeArray.clear();
     }
 
+    //Runs a delay before removing a shape from the array list dependent on the duration parameter defined by the user
     public void delay(ShapeType shapeType){
         Handler handler = new Handler(Looper.getMainLooper());
         handler.postDelayed(new Runnable() {
