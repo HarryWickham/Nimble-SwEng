@@ -115,6 +115,6 @@ public class SplashScreen extends AppCompatActivity {
         }
         FirebaseDatabase rootDatabase = FirebaseDatabase.getInstance();
         DatabaseReference rootReference = rootDatabase.getReference("users").child(currentFirebaseUser.getUid());
-        rootReference.child("userDetails").child("lastLogin").setValue(sdf.format(new Date()));
+        rootReference.child("userDetails").child("lastLogin").setValue(Integer.parseInt(sdf.format(new Date())));
     }
 }
