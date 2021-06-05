@@ -68,7 +68,8 @@
         android:id="@+id/toEndSummary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="End Summary Page" />
+        android:text="End Summary Page"
+        android:visibility="gone"/>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

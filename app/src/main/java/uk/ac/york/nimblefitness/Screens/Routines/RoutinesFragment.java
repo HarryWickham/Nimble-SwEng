@@ -1,7 +1,9 @@
 package uk.ac.york.nimblefitness.Screens.Routines;
 
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +15,10 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,6 +31,9 @@ import uk.ac.york.nimblefitness.MediaHandlers.Text.TextModule;
 import uk.ac.york.nimblefitness.MediaHandlers.Video.VideoLayout;
 import uk.ac.york.nimblefitness.R;
 import uk.ac.york.nimblefitness.Screens.Exercises.ExerciseFragment;
+
+import static android.preference.PreferenceManager.getDefaultSharedPreferences;
+
 /*
 Fragment for displaying the routines in an expandable list view
 Each Parent element is a routine, and the children elements are the exercises in said routine
@@ -49,9 +58,20 @@ public class RoutinesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        requireActivity().setTitle("Routines");
+
         View view = inflater.inflate(R.layout.fragment_routines, container, false); //shows the fragment_settings.xml file in the frame view of the activity_main.xml
 
+        RoutineData routineData = new RoutineData(getContext());
+        ArrayList<Routine> routine = routineData.getRoutine();
+
+        SharedPreferences prefs = getDefaultSharedPreferences(getContext());
+        FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        if(getUserMembershipPlanRoutines(prefs, currentFirebaseUser) > 40 ){
+            requireActivity().setTitle("Routines - Remaining: " + DecimalFormatSymbols.getInstance().getInfinity());
+        }else {
+            requireActivity().setTitle("Routines - Remaining: " + String.valueOf(getUserMembershipPlanRoutines(prefs, currentFirebaseUser) - prefs.getInt(currentFirebaseUser + "completedRoutines", 0)));
+        }
         routineListView = view.findViewById(R.id.routine_exp_list);
         SearchView routineSearch = view.findViewById(R.id.routine_search);
         routineSearch.setActivated(true);
@@ -61,7 +81,7 @@ public class RoutinesFragment extends Fragment {
 
 
         routineArrayList = setUpRoutines();
-        listAdapter = new CustomExpandableListAdapter(getContext(), routineArrayList);
+        listAdapter = new CustomExpandableListAdapter(getContext(), routine);
 
         // setting list adapter
         routineListView.setAdapter(listAdapter);
@@ -160,5 +180,18 @@ public class RoutinesFragment extends Fragment {
             listOfRoutines.add(routine);
         }
         return listOfRoutines;
+    }
+
+    public int getUserMembershipPlanRoutines(SharedPreferences prefs, FirebaseUser currentFirebaseUser ){
+        switch (prefs.getString(currentFirebaseUser+"membershipPlan", "bronze")){
+            case "bronze":
+                return 20;
+            case "silver":
+                return 40;
+            case "gold":
+                return 9999;
+            default:
+                return 0;
+        }
     }
 }

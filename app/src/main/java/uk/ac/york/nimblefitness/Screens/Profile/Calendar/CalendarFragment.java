@@ -63,14 +63,6 @@ public class CalendarFragment extends Fragment implements CalendarContract.Calen
 
         calendarPresenter.setListViewHeightBasedOnChildren(listView);
 
-// This toast event still requires refactoring into MVP architecture?
-        // On click of a list item, the corresponding exercise title is displayed as a toast.
-        listView.setOnItemClickListener((parent, view1, position, id) -> {
-            String exerciseTitle = calendarPresenter.setCompletedMovesList().getExerciseTitleAtPosition(position);
-            Toast toast = Toast.makeText(getActivity(), exerciseTitle, Toast.LENGTH_SHORT);
-            toast.show();
-        });
-
         return view;
     }
 

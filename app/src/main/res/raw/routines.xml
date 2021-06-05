@@ -1,0 +1,58 @@
+<slideshow author="" version="" comment="">
+    <defaults backgroundcolour="#ffffff" font="sans_serif" fontsize="13" fontcolour="#000000" linecolour="#000000" fillcolour="#000000"/>
+    <slide id="Slide1" duration="0">
+        <!-- <routine routineImage="" routineName="" routineSummary="" rating="" sets="" restBetweenSets="">
+            <exercise exerciseName="" exerciseDescription="" repType="" reps="" timePerRep="" movesPerRep="" restAfterFinish="" colour="">
+                <video urlname="" starttime="0" loop="true" xstart="50" ystart="262" width="980" height="550" id="" />
+                <image urlname="" xstart="50" ystart="887" width="726" height="550" duration="0"/>
+                <shape type="RECTANGLE" xstart="25" ystart="237" width="600" height="1030" fillcolour="#303F9F" duration="0"/>
+                <shape type="RECTANGLE" xstart="25" ystart="862" width="560" height="780" fillcolour="#303F9F" duration="0"/>
+                <text font="sans_serif" fontsize="32" fontcolour="#000000" xstart="50" ystart="50"></text>
+                <text font="sans_serif" fontsize="13" fontcolour="#000000" xstart="50" ystart="1512"></text>
+            </exercise>
+        </routine> -->
+
+
+        <routine routineImage="" routineName="Beginner Upper Body" routineSummary="This is a test routine to ensure all routine related pages take the correct information from this single object"
+            rating="3" sets="4" restBetweenSets="30" setsRemaining="4">
+            <exercise exerciseName="Push Up" exerciseDescription="With your hands placed a shoulder width apart and a straight back, lower yourself to the ground keeping your elbows tucked in. Hold the position. Then push off of the floor to your start position to complete a rep. "
+                repType="number" reps="5" timePerRep="3" movesPerRep="1" restAfterFinish="10" colour="#d82bff">
+                <video urlname="https://www-users.york.ac.uk/~hew550/NimbleAssets/exercisevideos/Normal-Push-Up.mp4" starttime="0" loop="true" xstart="50" ystart="262" width="980" height="550" id="pushUpVideo" />
+                <image urlname="https://www-users.york.ac.uk/~hew550/NimbleAssets/exercisemusclegroups/normal_push_up.png" xstart="50" ystart="887" width="726" height="550" duration="0"/>
+                <shape type="RECTANGLE" xstart="25" ystart="237" width="600" height="1030" fillcolour="#303F9F" duration="0"/>
+                <shape type="RECTANGLE" xstart="25" ystart="862" width="560" height="780" fillcolour="#303F9F" duration="0"/>
+                <text font="sans_serif" fontsize="32" fontcolour="#000000" xstart="50" ystart="50"><b>Push Up</b></text>
+                <text font="sans_serif" fontsize="13" fontcolour="#000000" xstart="50" ystart="1512">With your hands placed a shoulder width apart and a straight back, lower yourself to the ground keeping your elbows tucked in. Hold the position. Then push off of the floor to your start position to complete a rep.</text>
+            </exercise>
+            <exercise exerciseName="Plank" exerciseDescription="From a normal push up position, lower yourself down so that your weight is resting on your forearms. With a straight back, hold this position by engaging your core muscles. "
+                repType="time" reps="20" timePerRep="0" movesPerRep="1" restAfterFinish="10" colour="#ffb100">
+                <video urlname="https://www-users.york.ac.uk/~hew550/NimbleAssets/exercisevideos/Plank.mp4" starttime="0" loop="true" xstart="50" ystart="262" width="980" height="550" id="plankVideo" />
+                <image urlname="https://www-users.york.ac.uk/~hew550/NimbleAssets/exercisemusclegroups/plank.png" xstart="50" ystart="887" width="726" height="550" duration="0"/>
+                <shape type="RECTANGLE" xstart="25" ystart="237" width="600" height="1030" fillcolour="#303F9F" duration="0"/>
+                <shape type="RECTANGLE" xstart="25" ystart="862" width="560" height="780" fillcolour="#303F9F" duration="0"/>
+                <text font="sans_serif" fontsize="32" fontcolour="#000000" xstart="50" ystart="50"><b>Plank</b></text>
+                <text font="sans_serif" fontsize="13" fontcolour="#000000" xstart="50" ystart="1512">From a normal push up position, lower yourself down so that your weight is resting on your forearms. With a straight back, hold this position by engaging your core muscles.</text>
+            </exercise>
+            <exercise exerciseName="Tricep Dip" exerciseDescription="Using a chair, put your weight onto your hands then lower yourself slowly down so that your legs are straight and your body forms an L shape. Push off of the chair to return to your start position to complete a rep."
+                repType="number" reps="5" timePerRep="4" movesPerRep="1" restAfterFinish="10" colour="#76ffbc">
+                <video urlname="https://www-users.york.ac.uk/~hew550/NimbleAssets/exercisevideos/Tricep-Dip.mp4" starttime="0" loop="true" xstart="50" ystart="262" width="980" height="550" id="tricepDipVideo" />
+                <image urlname="https://www-users.york.ac.uk/~hew550/NimbleAssets/exercisemusclegroups/tricep_dip.png" xstart="50" ystart="887" width="726" height="550" duration="0"/>
+                <shape type="RECTANGLE" xstart="25" ystart="237" width="600" height="1030" fillcolour="#303F9F" duration="0"/>
+                <shape type="RECTANGLE" xstart="25" ystart="862" width="560" height="780" fillcolour="#303F9F" duration="0"/>
+                <text font="sans_serif" fontsize="32" fontcolour="#000000" xstart="50" ystart="50"><b>Tricep Dip</b></text>
+                <text font="sans_serif" fontsize="13" fontcolour="#000000" xstart="50" ystart="1512">Using a chair, put your weight onto your hands then lower yourself slowly down so that your legs are straight and your body forms an L shape. Push off of the chair to return to your start position to complete a rep.</text>
+            </exercise>
+            <exercise exerciseName="Superman Raises" exerciseDescription="Start by laying on your front. Raise your legs off of the floor while simultaneously raising your arms off of the floor using your shoulder and back muscles. Hold this position."
+                repType="number" reps="5" timePerRep="4" movesPerRep="1" restAfterFinish="10" colour="#003ee0">
+                <video urlname="https://www-users.york.ac.uk/~hew550/NimbleAssets/exercisevideos/Superman.mp4" starttime="0" loop="true" xstart="50" ystart="262" width="980" height="550" id="supermanRaisesVideo" />
+                <image urlname="https://www-users.york.ac.uk/~hew550/NimbleAssets/exercisemusclegroups/superman.png" xstart="50" ystart="887" width="726" height="550" duration="0"/>
+                <shape type="RECTANGLE" xstart="25" ystart="237" width="600" height="1030" fillcolour="#303F9F" duration="0"/>
+                <shape type="RECTANGLE" xstart="25" ystart="862" width="560" height="780" fillcolour="#303F9F" duration="0"/>
+                <text font="sans_serif" fontsize="32" fontcolour="#000000" xstart="50" ystart="50"><b>Superman Raises</b></text>
+                <text font="sans_serif" fontsize="13" fontcolour="#000000" xstart="50" ystart="1512">Start by laying on your front. Raise your legs off of the floor while simultaneously raising your arms off of the floor using your shoulder and back muscles. Hold this position.</text>
+            </exercise>
+        </routine>
+
+
+    </slide>
+</slideshow>

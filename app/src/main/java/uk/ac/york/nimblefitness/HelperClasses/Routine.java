@@ -158,7 +158,8 @@ public class Routine implements Serializable {
                 null,
                 null));
 
-        exercises.add(new Exercise(new ImageLayout(50,
+        exercises.add(new Exercise(
+                new ImageLayout(50,
                 imageYstart,
                 imageWidth,
                 imageAndVideoHeight,
