@@ -36,7 +36,7 @@ public class PaymentActivity extends AppCompatActivity implements PaymentListAda
         String[] planSubtitle = {"Basic Membership", "Intermediate Membership",
                 "Advanced Membership"};
         String[] planTier = {"Bronze", "Silver", "Gold"};
-        String[] membershipDetails = {"20 routines/month", "40 routines/month", "Unlimited routines/month"};
+        String[] membershipDetails = {"20 routines/month", "40 routines/month", "Unlimited routines/month & Leaderboard Access"};
         int[] planImage = {R.drawable.bronzerounded,
                 R.drawable.silverrounded,
                 R.drawable.goldrounded};

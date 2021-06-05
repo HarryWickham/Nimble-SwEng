@@ -83,6 +83,12 @@ public class InformationFragment extends Fragment {
             textLayout.writeText();
         }
 
+        // A rectangle is drawn behind the video and image.
+        ShapeView rectangles = view.findViewById(R.id.information_shape_view);
+        for(ShapeType shapeType : exercise.getBackgroundShapes()){
+            rectangles.addShape(shapeType.getxStart(),shapeType.getyStart(),shapeType.getxEnd(),shapeType.getyEnd(),shapeType.getColour(),shapeType.getShape_type(),shapeType.getDuration());
+        }
+
         /*  Sets the context and parent layout for the current exercise's video and displays it in
             the fragment. */
         exercise.getExerciseVideo().setContext(getActivity());
@@ -95,10 +101,6 @@ public class InformationFragment extends Fragment {
         exercise.getMuscleGroupImage().setParentLayout(view.findViewById(R.id.infoPage));
         exercise.getMuscleGroupImage().setImage();
 
-        // A rectangle is drawn behind the video and image.
-        ShapeView rectangles = view.findViewById(R.id.information_shape_view);
-        for(ShapeType shapeType : exercise.getBackgroundShapes()){
-            rectangles.addShape(shapeType.getxStart(),shapeType.getyStart(),shapeType.getxEnd(),shapeType.getyEnd(),shapeType.getColour(),shapeType.getShape_type(),shapeType.getDuration());
-        }
+
     }
 }
