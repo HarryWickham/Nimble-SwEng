@@ -147,6 +147,7 @@ public class CounterFragment extends Fragment {
                             startRepCounterTimer(view, routine); // Use the rep exercise layout
                         } else {
                             editor.putInt(currentFirebaseUser + "totalPoints", prefs.getInt(currentFirebaseUser+"totalPoints", 0)-1);
+                            pointsAdded = pointsAdded - 1;
                             editor.apply(); // Removing the points
                             exerciseCountdown(view, routine); // Use the timer exercise layout
                         }
@@ -243,7 +244,7 @@ public class CounterFragment extends Fragment {
        int seconds = (int) (mTimeLeftInMillis / 1000);
 
        // Converting the time into string so it can be outputted on screen, in seconds rather than milliseconds
-       String timeLeftFormatted = String.format(Locale.getDefault(), "%02d", seconds);
+       String timeLeftFormatted = String.format(Locale.getDefault(), "%03d", seconds);
        TimeRemaining.setText(timeLeftFormatted); // Outputting the time remaining
     }
 
