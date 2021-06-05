@@ -76,7 +76,9 @@ public class CounterFragment extends Fragment {
         informationFragment.setArguments(bundle);
         returnButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view) {
-                pauseTimer();
+                if (mTimerRunning) {
+                    pauseTimer();
+                }
                 SharedPreferences.Editor editor = prefs.edit();
                 editor.putInt(currentFirebaseUser + "totalPoints", prefs.getInt(currentFirebaseUser+"totalPoints", 0)-(repCount * routine.getExerciseArrayList().get(routine.getCurrentExercise()).getMovesPerRep()));
                 editor.apply();
