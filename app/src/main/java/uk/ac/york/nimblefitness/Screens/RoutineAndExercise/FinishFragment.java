@@ -1,6 +1,7 @@
 package uk.ac.york.nimblefitness.Screens.RoutineAndExercise;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -14,14 +15,23 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.ArrayList;
 import java.util.Locale;
 
 import uk.ac.york.nimblefitness.Adapters.MovesListAdapter;
 import uk.ac.york.nimblefitness.HelperClasses.Exercise;
+import uk.ac.york.nimblefitness.HelperClasses.LeaderBoardUserDetails;
 import uk.ac.york.nimblefitness.HelperClasses.Routine;
 import uk.ac.york.nimblefitness.R;
 import uk.ac.york.nimblefitness.Screens.MainActivity;
+
+import static android.preference.PreferenceManager.getDefaultSharedPreferences;
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class FinishFragment extends Fragment {
 
@@ -37,7 +47,10 @@ public class FinishFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_finish, container, false);
 
-        Routine routine = (Routine) getArguments().getSerializable("routine");
+        Routine routine = null;
+        if (getArguments() != null) {
+            routine = (Routine) getArguments().getSerializable("routine");
+        }
 
         getActivity().setTitle(routine.getRoutineName());
         Button toEndSummary = view.findViewById(R.id.toEndSummary);
@@ -52,6 +65,23 @@ public class FinishFragment extends Fragment {
             finishText.setText(String.format(Locale.UK,"Congratulations you have completed %d seconds of %s",routine.getExerciseArrayList().get(routine.getCurrentExercise()).getReps(), routine.getExerciseArrayList().get(routine.getCurrentExercise()).getExerciseName()));
         }else if (routine.getExerciseArrayList().get(routine.getCurrentExercise()).getRepType().equalsIgnoreCase("number")){
             finishText.setText(String.format(Locale.UK,"Congratulations you have completed %d %s",routine.getExerciseArrayList().get(routine.getCurrentExercise()).getReps(), routine.getExerciseArrayList().get(routine.getCurrentExercise()).getExerciseName()));
+        }
+
+        FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        SharedPreferences prefs = getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putInt(currentFirebaseUser + "currentMoves", prefs.getInt(currentFirebaseUser+"currentMoves", 0)+(routine.getExerciseArrayList().get(routine.getCurrentExercise()).getReps()*routine.getExerciseArrayList().get(routine.getCurrentExercise()).getMovesPerRep()));
+        editor.apply();
+
+        FirebaseDatabase rootDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference rootReferenceUser = rootDatabase.getReference("users").child(currentFirebaseUser.getUid());
+        DatabaseReference rootReferenceScoreBoard = rootDatabase.getReference("scoreBoard").child(currentFirebaseUser.getUid());
+
+        rootReferenceUser.child("userDetails").child("currentMoves").setValue(prefs.getInt(currentFirebaseUser+"currentMoves", 0));
+
+        if(prefs.getString(currentFirebaseUser+"membershipPlan","error").equals("gold")) {
+            LeaderBoardUserDetails leaderBoardUserDetails = new LeaderBoardUserDetails(prefs.getString(currentFirebaseUser + "userFullName", "error"), prefs.getInt(currentFirebaseUser + "currentMoves", 0), currentFirebaseUser.getUid());
+            rootReferenceScoreBoard.setValue(leaderBoardUserDetails);
         }
 
         ArrayList<Exercise> allExercises;

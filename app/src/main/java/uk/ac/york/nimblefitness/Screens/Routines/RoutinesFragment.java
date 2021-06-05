@@ -2,6 +2,7 @@ package uk.ac.york.nimblefitness.Screens.Routines;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,6 +53,9 @@ public class RoutinesFragment extends Fragment {
         requireActivity().setTitle("Routines");
         View view = inflater.inflate(R.layout.fragment_routines, container, false); //shows the fragment_settings.xml file in the frame view of the activity_main.xml
 
+        RoutineData routineData = new RoutineData(getContext());
+        ArrayList<Routine> routine = routineData.getRoutine();
+
         routineListView = view.findViewById(R.id.routine_exp_list);
         SearchView routineSearch = view.findViewById(R.id.routine_search);
         routineSearch.setActivated(true);
@@ -61,7 +65,7 @@ public class RoutinesFragment extends Fragment {
 
 
         routineArrayList = setUpRoutines();
-        listAdapter = new CustomExpandableListAdapter(getContext(), routineArrayList);
+        listAdapter = new CustomExpandableListAdapter(getContext(), routine);
 
         // setting list adapter
         routineListView.setAdapter(listAdapter);

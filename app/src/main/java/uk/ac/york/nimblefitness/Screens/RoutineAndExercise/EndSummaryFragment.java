@@ -61,11 +61,9 @@ public class EndSummaryFragment extends Fragment {
 
 
         TextView summaryTextView = view.findViewById(R.id.end_summary_text_view);
+
         FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         SharedPreferences prefs = getDefaultSharedPreferences(getApplicationContext());
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putInt(currentFirebaseUser + "currentMoves", prefs.getInt(currentFirebaseUser+"currentMoves", 0)+totalMoves(routine));
-        editor.apply();
         summaryTextView.setText(String.format("You have just completed the %s routine and gained %d moves. %s",routine.getRoutineName(), totalMoves(routine), movesToGoal(prefs, currentFirebaseUser)));
 
         return view;

@@ -7,10 +7,13 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
+import com.google.gson.Gson;
 
 import uk.ac.york.nimblefitness.HelperClasses.Exercise;
 import uk.ac.york.nimblefitness.HelperClasses.Routine;
@@ -63,6 +66,7 @@ public class InformationFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getActivity(), MainActivity.class));//takes user the main page
+                getActivity().finish();
             }
         });
         // Initialises the information for the current exercise in the routine.
@@ -86,7 +90,7 @@ public class InformationFragment extends Fragment {
         // A rectangle is drawn behind the video and image.
         ShapeView rectangles = view.findViewById(R.id.information_shape_view);
         for(ShapeType shapeType : exercise.getBackgroundShapes()){
-            rectangles.addShape(shapeType.getxStart(),shapeType.getyStart(),shapeType.getxEnd(),shapeType.getyEnd(),shapeType.getColour(),shapeType.getShape_type(),shapeType.getDuration());
+            rectangles.addShape(shapeType.getxStart(),shapeType.getyStart(),shapeType.getWidth(),shapeType.getHeight(),shapeType.getColour(),shapeType.getShape_type(),shapeType.getDuration());
         }
 
         /*  Sets the context and parent layout for the current exercise's video and displays it in

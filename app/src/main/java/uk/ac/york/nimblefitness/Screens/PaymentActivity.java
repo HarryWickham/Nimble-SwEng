@@ -63,13 +63,15 @@ public class PaymentActivity extends AppCompatActivity implements PaymentListAda
         checkout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FirebaseDatabase rootDatabase = FirebaseDatabase.getInstance();
-                FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-                DatabaseReference rootReference = rootDatabase.getReference("users").child(currentFirebaseUser.getUid());
-                rootReference.child("userDetails").child("membershipPlan").setValue(checkoutTier);
+                if (checkoutTier != null) {
+                    FirebaseDatabase rootDatabase = FirebaseDatabase.getInstance();
+                    FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+                    DatabaseReference rootReference = rootDatabase.getReference("users").child(currentFirebaseUser.getUid());
+                    rootReference.child("userDetails").child("membershipPlan").setValue(checkoutTier);
 
-                startActivity(new Intent(PaymentActivity.this, UserDetailsActivity.class));
-                finish();
+                    startActivity(new Intent(PaymentActivity.this, UserDetailsActivity.class));
+                    finish();
+                }
             }
         });
     }
