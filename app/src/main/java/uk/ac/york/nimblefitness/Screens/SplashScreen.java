@@ -18,6 +18,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import uk.ac.york.nimblefitness.HelperClasses.UserDetails;
 import uk.ac.york.nimblefitness.R;
 
@@ -29,8 +32,7 @@ public class SplashScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
-            receiveData();
-
+        receiveData();
     }
 
     private void receiveData(){
@@ -46,7 +48,6 @@ public class SplashScreen extends AppCompatActivity {
                     UserDetails userDetails = snapshot.child("userDetails").getValue(UserDetails.class);
                     if (userDetails != null) {
                         String userFullName = String.format("%s %s", userDetails.getFirstName(), userDetails.getLastName());
-
                         SharedPreferences prefs = getDefaultSharedPreferences(getApplicationContext());
                         SharedPreferences.Editor editor = prefs.edit();
                         editor.putString(currentFirebaseUser + "membershipPlan", userDetails.getMembershipPlan());
@@ -55,6 +56,7 @@ public class SplashScreen extends AppCompatActivity {
                         editor.putInt(currentFirebaseUser + "currentMoves", userDetails.getCurrentMoves());
                         editor.putInt(currentFirebaseUser + "completedRoutines", userDetails.getCompletedRoutines());
                         editor.apply();
+                        resetCompletedRoutines(userDetails, currentFirebaseUser, prefs);
 
                     }
                     routing(currentFirebaseUser);
@@ -98,5 +100,21 @@ public class SplashScreen extends AppCompatActivity {
             startActivity(new Intent(SplashScreen.this,MainActivity.class));
             finish();
         }
+    }
+
+    private void resetCompletedRoutines(UserDetails userDetails, FirebaseUser currentFirebaseUser, SharedPreferences prefs){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMM");
+        Log.i("getLastLogin", String.valueOf(userDetails.getLastLogin()));
+        Log.i("SimpleDateFormat", sdf.format(new Date()));
+
+        if(Integer.parseInt(sdf.format(new Date()))>userDetails.getLastLogin()){
+            Log.i("resetCompletedRoutines", String.valueOf(userDetails.getLastLogin()));
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putInt(currentFirebaseUser + "completedRoutines", 0);
+            editor.apply();
+        }
+        FirebaseDatabase rootDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference rootReference = rootDatabase.getReference("users").child(currentFirebaseUser.getUid());
+        rootReference.child("userDetails").child("lastLogin").setValue(sdf.format(new Date()));
     }
 }

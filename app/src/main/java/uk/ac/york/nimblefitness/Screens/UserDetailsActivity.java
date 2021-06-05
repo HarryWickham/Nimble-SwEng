@@ -63,7 +63,7 @@ public class UserDetailsActivity extends AppCompatActivity {
     UserDetails helperClass2;
 
     String membershipPlan;
-    int currentMoves, completedRoutines;
+    int currentMoves, completedRoutines, lastLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,6 +104,7 @@ public class UserDetailsActivity extends AppCompatActivity {
                     currentMoves = helperClass.getCurrentMoves();
                     membershipPlan = helperClass.getMembershipPlan();
                     completedRoutines = helperClass.getCompletedRoutines();
+                    lastLogin = helperClass.getLastLogin();
 
                 }
             }
@@ -125,7 +126,7 @@ public class UserDetailsActivity extends AppCompatActivity {
                 String exerciseDuration = activity_level_selector.getEditText().getText().toString();
                 int weeklyGoal = Integer.parseInt(user_account_goal.getEditText().getText().toString().trim());
 
-                helperClass2 = new UserDetails(firstName, lastName, gender, exerciseType, exerciseDuration, userAge, membershipPlan, weeklyGoal, currentMoves, completedRoutines);
+                helperClass2 = new UserDetails(firstName, lastName, gender, exerciseType, exerciseDuration, userAge, membershipPlan, weeklyGoal, currentMoves, completedRoutines, lastLogin);
                 rootReference.child("userDetails").setValue(helperClass2);
 
                 String userFullName = String.format("%s %s", firstName, lastName);

@@ -3,12 +3,12 @@ package uk.ac.york.nimblefitness.HelperClasses;
 public class UserDetails {
 
     String firstName, lastName, gender, exerciseType, exerciseDuration, membershipPlan;
-    int currentMoves, age, weeklyGoal, completedRoutines;
+    int currentMoves, age, weeklyGoal, completedRoutines, lastLogin;
 
     public UserDetails() {
     }
 
-    public UserDetails(String firstName, String lastName, String gender, String exerciseType, String exerciseDuration, int age, String membershipPlan, int weeklyGoal, int currentMoves, int completedRoutines) {
+    public UserDetails(String firstName, String lastName, String gender, String exerciseType, String exerciseDuration, int age, String membershipPlan, int weeklyGoal, int currentMoves, int completedRoutines, int lastLogin) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;
@@ -19,6 +19,7 @@ public class UserDetails {
         this.weeklyGoal = weeklyGoal;
         this.currentMoves = currentMoves;
         this.completedRoutines = completedRoutines;
+        this.lastLogin = lastLogin;
     }
 
     public String getFirstName() {
@@ -99,5 +100,13 @@ public class UserDetails {
 
     public void setCompletedRoutines(int completedRoutines) {
         this.completedRoutines = completedRoutines;
+    }
+
+    public int getLastLogin() {
+        return lastLogin;
+    }
+
+    public void setLastLogin(int lastLogin) {
+        this.lastLogin = lastLogin;
     }
 }
