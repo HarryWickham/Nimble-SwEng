@@ -2,6 +2,7 @@ package uk.ac.york.nimblefitness.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,6 +15,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,7 +28,11 @@ import java.util.List;
 import uk.ac.york.nimblefitness.HelperClasses.Exercise;
 import uk.ac.york.nimblefitness.HelperClasses.Routine;
 import uk.ac.york.nimblefitness.R;
+import uk.ac.york.nimblefitness.Screens.MainActivity;
+import uk.ac.york.nimblefitness.Screens.PaymentActivity;
 import uk.ac.york.nimblefitness.Screens.RoutineAndExercise.RoutineAndExerciseActivity;
+
+import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 
 public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
 
@@ -82,13 +92,33 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
         expand_routines_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, "Button Clicked", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(context, RoutineAndExerciseActivity.class);
+                SharedPreferences prefs = getDefaultSharedPreferences(context);
+                FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+                if(prefs.getInt(currentFirebaseUser+"completedRoutines", 0)<getUserMembershipPlanRoutines(prefs, currentFirebaseUser)) {
+                    Intent intent = new Intent(context, RoutineAndExerciseActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("routine", routineArrayList.get(groupPosition));
+                    intent.putExtras(bundle);
+                    context.startActivity(intent);
+                } else{
+                    AlertDialog.Builder noMoreRoutines = new AlertDialog.Builder(context);
+                    noMoreRoutines.setTitle("You have used all of your routines for this month.");
+                    noMoreRoutines.setMessage("Would you like to upgrade your plan to get access to more plans per month?");
+                    noMoreRoutines.setCancelable(true)
+                            .setPositiveButton("Upgrade", (dialog, id) -> {
+                                // if this button is clicked, close
+                                // current activity
+                                context.startActivity(new Intent(context, PaymentActivity.class));
+                            })
+                            .setNegativeButton("Cancel", (dialog, id) -> {
+                                // if this button is clicked, just close
+                                // the dialog box and do nothing
+                                dialog.cancel();
+                            });
 
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("routine", routineArrayList.get(groupPosition));
-                intent.putExtras(bundle);
-                context.startActivity(intent);
+                    // create alert dialog
+                    noMoreRoutines.create().show();
+                }
             }
         });
         TextView routineName = convertView.findViewById(R.id.routines_activity_name);
@@ -164,5 +194,18 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
             searched = false;
         }
         return searched;
+    }
+
+    public int getUserMembershipPlanRoutines(SharedPreferences prefs, FirebaseUser currentFirebaseUser ){
+        switch (prefs.getString(currentFirebaseUser+"membershipPlan", "bronze")){
+            case "bronze":
+                return 20;
+            case "silver":
+                return 40;
+            case "gold":
+                return 9999;
+            default:
+                return 0;
+        }
     }
 }

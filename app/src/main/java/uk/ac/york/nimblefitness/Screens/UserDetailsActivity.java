@@ -8,7 +8,6 @@ import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -41,11 +40,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
-import uk.ac.york.nimblefitness.HelperClasses.UserHelperClass;
+import uk.ac.york.nimblefitness.HelperClasses.UserDetails;
 import uk.ac.york.nimblefitness.R;
 
 import static android.preference.PreferenceManager.getDefaultSharedPreferences;
-import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class UserDetailsActivity extends AppCompatActivity {
 
@@ -61,11 +59,11 @@ public class UserDetailsActivity extends AppCompatActivity {
     DatabaseReference rootReference;
     DatabaseReference rootReferenceScoreBoard;
 
-    UserHelperClass helperClass;
-    UserHelperClass helperClass2;
+    UserDetails helperClass;
+    UserDetails helperClass2;
 
     String membershipPlan;
-    int currentMoves;
+    int currentMoves, completedRoutines;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,7 +90,7 @@ public class UserDetailsActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                helperClass = snapshot.child("userDetails").getValue(UserHelperClass.class);
+                helperClass = snapshot.child("userDetails").getValue(UserDetails.class);
                 if (helperClass != null) {
                     user_account_first_name_edit_text.setText(helperClass.getFirstName());
                     user_account_last_name_edit_text.setText(helperClass.getLastName());
@@ -105,6 +103,7 @@ public class UserDetailsActivity extends AppCompatActivity {
                     }
                     currentMoves = helperClass.getCurrentMoves();
                     membershipPlan = helperClass.getMembershipPlan();
+                    completedRoutines = helperClass.getCompletedRoutines();
 
                 }
             }
@@ -126,7 +125,7 @@ public class UserDetailsActivity extends AppCompatActivity {
                 String exerciseDuration = activity_level_selector.getEditText().getText().toString();
                 int weeklyGoal = Integer.parseInt(user_account_goal.getEditText().getText().toString().trim());
 
-                helperClass2 = new UserHelperClass(firstName, lastName, gender, exerciseType, exerciseDuration, userAge, membershipPlan, weeklyGoal, currentMoves);
+                helperClass2 = new UserDetails(firstName, lastName, gender, exerciseType, exerciseDuration, userAge, membershipPlan, weeklyGoal, currentMoves, completedRoutines);
                 rootReference.child("userDetails").setValue(helperClass2);
 
                 String userFullName = String.format("%s %s", firstName, lastName);
@@ -137,6 +136,7 @@ public class UserDetailsActivity extends AppCompatActivity {
                 editor.putString(currentFirebaseUser + "userFullName", userFullName);
                 editor.putInt(currentFirebaseUser + "weeklyGoal", weeklyGoal);
                 editor.putInt(currentFirebaseUser + "currentMoves", currentMoves);
+                editor.putInt(currentFirebaseUser + "completedRoutines", completedRoutines);
                 editor.apply();
                 startActivity(new Intent(UserDetailsActivity.this, MainActivity.class));
                 finish();
@@ -504,20 +504,20 @@ public class UserDetailsActivity extends AppCompatActivity {
                 EditText passwordInput = new EditText(UserDetailsActivity.this);
                 passwordInput.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);//ensures that text box can only take one line
 
-                AlertDialog.Builder passwordResetDialog = new AlertDialog.Builder(UserDetailsActivity.this);
-                passwordResetDialog.setTitle("ReAuthenticate to Delete Account");
-                passwordResetDialog.setMessage("Please Enter Your Password");
-                passwordResetDialog.setView(passwordInput);
+                AlertDialog.Builder passwordReAuthenticateDialog = new AlertDialog.Builder(UserDetailsActivity.this);
+                passwordReAuthenticateDialog.setTitle("ReAuthenticate to Delete Account");
+                passwordReAuthenticateDialog.setMessage("Please Enter Your Password");
+                passwordReAuthenticateDialog.setView(passwordInput);
 
-                passwordResetDialog.setPositiveButton("Submit", (dialog, which) -> {
+                passwordReAuthenticateDialog.setPositiveButton("Submit", (dialog, which) -> {
                     AuthCredential credential2 = EmailAuthProvider.getCredential(FirebaseAuth.getInstance().getCurrentUser().getEmail(), passwordInput.getText().toString());
                     deleteAccountAlertBuilder(credential2);
 
                 });
-                passwordResetDialog.setNegativeButton("Cancel", (dialog, which) -> {
+                passwordReAuthenticateDialog.setNegativeButton("Cancel", (dialog, which) -> {
 
                 });
-                passwordResetDialog.show();
+                passwordReAuthenticateDialog.show();
                 Log.i("reAuthenticateUser", FirebaseAuth.getInstance().getCurrentUser().getEmail());
 
                 break;

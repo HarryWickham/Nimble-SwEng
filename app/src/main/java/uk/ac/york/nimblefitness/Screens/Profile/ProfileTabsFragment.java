@@ -12,6 +12,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import uk.ac.york.nimblefitness.R;
 import uk.ac.york.nimblefitness.Screens.Profile.Calendar.CalendarFragment;
@@ -39,11 +41,12 @@ public class ProfileTabsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         requireActivity().setTitle("Profile");
+        FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
         SharedPreferences prefs = getDefaultSharedPreferences(getApplicationContext());
         Log.i("onCreateView", prefs.getString("membershipPlan", "bronze"));
 
-        if(prefs.getString("membershipPlan", "bronze").equals("gold")) {
+        if(prefs.getString(currentFirebaseUser+"membershipPlan", "bronze").equals("gold")) {
             view = inflater.inflate(R.layout.fragment_profile_tabs_gold, container, false);
         }else{
             view = inflater.inflate(R.layout.fragment_profile_tabs, container, false);

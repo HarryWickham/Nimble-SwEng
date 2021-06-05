@@ -86,7 +86,8 @@ public class PaymentActivity extends AppCompatActivity implements PaymentListAda
     public void onActionPerformed(String position) {
         SharedPreferences prefs = getDefaultSharedPreferences(getApplicationContext());
         SharedPreferences.Editor editor = prefs.edit();
-        editor.putString("membershipPlan", position);
+        FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        editor.putString(currentFirebaseUser+"membershipPlan", position);
         editor.apply();
         checkout.setText("Check out with the " + position + " plan");
         setCheckoutTier(position);

@@ -2,18 +2,25 @@ package uk.ac.york.nimblefitness.Screens.RoutineAndExercise;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
@@ -23,6 +30,8 @@ import uk.ac.york.nimblefitness.HelperClasses.Routine;
 import uk.ac.york.nimblefitness.MediaHandlers.Text.TextLayout;
 import uk.ac.york.nimblefitness.MediaHandlers.Video.VideoLayout;
 import uk.ac.york.nimblefitness.R;
+
+import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 
 public class StartSummaryFragment extends Fragment {
 
@@ -37,8 +46,6 @@ public class StartSummaryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_start_summary, container, false);
-
-
 
         Intent intent = getActivity().getIntent();
         Bundle bundle = intent.getExtras();
@@ -71,6 +78,17 @@ public class StartSummaryFragment extends Fragment {
         toInfoPage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                SharedPreferences prefs = getDefaultSharedPreferences(getContext());
+                FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+                SharedPreferences.Editor editor = prefs.edit();
+                Log.i("completedRoutines", String.valueOf(prefs.getInt(currentFirebaseUser+"completedRoutines", 0)));
+                editor.putInt(currentFirebaseUser + "completedRoutines", prefs.getInt(currentFirebaseUser+"completedRoutines", 0)+1);
+                editor.apply();
+                FirebaseDatabase rootDatabase = FirebaseDatabase.getInstance();
+                DatabaseReference rootReferenceUser = rootDatabase.getReference("users").child(currentFirebaseUser.getUid());
+                rootReferenceUser.child("userDetails").child("completedRoutines").setValue(prefs.getInt(currentFirebaseUser+"completedRoutines", 0));
+                Log.i("completedRoutines saved", String.valueOf(prefs.getInt(currentFirebaseUser+"completedRoutines", 0)));
+
                 FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.RoutineAndExerciseFrame, informationFragment);
                 fragmentTransaction.commit();

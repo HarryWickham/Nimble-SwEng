@@ -18,13 +18,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.io.IOException;
-
-import uk.ac.york.nimblefitness.HelperClasses.UserHelperClass;
+import uk.ac.york.nimblefitness.HelperClasses.UserDetails;
 import uk.ac.york.nimblefitness.R;
 
 import static android.preference.PreferenceManager.getDefaultSharedPreferences;
-import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class SplashScreen extends AppCompatActivity {
 
@@ -46,7 +43,7 @@ public class SplashScreen extends AppCompatActivity {
             rootReference.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    UserHelperClass userDetails = snapshot.child("userDetails").getValue(UserHelperClass.class);
+                    UserDetails userDetails = snapshot.child("userDetails").getValue(UserDetails.class);
                     if (userDetails != null) {
                         String userFullName = String.format("%s %s", userDetails.getFirstName(), userDetails.getLastName());
 
@@ -56,6 +53,7 @@ public class SplashScreen extends AppCompatActivity {
                         editor.putString(currentFirebaseUser + "userFullName", userFullName);
                         editor.putInt(currentFirebaseUser + "weeklyGoal", userDetails.getWeeklyGoal());
                         editor.putInt(currentFirebaseUser + "currentMoves", userDetails.getCurrentMoves());
+                        editor.putInt(currentFirebaseUser + "completedRoutines", userDetails.getCompletedRoutines());
                         editor.apply();
 
                     }

@@ -46,7 +46,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.Objects;
 
-import uk.ac.york.nimblefitness.HelperClasses.UserHelperClass;
+import uk.ac.york.nimblefitness.HelperClasses.UserDetails;
 import uk.ac.york.nimblefitness.HelperClasses.Verification;
 import uk.ac.york.nimblefitness.R;
 
@@ -292,7 +292,7 @@ public class SigninActivity extends AppCompatActivity {
             rootReference.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    UserHelperClass userDetails = snapshot.child("userDetails").getValue(UserHelperClass.class);
+                    UserDetails userDetails = snapshot.child("userDetails").getValue(UserDetails.class);
                     if (userDetails != null) {
                         String userFullName = String.format("%s %s", userDetails.getFirstName(), userDetails.getLastName());
 
@@ -302,6 +302,7 @@ public class SigninActivity extends AppCompatActivity {
                         editor.putString(currentFirebaseUser + "userFullName", userFullName);
                         editor.putInt(currentFirebaseUser + "weeklyGoal", userDetails.getWeeklyGoal());
                         editor.putInt(currentFirebaseUser + "currentMoves", userDetails.getCurrentMoves());
+                        editor.putInt(currentFirebaseUser + "completedRoutines", userDetails.getCompletedRoutines());
                         editor.apply();
 
                     }
