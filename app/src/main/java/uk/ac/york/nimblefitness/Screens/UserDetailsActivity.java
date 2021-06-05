@@ -59,6 +59,7 @@ public class UserDetailsActivity extends AppCompatActivity {
 
     FirebaseDatabase rootDatabase;
     DatabaseReference rootReference;
+    DatabaseReference rootReferenceScoreBoard;
 
     UserHelperClass helperClass;
     UserHelperClass helperClass2;
@@ -86,6 +87,7 @@ public class UserDetailsActivity extends AppCompatActivity {
         rootDatabase = FirebaseDatabase.getInstance();
         FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         rootReference = rootDatabase.getReference("users").child(currentFirebaseUser.getUid());
+        rootReferenceScoreBoard = rootDatabase.getReference("scoreBoard").child(currentFirebaseUser.getUid());
         rootReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -447,6 +449,7 @@ public class UserDetailsActivity extends AppCompatActivity {
         .setPositiveButton("Yes, Delete", (dialog, id) -> {
             final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
             rootReference.removeValue();
+            rootReferenceScoreBoard.removeValue();
             user.reauthenticate(credential).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {
