@@ -88,4 +88,8 @@ public class ImageLayout implements Serializable {
     public void setHeight(int height) {
         this.height = height;
     }
+
+    public String getImageSource() {
+        return imageSource;
+    }
 }
