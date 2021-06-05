@@ -10,8 +10,7 @@
         app:layout_constraintBottom_toTopOf="@+id/CounterButtons">
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            >
+            android:layout_height="match_parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -39,7 +38,7 @@
                         android:layout_height="200dp"
                         android:layout_gravity="bottom"
                         android:layout_margin="@dimen/activity_vertical_margin"
-                        android:src="@drawable/final_logo" />
+                         />
 
                     <TextView
                         android:id="@+id/PointsEarntOutput"
@@ -48,7 +47,6 @@
                         android:layout_gravity="end|center"
                         android:layout_margin="@dimen/activity_horizontal_margin"
                         android:text="Points Earnt"
-                        android:outlineAmbientShadowColor="@color/black"
                         android:textSize="30sp" />
                 </LinearLayout>
 
@@ -59,34 +57,41 @@
                     android:layout_marginVertical="@dimen/default_padding_bottom"
                     android:orientation="vertical">
 
+                    <Button
+                        android:id="@+id/StartButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:text="Start Exercise"
+                        android:textSize="35sp" />
+
                     <TextView
-                        android:id="@+id/TextOutput"
+                        android:id="@+id/TimeRemaining"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="Test Output"
-                        android:textSize="50sp" />
-                </FrameLayout>
+                        android:visibility="gone"
+                        android:textSize="50sp"/>
 
-                <TextView
-                    android:id="@+id/SetCounter"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/activity_horizontal_margin"
-                    android:text="Set: 0 out of 10"
-                    android:textSize="30sp" />
+                </FrameLayout>
 
                 <TextView
                     android:id="@+id/RepCounter"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                    android:layout_marginVertical="@dimen/activity_vertical_margin"
                     android:text="Rep: 0 out of 10"
-                    android:textSize="30sp" />
+                    android:textSize="30sp"/>
+
             </LinearLayout>
 
         </FrameLayout>
+
+
+
     </ScrollView>
+
     <FrameLayout
         app:layout_constraintBottom_toBottomOf="parent"
         android:id="@+id/CounterButtons"
@@ -111,7 +116,7 @@
             android:text="Mute" />
 
         <Button
-            android:id="@+id/toFinishPage"
+            android:id="@+id/PauseButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
