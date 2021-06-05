@@ -18,6 +18,7 @@ import uk.ac.york.nimblefitness.Adapters.PaymentListAdapter;
 import uk.ac.york.nimblefitness.R;
 
 import static android.preference.PreferenceManager.getDefaultSharedPreferences;
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 //Importing
 
@@ -68,8 +69,13 @@ public class PaymentActivity extends AppCompatActivity implements PaymentListAda
                     FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
                     DatabaseReference rootReference = rootDatabase.getReference("users").child(currentFirebaseUser.getUid());
                     rootReference.child("userDetails").child("membershipPlan").setValue(checkoutTier);
-
-                    startActivity(new Intent(PaymentActivity.this, UserDetailsActivity.class));
+                    SharedPreferences prefs = getDefaultSharedPreferences(getApplicationContext());
+                    String userName = prefs.getString(currentFirebaseUser+"userFullName", "Error Getting Name");
+                    if(!userName.equals("Error Getting Name")) {
+                        startActivity(new Intent(PaymentActivity.this, MainActivity.class));
+                    } else {
+                        startActivity(new Intent(PaymentActivity.this, UserDetailsActivity.class));
+                    }
                     finish();
                 }
             }
@@ -89,4 +95,6 @@ public class PaymentActivity extends AppCompatActivity implements PaymentListAda
     public void setCheckoutTier(String checkoutTier) {
         this.checkoutTier = checkoutTier;
     }
+
+
 }
