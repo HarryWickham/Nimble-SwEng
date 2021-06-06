@@ -161,7 +161,10 @@ public class FinishFragment extends Fragment {
 
             @Override
             public void onFinish() {
-                restTime.setText("Please continue to next exercise");
+                this.cancel();
+                FragmentTransaction fragmentTransaction = requireActivity().getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.RoutineAndExerciseFrame, informationFragment);
+                fragmentTransaction.commit();
             }
         }.start();
 

@@ -73,14 +73,16 @@ public class MovesListAdapter extends BaseAdapter {
             result = convertView;
         }
 
-        viewHolder.txtName.setText(exercise.get(position).getExerciseName());
-        if(exercise.get(position).getRepType().equalsIgnoreCase("time")){
-            viewHolder.txtDetails.setText(String.format(Locale.UK,"%d seconds", exercise.get(position).getReps()));
-        }else if (exercise.get(position).getRepType().equalsIgnoreCase("number")){
-            viewHolder.txtDetails.setText(String.format(Locale.UK,"%d reps", exercise.get(position).getReps()));
+        if(exercise.size() != 0) {
+            viewHolder.txtName.setText(exercise.get(position).getExerciseName());
+            if (exercise.get(position).getRepType().equalsIgnoreCase("time")) {
+                viewHolder.txtDetails.setText(String.format(Locale.UK, "%d seconds", exercise.get(position).getReps()));
+            } else if (exercise.get(position).getRepType().equalsIgnoreCase("number")) {
+                viewHolder.txtDetails.setText(String.format(Locale.UK, "%d reps", exercise.get(position).getReps()));
+            }
+            viewHolder.txtMoves.setText(String.format(Locale.UK, "Moves: %d", (int) exercise.get(position).getMovesPerRep() * exercise.get(position).getReps()));
+            viewHolder.colourBar.setBackgroundColor(exercise.get(position).getColour());
         }
-        viewHolder.txtMoves.setText(String.format(Locale.UK,"Moves: %d", (int) exercise.get(position).getMovesPerRep()*exercise.get(position).getReps()));
-        viewHolder.colourBar.setBackgroundColor(exercise.get(position).getColour());
         return convertView;
     }
 
