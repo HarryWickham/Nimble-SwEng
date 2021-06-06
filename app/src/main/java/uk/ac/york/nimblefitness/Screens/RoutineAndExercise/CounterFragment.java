@@ -212,7 +212,7 @@ public class CounterFragment extends Fragment {
     // A timer for the 3 second wait at the beginning of the routine once the start button has been pressed
     // This timer counts down from 4 to 0
     // This is due to the counter missing out 4 and starting straight at 3
-    // As the counter counts down, it displays the time untill start on screen
+    // As the counter counts down, it displays the time until start on screen
     // Once the counter reaches 0, it starts the exercise counter
     // This counter will either be the rep counter or the hold counter depending on the current exercise
     private void threeSecondWait(View view, Routine routine){
@@ -231,13 +231,13 @@ public class CounterFragment extends Fragment {
                     ExerciseTime = routine.getExerciseArrayList().get(routine.getCurrentExercise()).getTimePerRep(); // Retrieving time taken per rep
                     RepCounter.setText("Rep: " + (repCount + 1) + " out of: " + repCountTotal); // Updating the rep counter so state they are on the first rep
                     mTimeLeftInMillis = ExerciseTime * 1000; // Inputting the time taken per rep in milli seconds
-                    beegBeegYoshi(); // Playing a beep sound to indicate a rep starting/ending
+                    beepSoundOutput(); // Playing a beep sound to indicate a rep starting/ending
                     startRepCounterTimer(view, routine); // Starting the timer for the reps exercise
                 } else { // If it is a hold exercise
                     ExerciseTime = routine.getExerciseArrayList().get(routine.getCurrentExercise()).getReps(); // Gather time for the hold
                     repCountTotal = 1; // Setting total reps to be 1, as the user will only hold it once
                     mTimeLeftInMillis = ExerciseTime * 1000; // Inputting the time taken for the old in milli seconds
-                    beegBeegYoshi(); // Playing a beep sound to indicate a rep starting/ending
+                    beepSoundOutput(); // Playing a beep sound to indicate a rep starting/ending
                     exerciseCountdown(view, routine); // Starting the timer for the hold exercise
                 }
             }
@@ -275,7 +275,7 @@ public class CounterFragment extends Fragment {
             @Override
             public void onFinish() { // If the timer has reached 0
                 mTimerRunning = false; // States the timer is no longer running
-                beegBeegYoshi(); // Playing a beep sound to indicate a rep starting/ending
+                beepSoundOutput(); // Playing a beep sound to indicate a rep starting/ending
                 repCounter(view, routine); // Function to check if there are more reps
             }
         }.start(); // Starting the timer
@@ -361,7 +361,7 @@ public class CounterFragment extends Fragment {
             @Override
             public void onFinish() {
                 mTimerRunning = false;
-                beegBeegYoshi(); // Playing a beep sound to indicate a rep starting/ending
+                beepSoundOutput(); // Playing a beep sound to indicate a rep starting/ending
                 nextScreen(); // goes to next screen
             }
         }.start();
@@ -385,7 +385,7 @@ public class CounterFragment extends Fragment {
     }
 
     //Function to output sound when a rep/time starts or ends
-    private void beegBeegYoshi(){
+    private void beepSoundOutput(){
        if (isMuted != true) { // First checks to see if the page has been muted, if not it continues
            AudioType audioType = new AudioType("https://www-users.york.ac.uk/~hew550/NimbleAssets/beep.wav", 0, false, "id", getContext()); // Retrieving beep sound
            audioType.play(); // Play the sound retrieved
