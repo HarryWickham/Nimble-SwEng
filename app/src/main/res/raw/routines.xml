@@ -13,7 +13,7 @@
         </routine> -->
 
 
-        <routine routineImage="https://www-users.york.ac.uk/~hew550/NimbleAssets/routineimages/beginUp.png" routineName="Beginner Upper Body" routineSummary="Get your upper body burning no matter your ability!"
+        <routine routineImage="https://www-users.york.ac.uk/~hew550/NimbleAssets/routineimages/beginUp.png" routineName="Beginner Upper Body" routineSummary="Let's start easy. This routine concentrates on those upper body muscles including pectorals, deltoids and abdominals with most of the moves requiring the body to be laid out on the stomach."
             rating="3" sets="4" restBetweenSets="30" setsRemaining="4">
             <exercise exerciseName="Push Up" exerciseDescription="With your hands placed a shoulder width apart and a straight back, lower yourself to the ground keeping your elbows tucked in. Hold the position. Then push off of the floor to your start position to complete a rep. "
                 repType="number" reps="5" timePerRep="3" movesPerRep="1" restAfterFinish="10" colour="#d82bff">
@@ -53,7 +53,8 @@
             </exercise>
         </routine>
 
-        <routine routineImage="https://www-users.york.ac.uk/~hew550/NimbleAssets/routineimages/beginLow.png" routineName="Beginner Lower Body" routineSummary="Get your lower body burning no matter your ability!"
+        <routine routineImage="https://www-users.york.ac.uk/~hew550/NimbleAssets/routineimages/beginLow.png" routineName="Beginner Lower Body" routineSummary="Don’t skip leg day! This routine concentrates on those lower body muscles including femoris muscles, soleus and gluteus muscles by using your own bodyweight to work them.
+"
             rating="3" sets="4" restBetweenSets="30" setsRemaining="4">
             <exercise exerciseName="Body Weight Squats" exerciseDescription="From a standing position, space your legs about a shoulder width apart, toes facing forwards and bend at the knee to lower your body. Ensure that you do not arch your back; keep it straight, and bend sufficiently at the knee to lower yourself. Then, raise yourself by engaging leg and core muscles back to the start position to complete a rep. "
                 repType="number" reps="5" timePerRep="3" movesPerRep="1" restAfterFinish="10" colour="#009933">
@@ -93,7 +94,8 @@
             </exercise>
         </routine>
 
-        <routine routineImage="https://www-users.york.ac.uk/~hew550/NimbleAssets/routineimages/beginCore.png" routineName="Beginner Core" routineSummary="Get your core burning no matter your ability!"
+        <routine routineImage="https://www-users.york.ac.uk/~hew550/NimbleAssets/routineimages/beginCore.png" routineName="Beginner Core" routineSummary="Build up that body and mind. This routine concentrates on the core body muscles including the front and back carpi muscles, rhomboids and dorsi; a variety of plank exercises.
+"
             rating="3" sets="4" restBetweenSets="30" setsRemaining="4">
             <exercise exerciseName="Plank" exerciseDescription="From a normal push up position, lower yourself down so that your weight is resting on your forearms. With a straight back, hold this position by engaging your core muscles. "
                 repType="time" reps="20" timePerRep="0" movesPerRep="1" restAfterFinish="10" colour="#ffb100">
@@ -133,7 +135,7 @@
             </exercise>
         </routine>
 
-        <routine routineImage="https://www-users.york.ac.uk/~hew550/NimbleAssets/routineimages/easyUp.png" routineName="Easy Upper Body" routineSummary="Get your upper body burning - a level up from beginner!"
+        <routine routineImage="https://www-users.york.ac.uk/~hew550/NimbleAssets/routineimages/easyUp.png" routineName="Easy Upper Body" routineSummary="Time to take it up a step. This routine concentrates on those upper body muscles including the trapezius, both sets of abdominal muscles and the triceps, mainly requiring the body to be laid out on the stomach."
             rating="3" sets="4" restBetweenSets="30" setsRemaining="4">
             <exercise exerciseName="Push Up" exerciseDescription="With your hands placed a shoulder width apart and a straight back, lower yourself to the ground keeping your elbows tucked in. Hold the position. Then push off of the floor to your start position to complete a rep. "
                 repType="number" reps="10" timePerRep="3" movesPerRep="1.25" restAfterFinish="10" colour="#d82bff">
@@ -173,7 +175,8 @@
             </exercise>
         </routine>
 
-        <routine routineImage="https://www-users.york.ac.uk/~hew550/NimbleAssets/routineimages/easyLow.png" routineName="Easy Lower Body" routineSummary="Get your lower body burning - a level up from beginner!"
+        <routine routineImage="https://www-users.york.ac.uk/~hew550/NimbleAssets/routineimages/easyLow.png" routineName="Easy Lower Body" routineSummary="It’s time for leg gains. This routine concentrates on those lower body muscles including the tibia, femoral and fibula muscles with lots of longitudinal movements.
+"
             rating="3" sets="4" restBetweenSets="30" setsRemaining="4">
             <exercise exerciseName="Body Weight Squats" exerciseDescription="From a standing position, space your legs about a shoulder width apart, toes facing forwards and bend at the knee to lower your body. Ensure that you do not arch your back; keep it straight, and bend sufficiently at the knee to lower yourself. Then, raise yourself by engaging leg and core muscles back to the start position to complete a rep. "
                 repType="number" reps="10" timePerRep="3" movesPerRep="1.25" restAfterFinish="10" colour="#009933">
