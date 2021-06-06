@@ -100,28 +100,10 @@ public class ImageModule extends AppCompatImageView implements Serializable {
         setImageSource(imageSource);
     }
 
-    private Bitmap getImageBitmap(String url) {
-        Bitmap bm = null;
-        try {
-            URL aURL = new URL(url);
-            URLConnection conn = aURL.openConnection();
-            conn.connect();
-            InputStream is = conn.getInputStream();
-            BufferedInputStream bis = new BufferedInputStream(is);
-            bm = BitmapFactory.decodeStream(bis);
-            bis.close();
-            is.close();
-        } catch (IOException e) {
-            Log.e("TAG", "Error getting bitmap", e);
-        }
-        return bm;
-    }
-
     public void setImage(){
-
         //Instantiating image with glide
         Glide.with(getContext()).load(imageSource).override(width, height).into(this);
-
+        this.setContentDescription("Image of muscle groups targeted by this exercise");
     }
 
 }

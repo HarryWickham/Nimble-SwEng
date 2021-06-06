@@ -12,14 +12,14 @@
         android:id="@+id/toCounterPage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="" />
+        android:layout_margin="8dp"/>
 
     <Button
         android:layout_gravity="bottom|start"
         android:id="@+id/exit_to_menu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="" />
+        android:layout_margin="8dp"/>
 
     <uk.ac.york.nimblefitness.MediaHandlers.Graphics.ShapeView
         android:layout_width="match_parent"

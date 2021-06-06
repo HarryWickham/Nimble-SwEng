@@ -58,10 +58,10 @@ public class StartSummaryFragment extends Fragment {
         routineSummary.setText(routine.getRoutineSummary());
 
         TextView starRating = view.findViewById(R.id.star_rating);
-        starRating.setText(String.format("%d/5", routine.getRating()));
+        starRating.setText(String.format("Routine Rating: %d/5", routine.getRating()));
 
         TextView routineSets = view.findViewById(R.id.sets);
-        routineSets.setText(String.format("%d sets", routine.getSets()));
+        routineSets.setText(String.format("Total sets to complete: %d", routine.getSets()));
 
         ListView listView = view.findViewById(R.id.start_summary_list_view);
         listView.setEnabled(false);

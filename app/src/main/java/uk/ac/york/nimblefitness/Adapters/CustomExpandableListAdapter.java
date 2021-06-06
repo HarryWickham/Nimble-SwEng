@@ -109,6 +109,7 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
                                 // if this button is clicked, close
                                 // current activity
                                 context.startActivity(new Intent(context, PaymentActivity.class));
+
                             })
                             .setNegativeButton("Cancel", (dialog, id) -> {
                                 // if this button is clicked, just close
@@ -123,6 +124,10 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
         });
         TextView routineName = convertView.findViewById(R.id.routines_activity_name);
         routineName.setText(group.getRoutineName());
+        TextView routineSets = convertView.findViewById(R.id.routine_sets);
+        routineSets.setText(group.getSets() + " sets");
+        TextView routineTotalMoves = convertView.findViewById(R.id.routine_total_moves);
+        routineTotalMoves.setText("Total Moves: " + totalMoves(group));
         ImageView routineImage = convertView.findViewById(R.id.routines_image);
         routineImage.setImageResource(group.getRoutineImage());
 
@@ -134,12 +139,18 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
         Exercise child = (Exercise) getChild(groupPosition, childPosition);
         if(convertView==null){
             LayoutInflater layoutInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = layoutInflater.inflate(R.layout.expandable_list_item, null);
+            convertView = layoutInflater.inflate(R.layout.moves_list_layout, null);
         }
+        convertView.setPadding(20,0,20,10);
         TextView exerciseName = convertView.findViewById(R.id.exercise_name);
         exerciseName.setText(child.getExerciseName());
         TextView exerciseMoves = convertView.findViewById(R.id.number_of_moves);
-        exerciseMoves.setText("Moves: " + child.getMovesPerRep()*child.getReps());
+        exerciseMoves.setText("Moves/Set: " + child.getMovesPerRep()*child.getReps());
+        TextView numberOfReps = convertView.findViewById(R.id.sets_of_reps);
+        numberOfReps.setText(child.getReps() + " reps");
+        View colourBar = convertView.findViewById(R.id.moves_list_colour_bar);
+        colourBar.setBackgroundColor(child.getColour());
+
 
         return convertView;
     }
@@ -207,5 +218,17 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
             default:
                 return 0;
         }
+    }
+
+    private int totalMoves(Routine routine){
+        int routineTotalMoves = 0;
+
+        for(int i = 0; i < routine.getExerciseArrayList().size(); i++){
+            routineTotalMoves = routineTotalMoves + routine.getExerciseArrayList().get(i).getMovesPerRep()*routine.getExerciseArrayList().get(i).getReps();
+        }
+
+        routineTotalMoves = routineTotalMoves*routine.getSets();
+
+        return routineTotalMoves;
     }
 }

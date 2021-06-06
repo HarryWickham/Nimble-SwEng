@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,6 +60,7 @@ public class FinishFragment extends Fragment {
         TextView finishText = view.findViewById(R.id.finish_text);
         TextView remainingListText = view.findViewById(R.id.remaining_exercises);
         ListView finishListView = view.findViewById(R.id.finish_list_view);
+        TextView restTime = view.findViewById(R.id.finish_rest_remaining);
         finishListView.setEnabled(false);
 
         if(routine.getExerciseArrayList().get(routine.getCurrentExercise()).getRepType().equalsIgnoreCase("time")){
@@ -127,6 +129,23 @@ public class FinishFragment extends Fragment {
         Bundle bundle = new Bundle();
         bundle.putSerializable("routine",routine);
         informationFragment.setArguments(bundle);
+
+        restTime.setText(String.valueOf(routine.getExerciseArrayList().get(routine.getCurrentExercise()).getRestAfterFinish()));
+
+        CountDownTimer restTimer = new CountDownTimer(routine.getExerciseArrayList().get(routine.getCurrentExercise()).getRestAfterFinish()*1000, 1000) {
+            @Override
+            public void onTick(long startTimeRemaining) {
+                restTime.setText(String.valueOf(Integer.parseInt((String) restTime.getText())-1));
+            }
+
+            @Override
+            public void onFinish() {
+                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.RoutineAndExerciseFrame, informationFragment);
+                fragmentTransaction.commit();
+            }
+        }.start();
+
         nextExercise.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
