@@ -15,7 +15,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.NimbleFitness">
-        <activity android:name=".Screens.ViewPagerAdapter"></activity>
         <activity android:name=".Screens.Onboarding" />
         <activity
             android:name=".Screens.SplashScreen"
