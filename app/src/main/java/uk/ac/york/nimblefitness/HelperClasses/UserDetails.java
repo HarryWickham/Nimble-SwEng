@@ -8,7 +8,7 @@ public class UserDetails {
 
     public UserDetails() {
     }
-
+/*
     public UserDetails(String firstName, String lastName, String gender, String exerciseType, String exerciseDuration, int age, String membershipPlan, int weeklyGoal, int currentMoves, int completedRoutines, int lastLogin) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -22,7 +22,7 @@ public class UserDetails {
         this.completedRoutines = completedRoutines;
         this.lastLogin = lastLogin;
     }
-
+*/
     public UserDetails(String firstName, String lastName, String gender, String exerciseType, String exerciseDuration, int age, String membershipPlan, int weeklyGoal, int currentMoves, int completedRoutines, int lastLogin, boolean acceptedTC) {
         this.firstName = firstName;
         this.lastName = lastName;

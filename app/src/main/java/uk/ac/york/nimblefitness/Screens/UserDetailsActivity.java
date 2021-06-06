@@ -126,7 +126,7 @@ public class UserDetailsActivity extends AppCompatActivity {
                 String exerciseDuration = activity_level_selector.getEditText().getText().toString();
                 int weeklyGoal = Integer.parseInt(user_account_goal.getEditText().getText().toString().trim());
 
-                helperClass2 = new UserDetails(firstName, lastName, gender, exerciseType, exerciseDuration, userAge, membershipPlan, weeklyGoal, currentMoves, completedRoutines, lastLogin);
+                helperClass2 = new UserDetails(firstName, lastName, gender, exerciseType, exerciseDuration, userAge, membershipPlan, weeklyGoal, currentMoves, completedRoutines, lastLogin, true);
                 rootReference.child("userDetails").setValue(helperClass2);
 
                 String userFullName = String.format("%s %s", firstName, lastName);
@@ -138,6 +138,7 @@ public class UserDetailsActivity extends AppCompatActivity {
                 editor.putInt(currentFirebaseUser + "weeklyGoal", weeklyGoal);
                 editor.putInt(currentFirebaseUser + "currentMoves", currentMoves);
                 editor.putInt(currentFirebaseUser + "completedRoutines", completedRoutines);
+                editor.putBoolean(currentFirebaseUser + "acceptedTC", true);
                 editor.apply();
                 startActivity(new Intent(UserDetailsActivity.this, MainActivity.class));
                 finish();
