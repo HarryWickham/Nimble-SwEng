@@ -13,7 +13,7 @@
         </routine> -->
 
 
-        <routine routineImage="" routineName="Beginner Upper Body" routineSummary="Get your upper body burning no matter your ability!"
+        <routine routineImage="https://www-users.york.ac.uk/~hew550/NimbleAssets/routineimages/beginUp.png" routineName="Beginner Upper Body" routineSummary="Get your upper body burning no matter your ability!"
             rating="3" sets="4" restBetweenSets="30" setsRemaining="4">
             <exercise exerciseName="Push Up" exerciseDescription="With your hands placed a shoulder width apart and a straight back, lower yourself to the ground keeping your elbows tucked in. Hold the position. Then push off of the floor to your start position to complete a rep. "
                 repType="number" reps="5" timePerRep="3" movesPerRep="1" restAfterFinish="10" colour="#d82bff">
@@ -53,7 +53,7 @@
             </exercise>
         </routine>
 
-        <routine routineImage="" routineName="Beginner Lower Body" routineSummary="Get your lower body burning no matter your ability!"
+        <routine routineImage="https://www-users.york.ac.uk/~hew550/NimbleAssets/routineimages/beginLow.png" routineName="Beginner Lower Body" routineSummary="Get your lower body burning no matter your ability!"
             rating="3" sets="4" restBetweenSets="30" setsRemaining="4">
             <exercise exerciseName="Body Weight Squats" exerciseDescription="From a standing position, space your legs about a shoulder width apart, toes facing forwards and bend at the knee to lower your body. Ensure that you do not arch your back; keep it straight, and bend sufficiently at the knee to lower yourself. Then, raise yourself by engaging leg and core muscles back to the start position to complete a rep. "
                 repType="number" reps="5" timePerRep="3" movesPerRep="1" restAfterFinish="10" colour="#009933">
@@ -93,7 +93,7 @@
             </exercise>
         </routine>
 
-        <routine routineImage="" routineName="Beginner Core" routineSummary="Get your core burning no matter your ability!"
+        <routine routineImage="https://www-users.york.ac.uk/~hew550/NimbleAssets/routineimages/beginCore.png" routineName="Beginner Core" routineSummary="Get your core burning no matter your ability!"
             rating="3" sets="4" restBetweenSets="30" setsRemaining="4">
             <exercise exerciseName="Plank" exerciseDescription="From a normal push up position, lower yourself down so that your weight is resting on your forearms. With a straight back, hold this position by engaging your core muscles. "
                 repType="time" reps="20" timePerRep="0" movesPerRep="1" restAfterFinish="10" colour="#ffb100">
@@ -133,7 +133,7 @@
             </exercise>
         </routine>
 
-        <routine routineImage="" routineName="Easy Upper Body" routineSummary="Get your upper body burning - a level up from beginner!"
+        <routine routineImage="https://www-users.york.ac.uk/~hew550/NimbleAssets/routineimages/easyUp.png" routineName="Easy Upper Body" routineSummary="Get your upper body burning - a level up from beginner!"
             rating="3" sets="4" restBetweenSets="30" setsRemaining="4">
             <exercise exerciseName="Push Up" exerciseDescription="With your hands placed a shoulder width apart and a straight back, lower yourself to the ground keeping your elbows tucked in. Hold the position. Then push off of the floor to your start position to complete a rep. "
                 repType="number" reps="10" timePerRep="3" movesPerRep="1.25" restAfterFinish="10" colour="#d82bff">
@@ -173,7 +173,7 @@
             </exercise>
         </routine>
 
-        <routine routineImage="" routineName="Easy Lower Body" routineSummary="Get your lower body burning - a level up from beginner!"
+        <routine routineImage="https://www-users.york.ac.uk/~hew550/NimbleAssets/routineimages/easyLow.png" routineName="Easy Lower Body" routineSummary="Get your lower body burning - a level up from beginner!"
             rating="3" sets="4" restBetweenSets="30" setsRemaining="4">
             <exercise exerciseName="Body Weight Squats" exerciseDescription="From a standing position, space your legs about a shoulder width apart, toes facing forwards and bend at the knee to lower your body. Ensure that you do not arch your back; keep it straight, and bend sufficiently at the knee to lower yourself. Then, raise yourself by engaging leg and core muscles back to the start position to complete a rep. "
                 repType="number" reps="10" timePerRep="3" movesPerRep="1.25" restAfterFinish="10" colour="#009933">
@@ -224,7 +224,7 @@
 
 
 
-        <routine routineImage="" routineName="Intermediate Core" routineSummary="Maintain those brick-like abs. This routine concentrates on the core body muscles including the rhomboids, serratus and all the carpi muscles with a host of different plank exercises."
+        <routine routineImage="https://www-users.york.ac.uk/~hew550/NimbleAssets/routineimages/interCore.png" routineName="Intermediate Core" routineSummary="Maintain those brick-like abs. This routine concentrates on the core body muscles including the rhomboids, serratus and all the carpi muscles with a host of different plank exercises."
             rating="3" sets="4" restBetweenSets="30" setsRemaining="4">
             <exercise exerciseName="Plank" exerciseDescription="From a normal push up position, lower yourself down so that your weight is resting on your forearms. With a straight back, hold this position by engaging your core muscles. "
                 repType="time" reps="45" timePerRep="0" movesPerRep="1.5" restAfterFinish="60" colour="#ffb100">
@@ -291,7 +291,7 @@
             </exercise>
         </routine>
 
-        <routine routineImage="" routineName="Hard Upper Body" routineSummary="You’re definitely no slouch. This routine concentrates on those upper body muscles including triceps, deltoids and pectorals by performing differing push-up moves."
+        <routine routineImage="https://www-users.york.ac.uk/~hew550/NimbleAssets/routineimages/hardLower.png" routineName="Hard Upper Body" routineSummary="You’re definitely no slouch. This routine concentrates on those upper body muscles including triceps, deltoids and pectorals by performing differing push-up moves."
             rating="3" sets="3" restBetweenSets="30" setsRemaining="3">
             <exercise exerciseName="Push Up" exerciseDescription="With your hands placed a shoulder width apart and a straight back, lower yourself to the ground keeping your elbows tucked in. Hold the position. Then push off of the floor to your start position to complete a rep. "
                 repType="number" reps="10" timePerRep="3" movesPerRep="2" restAfterFinish="60" colour="#d82bff">
@@ -349,7 +349,7 @@
             </exercise>
         </routine>
 
-        <routine routineImage="" routineName="Hard Lower Body" routineSummary="Maintain those legs of steel. This  routine concentrates on those lower body muscles including the gluteus, tibia and soleus muscle groups with intense longitudinal movements."
+        <routine routineImage="https://www-users.york.ac.uk/~hew550/NimbleAssets/routineimages/hardLow.png" routineName="Hard Lower Body" routineSummary="Maintain those legs of steel. This  routine concentrates on those lower body muscles including the gluteus, tibia and soleus muscle groups with intense longitudinal movements."
             rating="3" sets="3" restBetweenSets="30" setsRemaining="3">
             <exercise exerciseName="Body Weight Squats" exerciseDescription="From a standing position, space your legs about a shoulder width apart, toes facing forwards and bend at the knee to lower your body. Ensure that you do not arch your back; keep it straight, and bend sufficiently at the knee to lower yourself. Then, raise yourself by engaging leg and core muscles back to the start position to complete a rep. "
                 repType="number" reps="20" timePerRep="3" movesPerRep="2" restAfterFinish="60" colour="#009933">
@@ -416,7 +416,7 @@
             </exercise>
         </routine>
 
-        <routine routineImage="" routineName="Hard Core" routineSummary="Sculpture-worthy abs. This routine concentrates on the core body muscles including the supraspinatus, carpi, and dorsi muscle groups via kicks, twists and planking."
+        <routine routineImage="https://www-users.york.ac.uk/~hew550/NimbleAssets/routineimages/hardCore.png" routineName="Hard Core" routineSummary="Sculpture-worthy abs. This routine concentrates on the core body muscles including the supraspinatus, carpi, and dorsi muscle groups via kicks, twists and planking."
             rating="3" sets="3" restBetweenSets="30" setsRemaining= "3">
             <exercise exerciseName="Plank" exerciseDescription="From a normal push up position, lower yourself down so that your weight is resting on your forearms. With a straight back, hold this position by engaging your core muscles."
                 repType="time" reps="60" timePerRep="0" movesPerRep="2" restAfterFinish="60" colour="#ffb100">

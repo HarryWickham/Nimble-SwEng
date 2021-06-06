@@ -4,6 +4,7 @@ import android.content.res.Resources;
 import android.graphics.Color;
 
 import java.io.Serializable;
+import java.sql.Struct;
 import java.util.ArrayList;
 
 import uk.ac.york.nimblefitness.MediaHandlers.Graphics.ShapeType;
@@ -14,7 +15,7 @@ import uk.ac.york.nimblefitness.MediaHandlers.Video.VideoLayout;
 import uk.ac.york.nimblefitness.R;
 
 public class Routine implements Serializable {
-    private int routineImage;
+    private String routineImage;
     private String routineName;
     private String routineSummary;
     private int rating;
@@ -24,7 +25,7 @@ public class Routine implements Serializable {
     private int currentExercise;
     private ArrayList<Exercise> exerciseArrayList;
 
-    public Routine(int routineImage, String routineName, String routineSummary, int rating, int sets, int restBetweenSets, int setsRemaining, int currentExercise, ArrayList<Exercise> exerciseArrayList) {
+    public Routine(String routineImage, String routineName, String routineSummary, int rating, int sets, int restBetweenSets, int setsRemaining, int currentExercise, ArrayList<Exercise> exerciseArrayList) {
         this.routineImage = routineImage;
         this.routineName = routineName;
         this.routineSummary = routineSummary;
@@ -36,7 +37,7 @@ public class Routine implements Serializable {
         this.exerciseArrayList = exerciseArrayList;
     }
 
-    public Routine(int routineImage, String routineName, int sets, ArrayList<Exercise> exerciseArrayList) {
+    public Routine(String routineImage, String routineName, int sets, ArrayList<Exercise> exerciseArrayList) {
         this.routineImage = routineImage;
         this.routineName = routineName;
         this.sets = sets;
@@ -46,7 +47,7 @@ public class Routine implements Serializable {
     public Routine() {
     }
 
-    public int getRoutineImage() {
+    public String getRoutineImage() {
         return routineImage;
     }
 
@@ -70,7 +71,7 @@ public class Routine implements Serializable {
         return exerciseArrayList;
     }
 
-    public void setRoutineImage(int routineImage) {
+    public void setRoutineImage(String routineImage) {
         this.routineImage = routineImage;
     }
 
@@ -333,6 +334,6 @@ public class Routine implements Serializable {
                 textLayouts4,
                 null));
 
-        return new Routine(R.drawable.upperbody,"Beginners Upper Body","This is a test routine to ensure all routine related pages take the correct information from this single object",3,4, 60, 4,0, exercises);
+        return new Routine("https://www-users.york.ac.uk/~hew550/NimbleAssets/routineimages/beginUp.png","Beginners Upper Body","This is a test routine to ensure all routine related pages take the correct information from this single object",3,4, 60, 4,0, exercises);
     }
 }

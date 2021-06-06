@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -129,7 +130,8 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
         TextView routineTotalMoves = convertView.findViewById(R.id.routine_total_moves);
         routineTotalMoves.setText("Total Moves: " + totalMoves(group));
         ImageView routineImage = convertView.findViewById(R.id.routines_image);
-        routineImage.setImageResource(group.getRoutineImage());
+        Glide.with(context).load(group.getRoutineImage()).into(routineImage);
+
 
         return convertView;
     }

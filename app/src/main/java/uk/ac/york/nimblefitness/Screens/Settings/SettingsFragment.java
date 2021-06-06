@@ -70,7 +70,6 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onItemClick(android.widget.AdapterView<?> parent, View view, int position, long id) {//watches for a user to click on the list view, then gives the program which position the click was in
 
-
             switch (position) {
                 case 0: { //if logout is clicked the user gets taken back to the login/signin screen will need to be changed to a case statement to allow for all items to be perform actions
                     Intent mIntent = new Intent(getActivity(), UserDetailsActivity.class);

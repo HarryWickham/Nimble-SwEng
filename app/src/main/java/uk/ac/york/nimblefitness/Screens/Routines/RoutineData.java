@@ -109,7 +109,7 @@ public class RoutineData {
                             break;
                         case "routine":
                             routine = new Routine();
-                            //routine.setRoutineImage(parser.getAttributeValue(null, "routineImage"));
+                            routine.setRoutineImage(parser.getAttributeValue(null, "routineImage"));
                             routine.setRoutineName(parser.getAttributeValue(null, "routineName"));
                             routine.setRoutineSummary(parser.getAttributeValue(null, "routineSummary"));
                             routine.setRating(Integer.parseInt(parser.getAttributeValue(null, "rating")));
