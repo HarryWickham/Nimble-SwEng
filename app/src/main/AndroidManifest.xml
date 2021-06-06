@@ -7,9 +7,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
-
     <application
-
         android:allowBackup="true"
         android:fullBackupContent="true"
         android:icon="@mipmap/ic_launcher"
@@ -17,44 +15,37 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.NimbleFitness">
-        <activity android:name=".Screens.SplashScreen"
-            android:theme="@style/Theme.NimbleFitness.NoActionBar"
-            android:screenOrientation="portrait">
+        <activity android:name=".Screens.ViewPagerAdapter"></activity>
+        <activity android:name=".Screens.Onboarding" />
+        <activity
+            android:name=".Screens.SplashScreen"
+            android:theme="@style/Theme.NimbleFitness.NoActionBar">
             <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN" />
 
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
-        <activity android:name=".Screens.RoutineAndExercise.RoutineAndExerciseActivity"
-            android:screenOrientation="portrait"/>
+        <activity android:name=".Screens.RoutineAndExercise.RoutineAndExerciseActivity" />
         <activity
             android:name=".Screens.Settings.HandlerTestActivity"
             android:label="@string/title_activity_handler_test"
-            android:theme="@style/Theme.NimbleFitness.NoActionBar"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".Screens.UserDetailsActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".Screens.PaymentActivity"
-            android:screenOrientation="portrait"/>
+            android:theme="@style/Theme.NimbleFitness.NoActionBar" />
+        <activity android:name=".Screens.UserDetailsActivity" />
+        <activity android:name=".Screens.PaymentActivity" />
         <activity
             android:name=".Screens.MainActivity"
-            android:windowSoftInputMode="adjustPan"
-            android:screenOrientation="portrait"/>
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".Screens.SigninActivity"
-            android:theme="@style/Theme.NimbleFitness.NoActionBar"
-            android:screenOrientation="portrait"/>
+            android:theme="@style/Theme.NimbleFitness.NoActionBar" />
         <activity
             android:name=".Screens.SignupActivity"
             android:label="@string/app_name"
-            android:theme="@style/Theme.NimbleFitness.NoActionBar"
-            android:screenOrientation="portrait"/>
+            android:theme="@style/Theme.NimbleFitness.NoActionBar" />
         <activity
             android:name=".Screens.TermsAndConditionsActivity"
-            android:theme="@style/Theme.NimbleFitness.NoActionBar"
-            android:screenOrientation="portrait"
-            />
+            android:theme="@style/Theme.NimbleFitness.NoActionBar" />
 
 
         <service android:name=".MediaHandlers.Audio.Audio" />
@@ -66,12 +57,10 @@
         <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait"/>
+            android:label="@string/app_name" />
         <activity
             android:name="com.facebook.CustomTabActivity"
-            android:exported="true"
-            android:screenOrientation="portrait">
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -82,14 +71,15 @@
             </intent-filter>
         </activity>
 
-
-        <meta-data android:name="io.sentry.dsn"
+        <meta-data
+            android:name="io.sentry.dsn"
             android:value="https://273a53c2acc54f998657ce3edcc3512c@o516837.ingest.sentry.io/5623806" />
-
-        <meta-data android:name="io.sentry.release" android:value="io.example@1.1.0" />
-
-        <meta-data android:name="io.sentry.traces.sample-rate" android:value="1.0" />
-
+        <meta-data
+            android:name="io.sentry.release"
+            android:value="io.example@1.1.0" />
+        <meta-data
+            android:name="io.sentry.traces.sample-rate"
+            android:value="1.0" />
     </application>
 
 </manifest>
