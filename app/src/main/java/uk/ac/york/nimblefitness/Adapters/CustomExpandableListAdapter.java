@@ -192,7 +192,7 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
                         searchList.add(exercise);
                     }
                 }
-                if (searchList.size() > 0) {
+                if (!searchList.isEmpty()) {
                     Routine filteredRoutine = new Routine();
                     filteredRoutine = filteredRoutine.getExampleRoutine();
                     filteredRoutine.setExerciseArrayList(searchList);
@@ -201,7 +201,7 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
             }
         }
         notifyDataSetChanged();
-        if (routineArrayList.size() == 0) {
+        if (routineArrayList.isEmpty()) {
             searched = false;
         }
         return searched;
