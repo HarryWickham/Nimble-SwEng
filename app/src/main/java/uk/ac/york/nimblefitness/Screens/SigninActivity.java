@@ -303,6 +303,7 @@ public class SigninActivity extends AppCompatActivity {
                         editor.putInt(currentFirebaseUser + "weeklyGoal", userDetails.getWeeklyGoal());
                         editor.putInt(currentFirebaseUser + "currentMoves", userDetails.getCurrentMoves());
                         editor.putInt(currentFirebaseUser + "completedRoutines", userDetails.getCompletedRoutines());
+                        editor.putBoolean(currentFirebaseUser + "acceptedTC", userDetails.isAcceptedTC());
                         editor.apply();
 
                     }
@@ -329,7 +330,11 @@ public class SigninActivity extends AppCompatActivity {
         SharedPreferences prefs = getDefaultSharedPreferences(getApplicationContext());
         String userName = prefs.getString(currentFirebaseUser+"userFullName", "error");
         String membershipPlan = prefs.getString(currentFirebaseUser+"membershipPlan", "error");
-        if(membershipPlan.equals("error")){
+        boolean acceptedTC = prefs.getBoolean(currentFirebaseUser+"acceptedTC", false);
+        if(!acceptedTC){
+            startActivity(new Intent(SigninActivity.this,TermsAndConditionsActivity.class));
+            finish();
+        } else if(membershipPlan.equals("error")){
             Log.i("routing membershipPlan ", membershipPlan);
             startActivity(new Intent(SigninActivity.this,PaymentActivity.class));
             finish();

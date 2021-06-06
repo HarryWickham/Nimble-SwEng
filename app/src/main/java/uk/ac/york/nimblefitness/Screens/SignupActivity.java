@@ -340,23 +340,7 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     private void routing(FirebaseUser currentFirebaseUser){
-        SharedPreferences prefs = getDefaultSharedPreferences(getApplicationContext());
-        String userName = prefs.getString(currentFirebaseUser+"userFullName", "error");
-        String membershipPlan = prefs.getString(currentFirebaseUser+"membershipPlan", "error");
-        if(membershipPlan.equals("error")){
-            Log.i("routing membershipPlan ", membershipPlan);
-            startActivity(new Intent(SignupActivity.this,PaymentActivity.class));
-            finish();
-        } else if((userName.equals("error") || userName.equals("null null"))){
-            Log.i("routing userName", userName);
-            startActivity(new Intent(SignupActivity.this,UserDetailsActivity.class));
-            finish();
-        } else {
-            Log.i("routing FirebaseUser", String.valueOf(currentFirebaseUser));
-            Log.i("routing membershipPlan", membershipPlan);
-            Log.i("routing userName", userName);
-            startActivity(new Intent(SignupActivity.this,MainActivity.class));
-            finish();
-        }
+        startActivity(new Intent(SignupActivity.this, TermsAndConditionsActivity.class));
+        finish();
     }
 }
