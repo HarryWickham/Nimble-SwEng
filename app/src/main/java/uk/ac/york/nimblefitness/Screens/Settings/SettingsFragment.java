@@ -20,9 +20,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.firebase.auth.FirebaseAuth;
 
+import uk.ac.york.nimblefitness.Adapters.SettingsListAdapter;
 import uk.ac.york.nimblefitness.R;
 import uk.ac.york.nimblefitness.Screens.PaymentActivity;
-import uk.ac.york.nimblefitness.Screens.RoutineAndExercise.RoutineAndExerciseActivity;
 import uk.ac.york.nimblefitness.Screens.SigninActivity;
 import uk.ac.york.nimblefitness.Screens.UserDetailsActivity;
 
@@ -33,7 +33,6 @@ public class SettingsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -49,10 +48,21 @@ public class SettingsFragment extends Fragment {
 
         String[] settings_list_items = {"Account", "Membership Plan", "Billing Information", "Report a Problem", "Terms and Conditions", "Logout", "HandlerTestActivity"}; //the text that goes in each different list view item
 
-        ListView listView = view.findViewById(R.id.settings_list); //find the list view from the fragment_settings.xml file
+        int[] settingsListIcons = {
+                R.drawable.ic_baseline_account_circle_24,
+                R.drawable.ic_baseline_card_membership_24,
+                R.drawable.ic_baseline_payment_24,
+                R.drawable.ic_baseline_report_problem_24,
+                R.drawable.ic_baseline_error_outline_24,
+                R.drawable.ic_baseline_login_24,
+                R.drawable.ic_baseline_download_24
+        };
 
+        SettingsListAdapter settings = new SettingsListAdapter(settings_list_items, settingsListIcons, getContext());
+
+        ListView listView = view.findViewById(R.id.settings_list); //find the list view from the fragment_settings.xml file
         ArrayAdapter<String> ListViewAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, settings_list_items); //need to make a 'simple_list_item_1' replacement -> 'settings_list_layout' allow the use of images in the list view like in settings activity example
-        listView.setAdapter(ListViewAdapter);
+        listView.setAdapter(settings);
 
         listView.setOnItemClickListener((parent, view1, position, id) -> {//watches for a user to click on the list view, then gives the program which position the click was in
             String itemValue = (String) listView.getItemAtPosition(position); //converts the position ID into the text that is written in that position
@@ -82,9 +92,10 @@ public class SettingsFragment extends Fragment {
                 }
 
                 case "Report a Problem":{
-                    FragmentTransaction fr = getParentFragmentManager().beginTransaction();
-                    fr.replace(R.id.main_frame, new ReportProblemFragment());
-                    fr.commit();
+                    String url = "https://forms.gle/QUjMeKqGW5W82RJN6";
+                    Intent mIntent = new Intent(Intent.ACTION_VIEW);
+                    mIntent.setData(Uri.parse(url));
+                    startActivity(mIntent);
                     break;
                 }
 

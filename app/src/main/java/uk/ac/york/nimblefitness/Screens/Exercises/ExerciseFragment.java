@@ -89,7 +89,7 @@ public class ExerciseFragment extends Fragment {
                     public void onFilterComplete(int i) {
                         if (i == 0) {
                             nothingFound.setVisibility(View.VISIBLE);
-                        }
+                            }
                         else{
                             nothingFound.setVisibility(View.GONE);
                         }

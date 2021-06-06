@@ -74,6 +74,7 @@
         <meta-data android:name="io.sentry.release" android:value="io.example@1.1.0" />
 
         <meta-data android:name="io.sentry.traces.sample-rate" android:value="1.0" />
+
     </application>
 
 </manifest>
