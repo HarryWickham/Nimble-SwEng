@@ -20,6 +20,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.List;
+
 import uk.ac.york.nimblefitness.Adapters.SettingsListAdapter;
 import uk.ac.york.nimblefitness.R;
 import uk.ac.york.nimblefitness.Screens.PaymentActivity;
@@ -64,34 +66,31 @@ public class SettingsFragment extends Fragment {
         ArrayAdapter<String> ListViewAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, settings_list_items); //need to make a 'simple_list_item_1' replacement -> 'settings_list_layout' allow the use of images in the list view like in settings activity example
         listView.setAdapter(settings);
 
-        listView.setOnItemClickListener((parent, view1, position, id) -> {//watches for a user to click on the list view, then gives the program which position the click was in
-            String itemValue = (String) listView.getItemAtPosition(position); //converts the position ID into the text that is written in that position
-            Toast toast = Toast.makeText(getActivity(), itemValue, Toast.LENGTH_SHORT); //shows an alert with the text of the list item that has been clicked
-            toast.show();
+        listView.setOnItemClickListener(new android.widget.AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(android.widget.AdapterView<?> parent, View view, int position, long id) {//watches for a user to click on the list view, then gives the program which position the click was in
 
-            switch (itemValue) {
-                case "Billing Information": {
+
+            switch (position) {
+                case 0: { //if logout is clicked the user gets taken back to the login/signin screen will need to be changed to a case statement to allow for all items to be perform actions
+                    Intent mIntent = new Intent(getActivity(), UserDetailsActivity.class);
+                    startActivity(mIntent);
+                    break;
+                }
+                case 1: {
+                    Intent mIntent = new Intent(getActivity(), PaymentActivity.class);
+                    startActivity(mIntent);
+                    requireActivity().finish();
+                    break;
+                }
+                case 2: {
                     String url = "https://play.google.com/store/account/subscriptions";
                     Intent mIntent = new Intent(Intent.ACTION_VIEW);
                     mIntent.setData(Uri.parse(url));
                     startActivity(mIntent);
                     break;
                 }
-                case "Membership Plan": {
-                    Intent mIntent = new Intent(getActivity(), PaymentActivity.class);
-                    startActivity(mIntent);
-                    requireActivity().finish();
-                    break;
-                }
-
-                case "Terms and Conditions": { //if logout is clicked the user gets taken back to the login/signin screen will need to be changed to a case statement to allow for all items to be perform actions
-                    FragmentTransaction fr = getParentFragmentManager().beginTransaction();
-                    fr.replace(R.id.main_frame, new TermsAndConditionsFragment());
-                    fr.commit();
-                    break;
-                }
-
-                case "Report a Problem":{
+                case 3:{
                     String url = "https://forms.gle/QUjMeKqGW5W82RJN6";
                     Intent mIntent = new Intent(Intent.ACTION_VIEW);
                     mIntent.setData(Uri.parse(url));
@@ -99,7 +98,16 @@ public class SettingsFragment extends Fragment {
                     break;
                 }
 
-                case "Logout": { //if logout is clicked the user gets taken back to the login/signin screen will need to be changed to a case statement to allow for all items to be perform actions
+                case 4: { //if logout is clicked the user gets taken back to the login/signin screen will need to be changed to a case statement to allow for all items to be perform actions
+                    FragmentTransaction fr = getParentFragmentManager().beginTransaction();
+                    fr.replace(R.id.main_frame, new TermsAndConditionsFragment());
+                    fr.commit();
+                    break;
+                }
+
+
+
+                case 5: { //if logout is clicked the user gets taken back to the login/signin screen will need to be changed to a case statement to allow for all items to be perform actions
                     FirebaseAuth.getInstance().signOut();
                     LoginManager.getInstance().logOut();
                     GoogleSignIn.getClient(getActivity(), new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).build()).signOut().addOnSuccessListener(aVoid ->
@@ -112,18 +120,15 @@ public class SettingsFragment extends Fragment {
 
                 }
 
-                case "Account": { //if logout is clicked the user gets taken back to the login/signin screen will need to be changed to a case statement to allow for all items to be perform actions
-                    Intent mIntent = new Intent(getActivity(), UserDetailsActivity.class);
-                    startActivity(mIntent);
-                    break;
-                }
-                case "HandlerTestActivity": { //if logout is clicked the user gets taken back to the login/signin screen will need to be changed to a case statement to allow for all items to be perform actions
+
+                case 6: { //if logout is clicked the user gets taken back to the login/signin screen will need to be changed to a case statement to allow for all items to be perform actions
                     Intent mIntent = new Intent(getActivity(), HandlerTestActivity.class);
                     startActivity(mIntent);
                     break;
                 }
             }
             
+        }
         });
 
         return view;
