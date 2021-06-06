@@ -87,14 +87,19 @@
                     android:layout_gravity="center"
                     android:text="Rep: 0 out of 10"
                     android:textSize="30sp"
-                    android:textColor="@color/black"
-
-                    />
+                    android:textColor="@color/black" />
 
                 <com.google.android.material.slider.Slider
+                    android:id="@+id/repTimeSlider"
+                    android:visibility="visible"
+                    android:enabled="true"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="16dp"/>
+                    android:value="4"
+                    android:stepSize="1"
+                    android:valueFrom="1"
+                    android:valueTo="10"/>
+
             </LinearLayout>
 
         </FrameLayout>

@@ -1,14 +1,8 @@
 package uk.ac.york.nimblefitness.Screens.RoutineAndExercise;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-
 import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,7 +12,10 @@ import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -33,14 +30,12 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
-import java.util.Objects;
 
 import uk.ac.york.nimblefitness.Adapters.MovesListAdapter;
 import uk.ac.york.nimblefitness.HelperClasses.Exercise;
 import uk.ac.york.nimblefitness.HelperClasses.LeaderBoardUserDetails;
 import uk.ac.york.nimblefitness.HelperClasses.Routine;
 import uk.ac.york.nimblefitness.HelperClasses.SavableExercise;
-import uk.ac.york.nimblefitness.HelperClasses.SavableExerciseArray;
 import uk.ac.york.nimblefitness.R;
 import uk.ac.york.nimblefitness.Screens.MainActivity;
 
@@ -138,14 +133,6 @@ public class FinishFragment extends Fragment {
         finishListView.setAdapter(movesListAdapter);
         setListViewHeightBasedOnChildren(finishListView);
 
-        exitToProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getActivity(), MainActivity.class));
-                getActivity().finish();//takes user the main page
-            }
-        });
-
         InformationFragment informationFragment = new InformationFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable("routine",routine);
@@ -161,7 +148,7 @@ public class FinishFragment extends Fragment {
 
             @Override
             public void onFinish() {
-                this.cancel();
+                cancel();
                 FragmentTransaction fragmentTransaction = requireActivity().getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.RoutineAndExerciseFrame, informationFragment);
                 fragmentTransaction.commit();
@@ -171,18 +158,28 @@ public class FinishFragment extends Fragment {
         nextExercise.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                restTimer.cancel();
                 FragmentTransaction fragmentTransaction = requireActivity().getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.RoutineAndExerciseFrame, informationFragment);
                 fragmentTransaction.commit();
             }
         });
 
+        exitToProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                restTimer.cancel();
+                startActivity(new Intent(getActivity(), MainActivity.class));
+                getActivity().finish();//takes user the main page
+            }
+        });
 
         EndSummaryFragment endSummaryFragment = new EndSummaryFragment();
         endSummaryFragment.setArguments(bundle);
         toEndSummary.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                restTimer.cancel();
                 FragmentTransaction fragmentTransaction = requireActivity().getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.RoutineAndExerciseFrame, endSummaryFragment);
                 fragmentTransaction.commit();

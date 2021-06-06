@@ -10,10 +10,12 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.slider.Slider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -38,7 +40,7 @@ public class CounterFragment extends Fragment {
     private TextView PointsEarntOutput;
 
     // Variable for the time taken per rep/hold
-    private long ExerciseTime = 2000;
+    private long ExerciseTime = 4;
 
     // The current countdown time
     private CountDownTimer mCountDownTimer;
@@ -47,7 +49,8 @@ public class CounterFragment extends Fragment {
     // Variables for if the timer has been activated and if it is currently running
     private boolean mTimerRunning;
     private boolean TimerStarted = false;
-    private boolean isMuted = false;
+    private boolean threeSecondWaitTimerRunning = false;
+    private boolean isMuted;
 
     // Time left in the counter
     private long mTimeLeftInMillis;
@@ -57,9 +60,10 @@ public class CounterFragment extends Fragment {
     private int repCount = 0;
     private int repCountTotal = 0;
 
-
     // Points which have been added for this exercise
     private int pointsAdded = 0;
+
+    private Slider slider;
 
     Bundle bundle;
 
@@ -77,6 +81,7 @@ public class CounterFragment extends Fragment {
         // One of these are for exercises which have an amount of reps, such as pushups
         // The other is used for exercises which are stress holds which have no reps, but only a time such as planking
         // The timer used in this code counts down in milli seconds, in 1000's
+        // Another count down timer is used as a 3 second wait after the start button is pressed to allow the user to get into position
 
         // Retrieving the information about the routine
         Routine routine = (Routine) getArguments().getSerializable("routine");
@@ -96,6 +101,7 @@ public class CounterFragment extends Fragment {
         SharedPreferences prefs = getDefaultSharedPreferences(getApplicationContext());
         PointsEarntOutput.setText("Points earnt: " + prefs.getInt(currentFirebaseUser+"totalPoints", 0));
 
+        // The points which have been gained for this exercise
         pointsAdded = 0;
 
         // The code for the return button
@@ -111,7 +117,10 @@ public class CounterFragment extends Fragment {
         returnButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view) {
                 if (mTimerRunning) {
-                    pauseTimer(); // If the timer is running, pause it
+                    pauseTimerCounter(); // If the timer is running, pause it
+                }
+                if (threeSecondWaitTimerRunning) {
+                    mThreeSecondTimer.cancel(); // If the 3 second contdown is running, cancel it
                 }
                 // Removing the points
                 editor.putInt(currentFirebaseUser + "totalPoints", (int) (prefs.getInt(currentFirebaseUser+"totalPoints", 0)-(pointsAdded * routine.getExerciseArrayList().get(routine.getCurrentExercise()).getMovesPerRep())));
@@ -124,16 +133,29 @@ public class CounterFragment extends Fragment {
 
         // Mute button for the audio beep
         // Finds if the current exercise if muted and changes respectively
-        isMuted = false;
+        // Carries the mute option through to the next exercise so the user does not have to keep remuting
+        // First it checks the current state of mute from the shared preference, and updates the mute button depending
         Button muteButton = view.findViewById(R.id.MuteButton);
+        isMuted = prefs.getBoolean(currentFirebaseUser + "isMuted", false);
+        if (isMuted) { // If it is currently muted upon button click
+            muteButton.setText("Unmute"); // Changing button
+        } else {
+            muteButton.setText("Mute"); // Changing button
+        }
+        // If the user then clicks the mute/unmute button it updates it with the new mute expression
         muteButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view) {
+                isMuted = prefs.getBoolean(currentFirebaseUser + "isMuted", false); // Gethering the value of if it is currently mutes
                 if (isMuted) { // If it is currently muted upon button click
+                    editor.putBoolean(currentFirebaseUser + "isMuted", false); // Setting it to be no longer muted
+                    editor.apply(); // Applying the new mute value to shared preferences
+                    isMuted = !isMuted; // Changing a variable for the check later on for the beep
                     muteButton.setText("Mute"); // Changing button
-                    isMuted = false; // Changing to not being muted
                 } else {
+                    editor.putBoolean(currentFirebaseUser + "isMuted", true);
+                    editor.apply();
+                    isMuted = !isMuted;
                     muteButton.setText("Unmute"); // Changing button
-                    isMuted=true; // Changing to being muted
                 }
             }
         });
@@ -150,7 +172,7 @@ public class CounterFragment extends Fragment {
             public void onClick(View view) {
                 if (TimerStarted) { // If the timer has been started
                     if (mTimerRunning) {
-                        pauseTimer(); // Pause the timer
+                        pauseTimerCounter(); // Pause the timer
                     } else { // Start the timer using one of the two functions
                         if (routine.getExerciseArrayList().get(routine.getCurrentExercise()).getRepType().equals("number")) { // If the routine has reps
                             startRepCounterTimer(view, routine); // Use the rep exercise layout
@@ -185,6 +207,19 @@ public class CounterFragment extends Fragment {
         // Retrieving and setting the muscle image for the current exercise
         Glide.with(getContext()).load(routine.getExerciseArrayList().get(routine.getCurrentExercise()).getMuscleGroupImage().getImageSource()).into(MuscleImage);
 
+        // Adding a slider to change the speed of the rep in an exercise
+        // To allow the user to control the speed better, they can set the time per rep to be anywhere between 1 and 10 seconds
+        slider = (Slider) view.findViewById(R.id.repTimeSlider);
+
+        slider.addOnChangeListener(new Slider.OnChangeListener() {
+            @Override
+            public void onValueChange(@NonNull Slider slider, float value, boolean fromUser) {
+                if (!TimerStarted) {
+                    ExerciseTime = (long) value; // Setting exercise time from slider
+                }
+            }
+        });
+
         // First setting of the "rep counter" function
         // If the exercise has an amount of reps, it will first display the amount of reps the user is currently on (0 since just starting) and the total amount in the exercise
         // If it is a stress hold, then it just dispays the message "hold the (exercise)" where the rep counter is usually
@@ -193,6 +228,7 @@ public class CounterFragment extends Fragment {
             RepCounter.setText("Rep: " + (repCount) + " out of: " + repCountTotal); // Updating the rep counter with amount
         } else {
             RepCounter.setText("Hold the " + routine.getExerciseArrayList().get(routine.getCurrentExercise()).getExerciseName()); // Setting the rep counter to be the hold message
+            slider.setVisibility(View.GONE); // Getting rid of the slider if there are no reps in the exercise
         }
 
         // The start button for the starter exercise with starter countdown
@@ -204,7 +240,9 @@ public class CounterFragment extends Fragment {
             public void onClick(View view) {
                 StartButton.setVisibility(View.GONE);
                 TimeRemaining.setVisibility(View.VISIBLE); // Changing the screen
-                threeSecondWait(view, routine); // Starting the countdown timer for the execise
+                threeSecondWaitTimerRunning = true;
+                slider.setEnabled(false);
+                threeSecondWait(view, routine); // Starting the three second countdown timer for the execise
             }
         });
     }
@@ -226,9 +264,10 @@ public class CounterFragment extends Fragment {
 
             @Override
             public void onFinish() {
+                threeSecondWaitTimerRunning = false;
                 TimerStarted = true; // Timer now running
+
                 if (routine.getExerciseArrayList().get(routine.getCurrentExercise()).getRepType().equals("number")) { // If there are reps in the exercise
-                    ExerciseTime = routine.getExerciseArrayList().get(routine.getCurrentExercise()).getTimePerRep(); // Retrieving time taken per rep
                     RepCounter.setText("Rep: " + (repCount + 1) + " out of: " + repCountTotal); // Updating the rep counter so state they are on the first rep
                     mTimeLeftInMillis = ExerciseTime * 1000; // Inputting the time taken per rep in milli seconds
                     beepSoundOutput(); // Playing a beep sound to indicate a rep starting/ending
@@ -242,7 +281,6 @@ public class CounterFragment extends Fragment {
                 }
             }
         }.start();
-
     }
 
     private void updateStartScreen(){
@@ -291,16 +329,13 @@ public class CounterFragment extends Fragment {
 
         String timeLeftFormatted;
         // Converting the time into string so it can be outputted on screen, in seconds rather than milliseconds
-        if (routine.getExerciseArrayList().get(routine.getCurrentExercise()).getRepType().equals("number")) {
-            timeLeftFormatted = String.format(Locale.getDefault(), "%02d", seconds); // Two digit number
-        } else {
-            timeLeftFormatted = String.format(Locale.getDefault(), "%02d", seconds); // Three digit number
-        }
+        // Three digit number
+        timeLeftFormatted = String.format(Locale.getDefault(), "%02d", seconds + 1); // Two digit number
         TimeRemaining.setText(timeLeftFormatted); // Outputting the time remaining
     }
 
     // Function to pause the timer
-    private void pauseTimer(){
+    private void pauseTimerCounter(){
        mCountDownTimer.cancel(); // Stops the timer from running
        mTimerRunning = false; // States that the timer is no longer running
        updateButtons(); // Updates the buttons at the bottom of the screen
