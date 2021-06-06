@@ -186,7 +186,7 @@
             </exercise>
             <exercise exerciseName="Lunges" exerciseDescription="From a standing position, step out in front and lower yourself onto that leg. Ensure that the knee of the leg you stepped out on doesnâ€™t go past your foot and that your back knee doesnâ€™t hit the floor. Engage your leg and core muscles to perform the motion correctly. Push off of the leading le to return to your start position. Repeat using the opposite leg as the leading leg."
                 repType="number" reps="10" timePerRep="3" movesPerRep="1.25" restAfterFinish="10" colour="#33ff77">
-                <video urlname="https://www-users.york.ac.uk/~hew550/NimbleAssets/exercisevideos/lunges.mp4" starttime="0" loop="true" xstart="50" ystart="262" width="980" height="550" id="lungesVideo" />
+                <video urlname="https://www-users.york.ac.uk/~hew550/NimbleAssets/exercisevideos/lunges.mp4" starttime="0" loop="true" xstart="50" ystart="262" width="980" height="550" id="lugesVideo" />
                 <image urlname="https://www-users.york.ac.uk/~hew550/NimbleAssets/exercisemusclegroups/lunges.png" xstart="50" ystart="887" width="726" height="550" duration="0"/>
                 <shape type="RECTANGLE" xstart="25" ystart="237" width="600" height="1030" fillcolour="#303F9F" duration="0"/>
                 <shape type="RECTANGLE" xstart="25" ystart="862" width="560" height="780" fillcolour="#303F9F" duration="0"/>
