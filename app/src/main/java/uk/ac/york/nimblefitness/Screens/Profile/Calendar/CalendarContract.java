@@ -21,7 +21,7 @@ public interface CalendarContract {
         long userStartDate();
         String selectedDay(int month, int dayOfMonth);
         String currentUser();
-        MovesListAdapter completedMoves(Context context);
+        MovesListAdapter completedMoves(Context context, String dayNumber, ListView listView);
         void setListViewHeightBasedOnChildren (ListView listView);
     }
 
@@ -30,7 +30,7 @@ public interface CalendarContract {
         long setStartDate();
         String displaySelectedDay(int month, int dayOfMonth);
         String displayUserName();
-        MovesListAdapter setCompletedMovesList();
+        MovesListAdapter setCompletedMovesList(String dayNumber, ListView listView);
         void setListViewHeightBasedOnChildren (ListView listView);
     }
 }

@@ -9,10 +9,16 @@ import android.view.ViewGroup;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
+import androidx.annotation.NonNull;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -23,6 +29,7 @@ import java.util.Locale;
 import uk.ac.york.nimblefitness.Adapters.MovesListAdapter;
 import uk.ac.york.nimblefitness.HelperClasses.Exercise;
 import uk.ac.york.nimblefitness.HelperClasses.Routine;
+import uk.ac.york.nimblefitness.HelperClasses.SavableExercise;
 import uk.ac.york.nimblefitness.MediaHandlers.Text.TextLayout;
 import uk.ac.york.nimblefitness.MediaHandlers.Video.VideoLayout;
 import uk.ac.york.nimblefitness.R;
@@ -34,6 +41,7 @@ public class CalendarModel implements CalendarContract.Model {
 
     private static final String TAG = "log";
     private String userName;
+    MovesListAdapter listAdapter;
     private FirebaseDatabase rootDatabase = FirebaseDatabase.getInstance();
     private DatabaseReference rootReference = rootDatabase.getReference("users");
     private FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -120,11 +128,53 @@ public class CalendarModel implements CalendarContract.Model {
     // The data for the moves the user needs to complete today will be retrieved from the Firebase
     // database and is used to populate this list in the Calendar tab.
     @Override
-    public MovesListAdapter completedMoves(Context context) {
-        MovesListAdapter listAdapter;
+    public MovesListAdapter completedMoves(Context context, String dayNumber, ListView listView) {
 
-        Routine routine = new Routine().getExampleRoutine();
-        listAdapter = new MovesListAdapter(context, routine.getExerciseArrayList());
+
+        ArrayList<Exercise> exercises = new ArrayList<>();
+
+        FirebaseDatabase rootDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference completedExercisesRootReference = rootDatabase.getReference("users").child(currentFirebaseUser.getUid()).child("exercises");
+
+        completedExercisesRootReference.child(dayNumber).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Log.i("Retrieve", "onDataChange");
+                for(DataSnapshot ds : snapshot.getChildren()) {
+                    Log.i("Retrieve", "DataSnapshot");
+                    if (ds.getValue(SavableExercise.class) != null) {
+                        Log.i("Retrieve", "ds.getValue(Exercise.class)");
+                        SavableExercise exercise = ds.getValue(SavableExercise.class);
+                        Exercise exercise1 = new Exercise();
+                        exercise1.setExerciseName(exercise.getExerciseName());
+                        exercise1.setColour(exercise.getColour());
+                        exercise1.setMovesPerRep(exercise.getMovesPerRep());
+                        exercise1.setReps(exercise.getReps());
+                        exercise1.setRepType(exercise.getRepType());
+                        exercises.add(exercise1);
+
+
+                        Gson gson = new Gson();
+                        Log.i("exercises json", gson.toJson(exercises));
+                    }
+
+                }
+                Log.i("onDataChange", "notify dataset changed");
+                listAdapter = new MovesListAdapter(context, exercises);
+                listView.setAdapter(listAdapter);
+                setListViewHeightBasedOnChildren(listView);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+        listAdapter = new MovesListAdapter(context, exercises);
+
         return listAdapter;
     }
 
@@ -149,4 +199,6 @@ public class CalendarModel implements CalendarContract.Model {
         listView.setLayoutParams(params);
         listView.requestLayout();
     }
+
+
 }

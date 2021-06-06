@@ -35,9 +35,10 @@ public class CalendarPresenter implements CalendarContract.Presenter{
         return calendarModel.currentUser();
     }
 
+
     @Override
-    public MovesListAdapter setCompletedMovesList() {
-        return calendarModel.completedMoves(calendarView.getContext());
+    public MovesListAdapter setCompletedMovesList(String dayNumber, ListView listView) {
+        return calendarModel.completedMoves(calendarView.getContext(), dayNumber, listView);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package uk.ac.york.nimblefitness.Screens.RoutineAndExercise;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -62,7 +64,6 @@ public class FinishFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_finish, container, false);
-
 
         if (getArguments() != null) {
             routine = (Routine) getArguments().getSerializable("routine");
@@ -160,9 +161,7 @@ public class FinishFragment extends Fragment {
 
             @Override
             public void onFinish() {
-                FragmentTransaction fragmentTransaction = requireActivity().getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.RoutineAndExerciseFrame, informationFragment);
-                fragmentTransaction.commit();
+                restTime.setText("Please continue to next exercise");
             }
         }.start();
 
@@ -247,10 +246,14 @@ public class FinishFragment extends Fragment {
     }
 
     public void addCompletedExerciseToFirebase(ArrayList<SavableExercise> completedExercises){
+        Exercise exercise;
+        if(routine.getCurrentExercise() != 0) {
+            exercise = routine.getExerciseArrayList().get(routine.getCurrentExercise()-1);
+        } else{
+            exercise = routine.getExerciseArrayList().get(routine.getExerciseArrayList().size()-1);
+        }
 
-        Exercise exercise = routine.getExerciseArrayList().get(routine.getCurrentExercise());
-
-        completedExercises.add(new SavableExercise(exercise.getExerciseName(),exercise.getReps(), exercise.getMovesPerRep(),exercise.getColour(), currentDayNumber()));
+        completedExercises.add(new SavableExercise(exercise.getExerciseName(),exercise.getReps(), exercise.getMovesPerRep(),exercise.getColour(), exercise.getRepType(), currentDayNumber()));
 
         rootReferenceUser.child("exercises").child(currentDayNumber()).setValue(completedExercises);
 

@@ -156,4 +156,5 @@ public class Exercise implements Serializable {
     public void setAudioTypes(ArrayList<AudioType> audioTypes) {
         this.audioTypes = audioTypes;
     }
+
 }

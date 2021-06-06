@@ -5,13 +5,15 @@ public class SavableExercise {
     private int reps;
     private float movesPerRep;
     private int colour;
+    private String repType;
     private String dateCompleted;
 
-    public SavableExercise(String exerciseName, int reps, float movesPerRep, int colour, String dateCompleted) {
+    public SavableExercise(String exerciseName, int reps, float movesPerRep, int colour, String repType, String dateCompleted) {
         this.exerciseName = exerciseName;
         this.reps = reps;
         this.movesPerRep = movesPerRep;
         this.colour = colour;
+        this.repType = repType;
         this.dateCompleted = dateCompleted;
     }
 
@@ -56,5 +58,13 @@ public class SavableExercise {
 
     public void setDateCompleted(String dateCompleted) {
         this.dateCompleted = dateCompleted;
+    }
+
+    public String getRepType() {
+        return repType;
+    }
+
+    public void setRepType(String repType) {
+        this.repType = repType;
     }
 }

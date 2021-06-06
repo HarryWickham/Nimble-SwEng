@@ -294,7 +294,7 @@ public class CounterFragment extends Fragment {
         if (routine.getExerciseArrayList().get(routine.getCurrentExercise()).getRepType().equals("number")) {
             timeLeftFormatted = String.format(Locale.getDefault(), "%02d", seconds); // Two digit number
         } else {
-            timeLeftFormatted = String.format(Locale.getDefault(), "%03d", seconds); // Three digit number
+            timeLeftFormatted = String.format(Locale.getDefault(), "%02d", seconds); // Three digit number
         }
         TimeRemaining.setText(timeLeftFormatted); // Outputting the time remaining
     }

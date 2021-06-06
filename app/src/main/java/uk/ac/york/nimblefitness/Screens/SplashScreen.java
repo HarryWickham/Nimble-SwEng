@@ -41,6 +41,7 @@ public class SplashScreen extends AppCompatActivity {
         if(currentFirebaseUser != null) {
             Log.i("currentFirebaseUser", currentFirebaseUser.getUid());
             Log.i("currentFirebaseUser", " not null :)");
+
             DatabaseReference rootReference = rootDatabase.getReference("users").child(currentFirebaseUser.getUid());
             rootReference.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override

@@ -14,6 +14,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import uk.ac.york.nimblefitness.HelperClasses.ShareService;
@@ -41,17 +42,25 @@ public class CalendarFragment extends Fragment implements CalendarContract.Calen
         calendarView.setMaxDate(calendarView.getDate());
         TextView dayNumber = view.findViewById(R.id.profile_date);
         dayNumber.setText(calendarPresenter.displayCurrentDayNumber());
-        // The displayed date text changes accordingly when another day is selected besides the
-        // default.
-        calendarView.setOnDateChangeListener((view1, year, month, dayOfMonth) ->
-                dayNumber.setText(calendarPresenter.displaySelectedDay(month, dayOfMonth)));
-        // The user's name is displayed above the list of completed moves.
-        TextView userName = view.findViewById(R.id.user_name);
-        userName.setText(calendarPresenter.displayUserName());
         // For the currently selected day, a list of the moves completed on that particular day is
         // displayed.
         ListView listView = (ListView) view.findViewById(R.id.completed_moves_list);
-        listView.setAdapter(calendarPresenter.setCompletedMovesList());
+        // The displayed date text changes accordingly when another day is selected besides the
+        // default.
+        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
+                dayNumber.setText(calendarPresenter.displaySelectedDay(month, dayOfMonth));
+                listView.setAdapter(calendarPresenter.setCompletedMovesList(String.valueOf(dayNumber.getText()),listView));
+            }
+        });
+
+
+        // The user's name is displayed above the list of completed moves.
+        TextView userName = view.findViewById(R.id.user_name);
+        userName.setText(calendarPresenter.displayUserName());
+
+        listView.setAdapter(calendarPresenter.setCompletedMovesList(String.valueOf(dayNumber.getText()),listView));
 
         ImageButton shareButton = view.findViewById(R.id.share_icon);
         shareButton.setOnClickListener(new View.OnClickListener() {
