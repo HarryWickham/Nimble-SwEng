@@ -47,8 +47,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_margin="@dimen/activity_horizontal_margin"
-                    android:text="Points Earnt"
+                    android:layout_margin="@dimen/activity_vertical_margin"
+                    android:text="Points"
                     android:textColor="@color/black"
                     android:textSize="30sp" />
 
@@ -88,6 +88,15 @@
                     android:text="Rep: 0 out of 10"
                     android:textSize="30sp"
                     android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/Slidertitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textColor="@color/black"
+                    android:visibility="visible"
+                    android:text="Seconds Per Rep"/>
 
                 <com.google.android.material.slider.Slider
                     android:id="@+id/repTimeSlider"

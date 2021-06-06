@@ -99,7 +99,7 @@ public class CounterFragment extends Fragment {
         // First finds the unique code and retrieves the points from the app
         FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         SharedPreferences prefs = getDefaultSharedPreferences(getApplicationContext());
-        PointsEarntOutput.setText("Points earnt: " + prefs.getInt(currentFirebaseUser+"totalPoints", 0));
+        PointsEarntOutput.setText("Points: " + prefs.getInt(currentFirebaseUser+"totalPoints", 0));
 
         // The points which have been gained for this exercise
         pointsAdded = 0;
@@ -229,6 +229,8 @@ public class CounterFragment extends Fragment {
         } else {
             RepCounter.setText("Hold the " + routine.getExerciseArrayList().get(routine.getCurrentExercise()).getExerciseName()); // Setting the rep counter to be the hold message
             slider.setVisibility(View.GONE); // Getting rid of the slider if there are no reps in the exercise
+            TextView Slidertitle = view.findViewById(R.id.Slidertitle);
+            Slidertitle.setVisibility(View.GONE);
         }
 
         // The start button for the starter exercise with starter countdown
@@ -416,7 +418,7 @@ public class CounterFragment extends Fragment {
         editor.apply(); // Applying the points
         pointsAdded ++; // Amount of points added per exercise
 
-        PointsEarntOutput.setText("Points earnt: " + prefs.getInt(currentFirebaseUser+"totalPoints", 0)); // Updating the text output for the points
+        PointsEarntOutput.setText("Points: " + prefs.getInt(currentFirebaseUser+"totalPoints", 0)); // Updating the text output for the points
     }
 
     //Function to output sound when a rep/time starts or ends
