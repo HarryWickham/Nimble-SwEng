@@ -2,6 +2,7 @@ package uk.ac.york.nimblefitness.Screens;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,7 @@ public class ViewPagerAdapter extends RecyclerView.Adapter<ViewPagerAdapter.View
     private LayoutInflater mInflater;
     private ViewPager2 viewPager2;
     private List<Integer> myImage;
+    private Context context;
 
 
 
@@ -36,6 +38,7 @@ public class ViewPagerAdapter extends RecyclerView.Adapter<ViewPagerAdapter.View
         this.viewPager2 = viewPager2;
         this.myImage =image;
         this.myDescription = description;
+        this.context = context;
 
 
     }
@@ -57,7 +60,8 @@ public class ViewPagerAdapter extends RecyclerView.Adapter<ViewPagerAdapter.View
         holder.skip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Intent myIntent = new Intent(OnBoadring.this, MainActivity.class);
+                Intent skipIntent = new Intent(context, MainActivity.class);
+                context.startActivity(skipIntent);
             }
 
         });
@@ -67,7 +71,8 @@ public class ViewPagerAdapter extends RecyclerView.Adapter<ViewPagerAdapter.View
             holder.getStarted.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //Intent myIntent = new Intent(OnBoadring.this, MainActivity.class);
+                    Intent getStartedIntent = new Intent(context, MainActivity.class);
+                    context.startActivity(getStartedIntent);
                 }
 
             });
