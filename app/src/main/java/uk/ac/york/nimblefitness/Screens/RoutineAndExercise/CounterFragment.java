@@ -20,6 +20,7 @@ import com.google.firebase.auth.FirebaseUser;
 import java.util.Locale;
 
 import uk.ac.york.nimblefitness.HelperClasses.Routine;
+import uk.ac.york.nimblefitness.MediaHandlers.Audio.AudioType;
 import uk.ac.york.nimblefitness.R;
 
 import static android.preference.PreferenceManager.getDefaultSharedPreferences;
@@ -41,17 +42,21 @@ public class CounterFragment extends Fragment {
 
     // The current countdown time
     private CountDownTimer mCountDownTimer;
+    private CountDownTimer mThreeSecondTimer;
 
     // Variables for if the timer has been activated and if it is currently running
     private boolean mTimerRunning;
     private boolean TimerStarted = false;
+    private boolean isMuted = false;
 
     // Time left in the counter
     private long mTimeLeftInMillis;
+    private long threeSecondInt = 4000;
 
     // Counting the total reps and current reps of the exercise
     private int repCount = 0;
     private int repCountTotal = 0;
+
 
     // Points which have been added for this exercise
     private int pointsAdded = 0;
@@ -108,13 +113,9 @@ public class CounterFragment extends Fragment {
                 if (mTimerRunning) {
                     pauseTimer(); // If the timer is running, pause it
                 }
-                if (routine.getExerciseArrayList().get(routine.getCurrentExercise()).getRepType().equals("number")) {
-                    editor.putInt(currentFirebaseUser + "totalPoints", prefs.getInt(currentFirebaseUser+"totalPoints", 0)-(pointsAdded * routine.getExerciseArrayList().get(routine.getCurrentExercise()).getMovesPerRep()));
-                    editor.apply(); // Removing the points
-                } else {
-                    editor.putInt(currentFirebaseUser + "totalPoints", prefs.getInt(currentFirebaseUser+"totalPoints", 0)-(pointsAdded * routine.getExerciseArrayList().get(routine.getCurrentExercise()).getMovesPerRep()));
-                    editor.apply(); // Removing the points
-                }
+                // Removing the points
+                editor.putInt(currentFirebaseUser + "totalPoints", prefs.getInt(currentFirebaseUser+"totalPoints", 0)-(pointsAdded * routine.getExerciseArrayList().get(routine.getCurrentExercise()).getMovesPerRep()));
+                editor.apply(); // Removing the points
                 FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.RoutineAndExerciseFrame, informationFragment);
                 fragmentTransaction.commit(); // Changing the screen
@@ -122,10 +123,18 @@ public class CounterFragment extends Fragment {
         });
 
         // Mute button for the audio beep
+        // Finds if the current exercise if muted and changes respectively
+        isMuted = false;
         Button muteButton = view.findViewById(R.id.MuteButton);
         muteButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view) {
-
+                if (isMuted) { // If it is currently muted upon button click
+                    muteButton.setText("Mute"); // Changing button
+                    isMuted = false; // Changing to not being muted
+                } else {
+                    muteButton.setText("Unmute"); // Changing button
+                    isMuted=true; // Changing to being muted
+                }
             }
         });
 
@@ -186,31 +195,67 @@ public class CounterFragment extends Fragment {
             RepCounter.setText("Hold the " + routine.getExerciseArrayList().get(routine.getCurrentExercise()).getExerciseName()); // Setting the rep counter to be the hold message
         }
 
-        // The start button for the exercise
+        // The start button for the starter exercise with starter countdown
         // This start button is in place for the timer countdown
-        // So as the button is pressed, it is removed from the screen and the timer is then displayed
-        // As there are two functions for the two types of exercise, a check is done to see which layout is going to be used
-        // Once the button has been pressed, a variable is updated to true for the counter now running
+        // So as the button is pressed, it is removed from the screen and the start timer is displayed
         StartButton = view.findViewById(R.id.StartButton);
         StartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 StartButton.setVisibility(View.GONE);
                 TimeRemaining.setVisibility(View.VISIBLE); // Changing the screen
+                threeSecondWait(view, routine); // Starting the countdown timer for the execise
+            }
+        });
+    }
+
+    // A timer for the 3 second wait at the beginning of the routine once the start button has been pressed
+    // This timer counts down from 4 to 0
+    // This is due to the counter missing out 4 and starting straight at 3
+    // As the counter counts down, it displays the time untill start on screen
+    // Once the counter reaches 0, it starts the exercise counter
+    // This counter will either be the rep counter or the hold counter depending on the current exercise
+    private void threeSecondWait(View view, Routine routine){
+
+        mThreeSecondTimer = new CountDownTimer(threeSecondInt, 1000) {
+            @Override
+            public void onTick(long startTimeRemaining) {
+                threeSecondInt = startTimeRemaining;
+                updateStartScreen(); // As every second passes, the function is used to update the screen
+            }
+
+            @Override
+            public void onFinish() {
                 TimerStarted = true; // Timer now running
                 if (routine.getExerciseArrayList().get(routine.getCurrentExercise()).getRepType().equals("number")) { // If there are reps in the exercise
                     ExerciseTime = routine.getExerciseArrayList().get(routine.getCurrentExercise()).getTimePerRep(); // Retrieving time taken per rep
                     RepCounter.setText("Rep: " + (repCount + 1) + " out of: " + repCountTotal); // Updating the rep counter so state they are on the first rep
                     mTimeLeftInMillis = ExerciseTime * 1000; // Inputting the time taken per rep in milli seconds
+                    beegBeegYoshi(); // Playing a beep sound to indicate a rep starting/ending
                     startRepCounterTimer(view, routine); // Starting the timer for the reps exercise
                 } else { // If it is a hold exercise
                     ExerciseTime = routine.getExerciseArrayList().get(routine.getCurrentExercise()).getReps(); // Gather time for the hold
                     repCountTotal = 1; // Setting total reps to be 1, as the user will only hold it once
-                    mTimeLeftInMillis = ExerciseTime * 1000; // Time in millis
+                    mTimeLeftInMillis = ExerciseTime * 1000; // Inputting the time taken for the old in milli seconds
+                    beegBeegYoshi(); // Playing a beep sound to indicate a rep starting/ending
                     exerciseCountdown(view, routine); // Starting the timer for the hold exercise
                 }
             }
-        });
+        }.start();
+
+    }
+
+    private void updateStartScreen(){
+        if (threeSecondInt > 1000) {
+            // Gathering the time from the counter and converting it to seconds
+            int seconds = (int) (threeSecondInt / 1000);
+
+            // Converting the time into string so it can be outputted on screen, in seconds rather than milliseconds
+            String startTimeFormatted = String.format(Locale.getDefault(), "%01d", seconds);
+            TimeRemaining.setText(startTimeFormatted); // Outputting the time remaining
+        } else {
+            TimeRemaining.setText("Go!");
+        }
     }
 
     // Timer control for the reps exercise
@@ -224,12 +269,13 @@ public class CounterFragment extends Fragment {
             @Override
             public void onTick(long millisUntilFinished) { // If timer does not equal 0
                 mTimeLeftInMillis = millisUntilFinished; // Sets new value once the timer has counted down
-                updateCountDownText(); // Function to update the timer on screen
+                updateCountDownText(routine); // Function to update the timer on screen
             }
 
             @Override
             public void onFinish() { // If the timer has reached 0
                 mTimerRunning = false; // States the timer is no longer running
+                beegBeegYoshi(); // Playing a beep sound to indicate a rep starting/ending
                 repCounter(view, routine); // Function to check if there are more reps
             }
         }.start(); // Starting the timer
@@ -239,13 +285,18 @@ public class CounterFragment extends Fragment {
     }
 
     // Here is the function which updates the text on screen to show the correct value of the timer
-    private void updateCountDownText(){
-       // Gathering the time from the counter and converting it to seconds
-       int seconds = (int) (mTimeLeftInMillis / 1000);
+    private void updateCountDownText(Routine routine){
+        // Gathering the time from the counter and converting it to seconds
+        int seconds = (int) (mTimeLeftInMillis / 1000);
 
-       // Converting the time into string so it can be outputted on screen, in seconds rather than milliseconds
-       String timeLeftFormatted = String.format(Locale.getDefault(), "%03d", seconds);
-       TimeRemaining.setText(timeLeftFormatted); // Outputting the time remaining
+        String timeLeftFormatted;
+        // Converting the time into string so it can be outputted on screen, in seconds rather than milliseconds
+        if (routine.getExerciseArrayList().get(routine.getCurrentExercise()).getRepType().equals("number")) {
+            timeLeftFormatted = String.format(Locale.getDefault(), "%02d", seconds); // Two digit number
+        } else {
+            timeLeftFormatted = String.format(Locale.getDefault(), "%03d", seconds); // Three digit number
+        }
+        TimeRemaining.setText(timeLeftFormatted); // Outputting the time remaining
     }
 
     // Function to pause the timer
@@ -304,12 +355,13 @@ public class CounterFragment extends Fragment {
             public void onTick(long millisUntilFinished) {
                 mTimeLeftInMillis = millisUntilFinished;
                 updatePoints(view, routine); // Updating the points
-                updateCountDownText(); // Updating the text on screen
+                updateCountDownText(routine); // Updating the text on screen
             }
 
             @Override
             public void onFinish() {
                 mTimerRunning = false;
+                beegBeegYoshi(); // Playing a beep sound to indicate a rep starting/ending
                 nextScreen(); // goes to next screen
             }
         }.start();
@@ -319,7 +371,7 @@ public class CounterFragment extends Fragment {
     }
 
     // The function for updating the points
-    // Everytime this is called, it finds the user unique code and gathers their current points earnt for the routine
+    // Every time this is called, it finds the user unique code and gathers their current points earnt for the routine
     // Once it has this, every time a rep is completed or a second is held, it adds the points for that exercise
     private void updatePoints (View view, Routine routine) {
         FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser(); // Gathering the users unique code
@@ -330,5 +382,13 @@ public class CounterFragment extends Fragment {
         pointsAdded ++; // Amount of points added per exercise
 
         PointsEarntOutput.setText("Points earnt: " + prefs.getInt(currentFirebaseUser+"totalPoints", 0)); // Updating the text output for the points
+    }
+
+    //Function to output sound when a rep/time starts or ends
+    private void beegBeegYoshi(){
+       if (isMuted != true) { // First checks to see if the page has been muted, if not it continues
+           AudioType audioType = new AudioType("https://www-users.york.ac.uk/~hew550/NimbleAssets/beep.wav", 0, false, "id", getContext()); // Retrieving beep sound
+           audioType.play(); // Play the sound retrieved
+       }
     }
 }
