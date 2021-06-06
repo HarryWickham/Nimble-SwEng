@@ -6,11 +6,12 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.LinearGradient;
 import android.graphics.Shader;
-import android.media.Image;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.Toast;
@@ -31,10 +32,11 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 import uk.ac.york.nimblefitness.MediaHandlers.Audio.AudioType;
+import uk.ac.york.nimblefitness.MediaHandlers.Button.ButtonLayout;
+import uk.ac.york.nimblefitness.MediaHandlers.Button.TextButtonType;
 import uk.ac.york.nimblefitness.MediaHandlers.Graphics.ShapeType;
 import uk.ac.york.nimblefitness.MediaHandlers.Graphics.ShapeView;
 import uk.ac.york.nimblefitness.MediaHandlers.Images.ImageLayout;
@@ -77,10 +79,16 @@ public class HandlerTestActivity extends AppCompatActivity {
 
         ImageLayout imageLayout = new ImageLayout(0,0, 3100, 1740, 1, "https://static.wikia.nocookie.net/reddwarf/images/6/69/Ainsley_Harriott.jpg/revision/latest/scale-to-width-down/310?cb=20180223100130",frameLayout, this);
 */
+
+        ButtonLayout buttonLayout = new ButtonLayout(200,500,800,200,"","","20","#FF03DAC5","ButtonTest", TextButtonType.fontFamily.sans_serif,frameLayout,this);
+        buttonLayout.drawTextButton();
+
+        ButtonLayout buttonLayout2 = new ButtonLayout(200,1000,80,400,"","","https://static.wikia.nocookie.net/reddwarf/images/6/69/Ainsley_Harriott.jpg/revision/latest/scale-to-width-down/310?cb=20180223100130",frameLayout,this);
+        buttonLayout2.drawImageButton();
+
         downloadXMLFile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //startActivity(new ShareService("Subject", "Text", "Title").ShareContent());
                 Uri uri = Uri.parse("https://www-users.york.ac.uk/~hew550/");
                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                 startActivity(intent);
@@ -93,15 +101,11 @@ public class HandlerTestActivity extends AppCompatActivity {
                 new MaterialFilePicker()
                         .withActivity(HandlerTestActivity.this)
                         .withRequestCode(1000)
-                        //.withCloseMenu(true)
                         .withFilter(Pattern.compile(".*\\.(xml)$"))
-                        //.withFilterDirectories(false)
                         .withHiddenFiles(true)
                         .start();
             }
         });
-
-
     }
 
     @Override

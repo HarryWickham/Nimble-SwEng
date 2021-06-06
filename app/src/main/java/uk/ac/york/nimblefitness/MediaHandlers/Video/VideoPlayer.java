@@ -72,6 +72,7 @@ public class VideoPlayer extends Activity implements Serializable {
                 //controller.setAnchorView(view);
                 //view.setMediaController(controller);
 
+                view.setContentDescription("Video showing how a rep should be completed");
 
                 view.setOnGenericMotionListener((v, event) -> {
                     controller.show(3);

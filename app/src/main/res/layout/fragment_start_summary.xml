@@ -4,45 +4,48 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Screens.RoutineAndExercise.StartSummaryFragment"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:gravity="center_horizontal">
 
-    <LinearLayout
+    <TextView
+        android:paddingTop="8dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        >
+        android:id="@+id/routine_summary"
+        android:textAlignment="center"
+        android:textSize="20sp"/>
 
+    <TextView
+        android:paddingTop="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/star_rating"
+        android:textSize="15sp"/>
+
+    <TextView
+        android:paddingTop="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/sets"
+        android:textSize="15sp"/>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp">
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/start_summary_list_view"
+            android:divider="@color/transparent"/>
+    </androidx.cardview.widget.CardView>
 
     <Button
         android:id="@+id/toInfoPage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="start routine"
-        android:layout_marginHorizontal="8dp">
+        android:layout_marginHorizontal="8dp"
+        android:text="start routine" />
 
-    </Button>
-
-    </LinearLayout>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/routine_summary"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/star_rating"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/sets"/>
-
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/start_summary_list_view"
-        android:divider="@color/transparent"/>
 
 </LinearLayout>
