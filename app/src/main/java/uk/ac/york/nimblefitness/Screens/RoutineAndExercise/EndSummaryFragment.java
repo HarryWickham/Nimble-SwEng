@@ -3,17 +3,24 @@ package uk.ac.york.nimblefitness.Screens.RoutineAndExercise;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.RatingBar;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
+import android.widget.Toolbar;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -94,8 +101,23 @@ public class EndSummaryFragment extends Fragment {
         }
     }
 
-    private void rateRoutine(){
+    private void rateRoutine() {
 
+    }
+
+    private void favouriteRoutine() {
+        ToggleButton favouritesButton = getView().findViewById(R.id.favourite_button);
+        favouritesButton.setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_baseline_favorite_24));
+
+        favouritesButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (favouritesButton.isChecked()) {
+                    favouritesButton.setBackgroundColor(Color.parseColor("#FF69B4"));
+
+                }
+            }
+        });
     }
 
 }
