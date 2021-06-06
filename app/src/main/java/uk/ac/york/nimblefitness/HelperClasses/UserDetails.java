@@ -4,6 +4,7 @@ public class UserDetails {
 
     String firstName, lastName, gender, exerciseType, exerciseDuration, membershipPlan;
     int currentMoves, age, weeklyGoal, completedRoutines, lastLogin;
+    boolean acceptedTC;
 
     public UserDetails() {
     }
@@ -20,6 +21,21 @@ public class UserDetails {
         this.currentMoves = currentMoves;
         this.completedRoutines = completedRoutines;
         this.lastLogin = lastLogin;
+    }
+
+    public UserDetails(String firstName, String lastName, String gender, String exerciseType, String exerciseDuration, int age, String membershipPlan, int weeklyGoal, int currentMoves, int completedRoutines, int lastLogin, boolean acceptedTC) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.gender = gender;
+        this.exerciseType = exerciseType;
+        this.exerciseDuration = exerciseDuration;
+        this.age = age;
+        this.membershipPlan = membershipPlan;
+        this.weeklyGoal = weeklyGoal;
+        this.currentMoves = currentMoves;
+        this.completedRoutines = completedRoutines;
+        this.lastLogin = lastLogin;
+        this.acceptedTC = acceptedTC;
     }
 
     public String getFirstName() {
@@ -108,5 +124,13 @@ public class UserDetails {
 
     public void setLastLogin(int lastLogin) {
         this.lastLogin = lastLogin;
+    }
+
+    public boolean isAcceptedTC() {
+        return acceptedTC;
+    }
+
+    public void setAcceptedTC(boolean acceptedTC) {
+        this.acceptedTC = acceptedTC;
     }
 }

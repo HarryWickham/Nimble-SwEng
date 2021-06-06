@@ -56,6 +56,7 @@ public class SplashScreen extends AppCompatActivity {
                         editor.putInt(currentFirebaseUser + "weeklyGoal", userDetails.getWeeklyGoal());
                         editor.putInt(currentFirebaseUser + "currentMoves", userDetails.getCurrentMoves());
                         editor.putInt(currentFirebaseUser + "completedRoutines", userDetails.getCompletedRoutines());
+                        editor.putBoolean(currentFirebaseUser + "acceptedTC", userDetails.isAcceptedTC());
                         editor.apply();
                         resetCompletedRoutines(userDetails, currentFirebaseUser, prefs);
 
@@ -83,8 +84,12 @@ public class SplashScreen extends AppCompatActivity {
         SharedPreferences prefs = getDefaultSharedPreferences(getApplicationContext());
         String userName = prefs.getString(currentFirebaseUser+"userFullName", "error");
         String membershipPlan = prefs.getString(currentFirebaseUser+"membershipPlan", "error");
+        boolean acceptedTC = prefs.getBoolean(currentFirebaseUser+"acceptedTC", false);
         if(currentFirebaseUser == null){
             startActivity(new Intent(SplashScreen.this,SignupActivity.class));
+            finish();
+        } else if(!acceptedTC) {
+            startActivity(new Intent(SplashScreen.this,TermsAndConditionsActivity.class));
             finish();
         } else if(membershipPlan.equals("error")){
             Log.i("routing membershipPlan ", membershipPlan);

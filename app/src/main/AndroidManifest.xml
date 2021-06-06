@@ -50,6 +50,11 @@
             android:label="@string/app_name"
             android:theme="@style/Theme.NimbleFitness.NoActionBar"
             android:screenOrientation="portrait"/>
+        <activity
+            android:name=".Screens.TermsAndConditionsActivity"
+            android:theme="@style/Theme.NimbleFitness.NoActionBar"
+            android:screenOrientation="portrait"
+            />
 
 
         <service android:name=".MediaHandlers.Audio.Audio" />
