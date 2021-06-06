@@ -12,7 +12,7 @@ import androidx.fragment.app.FragmentTransaction;
 import uk.ac.york.nimblefitness.R;
 
 public class TermsAndConditionsFragment extends Fragment {
-
+/*
     ImageButton back_button;
 
     @Override
@@ -38,5 +38,5 @@ public class TermsAndConditionsFragment extends Fragment {
         });
 
         return view;
-    }
+    }*/
 }
