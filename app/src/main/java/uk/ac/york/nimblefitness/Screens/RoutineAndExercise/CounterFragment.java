@@ -114,7 +114,7 @@ public class CounterFragment extends Fragment {
                     pauseTimer(); // If the timer is running, pause it
                 }
                 // Removing the points
-                editor.putInt(currentFirebaseUser + "totalPoints", prefs.getInt(currentFirebaseUser+"totalPoints", 0)-(pointsAdded * routine.getExerciseArrayList().get(routine.getCurrentExercise()).getMovesPerRep()));
+                editor.putInt(currentFirebaseUser + "totalPoints", (int) (prefs.getInt(currentFirebaseUser+"totalPoints", 0)-(pointsAdded * routine.getExerciseArrayList().get(routine.getCurrentExercise()).getMovesPerRep())));
                 editor.apply(); // Removing the points
                 FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.RoutineAndExerciseFrame, informationFragment);
@@ -340,7 +340,7 @@ public class CounterFragment extends Fragment {
     private void nextScreen(){
         FinishFragment finishFragment = new FinishFragment();
         finishFragment.setArguments(bundle); // Inputting the information
-        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+        FragmentTransaction fragmentTransaction = requireActivity().getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.RoutineAndExerciseFrame, finishFragment);
         fragmentTransaction.commit(); // Moving to the next screen
     }
@@ -377,7 +377,7 @@ public class CounterFragment extends Fragment {
         FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser(); // Gathering the users unique code
         SharedPreferences prefs = getDefaultSharedPreferences(getApplicationContext());
         SharedPreferences.Editor editor = prefs.edit();
-        editor.putInt(currentFirebaseUser + "totalPoints", prefs.getInt(currentFirebaseUser+"totalPoints", 0)+(routine.getExerciseArrayList().get(routine.getCurrentExercise()).getMovesPerRep()));
+        editor.putInt(currentFirebaseUser + "totalPoints", (int) (prefs.getInt(currentFirebaseUser+"totalPoints", 0)+(routine.getExerciseArrayList().get(routine.getCurrentExercise()).getMovesPerRep())));
         editor.apply(); // Applying the points
         pointsAdded ++; // Amount of points added per exercise
 
@@ -386,7 +386,7 @@ public class CounterFragment extends Fragment {
 
     //Function to output sound when a rep/time starts or ends
     private void beepSoundOutput(){
-       if (isMuted != true) { // First checks to see if the page has been muted, if not it continues
+       if (!isMuted) { // First checks to see if the page has been muted, if not it continues
            AudioType audioType = new AudioType("https://www-users.york.ac.uk/~hew550/NimbleAssets/beep.wav", 0, false, "id", getContext()); // Retrieving beep sound
            audioType.play(); // Play the sound retrieved
        }

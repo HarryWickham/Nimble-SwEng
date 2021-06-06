@@ -79,7 +79,7 @@ public class MovesListAdapter extends BaseAdapter {
         }else if (exercise.get(position).getRepType().equalsIgnoreCase("number")){
             viewHolder.txtDetails.setText(String.format(Locale.UK,"%d reps", exercise.get(position).getReps()));
         }
-        viewHolder.txtMoves.setText(String.format(Locale.UK,"Moves: %d", exercise.get(position).getMovesPerRep()*exercise.get(position).getReps()));
+        viewHolder.txtMoves.setText(String.format(Locale.UK,"Moves: %d", (int) exercise.get(position).getMovesPerRep()*exercise.get(position).getReps()));
         viewHolder.colourBar.setBackgroundColor(exercise.get(position).getColour());
         return convertView;
     }

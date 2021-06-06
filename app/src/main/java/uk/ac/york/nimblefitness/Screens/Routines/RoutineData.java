@@ -125,7 +125,7 @@ public class RoutineData {
                             exercise.setRepType(parser.getAttributeValue(null, "repType"));
                             exercise.setReps(Integer.parseInt(parser.getAttributeValue(null, "reps")));
                             exercise.setTimePerRep(Integer.parseInt(parser.getAttributeValue(null, "timePerRep")));
-                            exercise.setMovesPerRep(Integer.parseInt(parser.getAttributeValue(null, "movesPerRep")));
+                            exercise.setMovesPerRep(Float.parseFloat(parser.getAttributeValue(null, "movesPerRep")));
                             exercise.setRestAfterFinish(Integer.parseInt(parser.getAttributeValue(null, "restAfterFinish")));
                             exercise.setColour(Color.parseColor(parser.getAttributeValue(null, "colour")));
                             break;

@@ -17,7 +17,7 @@ public class Exercise implements Serializable {
     private String repType; //"time" or "number"
     private int reps;
     private int timePerRep;
-    private int movesPerRep;
+    private float movesPerRep;
     private int restAfterFinish;
     private int colour;
     private VideoLayout exerciseVideo;
@@ -25,7 +25,7 @@ public class Exercise implements Serializable {
     private int currentExercise;
     private ArrayList<AudioType> audioTypes;
 
-    public Exercise(ImageLayout muscleGroupImage, ArrayList<ShapeType> backgroundShapes, String exerciseName, String exerciseDescription, String repType, int reps, int timePerRep, int movesPerRep, int restAfterFinish, int colour, VideoLayout exerciseVideo, ArrayList<TextLayout> textLayouts, ArrayList<AudioType> audioTypes) {
+    public Exercise(ImageLayout muscleGroupImage, ArrayList<ShapeType> backgroundShapes, String exerciseName, String exerciseDescription, String repType, int reps, int timePerRep, float movesPerRep, int restAfterFinish, int colour, VideoLayout exerciseVideo, ArrayList<TextLayout> textLayouts, ArrayList<AudioType> audioTypes) {
         this.muscleGroupImage = muscleGroupImage;
         this.backgroundShapes = backgroundShapes;
         this.exerciseName = exerciseName;
@@ -93,11 +93,11 @@ public class Exercise implements Serializable {
         this.timePerRep = timePerRep;
     }
 
-    public int getMovesPerRep() {
+    public float getMovesPerRep() {
         return movesPerRep;
     }
 
-    public void setMovesPerRep(int movesPerRep) {
+    public void setMovesPerRep(float movesPerRep) {
         this.movesPerRep = movesPerRep;
     }
 

@@ -4,10 +4,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,16 +20,25 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
+import java.util.Objects;
 
 import uk.ac.york.nimblefitness.Adapters.MovesListAdapter;
 import uk.ac.york.nimblefitness.HelperClasses.Exercise;
 import uk.ac.york.nimblefitness.HelperClasses.LeaderBoardUserDetails;
 import uk.ac.york.nimblefitness.HelperClasses.Routine;
+import uk.ac.york.nimblefitness.HelperClasses.SavableExercise;
+import uk.ac.york.nimblefitness.HelperClasses.SavableExerciseArray;
 import uk.ac.york.nimblefitness.R;
 import uk.ac.york.nimblefitness.Screens.MainActivity;
 
@@ -36,6 +47,10 @@ import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class FinishFragment extends Fragment {
 
+    FirebaseUser currentFirebaseUser;
+    FirebaseDatabase rootDatabase;
+    DatabaseReference rootReferenceUser;
+    Routine routine = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -48,7 +63,7 @@ public class FinishFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_finish, container, false);
 
-        Routine routine = null;
+
         if (getArguments() != null) {
             routine = (Routine) getArguments().getSerializable("routine");
         }
@@ -63,20 +78,25 @@ public class FinishFragment extends Fragment {
         TextView restTime = view.findViewById(R.id.finish_rest_remaining);
         finishListView.setEnabled(false);
 
+
+
         if(routine.getExerciseArrayList().get(routine.getCurrentExercise()).getRepType().equalsIgnoreCase("time")){
             finishText.setText(String.format(Locale.UK,"Congratulations you have completed %d seconds of %s",routine.getExerciseArrayList().get(routine.getCurrentExercise()).getReps(), routine.getExerciseArrayList().get(routine.getCurrentExercise()).getExerciseName()));
         }else if (routine.getExerciseArrayList().get(routine.getCurrentExercise()).getRepType().equalsIgnoreCase("number")){
             finishText.setText(String.format(Locale.UK,"Congratulations you have completed %d %s",routine.getExerciseArrayList().get(routine.getCurrentExercise()).getReps(), routine.getExerciseArrayList().get(routine.getCurrentExercise()).getExerciseName()));
         }
 
-        FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         SharedPreferences prefs = getDefaultSharedPreferences(getApplicationContext());
         SharedPreferences.Editor editor = prefs.edit();
-        editor.putInt(currentFirebaseUser + "currentMoves", prefs.getInt(currentFirebaseUser+"currentMoves", 0)+(routine.getExerciseArrayList().get(routine.getCurrentExercise()).getReps()*routine.getExerciseArrayList().get(routine.getCurrentExercise()).getMovesPerRep()));
+        editor.putInt(currentFirebaseUser + "currentMoves", (int) (prefs.getInt(currentFirebaseUser+"currentMoves", 0)+(routine.getExerciseArrayList().get(routine.getCurrentExercise()).getReps()*routine.getExerciseArrayList().get(routine.getCurrentExercise()).getMovesPerRep())));
         editor.apply();
 
-        FirebaseDatabase rootDatabase = FirebaseDatabase.getInstance();
-        DatabaseReference rootReferenceUser = rootDatabase.getReference("users").child(currentFirebaseUser.getUid());
+        rootDatabase = FirebaseDatabase.getInstance();
+        rootReferenceUser = rootDatabase.getReference("users").child(currentFirebaseUser.getUid());
+
+
+
         DatabaseReference rootReferenceScoreBoard = rootDatabase.getReference("scoreBoard").child(currentFirebaseUser.getUid());
 
         rootReferenceUser.child("userDetails").child("currentMoves").setValue(prefs.getInt(currentFirebaseUser+"currentMoves", 0));
@@ -140,7 +160,7 @@ public class FinishFragment extends Fragment {
 
             @Override
             public void onFinish() {
-                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                FragmentTransaction fragmentTransaction = requireActivity().getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.RoutineAndExerciseFrame, informationFragment);
                 fragmentTransaction.commit();
             }
@@ -149,7 +169,7 @@ public class FinishFragment extends Fragment {
         nextExercise.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                FragmentTransaction fragmentTransaction = requireActivity().getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.RoutineAndExerciseFrame, informationFragment);
                 fragmentTransaction.commit();
             }
@@ -161,11 +181,14 @@ public class FinishFragment extends Fragment {
         toEndSummary.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                FragmentTransaction fragmentTransaction = requireActivity().getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.RoutineAndExerciseFrame, endSummaryFragment);
                 fragmentTransaction.commit();
             }
         });
+
+        retrieveCompletedExerciseFromFirebase();
+
         return view;
     }
 
@@ -195,5 +218,90 @@ public class FinishFragment extends Fragment {
             remainingExercises.remove(0);
         }
         return remainingExercises;
+    }
+
+    public void retrieveCompletedExerciseFromFirebase(){
+        Log.i("Retrieve", "retrieveCompletedExerciseFromFirebase: ");
+        ArrayList<SavableExercise> exerciseArrayList = new ArrayList<>();
+        rootReferenceUser.child("exercises").child(currentDayNumber()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Log.i("Retrieve", "onDataChange");
+                for(DataSnapshot ds : snapshot.getChildren()) {
+                    Log.i("Retrieve", "DataSnapshot");
+                    if (ds.getValue(SavableExercise.class) != null) {
+                        Log.i("Retrieve", "ds.getValue(Exercise.class)");
+                        SavableExercise exercise = ds.getValue(SavableExercise.class);
+                        exerciseArrayList.add(exercise);
+                    }
+
+                }
+                addCompletedExerciseToFirebase(exerciseArrayList);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    public void addCompletedExerciseToFirebase(ArrayList<SavableExercise> completedExercises){
+
+        Exercise exercise = routine.getExerciseArrayList().get(routine.getCurrentExercise());
+
+        completedExercises.add(new SavableExercise(exercise.getExerciseName(),exercise.getReps(), exercise.getMovesPerRep(),exercise.getColour(), currentDayNumber()));
+
+        rootReferenceUser.child("exercises").child(currentDayNumber()).setValue(completedExercises);
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyDD");
+        Log.i("SimpleDateFormat", sdf.format(new Date()));
+        Log.i("CustomFormattedDay", currentDayNumber());
+    }
+
+    public String monthText(int month){
+        switch (month){
+            case 1: return("January");
+            case 2: return("February");
+            case 3: return("March");
+            case 4: return("April");
+            case 5: return("May");
+            case 6: return("June");
+            case 7: return("July");
+            case 8: return("August");
+            case 9: return("September");
+            case 10: return("October");
+            case 11: return("November");
+            case 12: return("December");
+            default: return("error");
+        }
+    }
+
+    // This method is used to set which prefix is displayed after the date number.
+    public String datePrefix(int dayOfMonth){
+        switch (dayOfMonth){
+            case 1:
+            case 21:
+            case 31:
+                return ("st");
+            case 2:
+            case 22:
+                return ("nd");
+            case 3:
+            case 23:
+                return ("rd");
+            default: return ("th");
+        }
+    }
+
+    public String currentDayNumber() {
+        SimpleDateFormat month = new SimpleDateFormat("M", Locale.UK);
+        SimpleDateFormat day = new SimpleDateFormat("d", Locale.UK);
+        Date currentTime = Calendar.getInstance().getTime();
+        String monthString = month.format(currentTime);
+        String dayString = day.format(currentTime);
+        String currentDayNumber = String.format("%s %s%s", monthText(Integer.parseInt(monthString)),
+                dayString, datePrefix(Integer.parseInt(dayString)));
+        return currentDayNumber;
     }
 }

@@ -224,7 +224,7 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
         int routineTotalMoves = 0;
 
         for(int i = 0; i < routine.getExerciseArrayList().size(); i++){
-            routineTotalMoves = routineTotalMoves + routine.getExerciseArrayList().get(i).getMovesPerRep()*routine.getExerciseArrayList().get(i).getReps();
+            routineTotalMoves = routineTotalMoves + (int) routine.getExerciseArrayList().get(i).getMovesPerRep()*routine.getExerciseArrayList().get(i).getReps();
         }
 
         routineTotalMoves = routineTotalMoves*routine.getSets();
