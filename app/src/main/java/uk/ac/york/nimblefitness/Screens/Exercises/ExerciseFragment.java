@@ -1,13 +1,11 @@
 package uk.ac.york.nimblefitness.Screens.Exercises;
 
+import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Filter;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -17,6 +15,8 @@ import androidx.fragment.app.Fragment;
 
 import java.util.ArrayList;
 
+import uk.ac.york.nimblefitness.Adapters.ExerciseListAdapter;
+import uk.ac.york.nimblefitness.HelperClasses.Exercise;
 import uk.ac.york.nimblefitness.R;
 
 
@@ -47,6 +47,10 @@ public class ExerciseFragment extends Fragment {
         exercises.setIconified(false);
 
         ArrayList<String> arrayList = new ArrayList<>();
+        ArrayList<Exercise> exersiseList = new ArrayList<>();
+        Exercise exercise = new Exercise();
+        exercise.setColour(Color.parseColor("#ff6200"));
+        exercise.setExerciseName("Normal Push Up");
         arrayList.add("Normal Push Up");
         arrayList.add("Wide Push Up");
         arrayList.add("Closed Push Up");
@@ -68,13 +72,15 @@ public class ExerciseFragment extends Fragment {
         arrayList.add("Burpees");
         arrayList.add("Step Ups");
 
-        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getContext(),
-                android.R.layout.simple_list_item_1,
-                arrayList);
+        //final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getContext(),
+                //android.R.layout.simple_list_item_1,
+                //arrayList);
+        exersiseList.add(exercise);
+        ExerciseListAdapter arrayAdapter = new ExerciseListAdapter(getContext(),exersiseList);
         list.setAdapter(arrayAdapter);
 
 
-        exercises.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        /*exercises.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 return false;
@@ -97,7 +103,7 @@ public class ExerciseFragment extends Fragment {
                 });
                 return false;
             }
-        });
+        });*/
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
