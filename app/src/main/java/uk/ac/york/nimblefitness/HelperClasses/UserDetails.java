@@ -4,25 +4,42 @@ public class UserDetails {
 
     String firstName, lastName, gender, exerciseType, exerciseDuration, membershipPlan;
     int currentMoves, age, weeklyGoal, completedRoutines, lastLogin;
-    boolean acceptedTC;
+    boolean acceptedTC, onBoarded;
 
     public UserDetails() {
     }
-/*
-    public UserDetails(String firstName, String lastName, String gender, String exerciseType, String exerciseDuration, int age, String membershipPlan, int weeklyGoal, int currentMoves, int completedRoutines, int lastLogin) {
+
+    public UserDetails(String firstName, String lastName, String gender, String exerciseType, String exerciseDuration, String membershipPlan, int currentMoves, int age, int weeklyGoal, int completedRoutines, int lastLogin, boolean acceptedTC, boolean onBoarded) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;
         this.exerciseType = exerciseType;
         this.exerciseDuration = exerciseDuration;
-        this.age = age;
         this.membershipPlan = membershipPlan;
-        this.weeklyGoal = weeklyGoal;
         this.currentMoves = currentMoves;
+        this.age = age;
+        this.weeklyGoal = weeklyGoal;
         this.completedRoutines = completedRoutines;
         this.lastLogin = lastLogin;
+        this.acceptedTC = acceptedTC;
+        this.onBoarded = onBoarded;
     }
-*/
+
+    /*
+        public UserDetails(String firstName, String lastName, String gender, String exerciseType, String exerciseDuration, int age, String membershipPlan, int weeklyGoal, int currentMoves, int completedRoutines, int lastLogin) {
+            this.firstName = firstName;
+            this.lastName = lastName;
+            this.gender = gender;
+            this.exerciseType = exerciseType;
+            this.exerciseDuration = exerciseDuration;
+            this.age = age;
+            this.membershipPlan = membershipPlan;
+            this.weeklyGoal = weeklyGoal;
+            this.currentMoves = currentMoves;
+            this.completedRoutines = completedRoutines;
+            this.lastLogin = lastLogin;
+        }
+
     public UserDetails(String firstName, String lastName, String gender, String exerciseType, String exerciseDuration, int age, String membershipPlan, int weeklyGoal, int currentMoves, int completedRoutines, int lastLogin, boolean acceptedTC) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -36,7 +53,7 @@ public class UserDetails {
         this.completedRoutines = completedRoutines;
         this.lastLogin = lastLogin;
         this.acceptedTC = acceptedTC;
-    }
+    }*/
 
     public String getFirstName() {
         return firstName;
@@ -132,5 +149,13 @@ public class UserDetails {
 
     public void setAcceptedTC(boolean acceptedTC) {
         this.acceptedTC = acceptedTC;
+    }
+
+    public boolean isOnBoarded() {
+        return onBoarded;
+    }
+
+    public void setOnBoarded(boolean onBoarded) {
+        this.onBoarded = onBoarded;
     }
 }

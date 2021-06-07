@@ -1,28 +1,30 @@
 package uk.ac.york.nimblefitness.Screens;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Bundle;
 import android.util.Log;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.viewpager2.widget.ViewPager2;
+import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import uk.ac.york.nimblefitness.Adapters.ViewPagerAdapter;
 import uk.ac.york.nimblefitness.R;
 
-public class Onboarding extends AppCompatActivity {
+public class OnBoardingActivity extends AppCompatActivity {
 
     ViewPager2 viewPager2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_on_boarding);
+
         viewPager2 = findViewById(R.id.view_pager2);
         Log.i("viewpager", String.valueOf(viewPager2));
-
 
         List<String> title = new ArrayList<>();
         title.add("Calendar Tracker");
@@ -42,8 +44,10 @@ public class Onboarding extends AppCompatActivity {
         image.add(R.drawable.medal);
         image.add(R.drawable.leaderboard);
 
-        viewPager2.setAdapter(new ViewPagerAdapter(this, title, viewPager2, image, description));
+        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(this, title, viewPager2, image, description);
 
+        Log.i("onCreate", String.valueOf(viewPagerAdapter));
 
+        viewPager2.setAdapter(viewPagerAdapter);
     }
 }

@@ -47,6 +47,7 @@ public class TermsAndConditionsActivity extends Activity {
                             SharedPreferences prefs = getDefaultSharedPreferences(getApplicationContext());
                             SharedPreferences.Editor editor = prefs.edit();
                             editor.putBoolean(currentFirebaseUser + "acceptedTC", true);
+                            editor.putBoolean(currentFirebaseUser + "onBoarded", userDetails.isOnBoarded());
                             editor.apply();
                         }
                         routing(currentFirebaseUser);
@@ -64,7 +65,7 @@ public class TermsAndConditionsActivity extends Activity {
         SharedPreferences prefs = getDefaultSharedPreferences(getApplicationContext());
         String userName = prefs.getString(currentFirebaseUser+"userFullName", "error");
         String membershipPlan = prefs.getString(currentFirebaseUser+"membershipPlan", "error");
-
+        boolean onBoarded = prefs.getBoolean(currentFirebaseUser+"onBoarded", false);
         if(membershipPlan.equals("error")){
             Log.i("routing membershipPlan ", membershipPlan);
             startActivity(new Intent(TermsAndConditionsActivity.this,PaymentActivity.class));
@@ -73,7 +74,10 @@ public class TermsAndConditionsActivity extends Activity {
             Log.i("routing userName", userName);
             startActivity(new Intent(TermsAndConditionsActivity.this,UserDetailsActivity.class));
             finish();
-        } else {
+        } else if(!onBoarded){
+            startActivity(new Intent(TermsAndConditionsActivity.this, OnBoardingActivity.class));
+            finish();
+        }else {
             Log.i("routing FirebaseUser", String.valueOf(currentFirebaseUser));
             Log.i("routing membershipPlan", membershipPlan);
             Log.i("routing userName", userName);

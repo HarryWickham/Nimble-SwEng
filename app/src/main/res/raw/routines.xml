@@ -53,8 +53,7 @@
             </exercise>
         </routine>
 
-        <routine routineImage="https://www-users.york.ac.uk/~hew550/NimbleAssets/routineimages/beginLow.png" routineName="Beginner Lower Body" routineSummary="Don’t skip leg day! This routine concentrates on those lower body muscles including femoris muscles, soleus and gluteus muscles by using your own bodyweight to work them.
-"
+        <routine routineImage="https://www-users.york.ac.uk/~hew550/NimbleAssets/routineimages/beginLow.png" routineName="Beginner Lower Body" routineSummary="Don’t skip leg day! This routine concentrates on those lower body muscles including femoris muscles, soleus and gluteus muscles by using your own bodyweight to work them."
             rating="3" sets="4" restBetweenSets="30" setsRemaining="4">
             <exercise exerciseName="Body Weight Squats" exerciseDescription="From a standing position, space your legs about a shoulder width apart, toes facing forwards and bend at the knee to lower your body. Ensure that you do not arch your back; keep it straight, and bend sufficiently at the knee to lower yourself. Then, raise yourself by engaging leg and core muscles back to the start position to complete a rep. "
                 repType="number" reps="5" timePerRep="3" movesPerRep="1" restAfterFinish="10" colour="#009933">
