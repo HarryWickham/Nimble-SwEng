@@ -201,17 +201,20 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
                 if (routine.getRoutineName().toLowerCase().contains(query)) {
                     routineArrayList.add(routine);
                 }
-
+                boolean alreadyAdded = false;
                 for (Exercise exercise : exerciseList) {
                     if(exercise.getExerciseName().toLowerCase().contains(query)) {
-                        searchList.add(exercise);
+                        // Check to see if routine is already added
+                        for(Routine addRoutine : routineArrayList) {
+                            if(routine.getRoutineName().equals(addRoutine.getRoutineName())) {
+                                alreadyAdded = true;
+                            }
+                        }
+
+                        if (!alreadyAdded) {
+                            routineArrayList.add(routine);
+                        }
                     }
-                }
-                if (!searchList.isEmpty()) {
-                    Routine filteredRoutine;
-                    filteredRoutine = routine;
-                    filteredRoutine.setExerciseArrayList(searchList);
-                    routineArrayList.add(filteredRoutine);
                 }
             }
         }
