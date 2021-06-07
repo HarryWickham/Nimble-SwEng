@@ -8,19 +8,22 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import androidx.annotation.NonNull;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import uk.ac.york.nimblefitness.HelperClasses.UserDetails;
 import uk.ac.york.nimblefitness.R;
 
 import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 
 public class TermsAndConditionsActivity extends Activity {
-
-    FirebaseDatabase rootDatabase;
-    DatabaseReference rootReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -28,19 +31,31 @@ public class TermsAndConditionsActivity extends Activity {
         setContentView(R.layout.activity_terms_and_conditions);
         setTitle("Terms & Conditions");
 
-        rootDatabase = FirebaseDatabase.getInstance();
-        FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        rootReference = rootDatabase.getReference("users").child(currentFirebaseUser.getUid());
-
         Button acceptTC = findViewById(R.id.acceptTC);
-        acceptTC.setOnClickListener(new View.OnClickListener(){
+        acceptTC.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences prefs = getDefaultSharedPreferences(getApplicationContext());
-                SharedPreferences.Editor editor = prefs.edit();
-                editor.putBoolean(currentFirebaseUser + "acceptedTC", true);
-                editor.apply();
-                routing(currentFirebaseUser);
+                FirebaseDatabase rootDatabase = FirebaseDatabase.getInstance();
+                FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+                DatabaseReference rootReference = rootDatabase.getReference("users").child(currentFirebaseUser.getUid());
+                rootReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        UserDetails userDetails = snapshot.child("userDetails").getValue(UserDetails.class);
+                        rootReference.child("userDetails").child("acceptedTC").setValue(true);
+                        if (userDetails != null) {
+                            SharedPreferences prefs = getDefaultSharedPreferences(getApplicationContext());
+                            SharedPreferences.Editor editor = prefs.edit();
+                            editor.putBoolean(currentFirebaseUser + "acceptedTC", true);
+                            editor.apply();
+                        }
+                        routing(currentFirebaseUser);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                    }
+                });
             }
         });
     }
@@ -67,3 +82,6 @@ public class TermsAndConditionsActivity extends Activity {
         }
     }
 }
+/*
+
+ */
