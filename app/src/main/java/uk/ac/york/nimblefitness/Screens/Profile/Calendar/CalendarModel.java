@@ -2,7 +2,6 @@ package uk.ac.york.nimblefitness.Screens.Profile.Calendar;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +17,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.gson.Gson;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -28,11 +26,7 @@ import java.util.Locale;
 
 import uk.ac.york.nimblefitness.Adapters.MovesListAdapter;
 import uk.ac.york.nimblefitness.HelperClasses.Exercise;
-import uk.ac.york.nimblefitness.HelperClasses.Routine;
 import uk.ac.york.nimblefitness.HelperClasses.SavableExercise;
-import uk.ac.york.nimblefitness.MediaHandlers.Text.TextLayout;
-import uk.ac.york.nimblefitness.MediaHandlers.Video.VideoLayout;
-import uk.ac.york.nimblefitness.R;
 
 import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 import static com.facebook.FacebookSdk.getApplicationContext;
@@ -99,11 +93,10 @@ public class CalendarModel implements CalendarContract.Model {
     // The earliest selectable date on the calendar is set by when the user signed up to the app.
     @Override
     public long userStartDate() {
-        long startDate = 0;
         if (currentFirebaseUser != null) {
-            startDate = currentFirebaseUser.getMetadata().getCreationTimestamp();
+            return currentFirebaseUser.getMetadata().getCreationTimestamp();
         }
-        return startDate;
+        return 0;
     }
 
     // When the user selects a day on the calendar view, the date is displayed below the calendar as
@@ -150,7 +143,6 @@ public class CalendarModel implements CalendarContract.Model {
                         exercise1.setReps(exercise.getReps());
                         exercise1.setRepType(exercise.getRepType());
                         exercises.add(exercise1);
-
                     }
 
                 }
