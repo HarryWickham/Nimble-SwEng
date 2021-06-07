@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -72,11 +73,11 @@ public class ExerciseFragment extends Fragment {
         arrayList.add("Burpees");
         arrayList.add("Step Ups");
 
-        //final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getContext(),
-                //android.R.layout.simple_list_item_1,
-                //arrayList);
+        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getContext(),
+                android.R.layout.simple_list_item_1,
+                arrayList);
         exersiseList.add(exercise);
-        ExerciseListAdapter arrayAdapter = new ExerciseListAdapter(getContext(),exersiseList);
+        //ExerciseListAdapter arrayAdapter = new ExerciseListAdapter(getContext(),exersiseList);
         list.setAdapter(arrayAdapter);
 
 
