@@ -54,8 +54,8 @@ public class GoalPresenter implements GoalContract.Presenter{
     }
 
     @Override
-    public MovesListAdapter setTodaysMovesList() {
-        return goalModel.todaysMoves(goalView.getContext());
+    public MovesListAdapter setTodaysMovesList(ListView listView) {
+        return goalModel.todaysMoves(goalView.getContext(), listView);
     }
 
     @Override

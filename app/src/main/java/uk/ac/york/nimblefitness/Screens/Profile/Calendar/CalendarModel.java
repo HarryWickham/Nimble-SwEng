@@ -129,8 +129,6 @@ public class CalendarModel implements CalendarContract.Model {
     // database and is used to populate this list in the Calendar tab.
     @Override
     public MovesListAdapter completedMoves(Context context, String dayNumber, ListView listView) {
-
-
         ArrayList<Exercise> exercises = new ArrayList<>();
 
         FirebaseDatabase rootDatabase = FirebaseDatabase.getInstance();

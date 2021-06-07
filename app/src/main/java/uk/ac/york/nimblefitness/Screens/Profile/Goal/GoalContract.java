@@ -20,7 +20,7 @@ public interface GoalContract {
         String currentUser();
         int updateGauge(int currentValue, int valueAdded);
         int gaugeEndValue();
-        MovesListAdapter todaysMoves(Context context);
+        MovesListAdapter todaysMoves(Context context, ListView listView);
         void setListViewHeightBasedOnChildren (ListView listView);
     }
 
@@ -29,7 +29,7 @@ public interface GoalContract {
         String displayUserName();
         int displayGaugeInfo();
         int setGaugeEndValue();
-        MovesListAdapter setTodaysMovesList();
+        MovesListAdapter setTodaysMovesList(ListView listView);
         void setListViewHeightBasedOnChildren (ListView listView);
     }
 }

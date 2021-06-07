@@ -47,7 +47,7 @@ public class Audio extends Service {
         }
 
         myPlayer.setLooping(true); // Set looping, setting loop play to true
-        Toast.makeText(this, "Service Successfully Created", Toast.LENGTH_LONG).show();
+        //Toast.makeText(this, "Service Successfully Created", Toast.LENGTH_LONG).show();
     }
    @Override
     public void onStart(Intent intent, int startid) {

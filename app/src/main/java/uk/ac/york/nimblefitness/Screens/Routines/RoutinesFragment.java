@@ -138,8 +138,10 @@ public class RoutinesFragment extends Fragment {
             public boolean onQueryTextChange(String query) {
                 nothingFound = view.findViewById(R.id.nothing_found_routines);
                 boolean successfulSearch = listAdapter.filterData(query);
+                routineListView.setVisibility(VISIBLE);
                 if (!successfulSearch) {
                     nothingFound.setVisibility(VISIBLE);
+                    routineListView.setVisibility(GONE);
                 }
                 else if (query.isEmpty()) {
                     collapseAll();

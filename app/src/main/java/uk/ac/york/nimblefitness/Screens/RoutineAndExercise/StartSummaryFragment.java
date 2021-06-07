@@ -33,6 +33,7 @@ import uk.ac.york.nimblefitness.MediaHandlers.Video.VideoLayout;
 import uk.ac.york.nimblefitness.R;
 
 import static android.preference.PreferenceManager.getDefaultSharedPreferences;
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class StartSummaryFragment extends Fragment {
 
@@ -52,6 +53,12 @@ public class StartSummaryFragment extends Fragment {
         Bundle bundle = intent.getExtras();
 
         Routine routine = (Routine) bundle.getSerializable("routine");
+
+        FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser(); // Gathering the users unique code
+        SharedPreferences prefs = getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putInt(currentFirebaseUser + "totalPoints",0);
+        editor.apply();
 
         getActivity().setTitle(routine.getRoutineName());
 

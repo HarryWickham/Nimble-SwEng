@@ -343,10 +343,10 @@ public class HandlerTestActivity extends AppCompatActivity {
                     new String[]{permission},
                     requestCode);
         } else {
-            Toast.makeText(HandlerTestActivity.this,
+            /*Toast.makeText(HandlerTestActivity.this,
                     "Permission already granted",
                     Toast.LENGTH_SHORT)
-                    .show();
+                    .show();*/
         }
     }
 

@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Screens.Routines.RoutinesFragment">
+    tools:context=".Screens.Routines.RoutinesFragment"
+    android:gravity="center_horizontal">
 
     <SearchView
         android:id="@+id/routine_search"
@@ -13,7 +14,7 @@
 
     <ExpandableListView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:id="@+id/routine_exp_list"
         android:divider="@color/transparent"
         />

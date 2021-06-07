@@ -48,6 +48,7 @@ public class FinishFragment extends Fragment {
     FirebaseDatabase rootDatabase;
     DatabaseReference rootReferenceUser;
     Routine routine = null;
+    CountDownTimer restTimer;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -109,6 +110,12 @@ public class FinishFragment extends Fragment {
 
         ArrayList<Exercise> remainingExercises = remainingExerciseList(allExercises, routine);
 
+        InformationFragment informationFragment = new InformationFragment();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("routine",routine);
+        informationFragment.setArguments(bundle);
+
+        retrieveCompletedExerciseFromFirebase();
 
         if (routine.getSetsRemaining()==1 && remainingExercises.size()==0){
             nextExercise.setVisibility(View.GONE);
@@ -126,6 +133,37 @@ public class FinishFragment extends Fragment {
             }
             remainingListText.setText("");
             routine.setCurrentExercise(0);
+            restTimer = new CountDownTimer(routine.getRestBetweenSets()*1000, 1000) {
+                @Override
+                public void onTick(long startTimeRemaining) {
+                    restTime.setText(String.valueOf(Integer.parseInt((String) restTime.getText())-1));
+                }
+
+                @Override
+                public void onFinish() {
+                    FragmentTransaction fragmentTransaction = requireActivity().getSupportFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.RoutineAndExerciseFrame, informationFragment);
+                    fragmentTransaction.commit();
+                }
+            }.start();
+
+            restTime.setText(String.valueOf(routine.getExerciseArrayList().get(routine.getCurrentExercise()).getRestAfterFinish()));
+        } else {
+            restTimer = new CountDownTimer(routine.getExerciseArrayList().get(routine.getCurrentExercise()).getRestAfterFinish()*1000, 1000) {
+                @Override
+                public void onTick(long startTimeRemaining) {
+                    restTime.setText(String.valueOf(Integer.parseInt((String) restTime.getText())-1));
+                }
+
+                @Override
+                public void onFinish() {
+                    FragmentTransaction fragmentTransaction = requireActivity().getSupportFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.RoutineAndExerciseFrame, informationFragment);
+                    fragmentTransaction.commit();
+                }
+            }.start();
+
+            restTime.setText(String.valueOf(routine.getExerciseArrayList().get(routine.getCurrentExercise()).getRestAfterFinish()));
         }
 
         MovesListAdapter movesListAdapter = new MovesListAdapter(getContext(), remainingExercises);
@@ -133,27 +171,6 @@ public class FinishFragment extends Fragment {
         finishListView.setAdapter(movesListAdapter);
         setListViewHeightBasedOnChildren(finishListView);
 
-        InformationFragment informationFragment = new InformationFragment();
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("routine",routine);
-        informationFragment.setArguments(bundle);
-
-        restTime.setText(String.valueOf(routine.getExerciseArrayList().get(routine.getCurrentExercise()).getRestAfterFinish()));
-
-        CountDownTimer restTimer = new CountDownTimer(routine.getExerciseArrayList().get(routine.getCurrentExercise()).getRestAfterFinish()*1000, 1000) {
-            @Override
-            public void onTick(long startTimeRemaining) {
-                restTime.setText(String.valueOf(Integer.parseInt((String) restTime.getText())-1));
-            }
-
-            @Override
-            public void onFinish() {
-                cancel();
-                FragmentTransaction fragmentTransaction = requireActivity().getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.RoutineAndExerciseFrame, informationFragment);
-                fragmentTransaction.commit();
-            }
-        }.start();
 
         nextExercise.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -179,14 +196,13 @@ public class FinishFragment extends Fragment {
         toEndSummary.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                restTimer.cancel();
                 FragmentTransaction fragmentTransaction = requireActivity().getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.RoutineAndExerciseFrame, endSummaryFragment);
                 fragmentTransaction.commit();
             }
         });
 
-        retrieveCompletedExerciseFromFirebase();
+
 
         return view;
     }
@@ -253,7 +269,20 @@ public class FinishFragment extends Fragment {
             exercise = routine.getExerciseArrayList().get(routine.getExerciseArrayList().size()-1);
         }
 
-        completedExercises.add(new SavableExercise(exercise.getExerciseName(),exercise.getReps(), exercise.getMovesPerRep(),exercise.getColour(), exercise.getRepType(), currentDayNumber()));
+        boolean alreadyDone = false;
+        for(SavableExercise savableExercise : completedExercises){
+            if(savableExercise.getExerciseName().equals(exercise.getExerciseName())){
+                savableExercise.setReps(savableExercise.getReps() + exercise.getReps());
+                alreadyDone = true;
+                break;
+            }
+        }
+
+        if(completedExercises.size() == 0 || !alreadyDone){
+            completedExercises.add(new SavableExercise(exercise.getExerciseName(),exercise.getReps(), exercise.getMovesPerRep(),exercise.getColour(), exercise.getRepType(), currentDayNumber()));
+
+        }
+
 
         rootReferenceUser.child("exercises").child(currentDayNumber()).setValue(completedExercises);
 

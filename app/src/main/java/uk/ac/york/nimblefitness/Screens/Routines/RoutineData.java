@@ -334,8 +334,6 @@ public class RoutineData {
                     }
                     else if (name.equalsIgnoreCase("routine") && routine != null){
                         routine.setExerciseArrayList((ArrayList<Exercise>) exerciseArrayList.clone());
-                        Gson gson = new Gson();
-                        Log.i("getBackgroundShapes", gson.toJson(routine.getExerciseArrayList().get(0).getBackgroundShapes()));
                         routineArrayList.add(routine);
                         exerciseArrayList.clear();
                         routine = null;

@@ -7,9 +7,11 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +26,14 @@ import android.widget.Toolbar;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
+
+import java.util.ArrayList;
 
 import uk.ac.york.nimblefitness.HelperClasses.CreateNotification;
 import uk.ac.york.nimblefitness.HelperClasses.Routine;
@@ -34,8 +44,9 @@ import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class EndSummaryFragment extends Fragment {
-
-
+    Routine routine;
+    FirebaseUser currentFirebaseUser;
+    DatabaseReference mDatabase;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,7 +59,7 @@ public class EndSummaryFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_end_summary, container, false);
 
-        Routine routine = (Routine) getArguments().getSerializable("routine");
+        routine = (Routine) getArguments().getSerializable("routine");
 
         getActivity().setTitle(routine.getRoutineName());
 
@@ -58,7 +69,7 @@ public class EndSummaryFragment extends Fragment {
         returnHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity(), String.valueOf(ratingBar.getRating()), Toast.LENGTH_LONG).show();
+                //Toast.makeText(getActivity(), String.valueOf(ratingBar.getRating()), Toast.LENGTH_LONG).show();
 
                 startActivity(new Intent(getActivity(), MainActivity.class));
                 getActivity().finish();
@@ -72,7 +83,7 @@ public class EndSummaryFragment extends Fragment {
         FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         SharedPreferences prefs = getDefaultSharedPreferences(getApplicationContext());
         summaryTextView.setText(String.format("You have just completed the %s routine and gained %d moves. %s",routine.getRoutineName(), totalMoves(routine), movesToGoal(prefs, currentFirebaseUser)));
-
+        //favouriteRoutine(view);
         return view;
     }
 
@@ -105,19 +116,45 @@ public class EndSummaryFragment extends Fragment {
 
     }
 
-    private void favouriteRoutine() {
-        ToggleButton favouritesButton = getView().findViewById(R.id.favourite_button);
-        favouritesButton.setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_baseline_favorite_24));
+    private void favouriteRoutine(View view) {
+        Button favouritesButton = view.findViewById(R.id.favourite_button);
 
-        favouritesButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        favouritesButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (favouritesButton.isChecked()) {
-                    favouritesButton.setBackgroundColor(Color.parseColor("#FF69B4"));
+            public void onClick(View v) {
+                Log.i("onCheckedChanged", "onCheckedChanged: ");
+                currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();  // Getting the unique ID for the current user for their information
+                mDatabase = FirebaseDatabase.getInstance().getReference("users").child(currentFirebaseUser.getUid()).child("favorites");
+                ArrayList<String> favoriteRoutines = new ArrayList<>();
+                mDatabase.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        Log.i("onDataChange", "onDataChange: ");
+                            for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                if(dataSnapshot != null) {
+                                    favoriteRoutines.add(dataSnapshot.getValue(String.class));
+                                }
+                            }
+                            Gson gson = new Gson();
+                        Log.i("DataSnapshot", gson.toJson(snapshot));
+                        addNewFavouriteRoutine(favoriteRoutines);
+                    }
 
-                }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
             }
         });
+
+    }
+
+    private void addNewFavouriteRoutine(ArrayList<String> favoriteRoutines){
+        favoriteRoutines.add(routine.getRoutineName());
+        Log.i("addNewFavouriteRoutine", favoriteRoutines.get(favoriteRoutines.size()-1));
+        Log.i("size", String.valueOf(favoriteRoutines.size()));
+        //mDatabase.setValue(favoriteRoutines);
     }
 
 }

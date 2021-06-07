@@ -109,7 +109,7 @@ public class ExerciseFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String clickedItem = (String) list.getItemAtPosition(position);
-                Toast.makeText(getContext(), clickedItem, Toast.LENGTH_LONG).show();
+                //Toast.makeText(getContext(), clickedItem, Toast.LENGTH_LONG).show();
             }
         });
         // Inflate the layout for this fragment

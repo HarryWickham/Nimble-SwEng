@@ -4,15 +4,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Screens.Profile.FavesFragment"
-    >
-    <ListView
+    android:orientation="vertical"
+    android:gravity="center_horizontal">
+
+    <ExpandableListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/FavouritesList"
-        android:clickable="false"
-        android:focusable="false"
-        android:divider="@null"
+        android:id="@+id/routine_exp_list"
+        android:divider="@color/transparent"
         />
+
+    <TextView
+        android:id="@+id/nothing_found_routines"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="There are no routines in your favourites"
+        android:visibility="gone"/>
 
 
 </LinearLayout>
