@@ -33,6 +33,8 @@ import uk.ac.york.nimblefitness.R;
 import uk.ac.york.nimblefitness.Screens.Exercises.ExerciseFragment;
 
 import static android.preference.PreferenceManager.getDefaultSharedPreferences;
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
 
 /*
 Fragment for displaying the routines in an expandable list view
@@ -81,7 +83,7 @@ public class RoutinesFragment extends Fragment {
 
 
         routineArrayList = setUpRoutines(); // Fills the routineArrayList with the data from routineData
-        listAdapter = new CustomExpandableListAdapter(getContext(), routine); // Assigns the listAdapter with the
+        listAdapter = new CustomExpandableListAdapter(getContext(), routine); // Assigns the listAdapter with the context and routine list
 
         // setting list adapter
         routineListView.setAdapter(listAdapter);
@@ -91,9 +93,7 @@ public class RoutinesFragment extends Fragment {
 
             @Override
             public boolean onChildClick(ExpandableListView parent, View v,int groupPosition, int childPosition, long id) {
-                Toast.makeText(getContext(),routineArrayList.get(groupPosition).getRoutineName()
-                        + " : "
-                        + routineArrayList.get(groupPosition).getExerciseArrayList().get(childPosition).getExerciseName(), Toast.LENGTH_SHORT).show();
+
                 return false;
             }
         });
@@ -103,7 +103,7 @@ public class RoutinesFragment extends Fragment {
 
             @Override
             public void onGroupExpand(int groupPosition) {
-                Toast.makeText(getContext(),routineArrayList.get(groupPosition).getRoutineName() + " Expanded",Toast.LENGTH_SHORT).show();
+
             }
         });
 
@@ -112,7 +112,7 @@ public class RoutinesFragment extends Fragment {
 
             @Override
             public void onGroupCollapse(int groupPosition) {
-                Toast.makeText(getContext(),routineArrayList.get(groupPosition).getRoutineName() + " Collapsed",Toast.LENGTH_SHORT).show();
+
 
             }
         });
@@ -139,13 +139,13 @@ public class RoutinesFragment extends Fragment {
                 nothingFound = view.findViewById(R.id.nothing_found_routines);
                 boolean successfulSearch = listAdapter.filterData(query);
                 if (!successfulSearch) {
-                    nothingFound.setVisibility(View.VISIBLE);
+                    nothingFound.setVisibility(VISIBLE);
                 }
                 else if (query.isEmpty()) {
                     collapseAll();
                 }
                 else {
-                    nothingFound.setVisibility(View.GONE);
+                    nothingFound.setVisibility(GONE);
                     expandAll();
                 }
                 return false;
