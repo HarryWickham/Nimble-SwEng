@@ -497,14 +497,13 @@
 
         <routine routineImage="https://www-users.york.ac.uk/~hew550/NimbleAssets/routineimages/easyCore.png" routineName="Easy Core" routineSummary="Stronger body and mind. This routine concentrates on the core body muscles including the serratus, supraspinatus and all the abdominal muscles with a multitude of plank exercises."
             rating="3" sets="4" restBetweenSets="30" setsRemaining="4">
-            <exercise exerciseName="Plank" exerciseDescription="From a normal push up position, lower yourself down so that your weight is resting on your forearms. With a straight back, hold this position by engaging your core muscles.
-" repType="time" reps="30" timePerRep="0" movesPerRep="1" restAfterFinish="10" colour="#ffb100">
+            <exercise exerciseName="Plank" exerciseDescription="From a normal push up position, lower yourself down so that your weight is resting on your forearms. With a straight back, hold this position by engaging your core muscles." repType="time" reps="30" timePerRep="0" movesPerRep="1" restAfterFinish="10" colour="#ffb100">
                 <video urlname="https://www-users.york.ac.uk/~hew550/NimbleAssets/exercisevideos/Plank.mp4" starttime="0" loop="true" xstart="50" ystart="262" width="980" height="550" id="plankVideo" />
                 <image urlname="https://www-users.york.ac.uk/~hew550/NimbleAssets/exercisemusclegroups/plank.png" xstart="50" ystart="887" width="726" height="550" duration="0"/>
                 <shape type="RECTANGLE" xstart="25" ystart="237" width="600" height="1030" fillcolour="#303F9F" duration="0"/>
                 <shape type="RECTANGLE" xstart="25" ystart="862" width="560" height="780" fillcolour="#303F9F" duration="0"/>
-                <text font="sans_serif" fontsize="32" fontcolour="#000000" xstart="50" ystart="50"></text>
-                <text font="sans_serif" fontsize="13" fontcolour="#000000" xstart="50" ystart="1512"></text>
+                <text font="sans_serif" fontsize="32" fontcolour="#000000" xstart="50" ystart="50">Plank</text>
+                <text font="sans_serif" fontsize="13" fontcolour="#000000" xstart="50" ystart="1512">From a normal push up position, lower yourself down so that your weight is resting on your forearms. With a straight back, hold this position by engaging your core muscles.</text>
             </exercise>
             <exercise exerciseName="Side Plank" exerciseDescription="From laying on your side, raise yourself off the floor using your forearm as an anchor. Keep your legs parallel and engage your core to maintain the position. Switch arms to complete the exercise for the other half of your abdominals."
                 repType="time" reps="15" timePerRep="0" movesPerRep="1" restAfterFinish="10" colour="#996b00">
@@ -552,8 +551,8 @@
                 <image urlname="https://www-users.york.ac.uk/~hew550/NimbleAssets/exercisemusclegroups/normal_push_up.png" xstart="50" ystart="887" width="726" height="550" duration="0"/>
                 <shape type="RECTANGLE" xstart="25" ystart="237" width="600" height="1030" fillcolour="#303F9F" duration="0"/>
                 <shape type="RECTANGLE" xstart="25" ystart="862" width="560" height="780" fillcolour="#303F9F" duration="0"/>
-                <text font="sans_serif" fontsize="32" fontcolour="#000000" xstart="50" ystart="50"></text>
-                <text font="sans_serif" fontsize="13" fontcolour="#000000" xstart="50" ystart="1512"></text>
+                <text font="sans_serif" fontsize="32" fontcolour="#000000" xstart="50" ystart="50">Push Up</text>
+                <text font="sans_serif" fontsize="13" fontcolour="#000000" xstart="50" ystart="1512">With your hands placed next to each other and a straight back, lower yourself to the ground keeping your elbows tucked in. Hold the position. Then push off of the floor to your start position to complete a rep.</text>
             </exercise>
             <exercise exerciseName="Wide Push Up" exerciseDescription="With your hands placed a little wider than for a normal push up and a straight back, lower yourself to the ground keeping your elbows tucked in. Hold the position. Then push off of the floor to your start position to complete a rep."
                 repType="number" reps="10" timePerRep="2" movesPerRep="2" restAfterFinish="60" colour="#f1b3ff">
@@ -642,7 +641,7 @@
             </exercise>
             <exercise exerciseName="Side Plank Kicks" exerciseDescription="From a side plank starting position, while engaging your core, raise your leg up to just beyond parallel to the ground then return to parallel with your other leg. Switch arms to complete the exercise for the other half of your abdominals and oblique; raising the opposite leg."
                 repType="number" reps="10" timePerRep="4" movesPerRep="1.25" restAfterFinish="10" colour="#1a0d00">
-                <video urlname="https://www-users.york.ac.uk/~hew550/NimbleAssets/exercisevideos/Side-Plank-Kicks.mp4" starttime="0" loop="true" xstart="50" ystart="262" width="980" height="550" id="stepup-downsVideo" />
+                <video urlname="https://www-users.york.ac.uk/~hew550/NimbleAssets/exercisevideos/Side-Plank-Kicks.mp4" starttime="0" loop="true" xstart="50" ystart="262" width="980" height="550" id="sidePlankKicksVideo" />
                 <image urlname="https://www-users.york.ac.uk/~hew550/NimbleAssets/exercisemusclegroups/side_plank_kicks.png" xstart="50" ystart="887" width="726" height="550" duration="0"/>
                 <shape type="RECTANGLE" xstart="25" ystart="237" width="600" height="1030" fillcolour="#303F9F" duration="0"/>
                 <shape type="RECTANGLE" xstart="25" ystart="862" width="560" height="780" fillcolour="#303F9F" duration="0"/>
@@ -651,15 +650,13 @@
             </exercise>
             <exercise exerciseName="Side Plank Kicks Other Side" exerciseDescription="From a side plank starting position, while engaging your core, raise your leg up to just beyond parallel to the ground then return to parallel with your other leg. Switch arms to complete the exercise for the other half of your abdominals and oblique; raising the opposite leg."
                 repType="number" reps="10" timePerRep="4" movesPerRep="1.25" restAfterFinish="10" colour="#1a0d00">
-                <video urlname="https://www-users.york.ac.uk/~hew550/NimbleAssets/exercisevideos/Side-Plank-Kicks.mp4" starttime="0" loop="true" xstart="50" ystart="262" width="980" height="550" id="stepup-downsVideo" />
+                <video urlname="https://www-users.york.ac.uk/~hew550/NimbleAssets/exercisevideos/Side-Plank-Kicks.mp4" starttime="0" loop="true" xstart="50" ystart="262" width="980" height="550" id="sidePlankKicksVideo" />
                 <image urlname="https://www-users.york.ac.uk/~hew550/NimbleAssets/exercisemusclegroups/side_plank_kicks.png" xstart="50" ystart="887" width="726" height="550" duration="0"/>
                 <shape type="RECTANGLE" xstart="25" ystart="237" width="600" height="1030" fillcolour="#303F9F" duration="0"/>
                 <shape type="RECTANGLE" xstart="25" ystart="862" width="560" height="780" fillcolour="#303F9F" duration="0"/>
                 <text font="sans_serif" fontsize="32" fontcolour="#000000" xstart="50" ystart="50"><b>Set Up-Downs</b></text>
                 <text font="sans_serif" fontsize="13" fontcolour="#000000" xstart="50" ystart="1512">From a side plank starting position, while engaging your core, raise your leg up to just beyond parallel to the ground then return to parallel with your other leg. Switch arms to complete the exercise for the other half of your abdominals and oblique; raising the opposite leg.</text>
             </exercise>
-
         </routine>
-
     </slide>
 </slideshow>

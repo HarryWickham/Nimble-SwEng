@@ -153,9 +153,6 @@ public class CalendarModel implements CalendarContract.Model {
                         exercise1.setRepType(exercise.getRepType());
                         exercises.add(exercise1);
 
-
-                        Gson gson = new Gson();
-                        Log.i("exercises json", gson.toJson(exercises));
                     }
 
                 }
