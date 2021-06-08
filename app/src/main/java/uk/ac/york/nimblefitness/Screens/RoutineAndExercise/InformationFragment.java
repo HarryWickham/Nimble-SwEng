@@ -47,9 +47,9 @@ public class InformationFragment extends Fragment {
         Routine routine = (Routine) getArguments().getSerializable("routine");
         // A new counter page is created upon the button mentioned above is pressed.
         CounterFragment counterFragment = new CounterFragment();
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("routine",routine);
-        counterFragment.setArguments(bundle);
+        //Bundle bundle = new Bundle();
+        //bundle.putSerializable("routine",routine);
+        counterFragment.setArguments(getArguments());
         /*  The listener which opens the counter fragment and closes this fragment when the
             corresponding button is pressed. */
         toCounterPage.setOnClickListener(new View.OnClickListener() {

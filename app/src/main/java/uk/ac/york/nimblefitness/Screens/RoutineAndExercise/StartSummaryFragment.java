@@ -81,8 +81,8 @@ public class StartSummaryFragment extends Fragment {
 
         Button toInfoPage = view.findViewById(R.id.toInfoPage);
         InformationFragment informationFragment = new InformationFragment();
-        Bundle bundle2 = new Bundle();
-        bundle2.putSerializable("routine",routine);
+        //Bundle bundle2 = new Bundle();
+        //bundle2.putSerializable("routine",routine);
         informationFragment.setArguments(bundle);
         toInfoPage.setOnClickListener(new View.OnClickListener() {
             @Override

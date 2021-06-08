@@ -116,7 +116,7 @@ public class SettingsFragment extends Fragment {
 
 
                 case 6: { //if logout is clicked the user gets taken back to the login/signin screen will need to be changed to a case statement to allow for all items to be perform actions
-                    Intent mIntent = new Intent(getActivity(), HandlerTestActivity.class);
+                    Intent mIntent = new Intent(getActivity(), LoadNewPresentationActivity.class);
                     startActivity(mIntent);
                     break;
                 }

@@ -38,6 +38,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
 import uk.ac.york.nimblefitness.HelperClasses.UserDetails;
@@ -128,7 +129,10 @@ public class UserDetailsActivity extends AppCompatActivity {
                 String exerciseDuration = activity_level_selector.getEditText().getText().toString();
                 int weeklyGoal = Integer.parseInt(user_account_goal.getEditText().getText().toString().trim());
 
-                helperClass2 = new UserDetails(firstName, lastName, gender, exerciseType, exerciseDuration, membershipPlan, userAge, weeklyGoal, currentMoves, completedRoutines, lastLogin, acceptedTC, onBoarded);
+                helperClass2 = new UserDetails(firstName, lastName, gender, exerciseType, exerciseDuration, userAge, membershipPlan, weeklyGoal, currentMoves, completedRoutines, lastLogin, acceptedTC, onBoarded);
+                Gson gson = new Gson();
+                Log.i("helperClass2", gson.toJson(helperClass2));
+
                 rootReference.child("userDetails").setValue(helperClass2);
 
                 String userFullName = String.format("%s %s", firstName, lastName);
