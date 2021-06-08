@@ -15,7 +15,7 @@
         android:background="@color/colorPrimary"
         android:textColor="@color/white"
         android:elevation="4dp"
-        android:text="Accept Terms and Conditions"
+        android:text="@string/accept_terms_and_conditions"
         android:id="@+id/acceptTC">
     </Button>
 
@@ -29,6 +29,7 @@
             android:textSize="20sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:justificationMode="inter_word"
             android:id ="@+id/TCText"
             android:text="@string/terms_and_conditions"/>
     </ScrollView>

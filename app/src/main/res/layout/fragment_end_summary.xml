@@ -8,23 +8,35 @@
     android:orientation="vertical"
     android:gravity="center_horizontal">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
+        android:id="@+id/congratulation_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ay good job mate you did great" />
+        android:text="Amazing job!"
+        android:textSize="32sp"
+        />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/end_summary_text_view"/>
+        android:id="@+id/end_summary_text_view"
+        android:textSize="16sp"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add routine to favorites"
+        android:text="@string/add_routine_to_favorites"
+        android:textSize="24sp"
         android:id="@+id/favourite_button"
         />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Rate the Routine:"
+        android:textSize="32sp"
+        />
+
 
     <RatingBar
         android:id="@+id/rating_bar"
@@ -33,12 +45,18 @@
         android:saveEnabled="true"
         android:numStars="5"/>
 
+    <pl.droidsonroids.gif.GifImageView
+        android:layout_width="match_parent"
+        android:layout_height="390dp"
+        android:src="@drawable/bird_animation2"
+        />
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Lets go home and find a new one"
-        android:id="@+id/end_summary_home_button"/>
-
-
+        android:text="@string/lets_go_home_and_find_a_new_one"
+        android:id="@+id/end_summary_home_button"
+        android:textSize="24sp"
+        />
 
 </LinearLayout>
