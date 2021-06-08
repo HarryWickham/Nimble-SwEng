@@ -176,7 +176,12 @@ public class FinishFragment extends Fragment {
         nextExercise.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                restTimer.cancel();
+                if (remainingExercises.size()==0) {
+                    restTimer.cancel();
+                } else {
+                    restTimer2.cancel();
+                }
+
                 FragmentTransaction fragmentTransaction = requireActivity().getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.RoutineAndExerciseFrame, informationFragment);
                 fragmentTransaction.commit();
@@ -186,7 +191,11 @@ public class FinishFragment extends Fragment {
         exitToProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                restTimer.cancel();
+                if (remainingExercises.size()==0) {
+                    restTimer.cancel();
+                } else {
+                    restTimer2.cancel();
+                }
                 startActivity(new Intent(getActivity(), MainActivity.class));
                 getActivity().finish();//takes user the main page
             }
