@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.InputType;
+import android.text.Spanned;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
@@ -163,9 +165,11 @@ public class UserDetailsActivity extends AppCompatActivity {
 
         user_account_first_name = findViewById(R.id.user_account_first_name);
         user_account_first_name_edit_text = findViewById(R.id.user_account_first_name_edit_text);
+        user_account_first_name_edit_text.setFilters(myFilter);
 
         user_account_last_name = findViewById(R.id.user_account_last_name);
         user_account_last_name_edit_text = findViewById(R.id.user_account_last_name_edit_text);
+        user_account_last_name_edit_text.setFilters(myFilter);
 
         user_account_age_edit_text = findViewById(R.id.user_account_age_edit_text);
         user_account_age = findViewById(R.id.user_account_age);
@@ -538,6 +542,20 @@ public class UserDetailsActivity extends AppCompatActivity {
                 break;
         }
     }
+
+    public static InputFilter[] myFilter = new InputFilter[] {
+            new InputFilter() {
+                public CharSequence filter(CharSequence source, int start, int end,
+                                           Spanned dest, int dstart, int dend) {
+                    for (int i = start; i < end; i++) {
+                        if (!Character.isLetter(source.charAt(i))) {
+                            return "";
+                        }
+                    }
+                    return null;
+                }
+            }
+    };
 
 }
 
