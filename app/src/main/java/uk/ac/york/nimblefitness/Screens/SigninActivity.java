@@ -1,10 +1,7 @@
 package uk.ac.york.nimblefitness.Screens;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.text.InputType;
 import android.util.Log;
 import android.view.View;
@@ -38,19 +35,11 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.Objects;
 
-import uk.ac.york.nimblefitness.HelperClasses.UserDetails;
 import uk.ac.york.nimblefitness.HelperClasses.Verification;
 import uk.ac.york.nimblefitness.R;
-
-import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 
 public class SigninActivity extends AppCompatActivity {
     private static final int GOOGLE_SIGNIN_CODE = 10005;
@@ -68,6 +57,11 @@ public class SigninActivity extends AppCompatActivity {
 
         //Initialise Firebase
         firebaseAuth = FirebaseAuth.getInstance();
+        /* For testing
+        if (firebaseAuth.getCurrentUser() != null) {
+            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            finish();
+        }*/
         InitialiseEmailLogin();
         InitialiseGoogleLogin();
         InitialiseFacebook();
@@ -111,7 +105,7 @@ public class SigninActivity extends AppCompatActivity {
                 firebaseAuth.signInWithEmailAndPassword(userDetails.getEmail(),userDetails.getPassword()).addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         Toast.makeText(SigninActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
-                        receiveData();//takes user the main page
+                        startActivity(new Intent(getApplicationContext(), PaymentActivity.class));//takes user the main page
                     } else {
                         invalidUser();
                     }
@@ -141,6 +135,7 @@ public class SigninActivity extends AppCompatActivity {
         googleSignIn.setOnClickListener(v -> {
             Intent gSignIn = signInClient.getSignInIntent();
             startActivityForResult(gSignIn, GOOGLE_SIGNIN_CODE);
+            //startActivity(new Intent(getApplicationContext(), PaymentActivity.class));
         });
     }
 
@@ -177,7 +172,8 @@ public class SigninActivity extends AppCompatActivity {
                         if(task.isSuccessful()){
                             //SendUserData(user);
                             Log.d("Login","Success");
-                            receiveData();
+                            startActivity(new Intent(getApplicationContext(), PaymentActivity.class));
+                            finish();
                         }
                         else{
                             Log.d("Login","Error");
@@ -211,7 +207,9 @@ public class SigninActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
-                            receiveData();
+                            FirebaseUser user=firebaseAuth.getCurrentUser();
+                            startActivity(new Intent(getApplicationContext(), PaymentActivity.class));
+
                         }
                     }
                 });

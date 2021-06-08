@@ -13,6 +13,9 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -89,6 +92,7 @@ public class SplashScreen extends AppCompatActivity {
         String userName = prefs.getString(currentFirebaseUser+"userFullName", "error");
         String membershipPlan = prefs.getString(currentFirebaseUser+"membershipPlan", "error");
         boolean acceptedTC = prefs.getBoolean(currentFirebaseUser+"acceptedTC", false);
+        /*
         boolean onBoarded = prefs.getBoolean(currentFirebaseUser+"onBoarded", false);
         if(currentFirebaseUser == null){
             startActivity(new Intent(SplashScreen.this,SignupActivity.class));
@@ -115,6 +119,8 @@ public class SplashScreen extends AppCompatActivity {
             startActivity(new Intent(SplashScreen.this,MainActivity.class));
             finish();
         }
+
+         */
     }
 
     private void resetCompletedRoutines(UserDetails userDetails, FirebaseUser currentFirebaseUser, SharedPreferences prefs){
