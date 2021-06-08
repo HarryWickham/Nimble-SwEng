@@ -15,7 +15,7 @@
         android:background="@color/colorPrimary"
         android:textColor="@color/white"
         android:elevation="4dp"
-        android:text="Accept Terms and Conditions"
+        android:text="@string/accept_terms_and_conditions"
         android:id="@+id/acceptTC">
     </Button>
 

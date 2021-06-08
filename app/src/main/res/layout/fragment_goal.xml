@@ -143,7 +143,7 @@
                                 android:contentDescription="@string/share_icon" />
                         </LinearLayout>
                     </LinearLayout>
-<!--Unable to scroll through list without scrolling entire page-->
+
                     <ListView
                         android:id="@+id/todays_moves"
                         android:layout_width="match_parent"
