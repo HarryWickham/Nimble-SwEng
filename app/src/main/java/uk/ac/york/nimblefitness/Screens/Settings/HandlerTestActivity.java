@@ -64,18 +64,6 @@ public class HandlerTestActivity extends AppCompatActivity {
         downloadXMLFile = findViewById(R.id.downloadXMLFile);
         frameLayout = findViewById(R.id.handlerTestFrame);
 
-        /*TextLayout textLayout = new TextLayout("Hello World", TextModule.fontFamily.sans_serif, "52", "#00ccff", TextModule.styleFamily.italic, 200, 1400, frameLayout, this);
-        textLayout.writeText();
-
-        VideoLayout videoLayout = new VideoLayout("https://www-users.york.ac.uk/~hew550/testvideo.mp4",1000,1000,200,200,"VidVideo", 5,false,frameLayout,this);
-        videoLayout.PlayVideo();
-
-        AudioType audioType = new AudioType("https://www-users.york.ac.uk/~hmt519/Levitating.wav",0,true,"id",this);
-        audioType.play();
-
-        ImageLayout imageLayout = new ImageLayout(0,0, 3100, 1740, 1, "https://static.wikia.nocookie.net/reddwarf/images/6/69/Ainsley_Harriott.jpg/revision/latest/scale-to-width-down/310?cb=20180223100130",frameLayout, this);
-*/
-
 
         downloadXMLFile.setOnClickListener(new View.OnClickListener() {
             @Override
