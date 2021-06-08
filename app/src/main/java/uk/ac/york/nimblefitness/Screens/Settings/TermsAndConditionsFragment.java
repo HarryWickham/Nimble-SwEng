@@ -2,17 +2,22 @@ package uk.ac.york.nimblefitness.Screens.Settings;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+
 
 import uk.ac.york.nimblefitness.R;
 
 public class TermsAndConditionsFragment extends Fragment {
-/*
+
     ImageButton back_button;
 
     @Override
@@ -27,6 +32,7 @@ public class TermsAndConditionsFragment extends Fragment {
 
         requireActivity().setTitle("Terms and Conditions");
 
+
         back_button = view.findViewById(R.id.back_button_terms_and_conditions);
         back_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -38,5 +44,5 @@ public class TermsAndConditionsFragment extends Fragment {
         });
 
         return view;
-    }*/
+    }
 }

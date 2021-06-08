@@ -96,14 +96,14 @@ public class SettingsFragment extends Fragment {
                     startActivity(mIntent);
                     break;
                 }
-/*
+
                 case 4: { //if logout is clicked the user gets taken back to the login/signin screen will need to be changed to a case statement to allow for all items to be perform actions
                     FragmentTransaction fr = getParentFragmentManager().beginTransaction();
                     fr.replace(R.id.main_frame, new TermsAndConditionsFragment());
                     fr.commit();
                     break;
                 }
-*/
+
 
 
                 case 5: { //if logout is clicked the user gets taken back to the login/signin screen will need to be changed to a case statement to allow for all items to be perform actions

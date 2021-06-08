@@ -28,6 +28,7 @@
             android:textSize="20sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:justificationMode="inter_word"
             android:text="@string/terms_and_conditions"/>
     </ScrollView>
 </LinearLayout>
