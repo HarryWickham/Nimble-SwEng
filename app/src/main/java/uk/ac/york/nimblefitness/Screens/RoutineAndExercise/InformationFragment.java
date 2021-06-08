@@ -115,7 +115,7 @@ public class InformationFragment extends Fragment {
         for (TextLayout textLayout : exercise.getTextLayouts()){
             textLayout.setContext(getActivity());
             textLayout.setParentLayout(view.findViewById(R.id.infoPage));
-            textLayout.writeText();
+            textLayout.draw();
         }
 
         /* A rectangle is drawn behind the video and image. */
@@ -131,13 +131,13 @@ public class InformationFragment extends Fragment {
          */
         exercise.getExerciseVideo().setContext(getActivity());
         exercise.getExerciseVideo().setParentLayout(view.findViewById(R.id.infoPage));
-        exercise.getExerciseVideo().PlayVideo();
+        exercise.getExerciseVideo().draw();
 
         /* Sets the context and parent layout for the current exercise's image and displays it in
            the fragment.
          */
         exercise.getMuscleGroupImage().setContext(getActivity());
         exercise.getMuscleGroupImage().setParentLayout(view.findViewById(R.id.infoPage));
-        exercise.getMuscleGroupImage().setImage();
+        exercise.getMuscleGroupImage().draw();
     }
 }

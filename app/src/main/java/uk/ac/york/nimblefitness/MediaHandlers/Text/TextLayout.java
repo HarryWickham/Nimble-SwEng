@@ -7,7 +7,9 @@ import android.widget.FrameLayout;
 
 import java.io.Serializable;
 
-public class TextLayout implements Serializable {
+import uk.ac.york.nimblefitness.MediaHandlers.AbstractLayout;
+
+public class TextLayout implements Serializable, AbstractLayout {
 
     TextModule.styleFamily style;
     TextModule.fontFamily font;
@@ -28,7 +30,16 @@ public class TextLayout implements Serializable {
         this.context = context;
     }
 
-    public void writeText(){
+    public void setParentLayout(FrameLayout parentLayout) {
+        this.parentLayout = parentLayout;
+    }
+
+    public void setContext(Context context) {
+        this.context = context;
+    }
+
+    @Override
+    public void draw() {
         textModule = new TextModule(this.context);
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.leftMargin=this.xstart;
@@ -39,11 +50,9 @@ public class TextLayout implements Serializable {
         textModule.writeText();
     }
 
-    public void setParentLayout(FrameLayout parentLayout) {
-        this.parentLayout = parentLayout;
-    }
 
-    public void setContext(Context context) {
-        this.context = context;
+    @Override
+    public String getMediaId() {
+        return null;
     }
 }

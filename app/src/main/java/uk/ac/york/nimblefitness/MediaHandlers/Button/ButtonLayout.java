@@ -111,8 +111,10 @@ public class ButtonLayout {
     }
 
     private void changeSlide() {
+
     }
 
     private void startStopMedia() {
+
     }
 }
