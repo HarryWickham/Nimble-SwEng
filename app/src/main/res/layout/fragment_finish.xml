@@ -57,6 +57,7 @@
             </androidx.cardview.widget.CardView>
 
             <TextView
+                android:id="@+id/restText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Take a Rest! Time until next exercise:"
