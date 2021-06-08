@@ -74,6 +74,7 @@ public class FinishFragment extends Fragment {
         TextView remainingListText = view.findViewById(R.id.remaining_exercises);
         ListView finishListView = view.findViewById(R.id.finish_list_view);
         TextView restTime = view.findViewById(R.id.finish_rest_remaining);
+        TextView restText = view.findViewById(R.id.restText);
         finishListView.setEnabled(false);
 
 
@@ -92,8 +93,6 @@ public class FinishFragment extends Fragment {
 
         rootDatabase = FirebaseDatabase.getInstance();
         rootReferenceUser = rootDatabase.getReference("users").child(currentFirebaseUser.getUid());
-
-
 
         DatabaseReference rootReferenceScoreBoard = rootDatabase.getReference("scoreBoard").child(currentFirebaseUser.getUid());
 
@@ -116,21 +115,26 @@ public class FinishFragment extends Fragment {
         bundle.putSerializable("routine",routine);
         informationFragment.setArguments(getArguments());
 
+        EndSummaryFragment endSummaryFragment = new EndSummaryFragment();
+        endSummaryFragment.setArguments(getArguments());
+
         retrieveCompletedExerciseFromFirebase();
 
         if (routine.getSetsRemaining()==1 && remainingExercises.size()==0){
-            nextExercise.setVisibility(View.GONE);
-            finishText.setText(String.format(Locale.UK,"Congratulations you have completed all the sets for this routine."));
-            toEndSummary.setVisibility(View.VISIBLE);
-            remainingListText.setText("");
+
+            FragmentTransaction fragmentTransaction = requireActivity().getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.RoutineAndExerciseFrame, endSummaryFragment);
+            fragmentTransaction.commit();
+
         } else if (remainingExercises.size()==0){
             nextExercise.setText("Continue to next set");
             remainingListText.setText("");
             routine.setSetsRemaining(routine.getSetsRemaining()-1);
+            restText.setText("Take a Rest! Time until next set: ");
             if(routine.getSetsRemaining()==1){
-                finishText.setText(String.format(Locale.UK,"Congratulations you have completed all the exercises for this set. You have %d set remaining.",routine.getSetsRemaining()));
+                finishText.setText(String.format(Locale.UK,"Congratulations you have completed all the exercises for this set. You have %d set remaining.", routine.getSetsRemaining()));
             } else {
-                finishText.setText(String.format(Locale.UK, "Congratulations you have completed all the exercises for this set. You have %d sets remaining.", routine.getSetsRemaining()));
+                finishText.setText(String.format(Locale.UK,"Congratulations you have completed all the exercises for this set. You have %d sets remaining.", routine.getSetsRemaining()));
             }
             remainingListText.setText("");
             routine.setCurrentExercise(0);
@@ -148,8 +152,9 @@ public class FinishFragment extends Fragment {
                 }
             }.start();
 
-            restTime.setText(String.valueOf(routine.getExerciseArrayList().get(routine.getCurrentExercise()).getRestAfterFinish()));
+            restTime.setText(String.valueOf(routine.getRestBetweenSets()));
         } else {
+
             restTimer2 = new CountDownTimer(routine.getExerciseArrayList().get(routine.getCurrentExercise()).getRestAfterFinish()*1000, 1000) {
                 @Override
                 public void onTick(long startTimeRemaining) {
@@ -181,7 +186,6 @@ public class FinishFragment extends Fragment {
                 } else {
                     restTimer2.cancel();
                 }
-
                 FragmentTransaction fragmentTransaction = requireActivity().getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.RoutineAndExerciseFrame, informationFragment);
                 fragmentTransaction.commit();
@@ -200,19 +204,6 @@ public class FinishFragment extends Fragment {
                 getActivity().finish();//takes user the main page
             }
         });
-
-        EndSummaryFragment endSummaryFragment = new EndSummaryFragment();
-        endSummaryFragment.setArguments(getArguments());
-        toEndSummary.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FragmentTransaction fragmentTransaction = requireActivity().getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.RoutineAndExerciseFrame, endSummaryFragment);
-                fragmentTransaction.commit();
-            }
-        });
-
-
 
         return view;
     }
