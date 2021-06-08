@@ -21,6 +21,7 @@ import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -83,6 +84,8 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
+        group = (Routine) getGroup(groupPosition);
+
         if(convertView==null){
             LayoutInflater layoutInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = layoutInflater.inflate(R.layout.expandable_list_group, null);
@@ -93,12 +96,28 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
         expand_routines_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                for (Routine routine: originalRoutineArrayList) {
+                    if(routine.getRoutineName().equals(group.getRoutineName())) {
+                        group.setExerciseArrayList(routine.getExerciseArrayList());
+                        for (Exercise exercise: group.getExerciseArrayList() ) {
+                            System.out.println(exercise.getExerciseName());
+                        }
+                        for (Exercise exercise: routine.getExerciseArrayList() ) {
+                            System.out.println(exercise.getExerciseName());
+                        }
+                    }
+                }
                 SharedPreferences prefs = getDefaultSharedPreferences(context);
                 FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
                 if(prefs.getInt(currentFirebaseUser+"completedRoutines", 0)<getUserMembershipPlanRoutines(prefs, currentFirebaseUser)) {
+
+                    Exercise exercise = new Exercise();
+                    exercise.setExerciseName("fake");
+
                     Intent intent = new Intent(context, RoutineAndExerciseActivity.class);
                     Bundle bundle = new Bundle();
-                    bundle.putSerializable("routine", routineArrayList.get(groupPosition));
+                    bundle.putSerializable("routine",(Serializable) group);
+                    bundle.putSerializable("exercise", (Serializable) exercise);
                     intent.putExtras(bundle);
                     context.startActivity(intent);
                 } else{
@@ -124,13 +143,13 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
             }
         });
         TextView routineName = convertView.findViewById(R.id.routines_activity_name);
-        routineName.setText(routineArrayList.get(groupPosition).getRoutineName());
+        routineName.setText(group.getRoutineName());
         TextView routineSets = convertView.findViewById(R.id.routine_sets);
-        routineSets.setText(routineArrayList.get(groupPosition).getSets() + " sets");
+        routineSets.setText(group.getSets() + " sets");
         TextView routineTotalMoves = convertView.findViewById(R.id.routine_total_moves);
-        routineTotalMoves.setText("Total Moves: " + totalMoves(routineArrayList.get(groupPosition)));
+        routineTotalMoves.setText("Total Moves: " + totalMoves(group));
         ImageView routineImage = convertView.findViewById(R.id.routines_image);
-        Glide.with(context).load(routineArrayList.get(groupPosition).getRoutineImage()).into(routineImage);
+        Glide.with(context).load(group.getRoutineImage()).into(routineImage);
 
 
         return convertView;
@@ -167,9 +186,9 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
     }
 
     /*
-    Function for searching the Routines with the SearchView input
-    Uses a copy of the
-    */
+        Function for searching the Routines with the SearchView input
+        Uses a copy of the
+         */
     public boolean filterData(String query) {
         boolean searched = true;
         query = query.toLowerCase();
@@ -197,7 +216,7 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
                                 alreadyAdded = true;
                             }
                         }
-                        // If routine is not already added:
+
                         if (!alreadyAdded) {
                             routineArrayList.add(routine);
                         }
