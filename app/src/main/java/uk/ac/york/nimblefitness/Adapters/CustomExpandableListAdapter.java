@@ -41,7 +41,6 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
     private Context context;
     private ArrayList<Routine> originalRoutineArrayList;
     private ArrayList<Routine> routineArrayList;
-    Routine group;
 
     public CustomExpandableListAdapter(Context context, ArrayList<Routine> routineArrayList) {
         this.context = context;
@@ -84,8 +83,6 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-        group = (Routine) getGroup(groupPosition);
-
         if(convertView==null){
             LayoutInflater layoutInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = layoutInflater.inflate(R.layout.expandable_list_group, null);
@@ -96,17 +93,6 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
         expand_routines_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                for (Routine routine: originalRoutineArrayList) {
-                    if(routine.getRoutineName().equals(group.getRoutineName())) {
-                        group.setExerciseArrayList(routine.getExerciseArrayList());
-                        for (Exercise exercise: group.getExerciseArrayList() ) {
-                            System.out.println(exercise.getExerciseName());
-                        }
-                        for (Exercise exercise: routine.getExerciseArrayList() ) {
-                            System.out.println(exercise.getExerciseName());
-                        }
-                    }
-                }
                 SharedPreferences prefs = getDefaultSharedPreferences(context);
                 FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
                 if(prefs.getInt(currentFirebaseUser+"completedRoutines", 0)<getUserMembershipPlanRoutines(prefs, currentFirebaseUser)) {
@@ -116,7 +102,7 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
 
                     Intent intent = new Intent(context, RoutineAndExerciseActivity.class);
                     Bundle bundle = new Bundle();
-                    bundle.putSerializable("routine",(Serializable) group);
+                    bundle.putSerializable("routine",(Serializable) routineArrayList.get(groupPosition));
                     bundle.putSerializable("exercise", (Serializable) exercise);
                     intent.putExtras(bundle);
                     context.startActivity(intent);
@@ -143,13 +129,13 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
             }
         });
         TextView routineName = convertView.findViewById(R.id.routines_activity_name);
-        routineName.setText(group.getRoutineName());
+        routineName.setText(routineArrayList.get(groupPosition).getRoutineName());
         TextView routineSets = convertView.findViewById(R.id.routine_sets);
-        routineSets.setText(group.getSets() + " sets");
+        routineSets.setText(routineArrayList.get(groupPosition).getSets() + " sets");
         TextView routineTotalMoves = convertView.findViewById(R.id.routine_total_moves);
-        routineTotalMoves.setText("Total Moves: " + totalMoves(group));
+        routineTotalMoves.setText("Total Moves: " + totalMoves(routineArrayList.get(groupPosition)));
         ImageView routineImage = convertView.findViewById(R.id.routines_image);
-        Glide.with(context).load(group.getRoutineImage()).into(routineImage);
+        Glide.with(context).load(routineArrayList.get(groupPosition).getRoutineImage()).into(routineImage);
 
 
         return convertView;
