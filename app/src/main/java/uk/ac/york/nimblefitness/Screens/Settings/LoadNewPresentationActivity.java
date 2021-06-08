@@ -44,7 +44,7 @@ import uk.ac.york.nimblefitness.MediaHandlers.Video.VideoLayout;
 import uk.ac.york.nimblefitness.MediaHandlers.Video.VideoType;
 import uk.ac.york.nimblefitness.R;
 
-public class HandlerTestActivity extends AppCompatActivity {
+public class LoadNewPresentationActivity extends AppCompatActivity {
     ShapeView shapeView;
     Button openFileBrowser, downloadXMLFile;
     FrameLayout frameLayout;
@@ -78,7 +78,7 @@ public class HandlerTestActivity extends AppCompatActivity {
             public void onClick(View view) {
                 startXMLParsing("filePath");
                 new MaterialFilePicker()
-                        .withActivity(HandlerTestActivity.this)
+                        .withActivity(LoadNewPresentationActivity.this)
                         .withRequestCode(1000)
                         .withFilter(Pattern.compile(".*\\.(xml)$"))
                         .withHiddenFiles(true)
@@ -314,11 +314,11 @@ public class HandlerTestActivity extends AppCompatActivity {
     }
 
     public void checkPermission(String permission, int requestCode) {
-        if (ContextCompat.checkSelfPermission(HandlerTestActivity.this, permission)
+        if (ContextCompat.checkSelfPermission(LoadNewPresentationActivity.this, permission)
                 == PackageManager.PERMISSION_DENIED) {
 
             // Requesting the permission
-            ActivityCompat.requestPermissions(HandlerTestActivity.this,
+            ActivityCompat.requestPermissions(LoadNewPresentationActivity.this,
                     new String[]{permission},
                     requestCode);
         } else {
@@ -345,12 +345,12 @@ public class HandlerTestActivity extends AppCompatActivity {
         if (requestCode == STORAGE_PERMISSION_CODE) {
             if (grantResults.length > 0
                     && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(HandlerTestActivity.this,
+                Toast.makeText(LoadNewPresentationActivity.this,
                         "Storage Permission Granted",
                         Toast.LENGTH_SHORT)
                         .show();
             } else {
-                Toast.makeText(HandlerTestActivity.this,
+                Toast.makeText(LoadNewPresentationActivity.this,
                         "Storage Permission Denied",
                         Toast.LENGTH_SHORT)
                         .show();

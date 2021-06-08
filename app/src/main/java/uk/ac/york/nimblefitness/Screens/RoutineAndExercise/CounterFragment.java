@@ -87,8 +87,8 @@ public class CounterFragment extends Fragment {
         Routine routine = (Routine) getArguments().getSerializable("routine");
 
         // Creating a bundle for transferring information between pages
-        bundle = new Bundle();
-        bundle.putSerializable("routine",routine);
+        //bundle = new Bundle();
+        //bundle.putSerializable("routine",routine);
 
         // Retrieving the text outputs from the XML file to output text
         RepCounter = view.findViewById(R.id.RepCounter); // Text output for the rep counter
@@ -112,7 +112,7 @@ public class CounterFragment extends Fragment {
         // Upon changing the points, the screen is then changed
         Button returnButton = view.findViewById(R.id.ReturnButton);
         InformationFragment informationFragment = new InformationFragment();
-        informationFragment.setArguments(bundle);
+        informationFragment.setArguments(getArguments());
         SharedPreferences.Editor editor = prefs.edit();
         returnButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view) {
@@ -376,7 +376,7 @@ public class CounterFragment extends Fragment {
     // This is to move to the finish screen once all the reps, or time has been achieved in an exercise
     private void nextScreen(){
         FinishFragment finishFragment = new FinishFragment();
-        finishFragment.setArguments(bundle); // Inputting the information
+        finishFragment.setArguments(getArguments()); // Inputting the information
         FragmentTransaction fragmentTransaction = requireActivity().getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.RoutineAndExerciseFrame, finishFragment);
         fragmentTransaction.commit(); // Moving to the next screen

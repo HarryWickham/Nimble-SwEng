@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.InputType;
+import android.text.Spanned;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
@@ -38,6 +40,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
 import uk.ac.york.nimblefitness.HelperClasses.UserDetails;
@@ -128,7 +131,10 @@ public class UserDetailsActivity extends AppCompatActivity {
                 String exerciseDuration = activity_level_selector.getEditText().getText().toString();
                 int weeklyGoal = Integer.parseInt(user_account_goal.getEditText().getText().toString().trim());
 
-                helperClass2 = new UserDetails(firstName, lastName, gender, exerciseType, exerciseDuration, membershipPlan, userAge, weeklyGoal, currentMoves, completedRoutines, lastLogin, acceptedTC, onBoarded);
+                helperClass2 = new UserDetails(firstName, lastName, gender, exerciseType, exerciseDuration, userAge, membershipPlan, weeklyGoal, currentMoves, completedRoutines, lastLogin, acceptedTC, onBoarded);
+                Gson gson = new Gson();
+                Log.i("helperClass2", gson.toJson(helperClass2));
+
                 rootReference.child("userDetails").setValue(helperClass2);
 
                 String userFullName = String.format("%s %s", firstName, lastName);
@@ -159,9 +165,11 @@ public class UserDetailsActivity extends AppCompatActivity {
 
         user_account_first_name = findViewById(R.id.user_account_first_name);
         user_account_first_name_edit_text = findViewById(R.id.user_account_first_name_edit_text);
+        user_account_first_name_edit_text.setFilters(myFilter);
 
         user_account_last_name = findViewById(R.id.user_account_last_name);
         user_account_last_name_edit_text = findViewById(R.id.user_account_last_name_edit_text);
+        user_account_last_name_edit_text.setFilters(myFilter);
 
         user_account_age_edit_text = findViewById(R.id.user_account_age_edit_text);
         user_account_age = findViewById(R.id.user_account_age);
@@ -369,9 +377,9 @@ public class UserDetailsActivity extends AppCompatActivity {
     }
 
     private Boolean validateLastName(){
-        String firstName = user_account_last_name.getEditText().getText().toString().trim();
+        String lastName = user_account_last_name.getEditText().getText().toString().trim();
 
-        if(firstName.isEmpty()){
+        if(lastName.isEmpty()){
             user_account_last_name.setError("Last name cannot be empty");
             return false;
         }
@@ -383,10 +391,12 @@ public class UserDetailsActivity extends AppCompatActivity {
     }
 
     private Boolean validateAge(){
-        String firstName = user_account_age.getEditText().getText().toString().trim();
-
-        if(firstName.isEmpty()){
+        String userAge = user_account_age.getEditText().getText().toString().trim();
+        if(userAge.isEmpty()){
             user_account_age.setError("Age cannot be empty");
+            return false;
+        } else if(Integer.parseInt(userAge)<18){
+            user_account_age.setError("You Must be 18 or older");
             return false;
         }
         else{
@@ -397,9 +407,9 @@ public class UserDetailsActivity extends AppCompatActivity {
     }
 
     private Boolean validateGender(){
-        String firstName = gender_selector.getEditText().getText().toString().trim();
+        String gender = gender_selector.getEditText().getText().toString().trim();
 
-        if(firstName.isEmpty()){
+        if(gender.isEmpty()){
             gender_selector.setError("Gender cannot be empty");
             return false;
         }
@@ -411,9 +421,9 @@ public class UserDetailsActivity extends AppCompatActivity {
     }
 
     private Boolean validateExerciseDuration(){
-        String firstName = activity_level_selector.getEditText().getText().toString().trim();
+        String exerciseDuration = activity_level_selector.getEditText().getText().toString().trim();
 
-        if(firstName.isEmpty()){
+        if(exerciseDuration.isEmpty()){
             activity_level_selector.setError("Activity level cannot be empty");
             return false;
         }
@@ -425,9 +435,9 @@ public class UserDetailsActivity extends AppCompatActivity {
     }
 
     private Boolean validateExerciseType(){
-        String firstName = exercise_type_selector.getEditText().getText().toString().trim();
+        String exerciseType = exercise_type_selector.getEditText().getText().toString().trim();
 
-        if(firstName.isEmpty()){
+        if(exerciseType.isEmpty()){
             exercise_type_selector.setError("Type of exercise cannot be empty");
             return false;
         }
@@ -534,6 +544,20 @@ public class UserDetailsActivity extends AppCompatActivity {
                 break;
         }
     }
+
+    public static InputFilter[] myFilter = new InputFilter[] {
+            new InputFilter() {
+                public CharSequence filter(CharSequence source, int start, int end,
+                                           Spanned dest, int dstart, int dend) {
+                    for (int i = start; i < end; i++) {
+                        if (!Character.isLetter(source.charAt(i))) {
+                            return "";
+                        }
+                    }
+                    return null;
+                }
+            }
+    };
 
 }
 
