@@ -77,7 +77,6 @@ public class SettingsFragment extends Fragment {
                 case 1: {
                     Intent mIntent = new Intent(getActivity(), PaymentActivity.class);
                     startActivity(mIntent);
-                    requireActivity().finish();
                     break;
                 }
                 case 2: {
