@@ -377,9 +377,9 @@ public class UserDetailsActivity extends AppCompatActivity {
     }
 
     private Boolean validateLastName(){
-        String firstName = user_account_last_name.getEditText().getText().toString().trim();
+        String lastName = user_account_last_name.getEditText().getText().toString().trim();
 
-        if(firstName.isEmpty()){
+        if(lastName.isEmpty()){
             user_account_last_name.setError("Last name cannot be empty");
             return false;
         }
@@ -391,10 +391,12 @@ public class UserDetailsActivity extends AppCompatActivity {
     }
 
     private Boolean validateAge(){
-        String firstName = user_account_age.getEditText().getText().toString().trim();
-
-        if(firstName.isEmpty()){
+        String userAge = user_account_age.getEditText().getText().toString().trim();
+        if(userAge.isEmpty()){
             user_account_age.setError("Age cannot be empty");
+            return false;
+        } else if(Integer.parseInt(userAge)<18){
+            user_account_age.setError("You Must be 18 or older");
             return false;
         }
         else{
@@ -405,9 +407,9 @@ public class UserDetailsActivity extends AppCompatActivity {
     }
 
     private Boolean validateGender(){
-        String firstName = gender_selector.getEditText().getText().toString().trim();
+        String gender = gender_selector.getEditText().getText().toString().trim();
 
-        if(firstName.isEmpty()){
+        if(gender.isEmpty()){
             gender_selector.setError("Gender cannot be empty");
             return false;
         }
@@ -419,9 +421,9 @@ public class UserDetailsActivity extends AppCompatActivity {
     }
 
     private Boolean validateExerciseDuration(){
-        String firstName = activity_level_selector.getEditText().getText().toString().trim();
+        String exerciseDuration = activity_level_selector.getEditText().getText().toString().trim();
 
-        if(firstName.isEmpty()){
+        if(exerciseDuration.isEmpty()){
             activity_level_selector.setError("Activity level cannot be empty");
             return false;
         }
@@ -433,9 +435,9 @@ public class UserDetailsActivity extends AppCompatActivity {
     }
 
     private Boolean validateExerciseType(){
-        String firstName = exercise_type_selector.getEditText().getText().toString().trim();
+        String exerciseType = exercise_type_selector.getEditText().getText().toString().trim();
 
-        if(firstName.isEmpty()){
+        if(exerciseType.isEmpty()){
             exercise_type_selector.setError("Type of exercise cannot be empty");
             return false;
         }
