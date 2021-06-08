@@ -1,10 +1,13 @@
 package uk.ac.york.nimblefitness.Screens;
 
+import androidx.activity.OnBackPressedDispatcherOwner;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -57,6 +60,7 @@ public class SplashScreen extends AppCompatActivity {
                         editor.putInt(currentFirebaseUser + "currentMoves", userDetails.getCurrentMoves());
                         editor.putInt(currentFirebaseUser + "completedRoutines", userDetails.getCompletedRoutines());
                         editor.putBoolean(currentFirebaseUser + "acceptedTC", userDetails.isAcceptedTC());
+                        editor.putBoolean(currentFirebaseUser + "onBoarded", userDetails.isOnBoarded());
                         editor.apply();
                         resetCompletedRoutines(userDetails, currentFirebaseUser, prefs);
 
@@ -85,6 +89,7 @@ public class SplashScreen extends AppCompatActivity {
         String userName = prefs.getString(currentFirebaseUser+"userFullName", "error");
         String membershipPlan = prefs.getString(currentFirebaseUser+"membershipPlan", "error");
         boolean acceptedTC = prefs.getBoolean(currentFirebaseUser+"acceptedTC", false);
+        boolean onBoarded = prefs.getBoolean(currentFirebaseUser+"onBoarded", false);
         if(currentFirebaseUser == null){
             startActivity(new Intent(SplashScreen.this,SignupActivity.class));
             finish();
@@ -99,7 +104,11 @@ public class SplashScreen extends AppCompatActivity {
             Log.i("routing userName", userName);
             startActivity(new Intent(SplashScreen.this,UserDetailsActivity.class));
             finish();
-        } else {
+        }else if(!onBoarded){
+            startActivity(new Intent(SplashScreen.this, OnBoardingActivity.class));
+            finish();
+        }
+        else {
             Log.i("routing FirebaseUser", String.valueOf(currentFirebaseUser));
             Log.i("routing membershipPlan", membershipPlan);
             Log.i("routing userName", userName);
@@ -122,5 +131,19 @@ public class SplashScreen extends AppCompatActivity {
         FirebaseDatabase rootDatabase = FirebaseDatabase.getInstance();
         DatabaseReference rootReference = rootDatabase.getReference("users").child(currentFirebaseUser.getUid());
         rootReference.child("userDetails").child("lastLogin").setValue(Integer.parseInt(sdf.format(new Date())));
+    }
+
+    private boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
+        return cm.getActiveNetworkInfo() != null;
+    }
+
+    public boolean internetIsConnected() {
+        try {
+            String command = "ping -c 1 google.co.uk";
+            return (Runtime.getRuntime().exec(command).waitFor() == 0);
+        } catch (Exception e) {
+            return false;
+        }
     }
 }

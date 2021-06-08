@@ -64,6 +64,7 @@ public class UserDetailsActivity extends AppCompatActivity {
 
     String membershipPlan;
     int currentMoves, completedRoutines, lastLogin;
+    boolean acceptedTC, onBoarded;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,7 +106,8 @@ public class UserDetailsActivity extends AppCompatActivity {
                     membershipPlan = helperClass.getMembershipPlan();
                     completedRoutines = helperClass.getCompletedRoutines();
                     lastLogin = helperClass.getLastLogin();
-
+                    acceptedTC = helperClass.isAcceptedTC();
+                    onBoarded = helperClass.isOnBoarded();
                 }
             }
 
@@ -126,7 +128,7 @@ public class UserDetailsActivity extends AppCompatActivity {
                 String exerciseDuration = activity_level_selector.getEditText().getText().toString();
                 int weeklyGoal = Integer.parseInt(user_account_goal.getEditText().getText().toString().trim());
 
-                helperClass2 = new UserDetails(firstName, lastName, gender, exerciseType, exerciseDuration, userAge, membershipPlan, weeklyGoal, currentMoves, completedRoutines, lastLogin, true);
+                helperClass2 = new UserDetails(firstName, lastName, gender, exerciseType, exerciseDuration, membershipPlan, userAge, weeklyGoal, currentMoves, completedRoutines, lastLogin, acceptedTC, onBoarded);
                 rootReference.child("userDetails").setValue(helperClass2);
 
                 String userFullName = String.format("%s %s", firstName, lastName);
@@ -140,7 +142,11 @@ public class UserDetailsActivity extends AppCompatActivity {
                 editor.putInt(currentFirebaseUser + "completedRoutines", completedRoutines);
                 editor.putBoolean(currentFirebaseUser + "acceptedTC", true);
                 editor.apply();
-                startActivity(new Intent(UserDetailsActivity.this, MainActivity.class));
+                if(!onBoarded) {
+                    startActivity(new Intent(UserDetailsActivity.this, OnBoardingActivity.class));
+                }else {
+                    startActivity(new Intent(UserDetailsActivity.this, MainActivity.class));
+                }
                 finish();
             }
         });

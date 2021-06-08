@@ -304,6 +304,7 @@ public class SigninActivity extends AppCompatActivity {
                         editor.putInt(currentFirebaseUser + "currentMoves", userDetails.getCurrentMoves());
                         editor.putInt(currentFirebaseUser + "completedRoutines", userDetails.getCompletedRoutines());
                         editor.putBoolean(currentFirebaseUser + "acceptedTC", userDetails.isAcceptedTC());
+                        editor.putBoolean(currentFirebaseUser + "onBoarded", userDetails.isOnBoarded());
                         editor.apply();
 
                     }
@@ -331,6 +332,7 @@ public class SigninActivity extends AppCompatActivity {
         String userName = prefs.getString(currentFirebaseUser+"userFullName", "error");
         String membershipPlan = prefs.getString(currentFirebaseUser+"membershipPlan", "error");
         boolean acceptedTC = prefs.getBoolean(currentFirebaseUser+"acceptedTC", false);
+        boolean onBoarded = prefs.getBoolean(currentFirebaseUser+"onBoarded", false);
         if(!acceptedTC){
             startActivity(new Intent(SigninActivity.this,TermsAndConditionsActivity.class));
             finish();
@@ -341,6 +343,9 @@ public class SigninActivity extends AppCompatActivity {
         } else if((userName.equals("error") || userName.equals("null null"))){
             Log.i("routing userName", userName);
             startActivity(new Intent(SigninActivity.this,UserDetailsActivity.class));
+            finish();
+        }else if(!onBoarded){
+            startActivity(new Intent(SigninActivity.this, OnBoardingActivity.class));
             finish();
         } else {
             Log.i("routing FirebaseUser", String.valueOf(currentFirebaseUser));

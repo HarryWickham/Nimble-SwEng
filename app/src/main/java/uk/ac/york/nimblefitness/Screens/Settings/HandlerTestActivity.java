@@ -6,12 +6,10 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.LinearGradient;
 import android.graphics.Shader;
-import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.Toast;
@@ -35,8 +33,6 @@ import java.io.InputStream;
 import java.util.regex.Pattern;
 
 import uk.ac.york.nimblefitness.MediaHandlers.Audio.AudioType;
-import uk.ac.york.nimblefitness.MediaHandlers.Button.ButtonLayout;
-import uk.ac.york.nimblefitness.MediaHandlers.Button.TextButtonType;
 import uk.ac.york.nimblefitness.MediaHandlers.Graphics.ShapeType;
 import uk.ac.york.nimblefitness.MediaHandlers.Graphics.ShapeView;
 import uk.ac.york.nimblefitness.MediaHandlers.Images.ImageLayout;
@@ -68,23 +64,6 @@ public class HandlerTestActivity extends AppCompatActivity {
         downloadXMLFile = findViewById(R.id.downloadXMLFile);
         frameLayout = findViewById(R.id.handlerTestFrame);
 
-        /*TextLayout textLayout = new TextLayout("Hello World", TextModule.fontFamily.sans_serif, "52", "#00ccff", TextModule.styleFamily.italic, 200, 1400, frameLayout, this);
-        textLayout.writeText();
-
-        VideoLayout videoLayout = new VideoLayout("https://www-users.york.ac.uk/~hew550/testvideo.mp4",1000,1000,200,200,"VidVideo", 5,false,frameLayout,this);
-        videoLayout.PlayVideo();
-
-        AudioType audioType = new AudioType("https://www-users.york.ac.uk/~hmt519/Levitating.wav",0,true,"id",this);
-        audioType.play();
-
-        ImageLayout imageLayout = new ImageLayout(0,0, 3100, 1740, 1, "https://static.wikia.nocookie.net/reddwarf/images/6/69/Ainsley_Harriott.jpg/revision/latest/scale-to-width-down/310?cb=20180223100130",frameLayout, this);
-*/
-
-        ButtonLayout buttonLayout = new ButtonLayout(200,500,800,200,"","","20","#FF03DAC5","ButtonTest", TextButtonType.fontFamily.sans_serif,frameLayout,this);
-        buttonLayout.drawTextButton();
-
-        ButtonLayout buttonLayout2 = new ButtonLayout(200,1000,80,400,"","","https://static.wikia.nocookie.net/reddwarf/images/6/69/Ainsley_Harriott.jpg/revision/latest/scale-to-width-down/310?cb=20180223100130",frameLayout,this);
-        buttonLayout2.drawImageButton();
 
         downloadXMLFile.setOnClickListener(new View.OnClickListener() {
             @Override

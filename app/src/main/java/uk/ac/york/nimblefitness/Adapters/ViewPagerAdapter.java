@@ -1,5 +1,4 @@
-package uk.ac.york.nimblefitness.Screens;
-
+package uk.ac.york.nimblefitness.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,12 +10,22 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import uk.ac.york.nimblefitness.R;
+import uk.ac.york.nimblefitness.Screens.MainActivity;
+
 
 public class ViewPagerAdapter extends RecyclerView.Adapter<ViewPagerAdapter.ViewHolder> {
 
@@ -29,10 +38,10 @@ public class ViewPagerAdapter extends RecyclerView.Adapter<ViewPagerAdapter.View
 
 
 
-    private int[] colorArray = new int[]{android.R.color.holo_blue_bright, android.R.color.holo_red_light, android.R.color.holo_purple, android.R.color.holo_orange_light};
+    private final int[] colorArray = new int[]{android.R.color.holo_blue_bright, android.R.color.holo_red_light, android.R.color.holo_purple, android.R.color.holo_orange_light};
 
 
-    ViewPagerAdapter(Context context, List<String> data, ViewPager2 viewPager2, List<Integer> image, List<String> description) {
+    public ViewPagerAdapter(Context context, List<String> data, ViewPager2 viewPager2, List<Integer> image, List<String> description) {
         this.mInflater = LayoutInflater.from(context);
         this.myTitle = data;
         this.viewPager2 = viewPager2;
@@ -52,6 +61,9 @@ public class ViewPagerAdapter extends RecyclerView.Adapter<ViewPagerAdapter.View
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+        FirebaseDatabase rootDatabase = FirebaseDatabase.getInstance();
+        FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference rootReference = rootDatabase.getReference("users").child(currentFirebaseUser.getUid()).child("userDetails");
         String positionData = myTitle.get(position);
         holder.mytitleView.setText(positionData);
         holder.linearLayout.setBackgroundResource(colorArray[position]);
@@ -62,6 +74,7 @@ public class ViewPagerAdapter extends RecyclerView.Adapter<ViewPagerAdapter.View
             public void onClick(View v) {
                 Intent skipIntent = new Intent(context, MainActivity.class);
                 context.startActivity(skipIntent);
+                rootReference.child("onBoarded").setValue(true);
             }
 
         });
@@ -73,6 +86,7 @@ public class ViewPagerAdapter extends RecyclerView.Adapter<ViewPagerAdapter.View
                 public void onClick(View v) {
                     Intent getStartedIntent = new Intent(context, MainActivity.class);
                     context.startActivity(getStartedIntent);
+                    rootReference.child("onBoarded").setValue(true);
                 }
 
             });

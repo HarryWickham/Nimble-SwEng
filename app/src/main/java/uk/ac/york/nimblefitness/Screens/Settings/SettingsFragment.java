@@ -20,8 +20,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.firebase.auth.FirebaseAuth;
 
-import java.util.List;
-
 import uk.ac.york.nimblefitness.Adapters.SettingsListAdapter;
 import uk.ac.york.nimblefitness.R;
 import uk.ac.york.nimblefitness.Screens.PaymentActivity;
@@ -89,22 +87,19 @@ public class SettingsFragment extends Fragment {
                     startActivity(mIntent);
                     break;
                 }
-                case 3:{
+                case 3: {
                     String url = "https://forms.gle/QUjMeKqGW5W82RJN6";
                     Intent mIntent = new Intent(Intent.ACTION_VIEW);
                     mIntent.setData(Uri.parse(url));
                     startActivity(mIntent);
                     break;
                 }
-
                 case 4: { //if logout is clicked the user gets taken back to the login/signin screen will need to be changed to a case statement to allow for all items to be perform actions
                     FragmentTransaction fr = getParentFragmentManager().beginTransaction();
                     fr.replace(R.id.main_frame, new TermsAndConditionsFragment());
                     fr.commit();
                     break;
                 }
-
-
 
                 case 5: { //if logout is clicked the user gets taken back to the login/signin screen will need to be changed to a case statement to allow for all items to be perform actions
                     FirebaseAuth.getInstance().signOut();

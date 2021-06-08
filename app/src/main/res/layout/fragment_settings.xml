@@ -6,8 +6,6 @@
     tools:context=".Screens.Settings.SettingsFragment"
     >
 
-
-
     <ListView
         android:id="@+id/settings_list"
         android:layout_width="match_parent"
