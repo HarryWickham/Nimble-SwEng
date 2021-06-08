@@ -61,7 +61,7 @@ public class RoutinesFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_routines, container, false); // shows the fragment_routines.xml file in the frame view of the activity_main.xml
 
-        RoutineData routineData = new RoutineData(getContext()); // Object of routine data, that holds all the data from the routines.xml
+        RoutineData routineData = new RoutineData(getContext(), R.raw.routines); // Object of routine data, that holds all the data from the routines.xml
         ArrayList<Routine> routine = routineData.getRoutine();
 
         SharedPreferences prefs = getDefaultSharedPreferences(getContext()); // Sets up firebase data for routines for the user
