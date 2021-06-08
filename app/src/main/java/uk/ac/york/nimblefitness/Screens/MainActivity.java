@@ -109,7 +109,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void connectedToTheInternet(){
-        onResume();
         if(!isNetworkConnected() | !internetIsConnected()){
             handler.removeCallbacks(runnable);
             AlertDialog.Builder exitApp = new AlertDialog.Builder(this);
