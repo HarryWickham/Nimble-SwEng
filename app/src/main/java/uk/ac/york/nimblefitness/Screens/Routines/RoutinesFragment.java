@@ -46,7 +46,6 @@ public class RoutinesFragment extends Fragment {
 
 
     CustomExpandableListAdapter listAdapter; // listAdapter to mediate between the source code and the screen
-    ArrayList<Routine> routineArrayList; // array list to hold all the data for each routine and exercises within
     TextView nothingFound; // TextView used to alert user when their search yields no results
     ExpandableListView routineListView; // Instantiated ExpandableListView to show the code as an expandable list
 
@@ -62,7 +61,7 @@ public class RoutinesFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_routines, container, false); // shows the fragment_routines.xml file in the frame view of the activity_main.xml
 
-        RoutineData routineData = new RoutineData(getContext()); // Object of routine data, that holds all the data from the routines.xml
+        RoutineData routineData = new RoutineData(getContext(), R.raw.routines); // Object of routine data, that holds all the data from the routines.xml
         ArrayList<Routine> routine = routineData.getRoutine();
 
         SharedPreferences prefs = getDefaultSharedPreferences(getContext()); // Sets up firebase data for routines for the user
@@ -74,15 +73,15 @@ public class RoutinesFragment extends Fragment {
         }else {
             requireActivity().setTitle("Routines - Remaining: " + String.valueOf(getUserMembershipPlanRoutines(prefs, currentFirebaseUser) - prefs.getInt(currentFirebaseUser + "completedRoutines", 0)));
         }
+
         routineListView = view.findViewById(R.id.routine_exp_list); // Assigns the ListView to the layout 'routine_exp_list'
         SearchView routineSearch = view.findViewById(R.id.routine_search); // Assigns the SearchView to the layout 'routine_search'
         routineSearch.setActivated(true);
         routineSearch.setQueryHint("Search for Routines and Exercises");
         routineSearch.onActionViewExpanded();
         routineSearch.setIconified(false);
+        routineSearch.clearFocus();
 
-
-        routineArrayList = setUpRoutines(); // Fills the routineArrayList with the data from routineData
         listAdapter = new CustomExpandableListAdapter(getContext(), routine); // Assigns the listAdapter with the context and routine list
 
         // setting list adapter
@@ -103,7 +102,7 @@ public class RoutinesFragment extends Fragment {
 
             @Override
             public void onGroupExpand(int groupPosition) {
-
+                System.out.println(routine.get(groupPosition).getRoutineName());
             }
         });
 
@@ -112,8 +111,7 @@ public class RoutinesFragment extends Fragment {
 
             @Override
             public void onGroupCollapse(int groupPosition) {
-
-
+                System.out.println(routine.get(groupPosition).getRoutineName());
             }
         });
         // SearchView typing input listener
@@ -173,18 +171,6 @@ public class RoutinesFragment extends Fragment {
         }
     }
 
-    public ArrayList<Routine> setUpRoutines() {
-        // Instantiate variables for collecting data of each routine to display
-        ArrayList<Routine> listOfRoutines = new ArrayList<>();
-
-        // Sets up an array of routines with the data loaded into each routine
-        for (int i = 0; i < 12; i++) {
-            Routine routine = new Routine();
-            routine = routine.getExampleRoutine();
-            listOfRoutines.add(routine);
-        }
-        return listOfRoutines;
-    }
     // Gets information on user's plan to indicate how many routines a user has remaining
     public int getUserMembershipPlanRoutines(SharedPreferences prefs, FirebaseUser currentFirebaseUser ){
         switch (prefs.getString(currentFirebaseUser+"membershipPlan", "bronze")){

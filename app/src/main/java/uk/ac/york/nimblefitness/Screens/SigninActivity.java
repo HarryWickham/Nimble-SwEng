@@ -68,6 +68,11 @@ public class SigninActivity extends AppCompatActivity {
 
         //Initialise Firebase
         firebaseAuth = FirebaseAuth.getInstance();
+        /* For testing
+        if (firebaseAuth.getCurrentUser() != null) {
+            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            finish();
+        }*/
         InitialiseEmailLogin();
         InitialiseGoogleLogin();
         InitialiseFacebook();
@@ -111,7 +116,7 @@ public class SigninActivity extends AppCompatActivity {
                 firebaseAuth.signInWithEmailAndPassword(userDetails.getEmail(),userDetails.getPassword()).addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         Toast.makeText(SigninActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
-                        receiveData();//takes user the main page
+                        startActivity(new Intent(getApplicationContext(), PaymentActivity.class));//takes user the main page
                     } else {
                         invalidUser();
                     }
@@ -141,6 +146,7 @@ public class SigninActivity extends AppCompatActivity {
         googleSignIn.setOnClickListener(v -> {
             Intent gSignIn = signInClient.getSignInIntent();
             startActivityForResult(gSignIn, GOOGLE_SIGNIN_CODE);
+            //startActivity(new Intent(getApplicationContext(), PaymentActivity.class));
         });
     }
 
@@ -177,7 +183,8 @@ public class SigninActivity extends AppCompatActivity {
                         if(task.isSuccessful()){
                             //SendUserData(user);
                             Log.d("Login","Success");
-                            receiveData();
+                            startActivity(new Intent(getApplicationContext(), PaymentActivity.class));
+                            finish();
                         }
                         else{
                             Log.d("Login","Error");
@@ -211,7 +218,9 @@ public class SigninActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
-                            receiveData();
+                            FirebaseUser user=firebaseAuth.getCurrentUser();
+                            startActivity(new Intent(getApplicationContext(), PaymentActivity.class));
+
                         }
                     }
                 });

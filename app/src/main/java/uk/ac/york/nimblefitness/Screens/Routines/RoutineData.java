@@ -35,6 +35,7 @@ import uk.ac.york.nimblefitness.R;
 
 public class RoutineData {
     Routine routine;
+    int resourceFile;
     String defaultBackgroundColour;
     TextModule.fontFamily font;
     String fontColour;
@@ -50,8 +51,9 @@ public class RoutineData {
 
 
 
-    public RoutineData(Context context) {
+    public RoutineData(Context context, int resourceFile) {
         this.context = context;
+        this.resourceFile = resourceFile;
     }
 
     public ArrayList<Routine> getRoutine() {
@@ -66,7 +68,7 @@ public class RoutineData {
             pullParserFactory = XmlPullParserFactory.newInstance();
             XmlPullParser parser = pullParserFactory.newPullParser();
 
-            InputStream inputStream = context.getResources().openRawResource(R.raw.routines);
+            InputStream inputStream = context.getResources().openRawResource(resourceFile);
 
             parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
             parser.setInput(inputStream, null);

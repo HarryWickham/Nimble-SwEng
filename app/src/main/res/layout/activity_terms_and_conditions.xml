@@ -21,7 +21,8 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:id="@+id/TCScroll">
         <TextView
             android:layout_margin="16dp"
             android:paddingBottom="32dp"
@@ -29,6 +30,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:justificationMode="inter_word"
+            android:id ="@+id/TCText"
             android:text="@string/terms_and_conditions"/>
     </ScrollView>
 </LinearLayout>

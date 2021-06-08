@@ -71,7 +71,7 @@ public class FavesFragment extends Fragment {
                     favourites.add(dataSnapshot.getValue(String.class));
                 }
 
-                RoutineData routineData = new RoutineData(getContext()); // Object of routine data, that holds all the data from the routines.xml
+                RoutineData routineData = new RoutineData(getContext(), R.raw.routines); // Object of routine data, that holds all the data from the routines.xml
                 ArrayList<Routine> routines = routineData.getRoutine();
 
                 ArrayList<Routine> favouriteRoutines = new ArrayList<>();

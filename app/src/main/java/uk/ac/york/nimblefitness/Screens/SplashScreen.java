@@ -2,6 +2,7 @@ package uk.ac.york.nimblefitness.Screens;
 
 import androidx.activity.OnBackPressedDispatcherOwner;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -12,6 +13,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -35,7 +39,8 @@ public class SplashScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
-        receiveData();
+
+        connectedToTheInternet();
     }
 
     private void receiveData(){
@@ -115,6 +120,8 @@ public class SplashScreen extends AppCompatActivity {
             startActivity(new Intent(SplashScreen.this,MainActivity.class));
             finish();
         }
+
+
     }
 
     private void resetCompletedRoutines(UserDetails userDetails, FirebaseUser currentFirebaseUser, SharedPreferences prefs){
@@ -131,6 +138,28 @@ public class SplashScreen extends AppCompatActivity {
         FirebaseDatabase rootDatabase = FirebaseDatabase.getInstance();
         DatabaseReference rootReference = rootDatabase.getReference("users").child(currentFirebaseUser.getUid());
         rootReference.child("userDetails").child("lastLogin").setValue(Integer.parseInt(sdf.format(new Date())));
+    }
+
+    private void connectedToTheInternet(){
+        if(!isNetworkConnected() | !internetIsConnected()){
+            AlertDialog.Builder exitApp = new AlertDialog.Builder(this);
+            exitApp.setTitle("An error has occurred");
+            exitApp.setMessage("Please ensure you are connected to the internet");
+            Log.i("TAG", "onBackPressed: ");
+            exitApp.setCancelable(false)
+                    .setPositiveButton("Retry", (dialog, id) -> {
+                        if(isNetworkConnected() | internetIsConnected()) {
+                            receiveData();
+                        } else {
+                            connectedToTheInternet();
+                        }
+                    });
+
+            // create alert dialog
+            exitApp.create().show();
+        } else {
+            receiveData();
+        }
     }
 
     private boolean isNetworkConnected() {

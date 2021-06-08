@@ -5,13 +5,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.AudioAttributes;
 import android.media.MediaPlayer;
-import android.os.Build;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.widget.Toast;
-
-import androidx.annotation.RequiresApi;
 
 import java.io.IOException;
 
@@ -49,8 +45,9 @@ public class Audio extends Service {
         myPlayer.setLooping(true); // Set looping, setting loop play to true
         //Toast.makeText(this, "Service Successfully Created", Toast.LENGTH_LONG).show();
     }
+
    @Override
-    public void onStart(Intent intent, int startid) {
+    public void onStart(Intent intent, int startID) {
         //Set the looping value
        Boolean loop = prefs.getBoolean("loop",false);
        myPlayer.start();
@@ -61,6 +58,7 @@ public class Audio extends Service {
     public void onDestroy() {
         myPlayer.stop();
     }
+
     @Override
     public IBinder onBind(Intent intent) {
         return null;

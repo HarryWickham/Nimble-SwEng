@@ -1,0 +1,169 @@
+<slideshow author="" version="" comment="">
+    <defaults backgroundcolour="#ffffff" font="sans_serif" fontsize="13" fontcolour="#000000" linecolour="#000000" fillcolour="#000000"/>
+    <slide id="Slide1" duration="0">
+        <!-- <routine routineImage="" routineName="" routineSummary="" rating="" sets="" restBetweenSets="">
+            <exercise exerciseName="" exerciseDescription="" repType="" reps="" timePerRep="" movesPerRep="" restAfterFinish="" colour="">
+                <video urlname="" starttime="0" loop="true" xstart="50" ystart="262" width="980" height="550" id="" />
+                <image urlname="" xstart="50" ystart="887" width="726" height="550" duration="0"/>
+                <shape type="RECTANGLE" xstart="25" ystart="237" width="600" height="1030" fillcolour="#303F9F" duration="0"/>
+                <shape type="RECTANGLE" xstart="25" ystart="862" width="560" height="780" fillcolour="#303F9F" duration="0"/>
+                <text font="sans_serif" fontsize="32" fontcolour="#000000" xstart="50" ystart="50"></text>
+                <text font="sans_serif" fontsize="13" fontcolour="#000000" xstart="50" ystart="1512"></text>
+            </exercise>
+        </routine> -->
+
+        <routine routineImage="https://www-users.york.ac.uk/~hew550/NimbleAssets/routineimages/beginUp.png" routineName="Beginner Upper Body" routineSummary="Let's start easy. This routine concentrates on those upper body muscles including pectorals, deltoids and abdominals with most of the moves requiring the body to be laid out on the stomach."
+            rating="3" sets="4" restBetweenSets="30" setsRemaining="4">
+            <exercise exerciseName="Push Up" exerciseDescription="With your hands placed a shoulder width apart and a straight back, lower yourself to the ground keeping your elbows tucked in. Hold the position. Then push off of the floor to your start position to complete a rep. "
+                repType="number" reps="5" timePerRep="3" movesPerRep="1" restAfterFinish="10" colour="#d82bff">
+                <video urlname="https://www-users.york.ac.uk/~hew550/NimbleAssets/exercisevideos/Normal-Push-Up.mp4" starttime="0" loop="true" xstart="50" ystart="262" width="980" height="550" id="pushUpVideo" />
+                <image urlname="https://www-users.york.ac.uk/~hew550/NimbleAssets/exercisemusclegroups/normal_push_up.png" xstart="50" ystart="887" width="726" height="550" duration="0"/>
+                <shape type="RECTANGLE" xstart="25" ystart="237" width="600" height="1030" fillcolour="#303F9F" duration="0"/>
+                <shape type="RECTANGLE" xstart="25" ystart="862" width="560" height="780" fillcolour="#303F9F" duration="0"/>
+                <text font="sans_serif" fontsize="32" fontcolour="#000000" xstart="50" ystart="50"><b>Push Up</b></text>
+                <text font="sans_serif" fontsize="13" fontcolour="#000000" xstart="50" ystart="1512">With your hands placed a shoulder width apart and a straight back, lower yourself to the ground keeping your elbows tucked in. Hold the position. Then push off of the floor to your start position to complete a rep.</text>
+            </exercise>
+
+            <exercise exerciseName="Wide Push Up" exerciseDescription="With your hands placed a little wider than for a normal push up and a straight back, lower yourself to the ground keeping your elbows tucked in. Hold the position. Then push off of the floor to your start position to complete a rep."
+                repType="number" reps="10" timePerRep="2" movesPerRep="2" restAfterFinish="60" colour="#f1b3ff">
+                <video urlname="https://www-users.york.ac.uk/~hew550/NimbleAssets/exercisevideos/Wide-Push-Up.mp4" starttime="0" loop="true" xstart="50" ystart="262" width="980" height="550" id="widePushUpVideo" />
+                <image urlname="https://www-users.york.ac.uk/~hew550/NimbleAssets/exercisemusclegroups/wide_push_up.png" xstart="50" ystart="887" width="726" height="550" duration="0"/>
+                <shape type="RECTANGLE" xstart="25" ystart="237" width="600" height="1030" fillcolour="#303F9F" duration="0"/>
+                <shape type="RECTANGLE" xstart="25" ystart="862" width="560" height="780" fillcolour="#303F9F" duration="0"/>
+                <text font="sans_serif" fontsize="32" fontcolour="#000000" xstart="50" ystart="50"><b>Wide Push Up</b></text>
+                <text font="sans_serif" fontsize="13" fontcolour="#000000" xstart="50" ystart="1512">With your hands placed a little wider than for a normal push up and a straight back, lower yourself to the ground keeping your elbows tucked in. Hold the position. Then push off of the floor to your start position to complete a rep.</text>
+            </exercise>
+
+            <exercise exerciseName="Closed Push Up" exerciseDescription="With your hands placed next to each other and a straight back, lower yourself to the ground keeping your elbows tucked in. Hold the position. Then push off of the floor to your start position to complete a rep."
+                repType="number" reps="5" timePerRep="2" movesPerRep="2" restAfterFinish="60" colour="#3e004d">
+                <video urlname="https://www-users.york.ac.uk/~hew550/NimbleAssets/exercisevideos/Closed-Push-Up.mp4" starttime="0" loop="true" xstart="50" ystart="262" width="980" height="550" id="closedPushUpVideo" />
+                <image urlname="https://www-users.york.ac.uk/~hew550/NimbleAssets/exercisemusclegroups/closed_push_up.png" xstart="50" ystart="887" width="726" height="550" duration="0"/>
+                <shape type="RECTANGLE" xstart="25" ystart="237" width="600" height="1030" fillcolour="#303F9F" duration="0"/>
+                <shape type="RECTANGLE" xstart="25" ystart="862" width="560" height="780" fillcolour="#303F9F" duration="0"/>
+                <text font="sans_serif" fontsize="32" fontcolour="#000000" xstart="50" ystart="50"><b>Closed Push Up</b></text>
+                <text font="sans_serif" fontsize="13" fontcolour="#000000" xstart="50" ystart="1512">With your hands placed next to each other and a straight back, lower yourself to the ground keeping your elbows tucked in. Hold the position. Then push off of the floor to your start position to complete a rep.</text>
+            </exercise>
+
+            <exercise exerciseName="Spiderman Push Up" exerciseDescription="With your hands placed a shoulder width apart and a straight back, lower yourself to the ground while raising your knee up towards your elbow. Hold the position. Then push off of the floor to your start position to complete a rep. Alternate the knee you raise for each rep."
+                repType="number" reps="5" timePerRep="3" movesPerRep="2" restAfterFinish="60" colour="#15001a">
+                <video urlname="https://www-users.york.ac.uk/~hew550/NimbleAssets/exercisevideos/Spiderman-Push-Up.mp4" starttime="0" loop="true" xstart="50" ystart="262" width="980" height="550" id="spidermanPushUpVideo" />
+                <image urlname="https://www-users.york.ac.uk/~hew550/NimbleAssets/exercisemusclegroups/spiderman_push_up.png" xstart="50" ystart="887" width="726" height="550" duration="0"/>
+                <shape type="RECTANGLE" xstart="25" ystart="237" width="600" height="1030" fillcolour="#303F9F" duration="0"/>
+                <shape type="RECTANGLE" xstart="25" ystart="862" width="560" height="780" fillcolour="#303F9F" duration="0"/>
+                <text font="sans_serif" fontsize="32" fontcolour="#000000" xstart="50" ystart="50"><b>Spiderman Push Up</b></text>
+                <text font="sans_serif" fontsize="13" fontcolour="#000000" xstart="50" ystart="1512">With your hands placed a shoulder width apart and a straight back, lower yourself to the ground while raising your knee up towards your elbow. Hold the position. Then push off of the floor to your start position to complete a rep. Alternate the knee you raise for each rep.</text>
+            </exercise>
+
+            <exercise exerciseName="Tricep Dip" exerciseDescription="Using a chair, put your weight onto your hands then lower yourself slowly down so that your legs are straight and your body forms an L shape. Push off of the chair to return to your start position to complete a rep."
+                repType="number" reps="5" timePerRep="4" movesPerRep="1" restAfterFinish="10" colour="#76ffbc">
+                <video urlname="https://www-users.york.ac.uk/~hew550/NimbleAssets/exercisevideos/Tricep-Dip.mp4" starttime="0" loop="true" xstart="50" ystart="262" width="980" height="550" id="tricepDipVideo" />
+                <image urlname="https://www-users.york.ac.uk/~hew550/NimbleAssets/exercisemusclegroups/tricep_dip.png" xstart="50" ystart="887" width="726" height="550" duration="0"/>
+                <shape type="RECTANGLE" xstart="25" ystart="237" width="600" height="1030" fillcolour="#303F9F" duration="0"/>
+                <shape type="RECTANGLE" xstart="25" ystart="862" width="560" height="780" fillcolour="#303F9F" duration="0"/>
+                <text font="sans_serif" fontsize="32" fontcolour="#000000" xstart="50" ystart="50"><b>Tricep Dip</b></text>
+                <text font="sans_serif" fontsize="13" fontcolour="#000000" xstart="50" ystart="1512">Using a chair, put your weight onto your hands then lower yourself slowly down so that your legs are straight and your body forms an L shape. Push off of the chair to return to your start position to complete a rep.</text>
+            </exercise>
+
+            <exercise exerciseName="Plank" exerciseDescription="From a normal push up position, lower yourself down so that your weight is resting on your forearms. With a straight back, hold this position by engaging your core muscles. "
+                repType="time" reps="20" timePerRep="0" movesPerRep="1" restAfterFinish="10" colour="#ffb100">
+                <video urlname="https://www-users.york.ac.uk/~hew550/NimbleAssets/exercisevideos/Plank.mp4" starttime="0" loop="true" xstart="50" ystart="262" width="980" height="550" id="plankVideo" />
+                <image urlname="https://www-users.york.ac.uk/~hew550/NimbleAssets/exercisemusclegroups/plank.png" xstart="50" ystart="887" width="726" height="550" duration="0"/>
+                <shape type="RECTANGLE" xstart="25" ystart="237" width="600" height="1030" fillcolour="#303F9F" duration="0"/>
+                <shape type="RECTANGLE" xstart="25" ystart="862" width="560" height="780" fillcolour="#303F9F" duration="0"/>
+                <text font="sans_serif" fontsize="32" fontcolour="#000000" xstart="50" ystart="50"><b>Plank</b></text>
+                <text font="sans_serif" fontsize="13" fontcolour="#000000" xstart="50" ystart="1512">From a normal push up position, lower yourself down so that your weight is resting on your forearms. With a straight back, hold this position by engaging your core muscles.</text>
+            </exercise>
+
+            <exercise exerciseName="Side Plank Kicks" exerciseDescription="From a side plank starting position, while engaging your core, raise your leg up to just beyond parallel to the ground then return to parallel with your other leg. Switch arms to complete the exercise for the other half of your abdominals and oblique; raising the opposite leg."
+                repType="number" reps="5" timePerRep="2" movesPerRep="2" restAfterFinish="60" colour="#ff6600">
+                <video urlname="https://www-users.york.ac.uk/~hew550/NimbleAssets/exercisevideos/Side-Plank-Kicks.mp4" starttime="0" loop="true" xstart="50" ystart="262" width="980" height="550" id="sidePlankKicksVideo" />
+                <image urlname="https://www-users.york.ac.uk/~hew550/NimbleAssets/exercisemusclegroups/side_plank_kicks.png" xstart="50" ystart="887" width="726" height="550" duration="0"/>
+                <shape type="RECTANGLE" xstart="25" ystart="237" width="600" height="1030" fillcolour="#303F9F" duration="0"/>
+                <shape type="RECTANGLE" xstart="25" ystart="862" width="560" height="780" fillcolour="#303F9F" duration="0"/>
+                <text font="sans_serif" fontsize="32" fontcolour="#000000" xstart="50" ystart="50"><b>Side Plank Kicks</b></text>
+                <text font="sans_serif" fontsize="13" fontcolour="#000000" xstart="50" ystart="1512">From a side plank starting position, while engaging your core, raise your leg up to just beyond parallel to the ground then return to parallel with your other leg. Switch arms to complete the exercise for the other half of your abdominals and oblique; raising the opposite leg.</text>
+            </exercise>
+
+            <exercise exerciseName="Flutter Kicks" exerciseDescription="From a seated position on the floor with your legs out in front of you, lean back so that your arms can support your upper body and raise both legs just off of the floor. Then, alternately kick each leg upward in a motion similar to a front crawl. Ensure that your core is engaged and toes are pointed to maintain form."
+                repType="time" reps="30" timePerRep="0" movesPerRep="2" restAfterFinish="60" colour="#ff0000">
+                <video urlname="https://www-users.york.ac.uk/~hew550/NimbleAssets/exercisevideos/Flutter-Kicks.mp4" starttime="0" loop="true" xstart="50" ystart="262" width="980" height="550" id="flutterKicksVideo" />
+                <image urlname="https://www-users.york.ac.uk/~hew550/NimbleAssets/exercisemusclegroups/flutter_kicks.png" xstart="50" ystart="887" width="726" height="550" duration="0"/>
+                <shape type="RECTANGLE" xstart="25" ystart="237" width="600" height="1030" fillcolour="#303F9F" duration="0"/>
+                <shape type="RECTANGLE" xstart="25" ystart="862" width="560" height="780" fillcolour="#303F9F" duration="0"/>
+                <text font="sans_serif" fontsize="32" fontcolour="#000000" xstart="50" ystart="50"><b>Flutter Kicks</b></text>
+                <text font="sans_serif" fontsize="13" fontcolour="#000000" xstart="50" ystart="1512">From a seated position on the floor with your legs out in front of you, lean back so that your arms can support your upper body and raise both legs just off of the floor. Then, alternately kick each leg upward in a motion similar to a front crawl. Ensure that your core is engaged and toes are pointed to maintain form.</text>
+            </exercise>
+
+            <exercise exerciseName="Cross Kicks" exerciseDescription="From a seated position on the floor with your legs out in front of you, lean back so that your arms can support your upper body and raise both legs just off of the floor. Then, cross your legs left to right, bringing one leg above the other. Alternate which leg crosses on top and bottom. Remember to engage your core muscles to maintain form."
+                repType="time" reps="30" timePerRep="0" movesPerRep="1.5" restAfterFinish="60" colour="#ff8080">
+                <video urlname="https://www-users.york.ac.uk/~hew550/NimbleAssets/exercisevideos/Cross-Kicks.mp4" starttime="0" loop="true" xstart="50" ystart="262" width="980" height="550" id="crossKicksVideo" />
+                <image urlname="https://www-users.york.ac.uk/~hew550/NimbleAssets/exercisemusclegroups/cross_kicks.png" xstart="50" ystart="887" width="726" height="550" duration="0"/>
+                <shape type="RECTANGLE" xstart="25" ystart="237" width="600" height="1030" fillcolour="#303F9F" duration="0"/>
+                <shape type="RECTANGLE" xstart="25" ystart="862" width="560" height="780" fillcolour="#303F9F" duration="0"/>
+                <text font="sans_serif" fontsize="32" fontcolour="#000000" xstart="50" ystart="50"><b>Cross Kicks</b></text>
+                <text font="sans_serif" fontsize="13" fontcolour="#000000" xstart="50" ystart="1512">From a seated position on the floor with your legs out in front of you, lean back so that your arms can support your upper body and raise both legs just off of the floor. Then, cross your legs left to right, bringing one leg above the other. Alternate which leg crosses on top and bottom. Remember to engage your core muscles to maintain form.</text>
+            </exercise>
+
+            <exercise exerciseName="Russian Twists" exerciseDescription="From a seated position on the floor with your feet planted or raised in the air slightly, rotate the upper half of your body from left to right while maintaining a stable lower body position. Remember to engage your core muscles to maintain form."
+                repType="number" reps="20" timePerRep="4" movesPerRep="1.5" restAfterFinish="60" colour="#ffcccc">
+                <video urlname="https://www-users.york.ac.uk/~hew550/NimbleAssets/exercisevideos/Russian-Twist-1.mp4" starttime="0" loop="true" xstart="50" ystart="262" width="980" height="550" id="supermanRaisesVideo" />
+                <image urlname="https://www-users.york.ac.uk/~hew550/NimbleAssets/exercisemusclegroups/russian_twists.png" xstart="50" ystart="887" width="726" height="550" duration="0"/>
+                <shape type="RECTANGLE" xstart="25" ystart="237" width="600" height="1030" fillcolour="#303F9F" duration="0"/>
+                <shape type="RECTANGLE" xstart="25" ystart="862" width="560" height="780" fillcolour="#303F9F" duration="0"/>
+                <text font="sans_serif" fontsize="32" fontcolour="#000000" xstart="50" ystart="50"><b>Russian Twists</b></text>
+                <text font="sans_serif" fontsize="13" fontcolour="#000000" xstart="50" ystart="1512">From a seated position on the floor with your feet planted or raised in the air slightly, rotate the upper half of your body from left to right while maintaining a stable lower body position. Remember to engage your core muscles to maintain form..</text>
+            </exercise>
+
+            <exercise exerciseName="Ankle Taps" exerciseDescription="From a laying down position bring your knees in while keeping your feet planted. Then, use your left hand to touch your left ankle, while maintaining engaged core muscles and a laid back position. Repeat this using your right hand to touch your right ankle. Continue to alternate between using your left and right hand."
+                repType="number" reps="10" timePerRep="2" movesPerRep="1.5" restAfterFinish="60" colour="#660000">
+                <video urlname="https://www-users.york.ac.uk/~hew550/NimbleAssets/exercisevideos/Ankel-Taps.mp4" starttime="0" loop="true" xstart="50" ystart="262" width="980" height="550" id="ankleTapVideo" />
+                <image urlname="https://www-users.york.ac.uk/~hew550/NimbleAssets/exercisemusclegroups/ankle_tap.png" xstart="50" ystart="887" width="726" height="550" duration="0"/>
+                <shape type="RECTANGLE" xstart="25" ystart="237" width="600" height="1030" fillcolour="#303F9F" duration="0"/>
+                <shape type="RECTANGLE" xstart="25" ystart="862" width="560" height="780" fillcolour="#303F9F" duration="0"/>
+                <text font="sans_serif" fontsize="32" fontcolour="#000000" xstart="50" ystart="50"><b>Ankle Taps</b></text>
+                <text font="sans_serif" fontsize="13" fontcolour="#000000" xstart="50" ystart="1512">From a laying down position bring your knees in while keeping your feet planted. Then, use your left hand to touch your left ankle, while maintaining engaged core muscles and a laid back position. Repeat this using your right hand to touch your right ankle. Continue to alternate between using your left and right hand.</text>
+            </exercise>
+
+            <exercise exerciseName="Sit Ups" exerciseDescription="From a laying down position bring your knees in while keeping your feet planted. Using your core muscles, bring your upper body up off of the floor towards your knees. Slowly lower yourself back down to the starting position to complete a rep."
+                repType="number" reps="10" timePerRep="3" movesPerRep="1.5" restAfterFinish="60" colour="#8080ff">
+                <video urlname="https://www-users.york.ac.uk/~hew550/NimbleAssets/exercisevideos/Sit-Ups.mp4" starttime="0" loop="true" xstart="50" ystart="262" width="980" height="550" id="sitUpsVideo" />
+                <image urlname="https://www-users.york.ac.uk/~hew550/NimbleAssets/exercisemusclegroups/sit_ups.png" xstart="50" ystart="887" width="726" height="550" duration="0"/>
+                <shape type="RECTANGLE" xstart="25" ystart="237" width="600" height="1030" fillcolour="#303F9F" duration="0"/>
+                <shape type="RECTANGLE" xstart="25" ystart="862" width="560" height="780" fillcolour="#303F9F" duration="0"/>
+                <text font="sans_serif" fontsize="32" fontcolour="#000000" xstart="50" ystart="50"><b>Sit Ups</b></text>
+                <text font="sans_serif" fontsize="13" fontcolour="#000000" xstart="50" ystart="1512">From a laying down position bring your knees in while keeping your feet planted. Using your core muscles, bring your upper body up off of the floor towards your knees. Slowly lower yourself back down to the starting position to complete a rep.</text>
+            </exercise>
+
+            <exercise exerciseName="Superman Raises" exerciseDescription="Start by laying on your front. Raise your legs off of the floor while simultaneously raising your arms off of the floor using your shoulder and back muscles. Hold this position."
+                repType="number" reps="5" timePerRep="4" movesPerRep="1" restAfterFinish="10" colour="#003ee0">
+                <video urlname="https://www-users.york.ac.uk/~hew550/NimbleAssets/exercisevideos/Superman.mp4" starttime="0" loop="true" xstart="50" ystart="262" width="980" height="550" id="supermanRaisesVideo" />
+                <image urlname="https://www-users.york.ac.uk/~hew550/NimbleAssets/exercisemusclegroups/superman.png" xstart="50" ystart="887" width="726" height="550" duration="0"/>
+                <shape type="RECTANGLE" xstart="25" ystart="237" width="600" height="1030" fillcolour="#303F9F" duration="0"/>
+                <shape type="RECTANGLE" xstart="25" ystart="862" width="560" height="780" fillcolour="#303F9F" duration="0"/>
+                <text font="sans_serif" fontsize="32" fontcolour="#000000" xstart="50" ystart="50"><b>Superman Raises</b></text>
+                <text font="sans_serif" fontsize="13" fontcolour="#000000" xstart="50" ystart="1512">Start by laying on your front. Raise your legs off of the floor while simultaneously raising your arms off of the floor using your shoulder and back muscles. Hold this position.</text>
+            </exercise>
+
+            <exercise exerciseName="Body Weight Squats" exerciseDescription="From a standing position, space your legs about a shoulder width apart, toes facing forwards and bend at the knee to lower your body. Ensure that you do not arch your back; keep it straight, and bend sufficiently at the knee to lower yourself. Then, raise yourself by engaging leg and core muscles back to the start position to complete a rep. "
+                repType="number" reps="10" timePerRep="3" movesPerRep="1.25" restAfterFinish="10" colour="#009933">
+                <video urlname="https://www-users.york.ac.uk/~hew550/NimbleAssets/exercisevideos/Squats.mp4" starttime="0" loop="true" xstart="50" ystart="262" width="980" height="550" id="squatsVideo" />
+                <image urlname="https://www-users.york.ac.uk/~hew550/NimbleAssets/exercisemusclegroups/squats.png" xstart="50" ystart="887" width="726" height="550" duration="0"/>
+                <shape type="RECTANGLE" xstart="25" ystart="237" width="600" height="1030" fillcolour="#303F9F" duration="0"/>
+                <shape type="RECTANGLE" xstart="25" ystart="862" width="560" height="780" fillcolour="#303F9F" duration="0"/>
+                <text font="sans_serif" fontsize="32" fontcolour="#000000" xstart="50" ystart="50"><b>Body Weight Squats</b></text>
+                <text font="sans_serif" fontsize="13" fontcolour="#000000" xstart="50" ystart="1512">From a standing position, space your legs about a shoulder width apart, toes facing forwards and bend at the knee to lower your body. Ensure that you do not arch your back; keep it straight, and bend sufficiently at the knee to lower yourself. Then, raise yourself by engaging leg and core muscles back to the start position to complete a rep.</text>
+            </exercise>
+
+            <exercise exerciseName="Lunges" exerciseDescription="From a standing position, step out in front and lower yourself onto that leg. Ensure that the knee of the leg you stepped out on doesn't go past your foot and that your back knee doesn't hit the floor. Engage your leg and core muscles to perform the motion correctly. Push off of the leading le to return to your start position. Repeat using the opposite leg as the leading leg."
+                repType="number" reps="10" timePerRep="3" movesPerRep="1.25" restAfterFinish="10" colour="#33ff77">
+                <video urlname="https://www-users.york.ac.uk/~hew550/NimbleAssets/exercisevideos/lunges.mp4" starttime="0" loop="true" xstart="50" ystart="262" width="980" height="550" id="lungesVideo" />
+                <image urlname="https://www-users.york.ac.uk/~hew550/NimbleAssets/exercisemusclegroups/lunges.png" xstart="50" ystart="887" width="726" height="550" duration="0"/>
+                <shape type="RECTANGLE" xstart="25" ystart="237" width="600" height="1030" fillcolour="#303F9F" duration="0"/>
+                <shape type="RECTANGLE" xstart="25" ystart="862" width="560" height="780" fillcolour="#303F9F" duration="0"/>
+                <text font="sans_serif" fontsize="32" fontcolour="#000000" xstart="50" ystart="50"><b>Lunges</b></text>
+                <text font="sans_serif" fontsize="13" fontcolour="#000000" xstart="50" ystart="1512">From a standing position, step out in front and lower yourself onto that leg. Ensure that the knee of the leg you stepped out on doesn't go past your foot and that your back knee doesn't hit the floor. Engage your leg and core muscles to perform the motion correctly. Push off of the leading le to return to your start position. Repeat using the opposite leg as the leading leg.</text>
+            </exercise>
+        </routine>
+
+    </slide>
+</slideshow>

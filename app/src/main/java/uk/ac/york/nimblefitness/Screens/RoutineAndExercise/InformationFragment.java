@@ -15,6 +15,8 @@ import android.widget.Button;
 
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
+
 import uk.ac.york.nimblefitness.HelperClasses.Exercise;
 import uk.ac.york.nimblefitness.HelperClasses.Routine;
 import uk.ac.york.nimblefitness.MediaHandlers.Graphics.ShapeType;
@@ -44,12 +46,29 @@ public class InformationFragment extends Fragment {
         exitToMenu.setText("Exit to Main Menu");
         /*  This is the routine object shared between this page, the counter, finish summary and end
             summary pages. */
-        Routine routine = (Routine) getArguments().getSerializable("routine");
+
+        Intent intent = getActivity().getIntent();
+        Bundle bundle = intent.getExtras();
+
+        Log.i("TAG", String.valueOf(bundle.getSerializable("exercise")));
+        Exercise exercise = (Exercise) bundle.getSerializable("exercise");
+
+        Log.i("TAG", String.valueOf(exercise.getExerciseName()));
+
+        if(exercise.getExerciseName().equals("fake")) {
+            Routine routine = (Routine) getArguments().getSerializable("routine");
+            loadExercise(view, routine.getExerciseArrayList().get(routine.getCurrentExercise()));
+        }else if(bundle.getSerializable("exercise")!=null){
+            loadExercise(view, exercise);
+            toCounterPage.setVisibility(View.GONE);
+        }else{
+            Log.i("onCreateView", "onCreateView: ");
+        }
         // A new counter page is created upon the button mentioned above is pressed.
         CounterFragment counterFragment = new CounterFragment();
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("routine",routine);
-        counterFragment.setArguments(bundle);
+        //Bundle bundle = new Bundle();
+        //bundle.putSerializable("routine",routine);
+        counterFragment.setArguments(getArguments());
         /*  The listener which opens the counter fragment and closes this fragment when the
             corresponding button is pressed. */
         toCounterPage.setOnClickListener(new View.OnClickListener() {
@@ -70,14 +89,13 @@ public class InformationFragment extends Fragment {
             }
         });
         // Initialises the information for the current exercise in the routine.
-        loadExercise(view, routine);
+
         return view;
     }
 
-    public void loadExercise(View view, Routine routine) {
+    public void loadExercise(View view, Exercise exercise) {
         /*  The current exercise displayed is determined by the currentExercise property of the
             Routine object. */
-        Exercise exercise = routine.getExerciseArrayList().get(routine.getCurrentExercise());
 
         /*  Sets the context and parent layout for the current exercise's name and description and displays it in
             the fragment. */

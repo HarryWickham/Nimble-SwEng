@@ -9,7 +9,7 @@ public class UserDetails {
     public UserDetails() {
     }
 
-    public UserDetails(String firstName, String lastName, String gender, String exerciseType, String exerciseDuration, String membershipPlan, int currentMoves, int age, int weeklyGoal, int completedRoutines, int lastLogin, boolean acceptedTC, boolean onBoarded) {
+    public UserDetails(String firstName, String lastName, String gender, String exerciseType, String exerciseDuration, int age, String membershipPlan, int weeklyGoal, int currentMoves, int completedRoutines, int lastLogin, boolean acceptedTC, boolean onBoarded) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;

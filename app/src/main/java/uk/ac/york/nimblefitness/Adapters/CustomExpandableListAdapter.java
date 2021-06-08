@@ -21,6 +21,7 @@ import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -109,9 +110,14 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
                 SharedPreferences prefs = getDefaultSharedPreferences(context);
                 FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
                 if(prefs.getInt(currentFirebaseUser+"completedRoutines", 0)<getUserMembershipPlanRoutines(prefs, currentFirebaseUser)) {
+
+                    Exercise exercise = new Exercise();
+                    exercise.setExerciseName("fake");
+
                     Intent intent = new Intent(context, RoutineAndExerciseActivity.class);
                     Bundle bundle = new Bundle();
-                    bundle.putSerializable("routine", group);
+                    bundle.putSerializable("routine",(Serializable) group);
+                    bundle.putSerializable("exercise", (Serializable) exercise);
                     intent.putExtras(bundle);
                     context.startActivity(intent);
                 } else{

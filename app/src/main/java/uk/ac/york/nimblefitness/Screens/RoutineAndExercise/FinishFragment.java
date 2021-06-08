@@ -49,6 +49,7 @@ public class FinishFragment extends Fragment {
     DatabaseReference rootReferenceUser;
     Routine routine = null;
     CountDownTimer restTimer;
+    CountDownTimer restTimer2;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -113,7 +114,7 @@ public class FinishFragment extends Fragment {
         InformationFragment informationFragment = new InformationFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable("routine",routine);
-        informationFragment.setArguments(bundle);
+        informationFragment.setArguments(getArguments());
 
         retrieveCompletedExerciseFromFirebase();
 
@@ -149,7 +150,7 @@ public class FinishFragment extends Fragment {
 
             restTime.setText(String.valueOf(routine.getExerciseArrayList().get(routine.getCurrentExercise()).getRestAfterFinish()));
         } else {
-            restTimer = new CountDownTimer(routine.getExerciseArrayList().get(routine.getCurrentExercise()).getRestAfterFinish()*1000, 1000) {
+            restTimer2 = new CountDownTimer(routine.getExerciseArrayList().get(routine.getCurrentExercise()).getRestAfterFinish()*1000, 1000) {
                 @Override
                 public void onTick(long startTimeRemaining) {
                     restTime.setText(String.valueOf(Integer.parseInt((String) restTime.getText())-1));
@@ -175,7 +176,12 @@ public class FinishFragment extends Fragment {
         nextExercise.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                restTimer.cancel();
+                if (remainingExercises.size()==0) {
+                    restTimer.cancel();
+                } else {
+                    restTimer2.cancel();
+                }
+
                 FragmentTransaction fragmentTransaction = requireActivity().getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.RoutineAndExerciseFrame, informationFragment);
                 fragmentTransaction.commit();
@@ -185,14 +191,18 @@ public class FinishFragment extends Fragment {
         exitToProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                restTimer.cancel();
+                if (remainingExercises.size()==0) {
+                    restTimer.cancel();
+                } else {
+                    restTimer2.cancel();
+                }
                 startActivity(new Intent(getActivity(), MainActivity.class));
                 getActivity().finish();//takes user the main page
             }
         });
 
         EndSummaryFragment endSummaryFragment = new EndSummaryFragment();
-        endSummaryFragment.setArguments(bundle);
+        endSummaryFragment.setArguments(getArguments());
         toEndSummary.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

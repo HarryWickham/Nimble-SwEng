@@ -1,5 +1,6 @@
 package uk.ac.york.nimblefitness.Adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -10,9 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -20,7 +19,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import uk.ac.york.nimblefitness.R;
@@ -75,6 +73,7 @@ public class ViewPagerAdapter extends RecyclerView.Adapter<ViewPagerAdapter.View
                 Intent skipIntent = new Intent(context, MainActivity.class);
                 context.startActivity(skipIntent);
                 rootReference.child("onBoarded").setValue(true);
+                ((Activity)context).finish();
             }
 
         });
@@ -87,6 +86,7 @@ public class ViewPagerAdapter extends RecyclerView.Adapter<ViewPagerAdapter.View
                     Intent getStartedIntent = new Intent(context, MainActivity.class);
                     context.startActivity(getStartedIntent);
                     rootReference.child("onBoarded").setValue(true);
+                    ((Activity)context).finish();
                 }
 
             });

@@ -1,6 +1,9 @@
 package uk.ac.york.nimblefitness.Screens;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 
 import androidx.appcompat.app.AlertDialog;
@@ -24,6 +27,20 @@ public class MainActivity extends AppCompatActivity {
     private ExerciseFragment exerciseFragment;
     private SettingsFragment settingsFragment;
 
+    Handler handler = new Handler();
+    Runnable runnable;
+    int delay = 10000;
+
+    @Override
+    protected void onResume() {
+        handler.postDelayed(runnable = new Runnable() {
+            public void run() {
+                handler.postDelayed(runnable, delay);
+                connectedToTheInternet();
+            }
+        }, delay);
+        super.onResume();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,5 +106,38 @@ public class MainActivity extends AppCompatActivity {
         // create alert dialog
         exitApp.create().show();
 
+    }
+
+    private void connectedToTheInternet(){
+        if(!isNetworkConnected() | !internetIsConnected()){
+            handler.removeCallbacks(runnable);
+            AlertDialog.Builder exitApp = new AlertDialog.Builder(this);
+            exitApp.setTitle("An error has occurred");
+            exitApp.setMessage("Please ensure you are connected to the internet");
+            Log.i("TAG", "onBackPressed: ");
+            exitApp.setCancelable(false)
+                    .setPositiveButton("Retry", (dialog, id) -> {
+                        if(!isNetworkConnected() | !internetIsConnected()) {
+                            connectedToTheInternet();
+                        }
+                    });
+
+            // create alert dialog
+            exitApp.create().show();
+        }
+    }
+
+    private boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
+        return cm.getActiveNetworkInfo() != null;
+    }
+
+    public boolean internetIsConnected() {
+        try {
+            String command = "ping -c 1 google.co.uk";
+            return (Runtime.getRuntime().exec(command).waitFor() == 0);
+        } catch (Exception e) {
+            return false;
+        }
     }
 }
