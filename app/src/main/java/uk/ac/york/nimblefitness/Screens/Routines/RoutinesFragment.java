@@ -102,7 +102,7 @@ public class RoutinesFragment extends Fragment {
 
             @Override
             public void onGroupExpand(int groupPosition) {
-
+                System.out.println(routine.get(groupPosition).getRoutineName());
             }
         });
 
@@ -111,8 +111,7 @@ public class RoutinesFragment extends Fragment {
 
             @Override
             public void onGroupCollapse(int groupPosition) {
-
-
+                System.out.println(routine.get(groupPosition).getRoutineName());
             }
         });
         // SearchView typing input listener
