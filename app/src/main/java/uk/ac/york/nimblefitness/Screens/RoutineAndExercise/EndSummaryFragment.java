@@ -143,9 +143,11 @@ public class EndSummaryFragment extends Fragment {
                 Log.i("onCheckedChanged", "onCheckedChanged: ");
                 Log.i("favouritesButton", (String) favouritesButton.getText());
                 if(favouritesButton.getText().equals("Add routine to favourites")) {
+                    favouritesButton.setEnabled(false);
                     addNewFavouriteRoutine(favoriteRoutines);
                     favouritesButton.setText("Remove routine from favourites");
                 } else if(favouritesButton.getText().equals("Remove routine from favourites")){
+                    favouritesButton.setEnabled(false);
                     removeFavouriteRoutine(favoriteRoutines);
                     favouritesButton.setText("Add routine to favourites");
                 }
@@ -163,12 +165,14 @@ public class EndSummaryFragment extends Fragment {
                         }
                     }
                 }
+                favouritesButton.setEnabled(true);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
+
         });
 
     }
