@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -13,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import java.util.Locale;
 
 import pl.pawelkleczkowski.customgauge.CustomGauge;
+import uk.ac.york.nimblefitness.HelperClasses.ShareService;
 import uk.ac.york.nimblefitness.R;
 
 /** This class initialises the 'Goal' tab within the profile page of the app. It includes the 'goal
@@ -59,6 +61,16 @@ public class GoalFragment extends Fragment implements GoalContract.GoalView {
         /* Sets the list of today's moves. */
         listView.setAdapter(goalPresenter.setTodaysMovesList(listView));
         goalPresenter.setListViewHeightBasedOnChildren(listView);
+        ImageButton shareButton = view.findViewById(R.id.share_icon);
+        shareButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new ShareService("Look at my workout",
+                        "I have just completed a workout on the Nimble Fitness Companion, " +
+                                "sign up today to view my score!",
+                        "Share your workout - today").ShareContent());
+            }
+        });
         return view;
     }
     /** This method is used to send the fragment's context to the Presenter so the list of today's
