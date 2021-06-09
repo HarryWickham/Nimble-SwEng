@@ -11,12 +11,10 @@ import androidx.fragment.app.FragmentTransaction;
 
 import uk.ac.york.nimblefitness.R;
 
-/*
-Fragment to present the terms and conditions to the user.
-*/
+/** Fragment to present the terms and conditions to the user. */
 public class TermsAndConditionsFragment extends Fragment {
 
-    //To allow the user to go back to the settings fragment
+    // To allow the user to go back to the settings fragment
     ImageButton back_button;
 
     @Override

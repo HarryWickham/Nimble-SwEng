@@ -105,17 +105,25 @@ public class TextModule extends androidx.appcompat.widget.AppCompatTextView impl
         setYstart(ystart);
     }
 
-    // Method which calls for an update in Typeface and then appends the text
+    /**
+     * Method which calls for an update in Typeface and then appends the text
+     */
     public void writeText() {
         updateTypeface();
     }
-    // Updates text colour by taking the String from the constructor and converting it into an integer for setTextColor method
+
+    /**
+     * Updates text colour by taking the String from the constructor and converting it into an integer for setTextColor method
+     */
     public void updateTextColour() {
         int colour = Color.parseColor(fontcolour);
         setTextColor(colour);
         System.out.println(colour);
     }
-    // Updates text size by taking the String from the constructor and converting it into an integer for setTextSize method
+
+    /**
+     * Updates text size by taking the String from the constructor and converting it into an integer for setTextSize method
+     */
     public void updateTextSize() {
         int size = Integer.parseInt(fontsize);
         setTextSize(size);
@@ -149,6 +157,9 @@ public class TextModule extends androidx.appcompat.widget.AppCompatTextView impl
         return family;
     }
 
+    /**
+     * Calls the other updates to update the whole typeface
+     */
     public void updateTypeface() {
         updateTextColour();
         updateTextSize();

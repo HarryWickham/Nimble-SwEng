@@ -12,20 +12,21 @@
         android:layout_marginHorizontal="8dp"
         android:layout_marginTop="8dp"
         android:layout_gravity="center"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
         android:background="@color/colorPrimary"
         android:textColor="@color/white"
         android:elevation="4dp"
         android:text="@string/accept_terms_and_conditions"
-        android:id="@+id/acceptTC">
-    </Button>
+        android:id="@+id/acceptTC"/>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/TCScroll">
         <TextView
-            android:layout_margin="16dp"
-            android:paddingBottom="32dp"
+            android:layout_margin="8dp"
+            android:padding="8dp"
             android:textSize="20sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

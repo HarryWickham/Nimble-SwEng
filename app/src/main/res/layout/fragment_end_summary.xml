@@ -12,7 +12,7 @@
         android:id="@+id/congratulation_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Amazing job!"
+        android:text="@string/end_summary_title"
         android:textSize="32sp"
         android:layout_marginVertical="8dp"/>
 

@@ -25,8 +25,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginVertical="16dp"
-                android:textAlignment="center"
-                android:text="Basic Membership" />
+                android:textAlignment="center" />
 
             <TextView
                 android:id="@+id/plan_tier"
@@ -36,8 +35,7 @@
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginVertical="16dp"
                 android:textAlignment="center"
-                android:textSize="30sp"
-                android:text="Bronze" />
+                android:textSize="30sp" />
 
             <ImageView
                 android:id="@+id/plan_image"
@@ -46,7 +44,8 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginVertical="16dp"
-                app:srcCompat="@drawable/bronzerounded" />
+                app:srcCompat="@drawable/bronzerounded"
+                android:contentDescription="@string/plan_image_description" />
 
             <LinearLayout
                 android:id="@+id/down_arrow_bronze"
@@ -61,9 +60,9 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginBottom="16dp"
-                    android:drawableRight="@drawable/ic_baseline_keyboard_arrow_down_24"
+                    android:drawableEnd="@drawable/ic_baseline_keyboard_arrow_down_24"
                     android:drawableTint="@color/white"
-                    android:text="More Details">
+                    android:text="@string/more_less_details_button">
                 </Button>
 
             </LinearLayout>
@@ -82,8 +81,7 @@
                     android:textAlignment="center"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginHorizontal="16dp"
-                    android:layout_marginVertical="16dp"
-                    android:text="Lorem ipsum dolor sit amet." />
+                    android:layout_marginVertical="16dp" />
 
                 <Button
                     android:id="@+id/selection_button"
@@ -91,9 +89,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="top|center"
-                    android:drawableRight="@drawable/ic_baseline_fitness_center_24"
-                    android:drawableTint="@color/white"
-                    android:text="select this plan (£2.99)" />
+                    android:drawableEnd="@drawable/ic_baseline_fitness_center_24"
+                    android:drawableTint="@color/white" />
 
             </LinearLayout>
 

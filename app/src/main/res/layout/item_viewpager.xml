@@ -17,9 +17,9 @@
             android:id="@+id/skip_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="left"
+            android:layout_gravity="start"
             android:background="@android:color/transparent"
-            android:text="SKIP"
+            android:text="@string/skip_button_text"
             android:textColor="@android:color/white"
             android:textSize="18sp" />
 
@@ -28,7 +28,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingHorizontal="90dp"
-            tools:srcCompat="@tools:sample/avatars" />
+            tools:srcCompat="@tools:sample/avatars"
+            android:contentDescription="@string/a_brief_overview_of_the_app" />
 
         <TextView
             android:id="@+id/title"
@@ -58,7 +59,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:background="@android:color/transparent"
-            android:text="Get Started"
+            android:text="@string/get_started"
             android:textColor="@android:color/white"
             android:visibility="invisible"
             android:textSize="18sp" />
