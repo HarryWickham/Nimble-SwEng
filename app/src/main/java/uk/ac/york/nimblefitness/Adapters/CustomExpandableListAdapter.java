@@ -54,60 +54,29 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
         this.routineArrayList = (ArrayList<Routine>) routineArrayList.clone();
     }
 
-    /**
-     * Returns number of routines
-     * @return number of routines
-     */
     @Override
     public int getGroupCount() {
         return this.routineArrayList.size()-1;
     }
 
-    /**
-     * Returns number of exercises in a given group
-     * @param groupPosition
-     * @return number of exercises
-     */
     @Override
     public int getChildrenCount(int groupPosition) {
         return routineArrayList.get(groupPosition).getExerciseArrayList().size();
     }
 
-    /**
-     * Returns a specified routine
-     * @param groupPosition
-     * @return routine
-     */
     @Override
     public Object getGroup(int groupPosition) { return routineArrayList.get(groupPosition); }
 
-    /**
-     * Returns a specified exercise from a routine
-     * @param groupPosition
-     * @param childPosition
-     * @return exercise
-     */
     @Override
     public Object getChild(int groupPosition, int childPosition) {
         return routineArrayList.get(groupPosition).getExerciseArrayList().get(childPosition);
     }
 
-    /**
-     * Returns routine ID (position)
-     * @param groupPosition
-     * @return routine position
-     */
     @Override
     public long getGroupId(int groupPosition) {
         return groupPosition;
     }
 
-    /**
-     * Returns exercise ID (position)
-     * @param groupPosition
-     * @param childPosition
-     * @return exercise position
-     */
     @Override
     public long getChildId(int groupPosition, int childPosition) {
         return childPosition; //Our child elements don't have IDs, so this returns the position

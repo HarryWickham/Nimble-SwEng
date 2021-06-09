@@ -41,6 +41,13 @@ public class ExerciseListAdapter extends BaseAdapter{
     @Override
     public long getItemId(int i) { return 0; }
 
+    /**
+     * Sets up the view for the Exercise List
+     * @param i
+     * @param convertView
+     * @param viewGroup
+     * @return the convertView set up
+     */
     @Override
     public View getView(int i, View convertView, ViewGroup viewGroup) {
         ExerciseListAdapter.ViewHolder viewHolder;
@@ -62,7 +69,7 @@ public class ExerciseListAdapter extends BaseAdapter{
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                //Instantiates a routine called fake to be able to access StartSummaryFragment
                 Routine routine = new Routine();
                 routine.setRoutineName("fake");
 
@@ -79,10 +86,14 @@ public class ExerciseListAdapter extends BaseAdapter{
         return convertView;
     }
 
+    /**
+     * Method for searching the exercises, similar to the one for the Routine's List
+     * @param query
+     * @return boolean checking that a successful search has been made
+     */
     public boolean filterData(String query) {
         boolean searched = true;
         query = query.toLowerCase();
-        Log.v("MyListAdapter", String.valueOf(exerciseList.size()));
         exerciseList.clear();
 
         if (query.isEmpty()) {

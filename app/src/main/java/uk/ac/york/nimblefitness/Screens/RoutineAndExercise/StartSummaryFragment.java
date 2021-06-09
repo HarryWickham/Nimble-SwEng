@@ -109,7 +109,6 @@ public class StartSummaryFragment extends Fragment {
     }
 
     /**Ensures that the view height is sufficient based on the content of the page**/
-
     public void setListViewHeightBasedOnChildren (ListView listView) {
         ListAdapter listAdapter = listView.getAdapter();
         if (listAdapter == null) return;

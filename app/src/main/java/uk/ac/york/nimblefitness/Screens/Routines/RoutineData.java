@@ -25,6 +25,9 @@ import uk.ac.york.nimblefitness.MediaHandlers.Text.TextType;
 import uk.ac.york.nimblefitness.MediaHandlers.Video.VideoLayout;
 import uk.ac.york.nimblefitness.MediaHandlers.Video.VideoType;
 
+/**
+ * Class for filling the RoutineFragment with all the different routine information
+ */
 public class RoutineData {
     Routine routine;
     int resourceFile;
@@ -54,12 +57,16 @@ public class RoutineData {
         return routineArrayList;
     }
 
+    /**
+     * Starts parsing the xml information of the routines into the app
+     */
     void startXMLParsing() {
         XmlPullParserFactory pullParserFactory;
         try {
             pullParserFactory = XmlPullParserFactory.newInstance();
             XmlPullParser parser = pullParserFactory.newPullParser();
 
+            //file type InputStream for passing in the routines.xml file
             InputStream inputStream = context.getResources().openRawResource(resourceFile);
 
             parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
@@ -72,6 +79,12 @@ public class RoutineData {
         }
     }
 
+    /**
+     * Method for parsing the xml line-by-line
+     * @param parser
+     * @throws XmlPullParserException
+     * @throws IOException
+     */
     void parseXML(XmlPullParser parser) throws XmlPullParserException, IOException {
         int eventType = parser.getEventType();
         ShapeType shapeType = null;
@@ -90,6 +103,7 @@ public class RoutineData {
                 case XmlPullParser.START_TAG:
                     name = parser.getName();
                     switch (name) {
+                        //Default information about the slides
                         case "defaults":
                             defaultBackgroundColour = parser.getAttributeValue(null, "backgroundcolour");
                             font = TextModule.fontFamily.valueOf(parser.getAttributeValue(null, "font"));
@@ -98,10 +112,13 @@ public class RoutineData {
                             fillColour = parser.getAttributeValue(null, "fillcolour");
                             fontSize = Integer.parseInt(parser.getAttributeValue(null, "fontsize"));
                             break;
+                        //Information for the slides
                         case "slide":
-
+                            break;
+                        //Information for the whole slideshow
                         case "slideshow":
                             break;
+                        //Information for the routines
                         case "routine":
                             routine = new Routine();
                             routine.setRoutineImage(parser.getAttributeValue(null, "routineImage"));
@@ -113,6 +130,7 @@ public class RoutineData {
                             routine.setSetsRemaining(Integer.parseInt(parser.getAttributeValue(null, "sets")));
                             routine.setCurrentExercise(0);
                             break;
+                        //Information for each exercise in a routine
                         case "exercise":
                             exercise = new Exercise();
                             exercise.setExerciseName(parser.getAttributeValue(null, "exerciseName"));
@@ -124,6 +142,7 @@ public class RoutineData {
                             exercise.setRestAfterFinish(Integer.parseInt(parser.getAttributeValue(null, "restAfterFinish")));
                             exercise.setColour(Color.parseColor(parser.getAttributeValue(null, "colour")));
                             break;
+                        //Information for the borders of the items on the ExerciseInformationFragment
                         case "shape":
                             shapeType = new ShapeType();
                             shapeType.setShape_type(parser.getAttributeValue(null, "type"));
@@ -165,6 +184,7 @@ public class RoutineData {
                                 shapeType.setDuration(0);
                             }
                             break;
+                        //Information for how the text descriptions shall be laid out
                         case "text":
                             textType = new TextType();
                             textType.setStyle(TextModule.styleFamily.normal);
@@ -186,6 +206,7 @@ public class RoutineData {
                                 textType.setFontSize(String.valueOf(fontSize));
                             }
                             break;
+                        //For bold
                         case "b":
                             assert textType != null;
                             if (textType.getStyle() == TextModule.styleFamily.italic || textType.getStyle() == TextModule.styleFamily.bold_italic) {
@@ -194,6 +215,7 @@ public class RoutineData {
                                 textType.setStyle(TextModule.styleFamily.bold);
                             }
                             break;
+                        //For italics
                         case "i":
                             assert textType != null;
                             if (textType.getStyle() == TextModule.styleFamily.bold || textType.getStyle() == TextModule.styleFamily.bold_italic) {
@@ -201,8 +223,8 @@ public class RoutineData {
                             } else{
                                 textType.setStyle(TextModule.styleFamily.italic);
                             }
-                            //Not sure how to implement both italics and bold or some not bold/italic some bold/italic @todo
                             break;
+                        //For the video at the top of the ExerciseSummary Page
                         case "video":
                             videoType = new VideoType();
                             videoType.setUriPath(String.valueOf(parser.getAttributeValue(null, "urlname")));
@@ -221,6 +243,7 @@ public class RoutineData {
                                 videoType.setHeight(0);
                             }
                             break;
+                        //For the audio of the tone for each rep
                         case "audio":
                             audioType = new AudioType();
                             audioType.setUrl(String.valueOf(parser.getAttributeValue(null, "urlname")));
@@ -236,6 +259,7 @@ public class RoutineData {
                                 audioType.setId("");
                             }
                             break;
+                        //For the image of the muscle infographics
                         case "image":
                             imageType = new ImageType();
                             imageType.setImageSource(String.valueOf(parser.getAttributeValue(null, "urlname")));
@@ -250,11 +274,12 @@ public class RoutineData {
                             }
                             break;
                         case "button":
-
+                            break;
                         default:
                             throw new IllegalStateException("Unexpected value: " + name);
                     }
                     break;
+                //When text comes up in the xml for the text handler
                 case XmlPullParser.TEXT:
                     if (textType != null && !parser.getText().equals("null")) {
                         switch(textType.getStyle()) {
@@ -275,52 +300,35 @@ public class RoutineData {
                     break;
                 case XmlPullParser.END_TAG:
                     name = parser.getName();
+                    //Whether the end tag indicates a shape, video, text, audio, image, bold, italics, routine or exercise
                     if ((name.equalsIgnoreCase("shape") || name.equalsIgnoreCase("line")) && shapeType != null) {
-                        if (shapeType.getShape_type().equals("RECTANGLE") | shapeType.getShape_type().equals("OVAL")) {
+                        //Whether the shape is oval or rectangle, or a line
+                        if (shapeType.getShape_type().equals("RECTANGLE") || shapeType.getShape_type().equals("OVAL")) {
+                            //Whether a shape has a specified colour or not
                             if (shapeType.getColour() == 0) {
                                 shapeTypeArrayList.add(new ShapeType(shapeType.getxStart(), shapeType.getyStart(), shapeType.getWidth(), shapeType.getHeight(), 0, shapeType.getShape_type(), shapeType.getShading(), shapeType.getDuration()));
-                                //shapeView.addShape(shapeType.getxStart(), shapeType.getyStart(), shapeType.getHeight(), shapeType.getWidth(), shapeType.getShading(), shapeType.getShape_type(), shapeType.getDuration());
                             } else {
                                 shapeTypeArrayList.add(new ShapeType(shapeType.getxStart(), shapeType.getyStart(), shapeType.getWidth(), shapeType.getHeight(), shapeType.getColour(), shapeType.getShape_type(), null, shapeType.getDuration()));
-
-                                //shapeView.addShape(shapeType.getxStart(), shapeType.getyStart(), shapeType.getHeight(), shapeType.getWidth(), shapeType.getColour(), shapeType.getShape_type(), shapeType.getDuration());
-
                             }
                         } else if (shapeType.getShape_type().equals("LINE")) {
                             shapeTypeArrayList.add(new ShapeType(shapeType.getxStart(), shapeType.getyStart(), shapeType.getWidth(), shapeType.getHeight(), shapeType.getColour(), shapeType.getShape_type(), null, shapeType.getDuration()));
-
-                            //shapeView.addLine(shapeType.getxStart(), shapeType.getyStart(), shapeType.getxEnd(), shapeType.getyEnd(), shapeType.getColour(), shapeType.getDuration());
                         }
                         shapeType = null;
                     }
                     else if (name.equalsIgnoreCase("video") && videoType != null) {
-
                         exercise.setExerciseVideo(new VideoLayout(videoType.getUriPath(),videoType.getWidth(),videoType.getHeight(),videoType.getxStart(),videoType.getyStart(),videoType.getId(),videoType.getStartTime(),videoType.isLoop(), null, null));
-
-                        //VideoLayout videoLayout = new VideoLayout(videoType.getUriPath(),videoType.getWidth(),videoType.getHeight(),videoType.getXstart(),videoType.getYstart(),videoType.getId(),videoType.getStarttime(),videoType.isLoop(), frameLayout, this);
-                        //videoLayout.PlayVideo();
                         videoType = null;
                     }
                     else if (name.equalsIgnoreCase("text") && textType != null) {
-
                         textLayoutArrayList.add(new TextLayout(textType.getText(),textType.getFont(),textType.getFontSize(),textType.getFontColour(),textType.getxStart(),textType.getyStart(), null,null));
-                        //TextLayout textLayout = new TextLayout(textType.getText(),textType.getFont(),textType.getFontsize(),textType.getFontcolour(),textType.getXstart(),textType.getYstart(), frameLayout, this);
-                        //textLayout.writeText();
                         textType = null;
                     }
                     else if (name.equalsIgnoreCase("audio") && audioType != null){
-
                         audioTypeArrayList.add(new AudioType(audioType.getUrl(),audioType.getStarttime(),audioType.isLoop(),audioType.getId(), null));
-
-                        //AudioType audioType1 = new AudioType(audioType.getUrl(),audioType.getStarttime(),audioType.isLoop(),audioType.getId(), this);
-                        //audioType1.play();
                         audioType = null;
                     }
                     else if (name.equalsIgnoreCase("image") && imageType != null){
-
                         exercise.setMuscleGroupImage(new ImageLayout(imageType.getXCoordinate(),imageType.getYCoordinate(), imageType.getImageWidth(), imageType.getImageHeight(), imageType.getImageDuration(), imageType.getImageSource(),null, null));
-
-                        //ImageLayout imageLayout = new ImageLayout(imageType.getXCoordinate(),imageType.getYCoordinate(), imageType.getImageWidth(), imageType.getImageHeight(), imageType.getImageDuration(), imageType.getImageSource(),frameLayout, this);
                         imageType = null;
                     }
                     else if (name.equalsIgnoreCase("b") && textType != null){
@@ -347,6 +355,7 @@ public class RoutineData {
                     }
 
             }
+            //Set the next event to the eventType
             eventType = parser.next();
         }
     }
