@@ -121,7 +121,7 @@ public class UserDetailsActivity extends AppCompatActivity {
         });
 
         save_user_details_button.setOnClickListener(view -> {
-            if(validateFirstName() & validateLastName() & validateAge() & validateGender() & validateExerciseDuration() & validateExerciseType()) {
+            if(validateFirstName() & validateLastName() & validateAge() & validateGender() & validateExerciseDuration() & validateExerciseType() & validateWeeklyGoal()) {
 
                 String firstName = user_account_first_name.getEditText().getText().toString().trim();
                 String lastName = user_account_last_name.getEditText().getText().toString().trim();
@@ -281,6 +281,11 @@ public class UserDetailsActivity extends AppCompatActivity {
         if((!exercise_type_selector.getEditText().getText().toString().trim().equals(""))&&(!activity_level_selector.getEditText().getText().toString().trim().equals(""))){
             user_account_goal_edit_text.setText(weeklyGoalCalculation());
         }
+        user_account_goal.getEditText().setOnFocusChangeListener((view, b) -> {
+            if(!b){
+                validateWeeklyGoal();
+            }
+        });
     }
 
     private String weeklyGoalCalculation(){
@@ -444,6 +449,19 @@ public class UserDetailsActivity extends AppCompatActivity {
         else{
             exercise_type_selector.setError(null);
             exercise_type_selector.setErrorEnabled(false);
+            return true;
+        }
+    }
+
+    private Boolean validateWeeklyGoal(){
+        String weeklyGoal = user_account_goal.getEditText().getText().toString().trim();
+
+        if(Integer.parseInt(weeklyGoal) <= 0 || Integer.parseInt(weeklyGoal) > 9000){
+            user_account_goal.setError("Choose a goal greater than 0 or less than 9000");
+            return false;
+        } else {
+            user_account_goal.setError(null);
+            user_account_goal.setErrorEnabled(false);
             return true;
         }
     }
