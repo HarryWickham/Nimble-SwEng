@@ -1,14 +1,11 @@
 package uk.ac.york.nimblefitness.Screens.Profile;
 
-import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ExpandableListView;
-import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -24,11 +21,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 import uk.ac.york.nimblefitness.Adapters.CustomExpandableListAdapter;
-import uk.ac.york.nimblefitness.Adapters.MovesListAdapter;
-import uk.ac.york.nimblefitness.HelperClasses.Exercise;
 import uk.ac.york.nimblefitness.HelperClasses.Routine;
-import uk.ac.york.nimblefitness.MediaHandlers.Text.TextLayout;
-import uk.ac.york.nimblefitness.MediaHandlers.Video.VideoLayout;
 import uk.ac.york.nimblefitness.R;
 import uk.ac.york.nimblefitness.Screens.Routines.RoutineData;
 
@@ -44,6 +37,8 @@ public class FavesFragment extends Fragment {
     DatabaseReference mDatabase;
 
     String favourite;
+
+    TextView nothingFoundText;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -67,7 +62,7 @@ public class FavesFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 ArrayList<String> favourites = new ArrayList<>();
-                for(DataSnapshot dataSnapshot : snapshot.getChildren()){
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     favourites.add(dataSnapshot.getValue(String.class));
                 }
 
@@ -76,9 +71,9 @@ public class FavesFragment extends Fragment {
 
                 ArrayList<Routine> favouriteRoutines = new ArrayList<>();
 
-                for(Routine routine : routines){
-                    for(String favs: favourites){
-                        if(routine.getRoutineName().equals(favs)){
+                for (Routine routine : routines) {
+                    for (String favs : favourites) {
+                        if (routine.getRoutineName().equals(favs)) {
                             favouriteRoutines.add(routine);
                         }
                     }
@@ -87,12 +82,16 @@ public class FavesFragment extends Fragment {
                 CustomExpandableListAdapter listAdapter = new CustomExpandableListAdapter(getContext(), favouriteRoutines); // Assigns the listAdapter with the
 
                 FavouritesList.setAdapter(listAdapter);
-
+                if (favourites.isEmpty()) {
+                    nothingFoundText = view.findViewById(R.id.nothingFoundText);
+                    nothingFoundText.setVisibility(View.VISIBLE);
+                    FavouritesList.setVisibility(View.GONE);
+                    nothingFoundText.setText("You currently have no favourite routines. Complete a routine to add it to your favourites!");
+                }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
 
             }
         });
