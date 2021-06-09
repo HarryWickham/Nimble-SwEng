@@ -11,22 +11,25 @@ import androidx.fragment.app.FragmentTransaction;
 
 import uk.ac.york.nimblefitness.R;
 
+/** Fragment to present the terms and conditions to the user. */
 public class TermsAndConditionsFragment extends Fragment {
 
+    // To allow the user to go back to the settings fragment
     ImageButton back_button;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
+    public void onCreate(Bundle savedInstanceState) {super.onCreate(savedInstanceState);}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_terms_and_conditions, container, false); //shows the fragment_settings.xml file in the frame view of the activity_main.xml
+        //shows the fragment_terms_and_conditions.xml file in the frame view of the activity_main.xml
+        View view = inflater.inflate(R.layout.fragment_terms_and_conditions, container, false);
 
+        //set the title of the screen
         requireActivity().setTitle("Terms and Conditions");
 
+        //to allow for navigation back to the settings fragment
         back_button = view.findViewById(R.id.back_button_terms_and_conditions);
         back_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -36,7 +39,6 @@ public class TermsAndConditionsFragment extends Fragment {
                 fr.commit();
             }
         });
-
         return view;
     }
 }

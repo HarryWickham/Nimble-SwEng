@@ -7,7 +7,6 @@ import android.media.AudioAttributes;
 import android.media.MediaPlayer;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
-import android.widget.Toast;
 
 import java.io.IOException;
 
@@ -43,7 +42,6 @@ public class Audio extends Service {
         }
 
         myPlayer.setLooping(true); // Set looping, setting loop play to true
-        //Toast.makeText(this, "Service Successfully Created", Toast.LENGTH_LONG).show();
     }
 
    @Override
@@ -63,4 +61,5 @@ public class Audio extends Service {
     public IBinder onBind(Intent intent) {
         return null;
     }
+
 }

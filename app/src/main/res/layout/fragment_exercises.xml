@@ -25,7 +25,7 @@
         android:id="@+id/nothingfoundmessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="That exercise does not exist. Try another"
+        android:text="@string/nothing_found_message"
         android:visibility="gone"/>
 
 

@@ -36,8 +36,7 @@
                 android:text="@string/sign_up"
                 android:textColor="#666666"
                 android:textSize="30sp"
-                android:textStyle="bold"
-                />
+                android:textStyle="bold" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/SignUpEmailLayout"
@@ -52,8 +51,7 @@
                     android:id="@+id/SignUpEmail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textEmailAddress"
-                    />
+                    android:inputType="textEmailAddress" />
             </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -71,8 +69,7 @@
                     android:id="@+id/SignUpPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textPassword"
-                    />
+                    android:inputType="textPassword" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -89,9 +86,7 @@
                     android:id="@+id/SignUpPasswordConfirm"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textPassword"
-                    />
-
+                    android:inputType="textPassword" />
             </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -115,13 +110,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp" />
 
-
             <com.facebook.login.widget.LoginButton
                 android:id="@+id/fb_SignUp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:paddingLeft="10dp"
+                android:paddingStart="10dp"
+                android:paddingEnd="0dp"
                 android:layout_marginBottom="10dp"
                 android:paddingTop="11dp"
                 android:paddingBottom="11dp" />
@@ -136,6 +131,5 @@
                 android:text="@string/returning_member" />
 
         </LinearLayout>
-
     </ScrollView>
 </LinearLayout>

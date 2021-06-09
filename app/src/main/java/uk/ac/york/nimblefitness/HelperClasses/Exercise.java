@@ -19,7 +19,7 @@ public class Exercise implements Serializable {
     private int timePerRep;
     private float movesPerRep;
     private int restAfterFinish;
-    private int colour;
+    private int colour; //colour of indicator in the RoutineFragment
     private VideoLayout exerciseVideo;
     private ArrayList<TextLayout> textLayouts;
     private int currentExercise;

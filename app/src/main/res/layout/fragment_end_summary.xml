@@ -12,31 +12,37 @@
         android:id="@+id/congratulation_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Amazing job!"
+        android:text="@string/end_summary_title"
         android:textSize="32sp"
-        />
+        android:layout_marginVertical="8dp"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/end_summary_text_view"
-        android:textSize="16sp"/>
+        android:textSize="16sp"
+        android:layout_marginBottom="8dp"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/add_routine_to_favorites"
-        android:textSize="24sp"
         android:id="@+id/favourite_button"
-        />
+        android:textSize="24sp"
+        android:elevation="2dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Rate the Routine:"
-        android:textSize="32sp"
-        />
-
+        android:text="@string/rate_the_routine"
+        android:textSize="32sp"/>
 
     <RatingBar
         android:id="@+id/rating_bar"
@@ -45,11 +51,11 @@
         android:saveEnabled="true"
         android:numStars="5"/>
 
-    <pl.droidsonroids.gif.GifImageView
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="390dp"
-        android:src="@drawable/bird_animation2"
-        />
+        android:layout_height="wrap_content"
+        android:id="@+id/bird_animation_frame">
+    </FrameLayout>
 
     <Button
         android:layout_width="wrap_content"
@@ -57,6 +63,9 @@
         android:text="@string/lets_go_home_and_find_a_new_one"
         android:id="@+id/end_summary_home_button"
         android:textSize="24sp"
-        />
-
+        android:elevation="2dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"/>
 </LinearLayout>

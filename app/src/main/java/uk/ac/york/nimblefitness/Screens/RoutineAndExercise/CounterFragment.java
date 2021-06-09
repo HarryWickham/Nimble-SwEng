@@ -425,7 +425,7 @@ public class CounterFragment extends Fragment {
     private void beepSoundOutput(){
        if (!isMuted) { // First checks to see if the page has been muted, if not it continues
            AudioType audioType = new AudioType("https://www-users.york.ac.uk/~hew550/NimbleAssets/beep.wav", 0, false, "id", getContext()); // Retrieving beep sound
-           audioType.play(); // Play the sound retrieved
+           audioType.draw(); // Play the sound retrieved
        }
     }
 }

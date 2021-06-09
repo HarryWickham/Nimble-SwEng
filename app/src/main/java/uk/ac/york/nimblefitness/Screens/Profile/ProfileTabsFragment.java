@@ -29,17 +29,13 @@ import static com.facebook.FacebookSdk.getApplicationContext;
  */
 public class ProfileTabsFragment extends Fragment {
     View view;
-    /** This method initialises the fragment, with the calendar tab fragment being the first to
-     * appear in the tab view.
-     */
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         switchFragment(new CalendarFragment());
     }
-    /** This method creates the appearance of the fragment and inflates the goal tab layout so it's
-     * visible.
-     */
+
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -56,7 +52,7 @@ public class ProfileTabsFragment extends Fragment {
         }else{
             view = inflater.inflate(R.layout.fragment_profile_tabs, container, false);
         }
-        /* Finds where in the fragment the tab layout should go. */
+        // Finds where in the fragment the tab layout should go. //
         TabLayout profileTabs = view.findViewById(R.id.profile_tabs);
 
         profileTabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -82,7 +78,7 @@ public class ProfileTabsFragment extends Fragment {
                     default:
                         Toast.makeText(getActivity(), "Error", Toast.LENGTH_SHORT).show();
                 }
-                /* This changes the visible fragment when a different tab is selected. */
+                // This changes the visible fragment when a different tab is selected. //
                 switchFragment(fragment);
             }
 

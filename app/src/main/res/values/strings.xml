@@ -1,13 +1,13 @@
 <resources>
     <string name="app_name">Nimble Fitness</string>
-    <string name="tab_text_1">Tab 1</string>
-    <string name="tab_text_2">Tab 2</string>
+    <!-- Bottom Navigation Bar -->
     <string name="menu_exercises_label">Exercises</string>
     <string name="menu_profile_label">Profile</string>
     <string name="menu_routines_label">Routines</string>
     <string name="menu_settings_label">Settings</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- Splash Screen Activity -->
+    <string name="nimble_logo">Splash screen Nimble Logo</string>
+    <!-- Sign-up/in Activity -->
     <string name="title_activity_login">LoginActivity</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
@@ -26,24 +26,28 @@
     <string name="new_member">Not a member yet? Sign up here.</string>
     <string name="login">LOGIN</string>
     <string name="forgotten_password">Forgotten your password?</string>
-    <string name="title_activity_payment">PaymentActivity</string>
-    <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
     <string name="facebook_app_id">1156771534753719</string>
     <string name="fb_login_protocol_scheme">fb1156771534753719</string>
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
-    <!-- Strings used for profile fragments -->
+    <!-- Payment Activity -->
+    <string name="title_activity_payment">PaymentActivity</string>
+    <string name="checkout_button_text">Please select a plan above to checkout</string>
+    <string name="payment_instructions">Use the buttons to view more details for each subscription plan before buying one. Press the checkout button when ready to advance.</string>
+    <string name="more_less_details_button">More Details</string>
+    <string name="plan_image_description">A metallic square of the same material as the plan name.</string>
+    <!-- Profile Fragments -->
     <string name="share_icon">Share Icon</string>
     <string name="profile_picture">Profile Picture</string>
     <string name="today">Today</string>
     <string name="calendar_tab_txt">Calendar</string>
     <string name="favourites_tab_txt">favourites</string>
     <string name="goals_tab_txt">Goals</string>
+    <string name="leaderboard">LeaderBoard</string>
+    <string name="share_your_high_score">Share your high score</string>
+    <string name="no_favourites">There are no routines in your favourites</string>
+    <!-- Load New Presentation Activity -->
     <string name="title_activity_handler_test">HandlerTestActivity</string>
+    <!-- Terms and Conditions Activity and Fragment -->
+    <string name="accept_terms_and_conditions">Accept Terms and Conditions</string>
     <string name="terms_and_conditions">
         These rules and regulations are regarding and surrounding all aspects of contact with the Nimble fitness companion app including but not limited to use, both by the license holder and/or by another party or parties. Hereinafter, “you”, “client”, and “your” refer to you, the app license holder, “Party”, or “parties” refers to either the client or Nimble and “app” refers to the Nimble Fitness Companion application for Android. When referencing this document, any use of this terminology in different tenses, singular, plural, and with the addition of pronouns is to be taken as interchangeable for the purposes of this and all related documents.\n\n
         Unless stated otherwise, Nimble owns the intellectual property rights for all material present on the Fitness Companion app. This refers to all material both visible to the end-user, and material visible only to Nimble employees, notably the source code. This app may be accessed for your own personal use subject to restrictions set in these terms and conditions.\n\n
@@ -65,8 +69,53 @@
         This document will be binding from the date of agreement hereof.\n\n
         By selecting I agree, you also acknowledge that to the extent permitted by applicable law, we reserve the right to modify the contents of this agreement provided we have given you notice as permitted by law.
     </string>
-    <string name="add_routine_to_favorites">Add routine to favorites</string>
+    <!-- End Summary Fragment -->
+    <string name="add_routine_to_favorites">Add routine to favourites</string>
     <string name="lets_go_home_and_find_a_new_one">Exit to Main Menu</string>
-    <string name="accept_terms_and_conditions">Accept Terms and Conditions</string>
+    <string name="rate_the_routine">Rate the Routine:</string>
+    <!-- User Details Activity -->
+    <string name="user_details_title">Personal Information</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="age">Age</string>
+    <string name="please_select_your_gender">Please select your gender</string>
+    <string name="exercise_and_health">Exercise and Health</string>
+    <string name="how_long_do_you_exercise_a_week">How long do you exercise a week?</string>
+    <string name="what_type_of_exercise_do_you_do">What type of exercise do you do?</string>
+    <string name="suggested_weekly_goal">Suggested Weekly Goal</string>
+    <string name="save">Save</string>
+    <string name="delete_account">Delete Account</string>
+    <!-- Routine Expandable List Group -->
+    <string name="start_routine_button">Start Routine</string>
+    <string name="routine_content_description">Image showing each exercise within this routine</string>
+    <string name="moves">Moves:</string>
+    <!-- Counter Fragment -->
+    <string name="counter_title">Exercise</string>
+    <string name="start_exercise">Start Exercise</string>
+    <string name="return_button">Return</string>
+    <string name="mute_button">Mute</string>
+    <string name="pause_button">Pause</string>
+    <string name="slider_title">Seconds Per Rep</string>
+    <!-- End Summary Fragment-->
+    <string name="end_summary_title">Amazing job!</string>
+    <!-- Exercise Search Fragment-->
+    <string name="nothing_found_message">That exercise does not exist. Try another</string>
+    <!-- Routine Search Fragment -->
+    <string name="no_routine_search_result">That routine does not exist. Try another</string>
+    <!-- Finish Fragment -->
+    <string name="take_a_rest_time_until_next_exercise">Take a Rest! Time until next exercise:</string>
+    <string name="finish_continue_button">Continue to next exercise</string>
+    <string name="remaining_exercises_in_this_set">Remaining exercises in this set</string>
+    <!-- Exercise Information Fragment -->
+    <string name="ready_button">Ready!</string>
+    <string name="exit_to_main_menu_button">Exit to Main Menu</string>
+    <!-- On-boarding Screen -->
+    <string name="get_started">Get Started</string>
+    <string name="skip_button_text">SKIP</string>
+    <string name="a_brief_overview_of_the_app">A brief overview of the app.</string>
+    <!-- Routine List Layout -->
+    <string name="routines_list_expander">This expands the routine so you can see individual exercises.</string>
+    <!-- Settings List -->
+    <string name="an_icon_representing_the_text_of_the_corresponding_setting">An icon representing the text of the corresponding setting.</string>
 
 </resources>

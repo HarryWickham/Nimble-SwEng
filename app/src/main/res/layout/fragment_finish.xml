@@ -17,7 +17,6 @@
             android:orientation="vertical"
             android:gravity="center">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
         android:id="@+id/finish_text"
         android:layout_width="wrap_content"
@@ -45,7 +44,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
                 android:textAlignment="center"
-                android:text="Remaining exercises in this set"/>
+                android:text="@string/remaining_exercises_in_this_set"/>
 
 
             <ListView
@@ -57,9 +56,10 @@
             </androidx.cardview.widget.CardView>
 
             <TextView
+                android:id="@+id/restText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Take a Rest! Time until next exercise:"
+                android:text="@string/take_a_rest_time_until_next_exercise"
                 android:textSize="20sp"/>
             <TextView
                 android:layout_width="wrap_content"
@@ -71,13 +71,13 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Continue to next exercise"
+        android:text="@string/finish_continue_button"
         android:id="@+id/continue_button"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Exit to Main Menu"
+        android:text="@string/exit_to_main_menu_button"
         android:id="@+id/exit_button"/>
 
     <Button

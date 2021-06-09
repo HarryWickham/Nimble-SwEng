@@ -3,12 +3,16 @@ package uk.ac.york.nimblefitness.MediaHandlers.Audio;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Handler;
+import android.os.Looper;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
 import java.io.Serializable;
 
-public class AudioType implements Serializable {
+import uk.ac.york.nimblefitness.MediaHandlers.AbstractLayout;
+
+public class AudioType implements Serializable, AbstractLayout {
     String url;
     int starttime;
     boolean loop;
@@ -24,16 +28,6 @@ public class AudioType implements Serializable {
     }
 
     public AudioType() {
-    }
-
-    public void play(){
-        SharedPreferences prefs  = PreferenceManager.getDefaultSharedPreferences(context);
-        SharedPreferences.Editor editor = prefs.edit();
-        Log.i("prefs putString URL", url);
-        editor.putString("url",url);
-        editor.putBoolean("loop",loop);
-        editor.apply();
-        context.startService(new Intent(context.getApplicationContext(), Audio.class));
     }
 
     public void stop(){
@@ -70,5 +64,32 @@ public class AudioType implements Serializable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    @Override
+    public void draw() {
+        SharedPreferences prefs  = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = prefs.edit();
+        Log.i("prefs putString URL", url);
+        editor.putString("url",url);
+        editor.putBoolean("loop",loop);
+        editor.apply();
+        delay(this);
+    }
+
+    @Override
+    public String getMediaId() {
+        return id;
+    }
+
+    /** This method delays when the audio starts as set by the user using setStartTime. */
+    public void delay(AudioType audioType) {
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                context.startService(new Intent(context.getApplicationContext(), Audio.class));
+            }
+        }, audioType.getStarttime());
     }
 }

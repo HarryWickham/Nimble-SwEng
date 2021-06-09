@@ -68,11 +68,6 @@ public class SigninActivity extends AppCompatActivity {
 
         //Initialise Firebase
         firebaseAuth = FirebaseAuth.getInstance();
-        /* For testing
-        if (firebaseAuth.getCurrentUser() != null) {
-            startActivity(new Intent(getApplicationContext(), MainActivity.class));
-            finish();
-        }*/
         InitialiseEmailLogin();
         InitialiseGoogleLogin();
         InitialiseFacebook();
@@ -113,10 +108,13 @@ public class SigninActivity extends AppCompatActivity {
                 //Shows the user a loading symbol to reassure them that something is happening
                 progressBar.setVisibility(View.VISIBLE);
                 //passes the login details to firebase to authenticate
-                firebaseAuth.signInWithEmailAndPassword(userDetails.getEmail(),userDetails.getPassword()).addOnCompleteListener(task -> {
+                firebaseAuth.signInWithEmailAndPassword(userDetails.getEmail(),userDetails.
+                        getPassword()).addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        Toast.makeText(SigninActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(getApplicationContext(), PaymentActivity.class));//takes user the main page
+                        Toast.makeText(SigninActivity.this, "Login Successful",
+                                Toast.LENGTH_SHORT).show();
+                        //takes user the main page
+                        startActivity(new Intent(getApplicationContext(), PaymentActivity.class));
                     } else {
                         invalidUser();
                     }
@@ -214,7 +212,8 @@ public class SigninActivity extends AppCompatActivity {
 
     private void processFirebaseLogin(String token){
         AuthCredential authCredential= GoogleAuthProvider.getCredential(token,null);
-        firebaseAuth.signInWithCredential(authCredential).addOnCompleteListener(SigninActivity.this, new OnCompleteListener<AuthResult>() {
+        firebaseAuth.signInWithCredential(authCredential).addOnCompleteListener
+                (SigninActivity.this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
@@ -229,7 +228,8 @@ public class SigninActivity extends AppCompatActivity {
     //to enable user to reset password
     public void onClickForgottenPassword(View v) {
         EditText recoveryEmail = new EditText(v.getContext());
-        recoveryEmail.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);//ensures that text box can only take one line
+        //ensures that text box can only take one line
+        recoveryEmail.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
         AlertDialog.Builder passwordResetDialog = new AlertDialog.Builder(v.getContext());
         passwordResetDialog.setTitle("Reset Password");
         passwordResetDialog.setMessage("Enter Your Email Address");
@@ -238,19 +238,25 @@ public class SigninActivity extends AppCompatActivity {
         passwordResetDialog.setPositiveButton("Submit", (dialog, which) -> {
             //extract email and send the reset link
             String email = recoveryEmail.getText().toString();
-            firebaseAuth.sendPasswordResetEmail(email).addOnSuccessListener(aVoid -> Toast.makeText(SigninActivity.this, "Check Your Emails", Toast.LENGTH_LONG).show()).addOnFailureListener(e -> Toast.makeText(SigninActivity.this, "Error, No account with specified email found", Toast.LENGTH_LONG).show());
+            firebaseAuth.sendPasswordResetEmail(email).addOnSuccessListener(aVoid ->
+                    Toast.makeText(SigninActivity.this, "Check Your Emails",
+                            Toast.LENGTH_LONG).show()).addOnFailureListener(e -> Toast.makeText
+                    (SigninActivity.this, "Error, No account with specified email found",
+                            Toast.LENGTH_LONG).show());
         });
         passwordResetDialog.setNegativeButton("Cancel", (dialog, which) -> {
 
         });
 
         passwordResetDialog.create().show();
-        Toast toast = Toast.makeText(getApplicationContext(), "Reset Password", Toast.LENGTH_SHORT);//function called to initiate forgotten password user story
+        //function called to initiate forgotten password user story
+        Toast toast = Toast.makeText(getApplicationContext(), "Reset Password", Toast.LENGTH_SHORT);
         toast.show();
     }
-
-    public void onClickGoToSignUp(View v) {//called from the TextView in with id/new_member called using (android:onClick="onClickGoToSignUp")
-        Intent mIntent = new Intent(SigninActivity.this, SignupActivity.class); //changes current activity from signin to signup
+    //called from the TextView in with id/new_member called using (android:onClick="onClickGoToSignUp")
+    public void onClickGoToSignUp(View v) {
+        //changes current activity from signin to signup
+        Intent mIntent = new Intent(SigninActivity.this, SignupActivity.class);
         startActivity(mIntent);
         finish();
     }
@@ -269,8 +275,8 @@ public class SigninActivity extends AppCompatActivity {
             return true;
         }
     }
-
-    private Boolean validatePassword(Verification userDetails) {// calls the validate password method in the verification class
+    // calls the validate password method in the verification class
+    private Boolean validatePassword(Verification userDetails) {
         userDetails.setPassword(userPassword.getText().toString().trim());
         String reply = userDetails.validatePassword();
         if(!reply.equals("Valid")){
