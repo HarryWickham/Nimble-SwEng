@@ -113,7 +113,6 @@ public class EndSummaryFragment extends Fragment {
         if(movesGoalDifference > 0) {
             return String.format("You are %d moves from your goal!", movesGoalDifference);
         }else {
-            CreateNotification createNotification = new CreateNotification(R.drawable.ic_stat_name, "Congratulations!", String.format("You have reached your weekly goal. Your current moves are: %s", String.format("%d/%d", prefs.getInt(currentFirebaseUser + "currentMoves", 0), prefs.getInt(currentFirebaseUser + "weeklyGoal",0))), MainActivity.class, "goalReachedChannelID", 1, getApplicationContext());
             return "Congratulations you have reached your weekly goal!";
         }
     }
