@@ -163,6 +163,56 @@
                 <text font="sans_serif" fontsize="32" fontcolour="#000000" xstart="50" ystart="50"><b>Lunges</b></text>
                 <text font="sans_serif" fontsize="13" fontcolour="#000000" xstart="50" ystart="1512">From a standing position, step out in front and lower yourself onto that leg. Ensure that the knee of the leg you stepped out on doesn't go past your foot and that your back knee doesn't hit the floor. Engage your leg and core muscles to perform the motion correctly. Push off of the leading le to return to your start position. Repeat using the opposite leg as the leading leg.</text>
             </exercise>
+
+            <exercise exerciseName="Calf Raises" exerciseDescription="On flat ground, start flat-footed. Raise yourself up onto the balls of your feet and hold at the top, before lowering back down to the start position to complete a rep."
+                repType="number" reps="10" timePerRep="4" movesPerRep="1" restAfterFinish="10" colour="#003312">
+                <video urlname="https://www-users.york.ac.uk/~hew550/NimbleAssets/exercisevideos/Calf-Raises.mp4" starttime="0" loop="true" xstart="50" ystart="262" width="980" height="550" id="calfraisesVideo" />
+                <image urlname="https://www-users.york.ac.uk/~hew550/NimbleAssets/exercisemusclegroups/calf_raises.png" xstart="50" ystart="887" width="726" height="550" duration="0"/>
+                <shape type="RECTANGLE" xstart="25" ystart="237" width="600" height="1030" fillcolour="#303F9F" duration="0"/>
+                <shape type="RECTANGLE" xstart="25" ystart="862" width="560" height="780" fillcolour="#303F9F" duration="0"/>
+                <text font="sans_serif" fontsize="32" fontcolour="#000000" xstart="50" ystart="50"><b>Calf Raises</b></text>
+                <text font="sans_serif" fontsize="13" fontcolour="#000000" xstart="50" ystart="1512">On flat ground, start flat-footed. Raise yourself up onto the balls of your feet and hold at the top, before lowering back down to the start position to complete a rep.</text>
+            </exercise>
+
+            <exercise exerciseName="Hip Thrusters" exerciseDescription="Using a chair, rest your back onto the seat of the chair and hold yourself level using your legs; feet planted. Then lower your core and glutes towards the floor. Hold this position before engaging your leg muscles and returning to the start position to complete a rep."
+                repType="number" reps="5" timePerRep="4" movesPerRep="1" restAfterFinish="10" colour="#009973">
+                <video urlname="https://www-users.york.ac.uk/~hew550/NimbleAssets/exercisevideos/Hip-Thruster.mp4" starttime="0" loop="true" xstart="50" ystart="262" width="980" height="550" id="hipthrustersVideo" />
+                <image urlname="https://www-users.york.ac.uk/~hew550/NimbleAssets/exercisemusclegroups/hip_thrusters.png" xstart="50" ystart="887" width="726" height="550" duration="0"/>
+                <shape type="RECTANGLE" xstart="25" ystart="237" width="600" height="1030" fillcolour="#303F9F" duration="0"/>
+                <shape type="RECTANGLE" xstart="25" ystart="862" width="560" height="780" fillcolour="#303F9F" duration="0"/>
+                <text font="sans_serif" fontsize="32" fontcolour="#000000" xstart="50" ystart="50"><b>Hip Thrusters</b></text>
+                <text font="sans_serif" fontsize="13" fontcolour="#000000" xstart="50" ystart="1512">Using a chair, rest your back onto the seat of the chair and hold yourself level using your legs; feet planted. Then lower your core and glutes towards the floor. Hold this position before engaging your leg muscles and returning to the start position to complete a rep.</text>
+            </exercise>
+
+            <exercise exerciseName="Side Plank Kicks" exerciseDescription="From a side plank starting position, while engaging your core, raise your leg up to just beyond parallel to the ground then return to parallel with your other leg. Switch arms to complete the exercise for the other half of your abdominals and oblique; raising the opposite leg."
+                repType="number" reps="10" timePerRep="4" movesPerRep="1.25" restAfterFinish="10" colour="#1a0d00">
+                <video urlname="https://www-users.york.ac.uk/~hew550/NimbleAssets/exercisevideos/Side-Plank-Kicks.mp4" starttime="0" loop="true" xstart="50" ystart="262" width="980" height="550" id="sidePlankKicksVideo" />
+                <image urlname="https://www-users.york.ac.uk/~hew550/NimbleAssets/exercisemusclegroups/side_plank_kicks.png" xstart="50" ystart="887" width="726" height="550" duration="0"/>
+                <shape type="RECTANGLE" xstart="25" ystart="237" width="600" height="1030" fillcolour="#303F9F" duration="0"/>
+                <shape type="RECTANGLE" xstart="25" ystart="862" width="560" height="780" fillcolour="#303F9F" duration="0"/>
+                <text font="sans_serif" fontsize="32" fontcolour="#000000" xstart="50" ystart="50"><b>Set Up-Downs</b></text>
+                <text font="sans_serif" fontsize="13" fontcolour="#000000" xstart="50" ystart="1512">From a side plank starting position, while engaging your core, raise your leg up to just beyond parallel to the ground then return to parallel with your other leg. Switch arms to complete the exercise for the other half of your abdominals and oblique; raising the opposite leg.</text>
+            </exercise>
+
+            <exercise exerciseName="Burpees" exerciseDescription="From a standing position, jump up and raise your arms. Once landed, lower yourself down into a normal push up position and perform a push-up. Bring your knees in towards your chest and jump up from this position to complete a rep."
+                repType="number" reps="10" timePerRep="6" movesPerRep="2" restAfterFinish="60" colour="#663300">
+                <video urlname="https://www-users.york.ac.uk/~hew550/NimbleAssets/exercisevideos/Burpees.mp4" starttime="0" loop="true" xstart="50" ystart="262" width="980" height="550" id="burpeesVideo" />
+                <image urlname="https://www-users.york.ac.uk/~hew550/NimbleAssets/exercisemusclegroups/burpees.png" xstart="50" ystart="887" width="726" height="550" duration="0"/>
+                <shape type="RECTANGLE" xstart="25" ystart="237" width="600" height="1030" fillcolour="#303F9F" duration="0"/>
+                <shape type="RECTANGLE" xstart="25" ystart="862" width="560" height="780" fillcolour="#303F9F" duration="0"/>
+                <text font="sans_serif" fontsize="32" fontcolour="#000000" xstart="50" ystart="50"><b>Burpees</b></text>
+                <text font="sans_serif" fontsize="13" fontcolour="#000000" xstart="50" ystart="1512">From a standing position, jump up and raise your arms. Once landed, lower yourself down into a normal push up position and perform a push-up. Bring your knees in towards your chest and jump up from this position to complete a rep.</text>
+            </exercise>
+
+            <exercise exerciseName="Step Up-Downs" exerciseDescription="Facing towards a step, step up onto it with one foot and bring your opposite foot up onto the step. Now step down using the last foot that stepped up. Repeat this action using alternate feet to do the initial step up motion."
+                repType="number" reps="10" timePerRep="4" movesPerRep="1.25" restAfterFinish="10" colour="#1a0d00">
+                <video urlname="https://www-users.york.ac.uk/~hew550/NimbleAssets/exercisevideos/Step-Ups.mp4" starttime="0" loop="true" xstart="50" ystart="262" width="980" height="550" id="stepup-downsVideo" />
+                <image urlname="https://www-users.york.ac.uk/~hew550/NimbleAssets/exercisemusclegroups/step_up_downs.png" xstart="50" ystart="887" width="726" height="550" duration="0"/>
+                <shape type="RECTANGLE" xstart="25" ystart="237" width="600" height="1030" fillcolour="#303F9F" duration="0"/>
+                <shape type="RECTANGLE" xstart="25" ystart="862" width="560" height="780" fillcolour="#303F9F" duration="0"/>
+                <text font="sans_serif" fontsize="32" fontcolour="#000000" xstart="50" ystart="50"><b>Set Up-Downs</b></text>
+                <text font="sans_serif" fontsize="13" fontcolour="#000000" xstart="50" ystart="1512">Facing towards a step, step up onto it with one foot and bring your opposite foot up onto the step. Now step down using the last foot that stepped up. Repeat this action using alternate feet to do the initial step up motion.</text>
+            </exercise>
         </routine>
 
     </slide>

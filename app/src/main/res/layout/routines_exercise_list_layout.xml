@@ -6,6 +6,6 @@
     android:orientation="horizontal"
     android:id="@+id/routines_exercise_list_layout">
 
-    Start of XML file for the child items in an expandable list (the exercises)
+    <!-- Start of XML file for the child items in an expandable list (the exercises) -->
 
 </LinearLayout>

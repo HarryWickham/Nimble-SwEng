@@ -23,7 +23,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_margin="@dimen/activity_vertical_margin"
-                    android:text="Exercise"
+                    android:text="@string/counter_title"
                     android:textColor="@color/black"
                     android:textSize="30sp" />
 
@@ -48,7 +48,6 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_margin="@dimen/activity_vertical_margin"
-                    android:text="Points"
                     android:textColor="@color/black"
                     android:textSize="30sp" />
 
@@ -64,7 +63,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
-                        android:text="Start Exercise"
+                        android:text="@string/start_exercise"
                         android:textSize="35sp" />
 
                     <TextView
@@ -85,7 +84,6 @@
                     android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
                     android:layout_marginVertical="@dimen/activity_vertical_margin"
                     android:layout_gravity="center"
-                    android:text="Rep: 0 out of 10"
                     android:textSize="30sp"
                     android:textColor="@color/black" />
 
@@ -96,7 +94,7 @@
                     android:layout_gravity="center"
                     android:textColor="@color/black"
                     android:visibility="visible"
-                    android:text="Seconds Per Rep"/>
+                    android:text="@string/slider_title"/>
 
                 <com.google.android.material.slider.Slider
                     android:id="@+id/repTimeSlider"
@@ -129,7 +127,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="start"
             android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
-            android:text="Return" />
+            android:text="@string/return_button" />
 
         <Button
             android:id="@+id/MuteButton"
@@ -137,7 +135,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
-            android:text="Mute" />
+            android:text="@string/mute_button" />
 
         <Button
             android:id="@+id/PauseButton"
@@ -145,7 +143,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
-            android:text="Pause" />
+            android:text="@string/pause_button" />
     </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

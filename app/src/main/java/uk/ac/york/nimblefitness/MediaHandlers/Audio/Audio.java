@@ -5,15 +5,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.AudioAttributes;
 import android.media.MediaPlayer;
-import android.os.Handler;
 import android.os.IBinder;
-import android.os.Looper;
 import android.preference.PreferenceManager;
-import android.widget.Toast;
 
 import java.io.IOException;
-
-import uk.ac.york.nimblefitness.MediaHandlers.Graphics.ShapeType;
 
 public class Audio extends Service {
     MediaPlayer myPlayer;
@@ -47,7 +42,6 @@ public class Audio extends Service {
         }
 
         myPlayer.setLooping(true); // Set looping, setting loop play to true
-        //Toast.makeText(this, "Service Successfully Created", Toast.LENGTH_LONG).show();
     }
 
    @Override
@@ -68,13 +62,4 @@ public class Audio extends Service {
         return null;
     }
 
-    public void delay(MediaPlayer myPlayer){
-        Handler handler = new Handler(Looper.getMainLooper());
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                onCreate();
-            }
-        }, myPlayer.getDuration());
-    }
 }

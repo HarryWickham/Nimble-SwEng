@@ -3,6 +3,8 @@ package uk.ac.york.nimblefitness.MediaHandlers.Audio;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Handler;
+import android.os.Looper;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
@@ -72,11 +74,22 @@ public class AudioType implements Serializable, AbstractLayout {
         editor.putString("url",url);
         editor.putBoolean("loop",loop);
         editor.apply();
-        context.startService(new Intent(context.getApplicationContext(), Audio.class));
+        delay(this);
     }
 
     @Override
     public String getMediaId() {
         return id;
+    }
+
+    /** This method delays when the audio starts as set by the user using setStartTime. */
+    public void delay(AudioType audioType) {
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                context.startService(new Intent(context.getApplicationContext(), Audio.class));
+            }
+        }, audioType.getStarttime());
     }
 }

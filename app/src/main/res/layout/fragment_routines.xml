@@ -23,7 +23,7 @@
         android:id="@+id/nothing_found_routines"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="That routine does not exist. Try another"
+        android:text="@string/no_routine_search_result"
         android:visibility="gone"/>
 
 </LinearLayout>

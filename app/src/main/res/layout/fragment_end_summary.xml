@@ -12,7 +12,7 @@
         android:id="@+id/congratulation_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Amazing job!"
+        android:text="@string/end_summary_title"
         android:textSize="32sp"
         android:layout_marginVertical="8dp"/>
 
@@ -55,11 +55,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/bird_animation_frame">
-
-        <!--    <pl.droidsonroids.gif.GifImageView
-            android:layout_width="match_parent"
-            android:layout_height="390dp"
-            android:src="@drawable/bird_animation2"/> -->
     </FrameLayout>
 
     <Button

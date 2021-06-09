@@ -36,6 +36,12 @@ import uk.ac.york.nimblefitness.Screens.RoutineAndExercise.RoutineAndExerciseAct
 
 import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 
+/**
+ * This class extends an ExpandableListAdapter, and helps connect the code to the UI
+ * Using an ArrayList<Routine>, it stores all the information needed to form the Expandable List
+ * Overriden methods are needed to get certain values from the ArrayList
+ * A method at the bottom is used to filter the data for the SearchView
+ */
 public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
 
     private Context context;
@@ -48,32 +54,63 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
         this.routineArrayList = (ArrayList<Routine>) routineArrayList.clone();
     }
 
+    /**
+     * Returns number of routines
+     * @return number of routines
+     */
     @Override
     public int getGroupCount() {
         return this.routineArrayList.size();
     }
 
+    /**
+     * Returns number of exercises in a given group
+     * @param groupPosition
+     * @return number of exercises
+     */
     @Override
     public int getChildrenCount(int groupPosition) {
         return routineArrayList.get(groupPosition).getExerciseArrayList().size();
     }
 
+    /**
+     * Returns a specified routine
+     * @param groupPosition
+     * @return routine
+     */
     @Override
     public Object getGroup(int groupPosition) { return routineArrayList.get(groupPosition); }
 
+    /**
+     * Returns a specified exercise from a routine
+     * @param groupPosition
+     * @param childPosition
+     * @return exercise
+     */
     @Override
     public Object getChild(int groupPosition, int childPosition) {
         return routineArrayList.get(groupPosition).getExerciseArrayList().get(childPosition);
     }
 
+    /**
+     * Returns routine ID (position)
+     * @param groupPosition
+     * @return routine position
+     */
     @Override
     public long getGroupId(int groupPosition) {
         return groupPosition;
     }
 
+    /**
+     * Returns exercise ID (position)
+     * @param groupPosition
+     * @param childPosition
+     * @return exercise position
+     */
     @Override
     public long getChildId(int groupPosition, int childPosition) {
-        return childPosition;
+        return childPosition; //Our child elements don't have IDs, so this returns the position
     }
 
     @Override
@@ -81,6 +118,14 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
         return false;
     }
 
+    /**
+     * Sets out the information needed for displaying a routine card in the expandable list
+     * @param groupPosition
+     * @param isExpanded
+     * @param convertView
+     * @param parent
+     * @return view for the routines
+     */
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
         if(convertView==null){
@@ -95,7 +140,8 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
             public void onClick(View view) {
                 SharedPreferences prefs = getDefaultSharedPreferences(context);
                 FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-                if(prefs.getInt(currentFirebaseUser+"completedRoutines", 0)<getUserMembershipPlanRoutines(prefs, currentFirebaseUser)) {
+                if(prefs.getInt(currentFirebaseUser+"completedRoutines", 0) <
+                        getUserMembershipPlanRoutines(prefs, currentFirebaseUser)) {
 
                     Exercise exercise = new Exercise();
                     exercise.setExerciseName("fake");
@@ -141,6 +187,15 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
         return convertView;
     }
 
+    /**
+     * Sets out the information needed for displaying the list of exercises in a routine
+     * @param groupPosition
+     * @param childPosition
+     * @param isLastChild
+     * @param convertView
+     * @param parent
+     * @return view for the exercises
+     */
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
         Exercise child = (Exercise) getChild(groupPosition, childPosition);
@@ -167,42 +222,43 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
         return true;
     }
 
-    public ArrayList<Routine> getRoutineArrayList() {
-        return routineArrayList;
-    }
-
-    /*
-        Function for searching the Routines with the SearchView input
-        Uses a copy of the
-         */
+    /**
+     * Function for searching the Routines with the SearchView input
+     * Uses a copy of the routineArrayList, clears it, and fills it up with routines/exercises that match the search
+     * @param query
+     * @return boolean determining if a search yielded a valid response
+     */
     public boolean filterData(String query) {
-        boolean searched = true;
-        query = query.toLowerCase();
-        Log.v("MyListAdapter", String.valueOf(routineArrayList.size()));
+        boolean searched = true; //Sets search to true when instantiated
+        query = query.toLowerCase(); //Can use contains() without worry of capitalisation
         routineArrayList.clear();
 
+        //When nothing is searched
         if (query.isEmpty()) {
             routineArrayList.addAll(originalRoutineArrayList);
             searched = true;
         } else {
             for (Routine routine : originalRoutineArrayList) {
                 ArrayList<Exercise> exerciseList = routine.getExerciseArrayList();
-                ArrayList<Exercise> searchList = new ArrayList<>();
-                boolean searchedRoutine = false;
 
+                //If routine is searched
                 if (routine.getRoutineName().toLowerCase().contains(query)) {
                     routineArrayList.add(routine);
                 }
+                //Boolean for checking for doubles
                 boolean alreadyAdded = false;
+                //If exercise is searched
                 for (Exercise exercise : exerciseList) {
                     if(exercise.getExerciseName().toLowerCase().contains(query)) {
                         // Check to see if routine is already added
                         for(Routine addRoutine : routineArrayList) {
+                            //Compares routine about to be added to routines already added
                             if(routine.getRoutineName().equals(addRoutine.getRoutineName())) {
                                 alreadyAdded = true;
                             }
                         }
 
+                        //If routine isn't already added
                         if (!alreadyAdded) {
                             routineArrayList.add(routine);
                         }
@@ -210,13 +266,21 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
                 }
             }
         }
+        //Updates data on the expandableList
         notifyDataSetChanged();
+        //If nothing matched the search
         if (routineArrayList.isEmpty()) {
             searched = false;
         }
         return searched;
     }
 
+    /**
+     * Gets information on user's plan to indicate how many routines a user has remaining
+     * @param prefs
+     * @param currentFirebaseUser
+     * @return number of routines a user is allowed in a month
+     */
     public int getUserMembershipPlanRoutines(SharedPreferences prefs, FirebaseUser currentFirebaseUser ){
         switch (prefs.getString(currentFirebaseUser+"membershipPlan", "bronze")){
             case "bronze":
@@ -230,13 +294,21 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
         }
     }
 
+    /**
+     * Sums the number of moves of each exercise in a routine
+     * @param routine
+     * @return total moves for a given routine
+     */
     private int totalMoves(Routine routine){
         int routineTotalMoves = 0;
 
+        //Adds moves for each routine in a recurring for loop by multiplying movesPerRep x number of reps
         for(int i = 0; i < routine.getExerciseArrayList().size(); i++){
-            routineTotalMoves = routineTotalMoves + (int) routine.getExerciseArrayList().get(i).getMovesPerRep()*routine.getExerciseArrayList().get(i).getReps();
+            routineTotalMoves = routineTotalMoves +
+                    (int) routine.getExerciseArrayList().get(i).getMovesPerRep()*routine.getExerciseArrayList().get(i).getReps();
         }
 
+        //Multiply the total by the number of sets the routine has
         routineTotalMoves = routineTotalMoves*routine.getSets();
 
         return routineTotalMoves;

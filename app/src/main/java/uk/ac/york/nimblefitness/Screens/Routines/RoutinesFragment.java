@@ -36,11 +36,11 @@ import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
-/*
-Fragment for displaying the routines in an expandable list view
-Each Parent element is a routine, and the children elements are the exercises in said routine
-The routine information is loaded in through xml, and is passed onto the RoutineExerciseActivity for when the user starts a routine
-There is also a SearchView that can search for exercises or routines in the ExpandableListView
+/**
+ * Fragment for displaying the routines in an expandable list view
+ * Each Parent element is a routine, and the children elements are the exercises in said routine
+ * The routine information is loaded in through xml, and is passed onto the RoutineExerciseActivity for when the user starts a routine
+ * There is also a SearchView that can search for exercises or routines in the ExpandableListView
  */
 public class RoutinesFragment extends Fragment {
 
@@ -69,9 +69,12 @@ public class RoutinesFragment extends Fragment {
 
         // If statement to display how many routines a user has left, if they're not on the gold plan
         if(getUserMembershipPlanRoutines(prefs, currentFirebaseUser) > 40 ){
-            requireActivity().setTitle("Routines - Remaining: " + DecimalFormatSymbols.getInstance().getInfinity());
+            requireActivity().setTitle("Routines - Remaining: " +
+                    DecimalFormatSymbols.getInstance().getInfinity());
         }else {
-            requireActivity().setTitle("Routines - Remaining: " + String.valueOf(getUserMembershipPlanRoutines(prefs, currentFirebaseUser) - prefs.getInt(currentFirebaseUser + "completedRoutines", 0)));
+            requireActivity().setTitle("Routines - Remaining: " +
+                    String.valueOf(getUserMembershipPlanRoutines(prefs, currentFirebaseUser) -
+                            prefs.getInt(currentFirebaseUser + "completedRoutines", 0)));
         }
 
         routineListView = view.findViewById(R.id.routine_exp_list); // Assigns the ListView to the layout 'routine_exp_list'
@@ -87,56 +90,48 @@ public class RoutinesFragment extends Fragment {
         // setting list adapter
         routineListView.setAdapter(listAdapter);
 
-        // Listview on child click listener
+        // Listview listener for when an exercise is clicked
         routineListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
 
             @Override
             public boolean onChildClick(ExpandableListView parent, View v,int groupPosition, int childPosition, long id) {
-
                 return false;
             }
         });
 
-        // Listview Group expanded listener
+        // Listview listener for when a routine is expanded
         routineListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
 
             @Override
             public void onGroupExpand(int groupPosition) {
-                System.out.println(routine.get(groupPosition).getRoutineName());
             }
         });
 
-        // Listview Group collasped listener
+        // Listview listener for when a routine is collapsed
         routineListView.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
 
             @Override
             public void onGroupCollapse(int groupPosition) {
-                System.out.println(routine.get(groupPosition).getRoutineName());
             }
         });
-        // SearchView typing input listener
+        // SearchView listener for when a user starts typing
         routineSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             // When query is submitted
             @Override
             public boolean onQueryTextSubmit(String query) {
-                /*nothingFound = view.findViewById(R.id.nothing_found_routines);
-                boolean successfulSearch = listAdapter.filterData(query);
-                if (!successfulSearch) {
-                    nothingFound.setVisibility(View.VISIBLE);
-                }
-                else{
-                    nothingFound.setVisibility(View.GONE);
-                    expandAll();
-                }*/
-
                 return false;
             }
+
             // When query is being typed
             @Override
             public boolean onQueryTextChange(String query) {
+                //TextView to show text to user that no routines were found with a given search input
                 nothingFound = view.findViewById(R.id.nothing_found_routines);
+                //Calls the function to filter the data and set up a new routineArrayList to display
                 boolean successfulSearch = listAdapter.filterData(query);
+
                 routineListView.setVisibility(VISIBLE);
+                //
                 if (!successfulSearch) {
                     nothingFound.setVisibility(VISIBLE);
                     routineListView.setVisibility(GONE);
@@ -155,7 +150,9 @@ public class RoutinesFragment extends Fragment {
         return view;
     }
 
-    // Method to expand all groups
+    /**
+     * Method to expand all groups
+     */
     private void expandAll() {
         int count = listAdapter.getGroupCount();
         for (int i = 0; i < count; i++){
@@ -163,7 +160,9 @@ public class RoutinesFragment extends Fragment {
         }
     }
 
-    // Method to collapse all groups
+    /**
+     * Method to collapse all groups
+     */
     private void collapseAll() {
         int count = listAdapter.getGroupCount();
         for (int i = 0; i < count; i++){
@@ -171,7 +170,12 @@ public class RoutinesFragment extends Fragment {
         }
     }
 
-    // Gets information on user's plan to indicate how many routines a user has remaining
+    /**
+     * Gets information on user's plan to indicate how many routines a user has remaining
+     * @param prefs
+     * @param currentFirebaseUser
+     * @return number of routines a user is allowed in a month
+     */
     public int getUserMembershipPlanRoutines(SharedPreferences prefs, FirebaseUser currentFirebaseUser ){
         switch (prefs.getString(currentFirebaseUser+"membershipPlan", "bronze")){
             case "bronze":
