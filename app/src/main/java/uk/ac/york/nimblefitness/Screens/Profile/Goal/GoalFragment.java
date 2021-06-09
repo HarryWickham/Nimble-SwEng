@@ -59,6 +59,9 @@ public class GoalFragment extends Fragment implements GoalContract.GoalView {
         // Sets the list of today's moves. //
         listView.setAdapter(goalPresenter.setTodaysMovesList(listView));
         goalPresenter.setListViewHeightBasedOnChildren(listView);
+        /* The user has the ability to share their completed exercises to any social media
+           platform.
+         */
         ImageButton shareButton = view.findViewById(R.id.share_icon);
         shareButton.setOnClickListener(new View.OnClickListener() {
             @Override

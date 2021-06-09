@@ -1,26 +1,16 @@
 package uk.ac.york.nimblefitness.MediaHandlers.Images;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.view.View;
 import android.widget.ImageView;
 
 import androidx.appcompat.widget.AppCompatImageView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.Target;
 
-import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.Serializable;
-import java.net.URL;
-import java.net.URLConnection;
 
 public class ImageModule extends AppCompatImageView implements Serializable {
 
@@ -97,7 +87,8 @@ public class ImageModule extends AppCompatImageView implements Serializable {
     }
 
 
-    public void setAll(int xCoordinate, int yCoordinate, int width, int height, int duration, String imageSource){
+    public void setAll(int xCoordinate, int yCoordinate, int width, int height,
+                       int duration, String imageSource) {
         setXCoordinate(xCoordinate);
         setYCoordinate(yCoordinate);
         setImageWidth(width);

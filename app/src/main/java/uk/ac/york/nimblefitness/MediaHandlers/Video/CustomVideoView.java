@@ -7,7 +7,6 @@ import android.widget.VideoView;
 public class CustomVideoView extends VideoView {
 
     protected int _overrideWidth = 480;
-
     protected int _overrideHeight = 360;
 
     public CustomVideoView(Context context) {
@@ -21,11 +20,10 @@ public class CustomVideoView extends VideoView {
     public void resizeVideo(int width, int height) {
         _overrideHeight = height;
         _overrideWidth = width;
-        // not sure whether it is useful or not but safe to do so
+        // Not necessarily useful but safe to do so.
         getHolder().setFixedSize(width, height);
-        //getHolder().setSizeFromLayout();
         requestLayout();
-        invalidate(); // very important, so that onMeasure will be triggered
+        invalidate(); // Very important, so that onMeasure will be triggered
 
     }
 

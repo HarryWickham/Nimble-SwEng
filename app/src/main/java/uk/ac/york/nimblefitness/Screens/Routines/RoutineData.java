@@ -4,21 +4,14 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.LinearGradient;
 import android.graphics.Shader;
-import android.util.Log;
-
-import com.google.gson.Gson;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.concurrent.atomic.AtomicReferenceArray;
 
 import uk.ac.york.nimblefitness.HelperClasses.Exercise;
 import uk.ac.york.nimblefitness.HelperClasses.Routine;
@@ -31,7 +24,6 @@ import uk.ac.york.nimblefitness.MediaHandlers.Text.TextModule;
 import uk.ac.york.nimblefitness.MediaHandlers.Text.TextType;
 import uk.ac.york.nimblefitness.MediaHandlers.Video.VideoLayout;
 import uk.ac.york.nimblefitness.MediaHandlers.Video.VideoType;
-import uk.ac.york.nimblefitness.R;
 
 public class RoutineData {
     Routine routine;
@@ -176,22 +168,22 @@ public class RoutineData {
                         case "text":
                             textType = new TextType();
                             textType.setStyle(TextModule.styleFamily.normal);
-                            textType.setXstart(Integer.parseInt(parser.getAttributeValue(null,"xstart")));
-                            textType.setYstart(Integer.parseInt(parser.getAttributeValue(null,"ystart")));
+                            textType.setxStart(Integer.parseInt(parser.getAttributeValue(null,"xstart")));
+                            textType.setyStart(Integer.parseInt(parser.getAttributeValue(null,"ystart")));
                             if(parser.getAttributeValue(null, "font") != null){
                                 textType.setFont(TextModule.fontFamily.valueOf(parser.getAttributeValue(null, "font")));
                             }else{
                                 textType.setFont(font);
                             }
                             if(parser.getAttributeValue(null, "fontcolour") != null){
-                                textType.setFontcolour(parser.getAttributeValue(null, "fontcolour"));
+                                textType.setFontColour(parser.getAttributeValue(null, "fontcolour"));
                             }else{
-                                textType.setFontcolour(fontColour);
+                                textType.setFontColour(fontColour);
                             }
                             if(parser.getAttributeValue(null, "fontsize") != null){
-                                textType.setFontsize(parser.getAttributeValue(null, "fontsize"));
+                                textType.setFontSize(parser.getAttributeValue(null, "fontsize"));
                             }else{
-                                textType.setFontsize(String.valueOf(fontSize));
+                                textType.setFontSize(String.valueOf(fontSize));
                             }
                             break;
                         case "b":
@@ -214,10 +206,10 @@ public class RoutineData {
                         case "video":
                             videoType = new VideoType();
                             videoType.setUriPath(String.valueOf(parser.getAttributeValue(null, "urlname")));
-                            videoType.setStarttime(Integer.parseInt(parser.getAttributeValue(null, "starttime")));
+                            videoType.setStartTime(Integer.parseInt(parser.getAttributeValue(null, "starttime")));
                             videoType.setLoop(Boolean.parseBoolean(parser.getAttributeValue(null, "loop")));
-                            videoType.setXstart(Integer.parseInt(parser.getAttributeValue(null, "xstart")));
-                            videoType.setYstart(Integer.parseInt(parser.getAttributeValue(null, "ystart")));
+                            videoType.setxStart(Integer.parseInt(parser.getAttributeValue(null, "xstart")));
+                            videoType.setyStart(Integer.parseInt(parser.getAttributeValue(null, "ystart")));
                             if(parser.getAttributeValue(null, "width") != null) {
                                 videoType.setWidth(Integer.parseInt(parser.getAttributeValue(null, "width")));
                             }else{
@@ -303,7 +295,7 @@ public class RoutineData {
                     }
                     else if (name.equalsIgnoreCase("video") && videoType != null) {
 
-                        exercise.setExerciseVideo(new VideoLayout(videoType.getUriPath(),videoType.getWidth(),videoType.getHeight(),videoType.getXstart(),videoType.getYstart(),videoType.getId(),videoType.getStarttime(),videoType.isLoop(), null, null));
+                        exercise.setExerciseVideo(new VideoLayout(videoType.getUriPath(),videoType.getWidth(),videoType.getHeight(),videoType.getxStart(),videoType.getyStart(),videoType.getId(),videoType.getStartTime(),videoType.isLoop(), null, null));
 
                         //VideoLayout videoLayout = new VideoLayout(videoType.getUriPath(),videoType.getWidth(),videoType.getHeight(),videoType.getXstart(),videoType.getYstart(),videoType.getId(),videoType.getStarttime(),videoType.isLoop(), frameLayout, this);
                         //videoLayout.PlayVideo();
@@ -311,7 +303,7 @@ public class RoutineData {
                     }
                     else if (name.equalsIgnoreCase("text") && textType != null) {
 
-                        textLayoutArrayList.add(new TextLayout(textType.getText(),textType.getFont(),textType.getFontsize(),textType.getFontcolour(),textType.getXstart(),textType.getYstart(), null,null));
+                        textLayoutArrayList.add(new TextLayout(textType.getText(),textType.getFont(),textType.getFontSize(),textType.getFontColour(),textType.getxStart(),textType.getyStart(), null,null));
                         //TextLayout textLayout = new TextLayout(textType.getText(),textType.getFont(),textType.getFontsize(),textType.getFontcolour(),textType.getXstart(),textType.getYstart(), frameLayout, this);
                         //textLayout.writeText();
                         textType = null;

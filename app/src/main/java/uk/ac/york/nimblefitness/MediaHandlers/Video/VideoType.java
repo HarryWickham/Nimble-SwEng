@@ -2,7 +2,7 @@ package uk.ac.york.nimblefitness.MediaHandlers.Video;
 
 public class VideoType {
     String uriPath, id;
-    int width, height, xstart, ystart, starttime;
+    int width, height, xStart, yStart, startTime;
     boolean loop;
 
     public VideoType() {
@@ -40,28 +40,28 @@ public class VideoType {
         this.height = height;
     }
 
-    public int getXstart() {
-        return xstart;
+    public int getxStart() {
+        return xStart;
     }
 
-    public void setXstart(int xstart) {
-        this.xstart = xstart;
+    public void setxStart(int xStart) {
+        this.xStart = xStart;
     }
 
-    public int getYstart() {
-        return ystart;
+    public int getyStart() {
+        return yStart;
     }
 
-    public void setYstart(int ystart) {
-        this.ystart = ystart;
+    public void setyStart(int yStart) {
+        this.yStart = yStart;
     }
 
-    public int getStarttime() {
-        return starttime;
+    public int getStartTime() {
+        return startTime;
     }
 
-    public void setStarttime(int starttime) {
-        this.starttime = starttime;
+    public void setStartTime(int startTime) {
+        this.startTime = startTime;
     }
 
     public boolean isLoop() {

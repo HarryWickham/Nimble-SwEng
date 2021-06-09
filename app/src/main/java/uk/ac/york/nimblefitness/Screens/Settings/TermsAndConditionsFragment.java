@@ -23,8 +23,10 @@ public class TermsAndConditionsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        //shows the fragment_terms_and_conditions.xml file in the frame view of the activity_main.xml
-        View view = inflater.inflate(R.layout.fragment_terms_and_conditions, container, false);
+        /* Shows the fragment_terms_and_conditions.xml file in the frame view of the
+           activity_main.xml */
+        View view = inflater.inflate(R.layout.fragment_terms_and_conditions,
+                                        container,false);
 
         //set the title of the screen
         requireActivity().setTitle("Terms and Conditions");

@@ -8,7 +8,7 @@ import android.util.AttributeSet;
 
 import java.io.Serializable;
 
-public class TextModule extends androidx.appcompat.widget.AppCompatTextView implements Serializable {
+public class TextModule extends androidx.appcompat.widget.AppCompatTextView implements Serializable{
 
     public enum fontFamily {
         default_bold, monospace, sans_serif, serif
@@ -21,11 +21,11 @@ public class TextModule extends androidx.appcompat.widget.AppCompatTextView impl
     //Declaring variables needed for the text
     styleFamily style;
     fontFamily font;
-    String text, fontsize, fontcolour;
-    int xstart, ystart;
+    String text, fontSize, fontColour;
+    int xStart, yStart;
 
     /**
-     * Constructor for the text module. Uses all these inputs to fulfill the PWS
+     * Constructor for the text module. Uses all these inputs to fulfill the PWS.
      */
     public TextModule(Context context) {
         super(context);
@@ -56,20 +56,20 @@ public class TextModule extends androidx.appcompat.widget.AppCompatTextView impl
         this.font = font;
     }
 
-    public String getFontsize() {
-        return fontsize;
+    public String getFontSize() {
+        return fontSize;
     }
 
-    public void setFontsize(String fontsize) {
-        this.fontsize = fontsize;
+    public void setFontSize(String fontSize) {
+        this.fontSize = fontSize;
     }
 
-    public String getFontcolour() {
-        return fontcolour;
+    public String getFontColour() {
+        return fontColour;
     }
 
-    public void setFontcolour(String fontcolour) {
-        this.fontcolour = fontcolour;
+    public void setFontColour(String fontColour) {
+        this.fontColour = fontColour;
     }
 
     public styleFamily getStyle() {
@@ -80,58 +80,62 @@ public class TextModule extends androidx.appcompat.widget.AppCompatTextView impl
         this.style = style;
     }
 
-    public int getXstart() {
-        return xstart;
+    public int getxStart() {
+        return xStart;
     }
 
-    public void setXstart(int xstart) {
-        this.xstart = xstart;
+    public void setxStart(int xStart) {
+        this.xStart = xStart;
     }
 
-    public int getYstart() {
-        return ystart;
+    public int getyStart() {
+        return yStart;
     }
 
-    public void setYstart(int ystart) {
-        this.ystart = ystart;
+    public void setyStart(int yStart) {
+        this.yStart = yStart;
     }
 
-    public void setall(String text, fontFamily font, String fontsize, String fontcolour, int xstart, int ystart) {
+    public void setAll(String text, fontFamily font, String fontsize, String fontcolour,
+                       int xStart, int yStart) {
         this.setText(Html.fromHtml(text));
         setFont(font);
-        setFontsize(fontsize);
-        setFontcolour(fontcolour);
-        setXstart(xstart);
-        setYstart(ystart);
+        setFontSize(fontsize);
+        setFontColour(fontcolour);
+        setxStart(xStart);
+        setyStart(yStart);
     }
 
     /**
-     * Method which calls for an update in Typeface and then appends the text
+     * Method which calls for an update in Typeface and then appends the text.
      */
     public void writeText() {
         updateTypeface();
     }
 
     /**
-     * Updates text colour by taking the String from the constructor and converting it into an integer for setTextColor method
+     * Updates text colour by taking the String from the constructor and converting it into an
+     * integer for setTextColor method.
      */
     public void updateTextColour() {
-        int colour = Color.parseColor(fontcolour);
+        int colour = Color.parseColor(fontColour);
         setTextColor(colour);
         System.out.println(colour);
     }
 
     /**
-     * Updates text size by taking the String from the constructor and converting it into an integer for setTextSize method
+     * Updates text size by taking the String from the constructor and converting it into an integer
+     * for setTextSize method.
      */
     public void updateTextSize() {
-        int size = Integer.parseInt(fontsize);
+        int size = Integer.parseInt(fontSize);
         setTextSize(size);
         System.out.println(size);
     }
 
     /**
-     * Updates text font using a switch case for default, default bold, monospace, sans serif and serif
+     * Updates text font using a switch case for default, default bold, monospace, sans serif and
+     * serif.
      * @return family: used for setting up the typeface in updateTypeface
      */
     public Typeface updateTextFont() {

@@ -27,6 +27,9 @@ import uk.ac.york.nimblefitness.Adapters.LeaderboardListAdapter;
 import uk.ac.york.nimblefitness.HelperClasses.LeaderBoardUserDetails;
 import uk.ac.york.nimblefitness.R;
 
+/** This class loads the data and appearance for the leaderboard tab which is only available/visible
+ *  to users who have a gold subscription plan.
+ */
 public class LeaderBoardFragment extends Fragment {
 
     ArrayList<LeaderBoardUserDetails> leaderBoardUserDetails = new ArrayList<>();
@@ -85,7 +88,8 @@ public class LeaderBoardFragment extends Fragment {
     private void updateListView(){
         leaderBoardProgressBar.setVisibility(View.GONE);
         Collections.sort(leaderBoardUserDetails);
-        LeaderboardListAdapter listAdapter = new LeaderboardListAdapter(leaderBoardUserDetails,getContext());
+        LeaderboardListAdapter listAdapter = new LeaderboardListAdapter(leaderBoardUserDetails,
+                                                                                    getContext());
         listView.setAdapter(listAdapter);
     }
 

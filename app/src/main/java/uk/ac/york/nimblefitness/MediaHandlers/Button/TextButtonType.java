@@ -3,12 +3,7 @@ package uk.ac.york.nimblefitness.MediaHandlers.Button;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.util.AttributeSet;
 import android.widget.Button;
-
-import com.google.gson.internal.$Gson$Preconditions;
-
-import uk.ac.york.nimblefitness.MediaHandlers.Text.TextModule;
 
 public class TextButtonType {
     int xStart, yStart, width, height;
@@ -20,7 +15,9 @@ public class TextButtonType {
         default_bold, monospace, sans_serif, serif
     }
 
-    public TextButtonType(int xStart, int yStart, int width, int height, String slideId, String mediaId, String fontSize, String fontColour, String text, fontFamily font, Context context) {
+    public TextButtonType(int xStart, int yStart, int width, int height, String slideId,
+                          String mediaId, String fontSize, String fontColour, String text,
+                          fontFamily font, Context context) {
         this.xStart = xStart;
         this.yStart = yStart;
         this.width = width;

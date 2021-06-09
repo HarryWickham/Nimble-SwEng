@@ -8,23 +8,23 @@ import android.widget.FrameLayout;
 import java.io.Serializable;
 
 import uk.ac.york.nimblefitness.MediaHandlers.AbstractLayout;
-import uk.ac.york.nimblefitness.MediaHandlers.Text.TextModule;
 
 public class VideoLayout implements Serializable, AbstractLayout {
     String uriPath, id;
-    int width, height, xstart, ystart, starttime;
+    int width, height, xStart, yStart, startTime;
     boolean loop;
     FrameLayout parentLayout;
     Context context;
 
-    public VideoLayout(String uriPath, int width, int height, int xstart, int ystart, String id, int starttime, boolean loop, FrameLayout parentLayout, Context context) {
+    public VideoLayout(String uriPath, int width, int height, int xStart, int yStart, String id,
+                       int startTime, boolean loop, FrameLayout parentLayout, Context context) {
         this.uriPath = uriPath;
         this.width = width;
         this.height = height;
-        this.xstart = xstart;
-        this.ystart = ystart;
+        this.xStart = xStart;
+        this.yStart = yStart;
         this.id = id;
-        this.starttime = starttime;
+        this.startTime = startTime;
         this.loop = loop;
         this.parentLayout = parentLayout;
         this.context = context;
@@ -38,20 +38,20 @@ public class VideoLayout implements Serializable, AbstractLayout {
         this.context = context;
     }
 
-    public int getXstart() {
-        return this.xstart;
+    public int getxStart() {
+        return this.xStart;
     }
 
-    public void setXstart(int xstart) {
-        this.xstart = xstart;
+    public void setxStart(int xStart) {
+        this.xStart = xStart;
     }
 
-    public int getYstart() {
-        return this.ystart;
+    public int getyStart() {
+        return this.yStart;
     }
 
-    public void setYstart(int ystart) {
-        this.ystart = ystart;
+    public void setyStart(int yStart) {
+        this.yStart = yStart;
     }
 
     public int getWidth() {
@@ -77,16 +77,18 @@ public class VideoLayout implements Serializable, AbstractLayout {
 
         CustomVideoView videoView = new CustomVideoView(this.context);
 
-        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        params.leftMargin=this.xstart;
-        params.topMargin=this.ystart;
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        params.leftMargin=this.xStart;
+        params.topMargin=this.yStart;
         videoView.setLayoutParams(params);
 
         parentLayout.addView(videoView);
         if(this.width != 0 && this.height != 0) {
             videoView.resizeVideo(this.width, this.height);
         }
-        videoPlayer.loadAndPlayVideo(UrlPath,this.loop,videoView,this.xstart,this.ystart,this.id,this.starttime);
+        videoPlayer.loadAndPlayVideo(UrlPath,this.loop,videoView, this.xStart,this.yStart,
+                this.id,this.startTime);
     }
 
     @Override

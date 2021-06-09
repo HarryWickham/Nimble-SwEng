@@ -1,8 +1,6 @@
 package uk.ac.york.nimblefitness.MediaHandlers.Button;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.util.AttributeSet;
 import android.widget.ImageButton;
 
 import com.bumptech.glide.Glide;
@@ -12,7 +10,8 @@ public class ImageButtonType {
     String slideid, mediaid, urlname;
     Context context;
 
-    public ImageButtonType(int xstart, int ystart, int width, int height, String slideid, String mediaid, String urlname, Context context) {
+    public ImageButtonType(int xstart, int ystart, int width, int height, String slideid,
+                           String mediaid, String urlname, Context context) {
         this.xstart = xstart;
         this.ystart = ystart;
         this.width = width;

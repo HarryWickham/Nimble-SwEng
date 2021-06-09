@@ -44,6 +44,7 @@ public class Audio extends Service {
         myPlayer.setLooping(true); // Set looping, setting loop play to true
     }
 
+    /** This sets the looping value*/
    @Override
     public void onStart(Intent intent, int startID) {
         //Set the looping value
@@ -52,7 +53,9 @@ public class Audio extends Service {
        myPlayer.setLooping(loop);
 
     }
-    @Override // When the app stops
+
+    /** This method is triggered when the app stops. */
+    @Override
     public void onDestroy() {
         myPlayer.stop();
     }

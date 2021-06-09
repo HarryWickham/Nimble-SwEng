@@ -26,10 +26,9 @@ import uk.ac.york.nimblefitness.Screens.PaymentActivity;
 import uk.ac.york.nimblefitness.Screens.SigninActivity;
 import uk.ac.york.nimblefitness.Screens.UserDetailsActivity;
 
-/*
-Fragment for the settings page from which the user can select several other pages.
-User can also logout from this fragment.
-*/
+/** Fragment for the settings page from which the user can select several other pages. User can also
+ * logout from this fragment.
+ */
 public class SettingsFragment extends Fragment {
 
     //instantiate token for firebase integration
@@ -72,19 +71,23 @@ public class SettingsFragment extends Fragment {
         };
 
         //adapter to allow the text and icon of each item is be placed together
-        SettingsListAdapter settings = new SettingsListAdapter(settings_list_items, settingsListIcons, getContext());
+        SettingsListAdapter settings = new SettingsListAdapter(settings_list_items,
+                                                                settingsListIcons, getContext());
 
         //find the list view from the fragment_settings.xml file
         ListView listView = view.findViewById(R.id.settings_list);
         //need to make a 'simple_list_item_1' replacement -> 'settings_list_layout'
-        ArrayAdapter<String> ListViewAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, settings_list_items);
+        ArrayAdapter<String> ListViewAdapter = new ArrayAdapter<>(getActivity(),
+                                        android.R.layout.simple_list_item_1, settings_list_items);
         listView.setAdapter(settings);
 
-        //waiting for a user input, detecting it and an action follows
         listView.setOnItemClickListener(new android.widget.AdapterView.OnItemClickListener() {
-            //watches for a user to click on the list view, then gives the program which position the click was in
+            /** watches for a user to click on the list view, then gives the program which position
+             * the click was in.
+             */
             @Override
-            public void onItemClick(android.widget.AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(android.widget.AdapterView<?> parent, View view,
+                                    int position, long id) {
 
             switch (position) {
                 case 0: { //if account is clicked the user details will be loaded to the screen
@@ -126,7 +129,8 @@ public class SettingsFragment extends Fragment {
 
                     Intent mIntent = new Intent(getActivity(), SigninActivity.class);
                     startActivity(mIntent);
-                    //closes this activity so when the user logs in again they are taken to the profile page not settings (also conserves device memory)
+                    /*closes this activity so when the user logs in again they are taken to the
+                      profile page not settings (also conserves device memory) */
                     requireActivity().finish();
 
                 }

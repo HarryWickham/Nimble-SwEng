@@ -1,7 +1,6 @@
 package uk.ac.york.nimblefitness.MediaHandlers.Video;
 
 import android.app.Activity;
-import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -18,7 +17,7 @@ public class VideoPlayer extends Activity implements Serializable {
     private int xstart;
     private int ystart;
     private String id;
-    private int starttime;
+    private int startTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,11 +31,12 @@ public class VideoPlayer extends Activity implements Serializable {
         view.suspend();
     }
 
-    public void loadAndPlayVideo (Uri path, Boolean loop, VideoView outsideView, int xstart, int ystart, String id, int starttime) {
-        this.xstart = xstart;
-        this.ystart = ystart;
+    public void loadAndPlayVideo (Uri path, Boolean loop, VideoView outsideView,
+                                  int xStart, int yStart, String id, int startTime) {
+        this.xstart = xStart;
+        this.ystart = yStart;
         this.id = id;
-        this.starttime = starttime;
+        this.startTime = startTime;
         final Runnable runnable = () -> {
             try {
                 try {
@@ -51,11 +51,14 @@ public class VideoPlayer extends Activity implements Serializable {
                             view.pause();
                             Handler handler = new Handler(Looper.getMainLooper());
                             handler.postDelayed(new Runnable() {
+                                /** The start of the video is delayed by the value set by the user
+                                 * in startTime.
+                                 */
                                 @Override
                                 public void run() {
                                     view.start();
                                 }
-                            }, this.starttime*1000);
+                            }, this.startTime *1000);
 
                         });
 
@@ -68,9 +71,6 @@ public class VideoPlayer extends Activity implements Serializable {
                 controller.setEnabled(true);
                 controller.show(2);
                 controller.setVisibility(View.VISIBLE);
-
-                //controller.setAnchorView(view);
-                //view.setMediaController(controller);
 
                 view.setContentDescription("Video showing how a rep should be completed");
 
@@ -96,21 +96,20 @@ public class VideoPlayer extends Activity implements Serializable {
         videoThread.start();
     }
 
-
     public int getXstart() {
         return xstart;
     }
 
-    public void setXstart(int xstart) {
-        this.xstart = xstart;
+    public void setXstart(int xStart) {
+        this.xstart = xStart;
     }
 
     public int getYstart() {
         return ystart;
     }
 
-    public void setYstart(int ystart) {
-        this.ystart = ystart;
+    public void setYstart(int yStart) {
+        this.ystart = yStart;
     }
 
     public String getId() {
@@ -121,11 +120,11 @@ public class VideoPlayer extends Activity implements Serializable {
         this.id = id;
     }
 
-    public int getStarttime() {
-        return starttime;
+    public int getStartTime() {
+        return startTime;
     }
 
-    public void setStarttime(int starttime) {
-        this.starttime = starttime;
+    public void setStartTime(int startTime) {
+        this.startTime = startTime;
     }
 }

@@ -130,7 +130,8 @@ public class LoadNewPresentationActivity extends AppCompatActivity {
                         case "slideshow":
                             break;
                         case "defaults":
-                            defaultBackgroundColour = parser.getAttributeValue(null, "backgroundcolour");
+                            defaultBackgroundColour = parser.getAttributeValue(null,
+                                                                        "backgroundcolour");
                             font = TextModule.fontFamily.valueOf(parser.getAttributeValue(null, "font"));
                             fontColour = parser.getAttributeValue(null, "fontcolour");
                             lineColour = parser.getAttributeValue(null, "linecolour");
@@ -186,22 +187,22 @@ public class LoadNewPresentationActivity extends AppCompatActivity {
                         case "text":
                             textType = new TextType();
                             textType.setStyle(TextModule.styleFamily.normal);
-                            textType.setXstart(Integer.parseInt(parser.getAttributeValue(null, "xstart")));
-                            textType.setYstart(Integer.parseInt(parser.getAttributeValue(null, "ystart")));
+                            textType.setxStart(Integer.parseInt(parser.getAttributeValue(null, "xstart")));
+                            textType.setyStart(Integer.parseInt(parser.getAttributeValue(null, "ystart")));
                             if (parser.getAttributeValue(null, "font") != null) {
                                 textType.setFont(TextModule.fontFamily.valueOf(parser.getAttributeValue(null, "font")));
                             } else {
                                 textType.setFont(TextModule.fontFamily.monospace);
                             }
                             if (parser.getAttributeValue(null, "fontcolour") != null) {
-                                textType.setFontcolour(parser.getAttributeValue(null, "fontcolour"));
+                                textType.setFontColour(parser.getAttributeValue(null, "fontcolour"));
                             } else {
-                                textType.setFontcolour("#000000");
+                                textType.setFontColour("#000000");
                             }
                             if (parser.getAttributeValue(null, "fontsize") != null) {
-                                textType.setFontsize(parser.getAttributeValue(null, "fontsize"));
+                                textType.setFontSize(parser.getAttributeValue(null, "fontsize"));
                             } else {
-                                textType.setFontsize("20");
+                                textType.setFontSize("20");
                             }
                             break;
                         case "b":
@@ -224,10 +225,10 @@ public class LoadNewPresentationActivity extends AppCompatActivity {
                         case "video":
                             videoType = new VideoType();
                             videoType.setUriPath(String.valueOf(parser.getAttributeValue(null, "urlname")));
-                            videoType.setStarttime(Integer.parseInt(parser.getAttributeValue(null, "starttime")));
+                            videoType.setStartTime(Integer.parseInt(parser.getAttributeValue(null, "starttime")));
                             videoType.setLoop(Boolean.parseBoolean(parser.getAttributeValue(null, "loop")));
-                            videoType.setXstart(Integer.parseInt(parser.getAttributeValue(null, "xstart")));
-                            videoType.setYstart(Integer.parseInt(parser.getAttributeValue(null, "ystart")));
+                            videoType.setxStart(Integer.parseInt(parser.getAttributeValue(null, "xstart")));
+                            videoType.setyStart(Integer.parseInt(parser.getAttributeValue(null, "ystart")));
                             if (parser.getAttributeValue(null, "width") != null) {
                                 videoType.setWidth(Integer.parseInt(parser.getAttributeValue(null, "width")));
                             } else {
@@ -300,11 +301,11 @@ public class LoadNewPresentationActivity extends AppCompatActivity {
                         abstractLayouts.add(shapeLayout);
                         shapeType = null;
                     } else if (name.equalsIgnoreCase("video") && videoType != null) {
-                        VideoLayout videoLayout = new VideoLayout(videoType.getUriPath(), videoType.getWidth(), videoType.getHeight(), videoType.getXstart(), videoType.getYstart(), videoType.getId(), videoType.getStarttime(), videoType.isLoop(), frameLayout, this);
+                        VideoLayout videoLayout = new VideoLayout(videoType.getUriPath(), videoType.getWidth(), videoType.getHeight(), videoType.getxStart(), videoType.getyStart(), videoType.getId(), videoType.getStartTime(), videoType.isLoop(), frameLayout, this);
                         abstractLayouts.add(videoLayout);
                         videoType = null;
                     } else if (name.equalsIgnoreCase("text") && textType != null) {
-                        TextLayout textLayout = new TextLayout(textType.getText(), textType.getFont(), textType.getFontsize(), textType.getFontcolour(), textType.getXstart(), textType.getYstart(), frameLayout, this);
+                        TextLayout textLayout = new TextLayout(textType.getText(), textType.getFont(), textType.getFontSize(), textType.getFontColour(), textType.getxStart(), textType.getyStart(), frameLayout, this);
                         abstractLayouts.add(textLayout);
                         textType = null;
                     } else if (name.equalsIgnoreCase("audio") && audioType != null) {
@@ -339,11 +340,6 @@ public class LoadNewPresentationActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(LoadNewPresentationActivity.this,
                     new String[]{permission},
                     requestCode);
-        } else {
-            /*Toast.makeText(HandlerTestActivity.this,
-                    "Permission already granted",
-                    Toast.LENGTH_SHORT)
-                    .show();*/
         }
     }
 

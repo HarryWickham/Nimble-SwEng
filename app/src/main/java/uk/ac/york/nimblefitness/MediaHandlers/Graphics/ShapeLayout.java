@@ -2,10 +2,7 @@ package uk.ac.york.nimblefitness.MediaHandlers.Graphics;
 
 import android.content.Context;
 import android.graphics.LinearGradient;
-import android.view.ViewGroup;
 import android.widget.FrameLayout;
-
-import androidx.constraintlayout.widget.ConstraintLayout;
 
 import java.io.Serializable;
 
@@ -25,7 +22,9 @@ public class ShapeLayout implements Serializable, AbstractLayout {
     private Context context;
     FrameLayout parentLayout;
 
-    public ShapeLayout(int yStart, int xStart, int width, int height, int colour, int xEnd, int yEnd, String shape_type, LinearGradient shading, int duration, Context context, FrameLayout parentLayout) {
+    public ShapeLayout(int yStart, int xStart, int width, int height, int colour,
+                       int xEnd, int yEnd, String shape_type, LinearGradient shading, int duration,
+                       Context context, FrameLayout parentLayout) {
         this.yStart = yStart;
         this.xStart = xStart;
         this.width = width;

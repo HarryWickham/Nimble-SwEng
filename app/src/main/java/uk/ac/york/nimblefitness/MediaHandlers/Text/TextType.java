@@ -3,8 +3,8 @@ package uk.ac.york.nimblefitness.MediaHandlers.Text;
 public class TextType {
     TextModule.styleFamily style;
     TextModule.fontFamily font;
-    String text = "", fontsize, fontcolour;
-    int xstart, ystart;
+    String text = "", fontSize, fontColour;
+    int xStart, yStart;
 
     public TextType() {
     }
@@ -33,35 +33,35 @@ public class TextType {
         this.text = this.text + text;
     }
 
-    public String getFontsize() {
-        return fontsize;
+    public String getFontSize() {
+        return fontSize;
     }
 
-    public void setFontsize(String fontsize) {
-        this.fontsize = fontsize;
+    public void setFontSize(String fontSize) {
+        this.fontSize = fontSize;
     }
 
-    public String getFontcolour() {
-        return fontcolour;
+    public String getFontColour() {
+        return fontColour;
     }
 
-    public void setFontcolour(String fontcolour) {
-        this.fontcolour = fontcolour;
+    public void setFontColour(String fontColour) {
+        this.fontColour = fontColour;
     }
 
-    public int getXstart() {
-        return xstart;
+    public int getxStart() {
+        return xStart;
     }
 
-    public void setXstart(int xstart) {
-        this.xstart = xstart;
+    public void setxStart(int xStart) {
+        this.xStart = xStart;
     }
 
-    public int getYstart() {
-        return ystart;
+    public int getyStart() {
+        return yStart;
     }
 
-    public void setYstart(int ystart) {
-        this.ystart = ystart;
+    public void setyStart(int yStart) {
+        this.yStart = yStart;
     }
 }

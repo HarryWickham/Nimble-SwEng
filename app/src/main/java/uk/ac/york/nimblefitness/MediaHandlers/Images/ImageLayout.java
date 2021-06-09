@@ -1,7 +1,6 @@
 package uk.ac.york.nimblefitness.MediaHandlers.Images;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
@@ -24,7 +23,8 @@ public class ImageLayout implements Serializable, AbstractLayout {
     Context context;
 
 
-    public ImageLayout(int xCoordinate, int yCoordinate, int width, int height, int duration, String imageSource, FrameLayout parentLayout, Context context) {
+    public ImageLayout(int xCoordinate, int yCoordinate, int width, int height, int duration,
+                       String imageSource, FrameLayout parentLayout, Context context) {
         this.xCoordinate = xCoordinate;
         this.yCoordinate = yCoordinate;
         this.width = width;
@@ -83,13 +83,15 @@ public class ImageLayout implements Serializable, AbstractLayout {
     public void draw() {
         imageModule = new ImageModule(this.context);
 
-        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.leftMargin = this.xCoordinate;
         params.topMargin = this.yCoordinate;
         imageModule.setLayoutParams(params);
 
         parentLayout.addView(imageModule);
-        imageModule.setAll(this.xCoordinate, this.yCoordinate, this.width, this.height, this.duration, this.imageSource);
+        imageModule.setAll(this.xCoordinate, this.yCoordinate, this.width, this.height,
+                            this.duration, this.imageSource);
         imageModule.setImage();
     }
 
