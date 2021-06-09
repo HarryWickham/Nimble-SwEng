@@ -107,6 +107,7 @@ public class RoutineData {
                             fontSize = Integer.parseInt(parser.getAttributeValue(null, "fontsize"));
                             break;
                         case "slide":
+
                         case "slideshow":
                             break;
                         case "routine":
@@ -256,6 +257,8 @@ public class RoutineData {
                                 imageType.setImageDuration(0);
                             }
                             break;
+                        case "button":
+
                         default:
                             throw new IllegalStateException("Unexpected value: " + name);
                     }

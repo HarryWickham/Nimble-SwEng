@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Objects;
 
 import uk.ac.york.nimblefitness.Adapters.MovesListAdapter;
 import uk.ac.york.nimblefitness.HelperClasses.Exercise;
@@ -31,16 +32,19 @@ import uk.ac.york.nimblefitness.HelperClasses.SavableExercise;
 import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 import static com.facebook.FacebookSdk.getApplicationContext;
 
+/** This class handles the logic and database aspects of the Calendar tab in the profile page of the
+ * app.
+ */
+
 public class CalendarModel implements CalendarContract.Model {
 
     private static final String TAG = "log";
-    private String userName;
     MovesListAdapter listAdapter;
     private FirebaseDatabase rootDatabase = FirebaseDatabase.getInstance();
     private DatabaseReference rootReference = rootDatabase.getReference("users");
     private FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
-    // This method sets the displayed text for the corresponding month.
+    /** This method sets the displayed text for the corresponding month. */
     public String monthText(int month){
         switch (month){
             case 1: return("January");
@@ -59,7 +63,7 @@ public class CalendarModel implements CalendarContract.Model {
         }
     }
 
-    // This method is used to set which prefix is displayed after the date number.
+    /** This method is used to set which prefix is displayed after the date number. */
     public String datePrefix(int dayOfMonth){
         switch (dayOfMonth){
             case 1:
@@ -76,8 +80,9 @@ public class CalendarModel implements CalendarContract.Model {
         }
     }
 
-    // The default selected day is the current day which is displayed in text below the calendar
-    // view in the Calendar tab in the profile page.
+    /** The default selected day is the current day which is displayed in text below the calendar
+     * view in the Calendar tab in the profile page.
+     */
     @Override
     public String currentDayNumber() {
         SimpleDateFormat month = new SimpleDateFormat("M", Locale.UK);
@@ -85,49 +90,58 @@ public class CalendarModel implements CalendarContract.Model {
         Date currentTime = Calendar.getInstance().getTime();
         String monthString = month.format(currentTime);
         String dayString = day.format(currentTime);
-        String currentDayNumber = String.format("%s %s%s", monthText(Integer.parseInt(monthString)),
+        /* Outputs month name followed by date and the number's corresponding prefix. */
+        return String.format("%s %s%s", monthText(Integer.parseInt(monthString)),
                 dayString, datePrefix(Integer.parseInt(dayString)));
-        return currentDayNumber;
     }
 
-    // The earliest selectable date on the calendar is set by when the user signed up to the app.
+    /** The earliest selectable date on the calendar is set by when the user signed up to the app.*/
     @Override
     public long userStartDate() {
         if (currentFirebaseUser != null) {
-            return currentFirebaseUser.getMetadata().getCreationTimestamp();
+            return Objects.requireNonNull(currentFirebaseUser.getMetadata()).getCreationTimestamp();
         }
         return 0;
     }
 
-    // When the user selects a day on the calendar view, the date is displayed below the calendar as
-    // text.
+    /** When the user selects a day on the calendar view, the date is displayed below the calendar
+     * as text.
+     */
     @Override
     public String selectedDay(int month, int dayOfMonth) {
-        String dayNumber = String.format(Locale.UK, "%s %d%s",
+        /* Outputs month name followed by date and the number's corresponding prefix. */
+        return String.format(Locale.UK, "%s %d%s",
                 monthText(month + 1), dayOfMonth, datePrefix(dayOfMonth));
-        return dayNumber;
     }
 
-    // The current user's name is retrieved from the Firebase database to be displayed on the
-    // Calendar tab of the profile page.
+    /** The current user's name is retrieved from the Firebase database to be displayed on the
+     * Calendar tab of the profile page.
+     */
     @Override
     public String currentUser() {
         SharedPreferences prefs = getDefaultSharedPreferences(getApplicationContext());
-        userName = prefs.getString(currentFirebaseUser+"userFullName", "Error Getting Name");
-        Log.i(TAG, " Full name : "+userName);
+        String userName = prefs.getString(currentFirebaseUser + "userFullName",
+                "Error Getting Name");
+        Log.i(TAG, " Full name : "+ userName);
         return userName;
     }
 
-    // The data for the moves the user needs to complete today will be retrieved from the Firebase
-    // database and is used to populate this list in the Calendar tab.
+    /** The data for the moves the user needs to complete today is be retrieved from the Firebase
+     * database and is used to populate this list in the Calendar tab.
+     */
     @Override
     public MovesListAdapter completedMoves(Context context, String dayNumber, ListView listView) {
         ArrayList<Exercise> exercises = new ArrayList<>();
-
+        /* The relevant user's completed exercises is retrieved from the database. */
         FirebaseDatabase rootDatabase = FirebaseDatabase.getInstance();
-        DatabaseReference completedExercisesRootReference = rootDatabase.getReference("users").child(currentFirebaseUser.getUid()).child("exercises");
-
-        completedExercisesRootReference.child(dayNumber).addListenerForSingleValueEvent(new ValueEventListener() {
+        DatabaseReference completedExercisesRootReference = rootDatabase.
+                getReference("users").child(currentFirebaseUser.getUid()).child("exercises");
+        /* The completed exercises displayed in the list is changed when the user selects a
+          different day in the calendar view to display the corresponding exercises completed on
+          that particular day.
+         */
+        completedExercisesRootReference.child(dayNumber).
+                addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Log.i("Retrieve", "onDataChange");
@@ -137,6 +151,7 @@ public class CalendarModel implements CalendarContract.Model {
                         Log.i("Retrieve", "ds.getValue(Exercise.class)");
                         SavableExercise exercise = ds.getValue(SavableExercise.class);
                         Exercise exercise1 = new Exercise();
+                        assert exercise != null;
                         exercise1.setExerciseName(exercise.getExerciseName());
                         exercise1.setColour(exercise.getColour());
                         exercise1.setMovesPerRep(exercise.getMovesPerRep());
@@ -150,42 +165,37 @@ public class CalendarModel implements CalendarContract.Model {
                 listAdapter = new MovesListAdapter(context, exercises);
                 listView.setAdapter(listAdapter);
                 setListViewHeightBasedOnChildren(listView);
-
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
             }
         });
-
-
         listAdapter = new MovesListAdapter(context, exercises);
-
         return listAdapter;
     }
 
+    /** The height of the list of completed exercises is set by how many items (children) it
+     * contains.
+     */
     @Override
     public void setListViewHeightBasedOnChildren (ListView listView) {
         ListAdapter listAdapter = listView.getAdapter();
         if (listAdapter == null) return;
-        int desiredWidth = View.MeasureSpec.makeMeasureSpec(listView.getWidth(), View.MeasureSpec.UNSPECIFIED);
+        int desiredWidth = View.MeasureSpec.makeMeasureSpec(listView.getWidth(),
+                View.MeasureSpec.UNSPECIFIED);
         int totalHeight = 0;
         View view = null;
         for (int i = 0; i < listAdapter.getCount(); i++) {
             view = listAdapter.getView(i, view, listView);
-            if (i == 0) view.setLayoutParams(new ViewGroup.LayoutParams(desiredWidth, ViewGroup.LayoutParams.WRAP_CONTENT));
+            if (i == 0) view.setLayoutParams(new ViewGroup.LayoutParams(desiredWidth,
+                    ViewGroup.LayoutParams.WRAP_CONTENT));
             view.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
             totalHeight += view.getMeasuredHeight();
         }
-
         ViewGroup.LayoutParams params = listView.getLayoutParams();
-
         params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
-
         listView.setLayoutParams(params);
         listView.requestLayout();
     }
-
-
 }

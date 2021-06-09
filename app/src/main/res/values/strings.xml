@@ -65,5 +65,9 @@
         This document will be binding from the date of agreement hereof.\n\n
         By selecting I agree, you also acknowledge that to the extent permitted by applicable law, we reserve the right to modify the contents of this agreement provided we have given you notice as permitted by law.
     </string>
+    <string name="add_routine_to_favorites">Add routine to favourites</string>
+    <string name="lets_go_home_and_find_a_new_one">Exit to Main Menu</string>
+    <string name="accept_terms_and_conditions">Accept Terms and Conditions</string>
+    <string name="rate_the_routine">Rate the Routine:</string>
 
 </resources>

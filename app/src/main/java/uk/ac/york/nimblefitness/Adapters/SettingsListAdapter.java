@@ -10,11 +10,14 @@ import android.widget.TextView;
 
 import uk.ac.york.nimblefitness.R;
 
+/*
+Adpater to allow the settings fragment to displays icons alongside the text for each item
+*/
 public class SettingsListAdapter extends BaseAdapter {
 
     Context context;
-    String[] settingsTitles;
-    int[] settingsIcons;
+    String[] settingsTitles; //the text for each item
+    int[] settingsIcons; //the icons for each item
 
     public SettingsListAdapter(String[] settingsTitles, int[] settingsIcons, Context context) {
         this.context = context;
@@ -43,21 +46,19 @@ public class SettingsListAdapter extends BaseAdapter {
 
         if (convertView == null) {
             viewHolder = new SettingsListAdapter.ViewHolder();
-
+            //gets the current screen
             LayoutInflater inflater = LayoutInflater.from(context);
+            //adapts it to include the icons and text for each item
             convertView = inflater.inflate(R.layout.settings_list_layout, parent, false);
-
             viewHolder.settingsName = convertView.findViewById(R.id.settings_list_text_view);
             viewHolder.settingsIcon = convertView.findViewById(R.id.settings_list_image_view);
-
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (SettingsListAdapter.ViewHolder) convertView.getTag();
         }
-
+        //sets the icons and text/title for each item
         viewHolder.settingsName.setText(settingsTitles[position]);
         viewHolder.settingsIcon.setImageResource(settingsIcons[position]);
-
         return convertView;
     }
 

@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Filter;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -21,25 +20,28 @@ import uk.ac.york.nimblefitness.Screens.Routines.RoutineData;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
-
+/*
+Fragment for displaying the available exercises and allowing the user to search for them.
+The ExerciseListAdapter is used to allow the exercises to be selected and loaded onto the screen.
+SearchView allows the exercises to be searched for by the user.
+*/
 public class ExerciseFragment extends Fragment {
 
-    ListView list;
-    SearchView exercisesSearch;
-    TextView nothingFound;
-
+    ListView list; //list displays the exercises that can be searched for
+    SearchView exercisesSearch; //exercisesSearch establishes the SearchView
+    TextView nothingFound; //nothingFound displays a message if not items are found from a search
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
+    public void onCreate(Bundle savedInstanceState) {super.onCreate(savedInstanceState);}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        //sets the title of the screen
         requireActivity().setTitle("Search for exercise");
 
+        //loads the correct xml file for the layout
         View view = inflater.inflate(R.layout.fragment_exercises, container, false);
         list = view.findViewById(R.id.list);
         exercisesSearch = view.findViewById(R.id.search);
@@ -48,13 +50,14 @@ public class ExerciseFragment extends Fragment {
         exercisesSearch.onActionViewExpanded();
         exercisesSearch.setIconified(false);
 
-        RoutineData routineData = new RoutineData(getContext(), R.raw.exercise); // Object of routine data, that holds all the data from the routines.xml
+        // Object of routine data, that holds all the data from the routines.xml
+        RoutineData routineData = new RoutineData(getContext(), R.raw.exercise);
         ArrayList<Exercise> exercises = (ArrayList<Exercise>) routineData.getRoutine().get(0).getExerciseArrayList().clone();
 
         ExerciseListAdapter arrayAdapter = new ExerciseListAdapter(getContext(),exercises);
         list.setAdapter(arrayAdapter);
 
-
+        //the method for the searching functionality
         exercisesSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -76,16 +79,6 @@ public class ExerciseFragment extends Fragment {
                 return false;
             }
         });
-        /*list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String clickedItem = (String) list.getItemAtPosition(position).;
-                //Toast.makeText(getContext(), clickedItem, Toast.LENGTH_LONG).show();
-            }
-        });*/
         return view;
-
-
     }
-
 }

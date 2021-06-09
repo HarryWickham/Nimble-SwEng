@@ -1,6 +1,7 @@
 package uk.ac.york.nimblefitness.Screens;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.Handler;
@@ -27,11 +28,12 @@ public class MainActivity extends AppCompatActivity {
     private ExerciseFragment exerciseFragment;
     private SettingsFragment settingsFragment;
 
+    AlertDialog internetChecker;
     Handler handler = new Handler();
     Runnable runnable;
     int delay = 10000;
 
-    @Override
+    /*@Override
     protected void onResume() {
         handler.postDelayed(runnable = new Runnable() {
             public void run() {
@@ -40,12 +42,13 @@ public class MainActivity extends AppCompatActivity {
             }
         }, delay);
         super.onResume();
-    }
+    }*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        internetChecker = new AlertDialog.Builder(MainActivity.this).create();
         profileTabsFragment = new ProfileTabsFragment();
         routinesFragment = new RoutinesFragment();
         exerciseFragment = new ExerciseFragment();
@@ -110,20 +113,21 @@ public class MainActivity extends AppCompatActivity {
 
     private void connectedToTheInternet(){
         if(!isNetworkConnected() | !internetIsConnected()){
-            handler.removeCallbacks(runnable);
-            AlertDialog.Builder exitApp = new AlertDialog.Builder(this);
-            exitApp.setTitle("An error has occurred");
-            exitApp.setMessage("Please ensure you are connected to the internet");
+            internetChecker.setTitle("An error has occurred");
+            internetChecker.setMessage("Please ensure you are connected to the internet");
             Log.i("TAG", "onBackPressed: ");
-            exitApp.setCancelable(false)
-                    .setPositiveButton("Retry", (dialog, id) -> {
+            internetChecker.setCancelable(false);
+            internetChecker.setButton(DialogInterface.BUTTON_NEGATIVE,"Retry", (dialog, id) -> {
                         if(!isNetworkConnected() | !internetIsConnected()) {
                             connectedToTheInternet();
+                            internetChecker.cancel();
                         }
                     });
 
-            // create alert dialog
-            exitApp.create().show();
+            if(!internetChecker.isShowing()) {
+                // create alert dialog
+                internetChecker.show();
+            }
         }
     }
 

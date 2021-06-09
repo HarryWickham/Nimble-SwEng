@@ -30,9 +30,15 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Pattern;
 
+import uk.ac.york.nimblefitness.HelperClasses.Slide;
+import uk.ac.york.nimblefitness.MediaHandlers.AbstractLayout;
 import uk.ac.york.nimblefitness.MediaHandlers.Audio.AudioType;
+import uk.ac.york.nimblefitness.MediaHandlers.Graphics.ShapeLayout;
 import uk.ac.york.nimblefitness.MediaHandlers.Graphics.ShapeType;
 import uk.ac.york.nimblefitness.MediaHandlers.Graphics.ShapeView;
 import uk.ac.york.nimblefitness.MediaHandlers.Images.ImageLayout;
@@ -45,13 +51,19 @@ import uk.ac.york.nimblefitness.MediaHandlers.Video.VideoType;
 import uk.ac.york.nimblefitness.R;
 
 public class LoadNewPresentationActivity extends AppCompatActivity {
+    private static final int STORAGE_PERMISSION_CODE = 101;
     ShapeView shapeView;
     Button openFileBrowser, downloadXMLFile;
     FrameLayout frameLayout;
-
-    private static final int STORAGE_PERMISSION_CODE = 101;
-
-
+    Map<String, Slide> slides = new HashMap<>();
+    String defaultBackgroundColour;
+    TextModule.fontFamily font;
+    String fontColour;
+    String lineColour;
+    String fillColour;
+    String slideID;
+    int slideDuration;
+    int fontSize;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,6 +116,8 @@ public class LoadNewPresentationActivity extends AppCompatActivity {
         VideoType videoType = null;
         AudioType audioType = null;
         ImageType imageType = null;
+        Slide slide = null;
+        ArrayList<AbstractLayout> abstractLayouts = new ArrayList<>();
 
         while (eventType != XmlPullParser.END_DOCUMENT) {
             String name;
@@ -113,8 +127,20 @@ public class LoadNewPresentationActivity extends AppCompatActivity {
                 case XmlPullParser.START_TAG:
                     name = parser.getName();
                     switch (name) {
+                        case "slideshow":
+                            break;
+                        case "defaults":
+                            defaultBackgroundColour = parser.getAttributeValue(null, "backgroundcolour");
+                            font = TextModule.fontFamily.valueOf(parser.getAttributeValue(null, "font"));
+                            fontColour = parser.getAttributeValue(null, "fontcolour");
+                            lineColour = parser.getAttributeValue(null, "linecolour");
+                            fillColour = parser.getAttributeValue(null, "fillcolour");
+                            fontSize = Integer.parseInt(parser.getAttributeValue(null, "fontsize"));
+                            break;
                         case "slide":
-                            Log.i("slide: ", "STARTING DOCUMENT");
+                            slide = new Slide();
+                            slideID = parser.getAttributeValue(null, "id");
+                            slide.setDuration(Integer.parseInt(parser.getAttributeValue(null, "duration")));
                             break;
                         case "shape":
                             shapeType = new ShapeType();
@@ -123,14 +149,14 @@ public class LoadNewPresentationActivity extends AppCompatActivity {
                             shapeType.setyStart(Integer.parseInt(parser.getAttributeValue(null, "ystart")));
                             shapeType.setWidth(Integer.parseInt(parser.getAttributeValue(null, "width")));
                             shapeType.setHeight(Integer.parseInt(parser.getAttributeValue(null, "height")));
-                            if(parser.getAttributeValue(null, "fillcolour") != null){
+                            if (parser.getAttributeValue(null, "fillcolour") != null) {
                                 shapeType.setColour(Color.parseColor(parser.getAttributeValue(null, "fillcolour")));
-                            }else{
+                            } else {
                                 shapeType.setColour(Color.parseColor("#000000"));
                             }
-                            if(parser.getAttributeValue(null, "duration") != null){
+                            if (parser.getAttributeValue(null, "duration") != null) {
                                 shapeType.setDuration(Integer.parseInt(parser.getAttributeValue(null, "duration")));
-                            }else{
+                            } else {
                                 shapeType.setDuration(0);
                             }
                             break;
@@ -146,35 +172,35 @@ public class LoadNewPresentationActivity extends AppCompatActivity {
                             shapeType.setyStart(Integer.parseInt(parser.getAttributeValue(null, "ystart")));
                             shapeType.setxEnd(Integer.parseInt(parser.getAttributeValue(null, "xend")));
                             shapeType.setyEnd(Integer.parseInt(parser.getAttributeValue(null, "yend")));
-                            if(parser.getAttributeValue(null, "linecolour") != null){
+                            if (parser.getAttributeValue(null, "linecolour") != null) {
                                 shapeType.setColour(Color.parseColor(parser.getAttributeValue(null, "linecolour")));
-                            }else{
+                            } else {
                                 shapeType.setColour(Color.parseColor("#000000"));
                             }
-                            if(parser.getAttributeValue(null, "duration") != null){
+                            if (parser.getAttributeValue(null, "duration") != null) {
                                 shapeType.setDuration(Integer.parseInt(parser.getAttributeValue(null, "duration")));
-                            }else{
+                            } else {
                                 shapeType.setDuration(0);
                             }
                             break;
                         case "text":
                             textType = new TextType();
                             textType.setStyle(TextModule.styleFamily.normal);
-                            textType.setXstart(Integer.parseInt(parser.getAttributeValue(null,"xstart")));
-                            textType.setYstart(Integer.parseInt(parser.getAttributeValue(null,"ystart")));
-                            if(parser.getAttributeValue(null, "font") != null){
+                            textType.setXstart(Integer.parseInt(parser.getAttributeValue(null, "xstart")));
+                            textType.setYstart(Integer.parseInt(parser.getAttributeValue(null, "ystart")));
+                            if (parser.getAttributeValue(null, "font") != null) {
                                 textType.setFont(TextModule.fontFamily.valueOf(parser.getAttributeValue(null, "font")));
-                            }else{
+                            } else {
                                 textType.setFont(TextModule.fontFamily.monospace);
                             }
-                            if(parser.getAttributeValue(null, "fontcolour") != null){
+                            if (parser.getAttributeValue(null, "fontcolour") != null) {
                                 textType.setFontcolour(parser.getAttributeValue(null, "fontcolour"));
-                            }else{
+                            } else {
                                 textType.setFontcolour("#000000");
                             }
-                            if(parser.getAttributeValue(null, "fontsize") != null){
+                            if (parser.getAttributeValue(null, "fontsize") != null) {
                                 textType.setFontsize(parser.getAttributeValue(null, "fontsize"));
-                            }else{
+                            } else {
                                 textType.setFontsize("20");
                             }
                             break;
@@ -182,7 +208,7 @@ public class LoadNewPresentationActivity extends AppCompatActivity {
                             assert textType != null;
                             if (textType.getStyle() == TextModule.styleFamily.italic || textType.getStyle() == TextModule.styleFamily.bold_italic) {
                                 textType.setStyle(TextModule.styleFamily.bold_italic);
-                            } else{
+                            } else {
                                 textType.setStyle(TextModule.styleFamily.bold);
                             }
                             break;
@@ -190,7 +216,7 @@ public class LoadNewPresentationActivity extends AppCompatActivity {
                             assert textType != null;
                             if (textType.getStyle() == TextModule.styleFamily.bold || textType.getStyle() == TextModule.styleFamily.bold_italic) {
                                 textType.setStyle(TextModule.styleFamily.bold_italic);
-                            } else{
+                            } else {
                                 textType.setStyle(TextModule.styleFamily.italic);
                             }
                             //Not sure how to implement both italics and bold or some not bold/italic some bold/italic @todo
@@ -202,14 +228,14 @@ public class LoadNewPresentationActivity extends AppCompatActivity {
                             videoType.setLoop(Boolean.parseBoolean(parser.getAttributeValue(null, "loop")));
                             videoType.setXstart(Integer.parseInt(parser.getAttributeValue(null, "xstart")));
                             videoType.setYstart(Integer.parseInt(parser.getAttributeValue(null, "ystart")));
-                            if(parser.getAttributeValue(null, "width") != null) {
+                            if (parser.getAttributeValue(null, "width") != null) {
                                 videoType.setWidth(Integer.parseInt(parser.getAttributeValue(null, "width")));
-                            }else{
+                            } else {
                                 videoType.setWidth(0);
                             }
-                            if(parser.getAttributeValue(null, "height") != null) {
+                            if (parser.getAttributeValue(null, "height") != null) {
                                 videoType.setHeight(Integer.parseInt(parser.getAttributeValue(null, "height")));
-                            }else{
+                            } else {
                                 videoType.setHeight(0);
                             }
                             Log.i("videoTypes :", String.valueOf(videoType.getUriPath()));
@@ -218,14 +244,14 @@ public class LoadNewPresentationActivity extends AppCompatActivity {
                             audioType = new AudioType();
                             audioType.setUrl(String.valueOf(parser.getAttributeValue(null, "urlname")));
                             audioType.setLoop(Boolean.parseBoolean(parser.getAttributeValue(null, "loop")));
-                            if(parser.getAttributeValue(null, "starttime") != null) {
+                            if (parser.getAttributeValue(null, "starttime") != null) {
                                 audioType.setStarttime(Integer.parseInt(parser.getAttributeValue(null, "starttime")));
-                            }else{
+                            } else {
                                 audioType.setStarttime(0);
                             }
-                            if(parser.getAttributeValue(null, "id") != null) {
+                            if (parser.getAttributeValue(null, "id") != null) {
                                 audioType.setId(String.valueOf(parser.getAttributeValue(null, "id")));
-                            }else{
+                            } else {
                                 audioType.setId("");
                             }
                             break;
@@ -236,9 +262,9 @@ public class LoadNewPresentationActivity extends AppCompatActivity {
                             imageType.setYCoordinate(Integer.parseInt(parser.getAttributeValue(null, "ystart")));
                             imageType.setImageHeight(Integer.parseInt(parser.getAttributeValue(null, "height")));
                             imageType.setImageWidth(Integer.parseInt(parser.getAttributeValue(null, "width")));
-                            if(parser.getAttributeValue(null, "duration") != null) {
+                            if (parser.getAttributeValue(null, "duration") != null) {
                                 imageType.setImageDuration(Integer.parseInt(parser.getAttributeValue(null, "duration")));
-                            }else{
+                            } else {
                                 imageType.setImageDuration(0);
                             }
                             break;
@@ -251,7 +277,7 @@ public class LoadNewPresentationActivity extends AppCompatActivity {
 
                         //textType.addText(parser.getText());
 
-                        switch(textType.getStyle()) {
+                        switch (textType.getStyle()) {
                             case normal:
                                 textType.addText(parser.getText());
                                 break;
@@ -270,42 +296,34 @@ public class LoadNewPresentationActivity extends AppCompatActivity {
                 case XmlPullParser.END_TAG:
                     name = parser.getName();
                     if ((name.equalsIgnoreCase("shape") || name.equalsIgnoreCase("line")) && shapeType != null) {
-                        if (shapeType.getShape_type().equals("RECTANGLE") | shapeType.getShape_type().equals("OVAL")) {
-                            if (shapeType.getColour() == 0) {
-                                shapeView.addShape(shapeType.getxStart(), shapeType.getyStart(), shapeType.getHeight(), shapeType.getWidth(), shapeType.getShading(), shapeType.getShape_type(), shapeType.getDuration());
-                            } else {
-                                shapeView.addShape(shapeType.getxStart(), shapeType.getyStart(), shapeType.getHeight(), shapeType.getWidth(), shapeType.getColour(), shapeType.getShape_type(), shapeType.getDuration());
-
-                            }
-                        } else if (shapeType.getShape_type().equals("LINE")) {
-                            shapeView.addLine(shapeType.getxStart(), shapeType.getyStart(), shapeType.getxEnd(), shapeType.getyEnd(), shapeType.getColour(), shapeType.getDuration());
-                        }
+                        ShapeLayout shapeLayout = new ShapeLayout(shapeType.getyStart(),shapeType.getxStart(),shapeType.getWidth(),shapeType.getHeight(),shapeType.getColour(),shapeType.getxEnd(),shapeType.getyEnd(),shapeType.getShape_type(),shapeType.getShading(),shapeType.getDuration(), this,frameLayout);
+                        abstractLayouts.add(shapeLayout);
                         shapeType = null;
-                    }
-                    else if (name.equalsIgnoreCase("video") && videoType != null) {
-                        VideoLayout videoLayout = new VideoLayout(videoType.getUriPath(),videoType.getWidth(),videoType.getHeight(),videoType.getXstart(),videoType.getYstart(),videoType.getId(),videoType.getStarttime(),videoType.isLoop(), frameLayout, this);
-                        videoLayout.PlayVideo();
+                    } else if (name.equalsIgnoreCase("video") && videoType != null) {
+                        VideoLayout videoLayout = new VideoLayout(videoType.getUriPath(), videoType.getWidth(), videoType.getHeight(), videoType.getXstart(), videoType.getYstart(), videoType.getId(), videoType.getStarttime(), videoType.isLoop(), frameLayout, this);
+                        abstractLayouts.add(videoLayout);
                         videoType = null;
-                    }
-                    else if (name.equalsIgnoreCase("text") && textType != null) {
-                        TextLayout textLayout = new TextLayout(textType.getText(),textType.getFont(),textType.getFontsize(),textType.getFontcolour(),textType.getXstart(),textType.getYstart(), frameLayout, this);
-                        textLayout.writeText();
+                    } else if (name.equalsIgnoreCase("text") && textType != null) {
+                        TextLayout textLayout = new TextLayout(textType.getText(), textType.getFont(), textType.getFontsize(), textType.getFontcolour(), textType.getXstart(), textType.getYstart(), frameLayout, this);
+                        abstractLayouts.add(textLayout);
                         textType = null;
-                    }
-                    else if (name.equalsIgnoreCase("audio") && audioType != null){
-                        AudioType audioType1 = new AudioType(audioType.getUrl(),audioType.getStarttime(),audioType.isLoop(),audioType.getId(), this);
-                        audioType1.play();
+                    } else if (name.equalsIgnoreCase("audio") && audioType != null) {
+                        AudioType audioType1 = new AudioType(audioType.getUrl(), audioType.getStarttime(), audioType.isLoop(), audioType.getId(), this);
+                        abstractLayouts.add(audioType1);
                         audioType = null;
-                    }
-                    else if (name.equalsIgnoreCase("image") && imageType != null){
-                        ImageLayout imageLayout = new ImageLayout(imageType.getXCoordinate(),imageType.getYCoordinate(), imageType.getImageWidth(), imageType.getImageHeight(), imageType.getImageDuration(), imageType.getImageSource(),frameLayout, this);
+                    } else if (name.equalsIgnoreCase("image") && imageType != null) {
+                        ImageLayout imageLayout = new ImageLayout(imageType.getXCoordinate(), imageType.getYCoordinate(), imageType.getImageWidth(), imageType.getImageHeight(), imageType.getImageDuration(), imageType.getImageSource(), frameLayout, this);
+                        abstractLayouts.add(imageLayout);
                         imageType = null;
-                    }
-                    else if (name.equalsIgnoreCase("b") && textType != null){
+                    } else if (name.equalsIgnoreCase("b") && textType != null) {
                         textType.setStyle(TextModule.styleFamily.normal);
-                    }
-                    else if (name.equalsIgnoreCase("i") && textType != null){
+                    } else if (name.equalsIgnoreCase("i") && textType != null) {
                         textType.setStyle(TextModule.styleFamily.normal);
+                    } else if (name.equalsIgnoreCase("slide") && abstractLayouts != null) {
+                        slide.setAbstractLayouts(abstractLayouts);
+                        slides.put(slideID, slide);
+                        slide = null;
+                        abstractLayouts = null;
                     }
 
             }
@@ -370,6 +388,10 @@ public class LoadNewPresentationActivity extends AppCompatActivity {
             parser.setInput(inputStream, null);
 
             parseXML(parser);
+
+            for (AbstractLayout abstractLayout : slides.get("Slide1").getAbstractLayouts()){
+                abstractLayout.draw();
+            }
 
         } catch (XmlPullParserException | IOException e) {
             e.printStackTrace();

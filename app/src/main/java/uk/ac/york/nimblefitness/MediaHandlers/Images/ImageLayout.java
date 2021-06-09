@@ -7,7 +7,9 @@ import android.widget.FrameLayout;
 
 import java.io.Serializable;
 
-public class ImageLayout implements Serializable {
+import uk.ac.york.nimblefitness.MediaHandlers.AbstractLayout;
+
+public class ImageLayout implements Serializable, AbstractLayout {
 
     //Declaring the variables for the image
     private int xCoordinate;
@@ -31,22 +33,6 @@ public class ImageLayout implements Serializable {
         this.imageSource = imageSource;
         this.parentLayout = parentLayout;
         this.context = context;
-    }
-
-    public void setImage(){
-        imageModule = new ImageModule(this.context);
-
-        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        params.leftMargin = this.xCoordinate;
-        params.topMargin = this.yCoordinate;
-        imageModule.setLayoutParams(params);
-
-        parentLayout.addView(imageModule);
-        imageModule.setAll(this.xCoordinate, this.yCoordinate, this.width, this.height, this.duration, this.imageSource);
-        imageModule.setImage();
-
-        Log.i("TAG", "setImage: ");
-
     }
 
     public void setParentLayout(FrameLayout parentLayout) {
@@ -91,5 +77,24 @@ public class ImageLayout implements Serializable {
 
     public String getImageSource() {
         return imageSource;
+    }
+
+    @Override
+    public void draw() {
+        imageModule = new ImageModule(this.context);
+
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        params.leftMargin = this.xCoordinate;
+        params.topMargin = this.yCoordinate;
+        imageModule.setLayoutParams(params);
+
+        parentLayout.addView(imageModule);
+        imageModule.setAll(this.xCoordinate, this.yCoordinate, this.width, this.height, this.duration, this.imageSource);
+        imageModule.setImage();
+    }
+
+    @Override
+    public String getMediaId() {
+        return null;
     }
 }
