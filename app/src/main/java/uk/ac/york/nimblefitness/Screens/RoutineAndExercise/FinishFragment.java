@@ -32,6 +32,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import uk.ac.york.nimblefitness.Adapters.MovesListAdapter;
+import uk.ac.york.nimblefitness.HelperClasses.CreateNotification;
 import uk.ac.york.nimblefitness.HelperClasses.Exercise;
 import uk.ac.york.nimblefitness.HelperClasses.LeaderBoardUserDetails;
 import uk.ac.york.nimblefitness.HelperClasses.Routine;
@@ -90,6 +91,11 @@ public class FinishFragment extends Fragment {
         SharedPreferences.Editor editor = prefs.edit();
         editor.putInt(currentFirebaseUser + "currentMoves", (int) (prefs.getInt(currentFirebaseUser+"currentMoves", 0)+(routine.getExerciseArrayList().get(routine.getCurrentExercise()).getReps()*routine.getExerciseArrayList().get(routine.getCurrentExercise()).getMovesPerRep())));
         editor.apply();
+
+        if(prefs.getInt(currentFirebaseUser+"currentMoves",0)>prefs.getInt(currentFirebaseUser+
+                "weeklyGoal",0)){
+            CreateNotification createNotification = new CreateNotification(R.drawable.ic_stat_name, "Congratulations!", String.format("You have reached your weekly goal. Your current moves are: %s", String.format("%d/%d", prefs.getInt(currentFirebaseUser + "currentMoves", 0), prefs.getInt(currentFirebaseUser + "weeklyGoal",0))), MainActivity.class, "goalReachedChannelID", 1, getApplicationContext());
+        }
 
         rootDatabase = FirebaseDatabase.getInstance();
         rootReferenceUser = rootDatabase.getReference("users").child(currentFirebaseUser.getUid());
