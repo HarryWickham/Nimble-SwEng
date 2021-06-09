@@ -35,11 +35,14 @@ public class ViewPagerAdapter extends RecyclerView.Adapter<ViewPagerAdapter.View
     private Context context;
 
 
+    //Array of background colours
+    private final int[] colorArray = new int[]{android.R.color.holo_blue_bright,
+            android.R.color.holo_red_light, android.R.color.holo_purple,
+            android.R.color.holo_orange_light};
 
-    private final int[] colorArray = new int[]{android.R.color.holo_blue_bright, android.R.color.holo_red_light, android.R.color.holo_purple, android.R.color.holo_orange_light};
 
-
-    public ViewPagerAdapter(Context context, List<String> data, ViewPager2 viewPager2, List<Integer> image, List<String> description) {
+    public ViewPagerAdapter(Context context, List<String> data, ViewPager2 viewPager2,
+                            List<Integer> image, List<String> description) {
         this.mInflater = LayoutInflater.from(context);
         this.myTitle = data;
         this.viewPager2 = viewPager2;
@@ -61,13 +64,18 @@ public class ViewPagerAdapter extends RecyclerView.Adapter<ViewPagerAdapter.View
     public void onBindViewHolder(ViewHolder holder, int position) {
         FirebaseDatabase rootDatabase = FirebaseDatabase.getInstance();
         FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        DatabaseReference rootReference = rootDatabase.getReference("users").child(currentFirebaseUser.getUid()).child("userDetails");
+        DatabaseReference rootReference = rootDatabase.getReference("users").
+                child(currentFirebaseUser.getUid()).child("userDetails");
+
+        //Adds all the elemets from the lists in onboarding screen class to each page
         String positionData = myTitle.get(position);
         holder.mytitleView.setText(positionData);
         holder.linearLayout.setBackgroundResource(colorArray[position]);
         holder.myimageview.setImageResource(myImage.get(position));
         holder.mydescriptionView.setText(myDescription.get(position));
+
         holder.skip.setOnClickListener(new View.OnClickListener() {
+            //makes sure that user only sees this screen the first time they log in
             @Override
             public void onClick(View v) {
                 Intent skipIntent = new Intent(context, MainActivity.class);
@@ -78,6 +86,7 @@ public class ViewPagerAdapter extends RecyclerView.Adapter<ViewPagerAdapter.View
 
         });
 
+        //This makes sure that the get started button is only displayed on the last page
         if(getItemCount()-1 == position){
             holder.getStarted.setVisibility(View.VISIBLE);
             holder.getStarted.setOnClickListener(new View.OnClickListener() {

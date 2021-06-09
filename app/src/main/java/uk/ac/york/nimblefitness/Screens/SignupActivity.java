@@ -91,19 +91,20 @@ public class SignupActivity extends AppCompatActivity {
         InitialiseGoogleLogin();
         InitialiseFacebook();
 
-        Objects.requireNonNull(userEmailLayout.getEditText()).setOnFocusChangeListener((view, b) -> {//validates the email text box when the user clicks away from them
+        //validates the email text box when the user clicks away from them
+        Objects.requireNonNull(userEmailLayout.getEditText()).setOnFocusChangeListener((view, b) -> {
             if(!b){
                 validateEmail(userDetails);
             }
         });
-
-        Objects.requireNonNull(userPasswordLayout.getEditText()).setOnFocusChangeListener((view, b) -> {//validates the password text box when the user clicks away from them
+        //validates the password text box when the user clicks away from them
+        Objects.requireNonNull(userPasswordLayout.getEditText()).setOnFocusChangeListener((view, b) -> {
             if(!b){
                 validatePassword(userDetails);
             }
         });
-
-        Objects.requireNonNull(userConfirmPasswordLayout.getEditText()).setOnFocusChangeListener((view, b) -> {//validates the confirm password text box when the user clicks away from them
+        //validates the confirm password text box when the user clicks away from them
+        Objects.requireNonNull(userConfirmPasswordLayout.getEditText()).setOnFocusChangeListener((view, b) -> {
             if(!b){
                 validateConfirmPassword(userDetails);
             }
@@ -112,7 +113,7 @@ public class SignupActivity extends AppCompatActivity {
         signUpButton.setOnClickListener(v -> {
             String email1 = userEmail.getText().toString().trim();
             String password1 = userPassword.getText().toString().trim();
-            //progressBar.setVisibility(View.VISIBLE);
+
             if(validateEmail(userDetails) & validatePassword(userDetails) & validateConfirmPassword(userDetails)) {
 
                 checkSignUpDetails(email1, password1);
@@ -241,15 +242,16 @@ public class SignupActivity extends AppCompatActivity {
         });
     }
 
-
-    public void onClickGoToLogin(View v) {//called from the TextView in with id/already_a_member called using (android:onClick="onClickGoToLogin")
-        Intent mIntent = new Intent(SignupActivity.this, SigninActivity.class);//changes current activity from signin to signup
+    //called from the TextView in with id/already_a_member called using (android:onClick="onClickGoToLogin")
+    public void onClickGoToLogin(View v) {
+        //changes current activity from signin to signup
+        Intent mIntent = new Intent(SignupActivity.this, SigninActivity.class);
         startActivity(mIntent);
         finish();
     }
 
-
-    private Boolean validateEmail(Verification userDetails) {// calls the validate email method in the verification class
+    // calls the validate email method in the verification class
+    private Boolean validateEmail(Verification userDetails) {
         userDetails.setEmail(userEmail.getText().toString().trim());
         String reply = userDetails.validateEmail();
         if(!reply.equals("Valid")){
@@ -263,8 +265,8 @@ public class SignupActivity extends AppCompatActivity {
             return true;
         }
     }
-
-    private Boolean validatePassword(Verification userDetails) {// calls the validate password method in the verification class
+    // calls the validate password method in the verification class
+    private Boolean validatePassword(Verification userDetails) {
         userDetails.setPassword(userPassword.getText().toString().trim());
         String reply = userDetails.validatePassword();
         if(!reply.equals("Valid")){
@@ -278,8 +280,8 @@ public class SignupActivity extends AppCompatActivity {
             return true;
         }
     }
-
-    private Boolean validateConfirmPassword(Verification userDetails){// calls the validate confirm password method in the verification class
+    // calls the validate confirm password method in the verification class
+    private Boolean validateConfirmPassword(Verification userDetails){
 
         userDetails.setConfirmPassword(userConfirmPassword.getText().toString().trim());
         String reply = userDetails.validateConfirmPassword();
