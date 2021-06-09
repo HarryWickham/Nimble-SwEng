@@ -131,36 +131,60 @@ public class EndSummaryFragment extends Fragment {
     private void favouriteRoutine(View view) {
         Button favouritesButton = view.findViewById(R.id.favourite_button);
 
+        currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();  // Getting
+        // the unique ID for the current user for their information
+        mDatabase =
+                FirebaseDatabase.getInstance().getReference("users")
+                        .child(currentFirebaseUser.getUid()).child("favorites");
+        ArrayList<String> favoriteRoutines = new ArrayList<>();
         favouritesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.i("onCheckedChanged", "onCheckedChanged: ");
-                currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();  // Getting
-                // the unique ID for the current user for their information
-                mDatabase =
-                        FirebaseDatabase.getInstance().getReference("users")
-                                .child(currentFirebaseUser.getUid()).child("favorites");
-                ArrayList<String> favoriteRoutines = new ArrayList<>();
-                mDatabase.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        Log.i("onDataChange", "onDataChange: ");
-                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                            if (dataSnapshot != null) {
-                                favoriteRoutines.add(dataSnapshot.getValue(String.class));
-                            }
+                Log.i("favouritesButton", (String) favouritesButton.getText());
+                if(favouritesButton.getText().equals("Add routine to favourites")) {
+                    addNewFavouriteRoutine(favoriteRoutines);
+                    favouritesButton.setText("Remove routine from favourites");
+                } else if(favouritesButton.getText().equals("Remove routine from favourites")){
+                    removeFavouriteRoutine(favoriteRoutines);
+                    favouritesButton.setText("Add routine to favourites");
+                }
+            }
+        });
+        mDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Log.i("onDataChange", "onDataChange: ");
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    if (dataSnapshot != null) {
+                        favoriteRoutines.add(dataSnapshot.getValue(String.class));
+                        if(dataSnapshot.getValue(String.class).equals(routine.getRoutineName())){
+                            favouritesButton.setText("Remove routine from favourites");
                         }
-                        addNewFavouriteRoutine(favoriteRoutines);
                     }
+                }
+            }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
-                    }
-                });
             }
         });
 
+    }
+
+    private void removeFavouriteRoutine(ArrayList<String> favoriteRoutines) {
+        Log.i("removeFavouriteRoutine", favoriteRoutines.get(0));
+        Log.i("size", String.valueOf(favoriteRoutines.size()));
+        for (int i = 0; i < favoriteRoutines.size(); i++) {
+            if (favoriteRoutines.get(i).equals(routine.getRoutineName())) {
+                Gson gson = new Gson();
+                Log.i("before remove Routine", gson.toJson(favoriteRoutines));
+                favoriteRoutines.remove(i);
+                Log.i("after", gson.toJson(favoriteRoutines));
+                mDatabase.setValue(favoriteRoutines);
+            }
+        }
     }
 
     private void addNewFavouriteRoutine(ArrayList<String> favoriteRoutines) {
@@ -171,9 +195,9 @@ public class EndSummaryFragment extends Fragment {
             }
         }
         if (!alreadyThere) {
-            Gson gson = new Gson();
+
             favoriteRoutines.add(routine.getRoutineName());
-            gson.toJson(favoriteRoutines);
+
             Log.i("addNewFavouriteRoutine", favoriteRoutines.get(favoriteRoutines.size() - 1));
             Log.i("size", String.valueOf(favoriteRoutines.size()));
             mDatabase.setValue(favoriteRoutines);
