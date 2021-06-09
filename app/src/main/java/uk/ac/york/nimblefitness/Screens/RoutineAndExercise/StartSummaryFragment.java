@@ -35,6 +35,9 @@ import uk.ac.york.nimblefitness.R;
 import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 import static com.facebook.FacebookSdk.getApplicationContext;
 
+/**This class gets routine data from firebase and displays it to the user, displaying data from the
+ * user's previous activity**/
+
 public class StartSummaryFragment extends Fragment {
 
     @Override
@@ -81,8 +84,6 @@ public class StartSummaryFragment extends Fragment {
 
         Button toInfoPage = view.findViewById(R.id.toInfoPage);
         InformationFragment informationFragment = new InformationFragment();
-        //Bundle bundle2 = new Bundle();
-        //bundle2.putSerializable("routine",routine);
         informationFragment.setArguments(bundle);
         toInfoPage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,6 +107,8 @@ public class StartSummaryFragment extends Fragment {
 
         return view;
     }
+
+    /**Ensures that the view height is sufficient based on the content of the page**/
 
     public void setListViewHeightBasedOnChildren (ListView listView) {
         ListAdapter listAdapter = listView.getAdapter();

@@ -20,14 +20,19 @@ import uk.ac.york.nimblefitness.R;
 import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 import static com.facebook.FacebookSdk.getApplicationContext;
 
-//Importing
+/**This class adds content to the arrays used in PaymentListAdapter in accordance to the
+ * different membership tiers, this class also contains the firebase integration for the membership
+ * system. The selected membership tier is saved to firebase, and is read from firebase to rename the
+ * corresponding buttons such as the checkout button. This works in conjunction with the other payment
+ * related classes and the payment and membership related xml files to produce a working membership
+ * selection system.**/
 
 public class PaymentActivity extends AppCompatActivity implements PaymentListAdapter.MyActionCallback {
 
     Button checkout;
     String checkoutTier;
 
-    //Runs when page is created (opened by user)
+    /**Runs when the page is opened by the user**/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -41,25 +46,18 @@ public class PaymentActivity extends AppCompatActivity implements PaymentListAda
         int[] planImage = {R.drawable.bronzerounded,
                 R.drawable.silverrounded,
                 R.drawable.goldrounded};
-    /*int[] detailsIcon = {R.drawable.ic_baseline_keyboard_arrow_down_24,
-            R.drawable.ic_baseline_keyboard_arrow_up_24,
-            R.drawable.ic_baseline_keyboard_arrow_down_24,
-            R.drawable.ic_baseline_keyboard_arrow_up_24,
-            R.drawable.ic_baseline_keyboard_arrow_down_24,
-            R.drawable.ic_baseline_keyboard_arrow_up_24};*/
         String[] moreDetailsButton = {"more details", "more details", "more details"};
         String[] selectionButton = {"select this plan (£1.99)", "select this plan (£3.99)", "select this plan (£5.99)"};
 
         checkout = findViewById(R.id.checkout_button);
 
         PaymentListAdapter listAdapter = new PaymentListAdapter(this, planSubtitle, planTier, planImage, membershipDetails, this, selectionButton);
-        /**Context context, String [] planSubtitle, String [] planTier, int [] planImage,
-         int [] moreDetailsButton, String[] membershipDetails,
-         int [] selectionButton**/
 
         ListView list = findViewById(R.id.expanding_item);
 
         list.setAdapter(listAdapter);//setListViewHeightBasedOnChildren(list);
+
+        /**Adds user's membershipPlan to firebase databse under UserDetails**/
 
         checkout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,6 +79,9 @@ public class PaymentActivity extends AppCompatActivity implements PaymentListAda
             }
         });
     }
+
+    /**Uses firebase integration to get currently selected membership plan and replace the checkout button
+     * text accordingly**/
 
     @Override
     public void onActionPerformed(String position) {

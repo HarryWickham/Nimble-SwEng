@@ -16,6 +16,11 @@ import androidx.annotation.Nullable;
 
 import uk.ac.york.nimblefitness.R;
 
+/**The PaymentListAdapter class fills the payment screen with text by only changing
+ * the text inside the different payment cards. This is done in conjunction with the
+ * payment related layout xml files and PaymentActivity. Arrays are defined and used
+ * to contain all possible text and image variations of the different membership tiers**/
+
 public class PaymentListAdapter extends BaseAdapter {
     
     Context context;
@@ -26,19 +31,14 @@ public class PaymentListAdapter extends BaseAdapter {
     private MyActionCallback mActionCallback;
     private String[] selectionButton;
 
-    
-
     public PaymentListAdapter(Context context, String[] planSubtitle, String[] planTier, int[] planImage, String[] membershipDetailsText, MyActionCallback actionCallback, String[] selectionButton) {
         this.context = context;
         this.planSubtitle = planSubtitle;
         this.planTier = planTier;
         this.planImage = planImage;
-        //this.moreDetailsButton = moreDetailsButton;
         this.membershipDetailsText = membershipDetailsText;
         mActionCallback = actionCallback;
         this.selectionButton = selectionButton;
-
-        //this.selectionButton = selectionButton;
     }
 
     @Override
@@ -67,6 +67,9 @@ public class PaymentListAdapter extends BaseAdapter {
             LayoutInflater inflater = LayoutInflater.from(context);
             convertView = inflater.inflate(R.layout.payment_list_layout, parent, false);
 
+            /**ids from the xml files are associated with the corresponding arrays to link the xml
+             * files to this class**/
+
             viewHolder.planSubtitle = convertView.findViewById(R.id.plan_subtitle);
             viewHolder.planTier = convertView.findViewById(R.id.plan_tier);
             viewHolder.planImage = convertView.findViewById(R.id.plan_image);
@@ -74,9 +77,6 @@ public class PaymentListAdapter extends BaseAdapter {
             viewHolder.membershipDetailsTextView = convertView.findViewById(R.id.membership_details_text);
             viewHolder.membershipDetailsLayout = convertView.findViewById(R.id.membership_details);
             viewHolder.selectedPlan = convertView.findViewById(R.id.selection_button);
-
-                    //viewHolder.moreDetailsButton = convertView.findViewById(R.id.more_details_button);
-            //viewHolder.selectionButton = convertView.findViewById(R.id.selection_button);
 
             convertView.setTag(viewHolder);
         } else {
@@ -93,19 +93,14 @@ public class PaymentListAdapter extends BaseAdapter {
 
     viewHolder.selectedPlan.setText(selectionButton[position]);
 
-
-
-        //viewHolder.selectionButton.setButton(selectionButton[position]);
-        //viewHolder.buttonIcon.setImageResource(buttonIcon[position]);
-
-        //View finalConvertView = convertView;
-
         viewHolder.moreLessButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 moreLessSelector(viewHolder);
             }
         });
+
+        /**Sends back the text of the purchase button that was last clicked by the user**/
 
         viewHolder.selectedPlan.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -133,21 +128,20 @@ public class PaymentListAdapter extends BaseAdapter {
         TextView membershipDetailsTextView;
         LinearLayout membershipDetailsLayout;
         Button selectedPlan;
-        //ImageView buttonIcon;
     }
 
     private void moreLessSelector(ViewHolder viewHolder){
         if(viewHolder.moreLessButton.getText().equals("Less Details")){
             viewHolder.membershipDetailsLayout.setVisibility(View.GONE);
             viewHolder.moreLessButton.setText("More Details");
-            //viewHolder.txtMoves.setCompoundDrawables(null,null, get , null);
 
         }else if(viewHolder.moreLessButton.getText().equals("More Details")){
             viewHolder.membershipDetailsLayout.setVisibility(View.VISIBLE);
             viewHolder.moreLessButton.setText("Less Details");
-            //viewHolder.txtMoves.setCompoundDrawables(null,null, convertView.getResources().getDrawable(R.drawable.ic_baseline_keyboard_arrow_down_24) , null);
         }
     }
+
+    /**Changes name of selected plan, based on content of the button currently pressed**/
 
     private String selectedPlan(ViewHolder viewHolder){
         switch (viewHolder.selectedPlan.getText().toString()) {
