@@ -74,7 +74,8 @@ public class CalendarFragment extends Fragment implements CalendarContract.Calen
             @Override
             public void onClick(View v) {
                 startActivity(new ShareService("Look at my workout",
-                        "I have just completed all of this exercise",
+                        "I have just completed a workout on the Nimble Fitness Companion, " +
+                                "sign up today to view my score!",
                         "Share your workout - "+ dayNumber.getText()).ShareContent());
             }
         });
