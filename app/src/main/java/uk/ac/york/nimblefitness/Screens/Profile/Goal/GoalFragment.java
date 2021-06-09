@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -62,7 +63,7 @@ public class GoalFragment extends Fragment implements GoalContract.GoalView {
         /* The user has the ability to share their completed exercises to any social media
            platform.
          */
-        ImageButton shareButton = view.findViewById(R.id.share_icon);
+        ImageButton shareButton = view.findViewById(R.id.share_button);
         shareButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
