@@ -43,7 +43,6 @@
                     android:id="@+id/exercise_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Lorem Ipsum"
                     android:textSize="16sp" />
 
             </LinearLayout>

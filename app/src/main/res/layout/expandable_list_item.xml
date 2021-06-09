@@ -43,7 +43,7 @@
             android:id="@+id/number_of_moves"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Moves: "
+            android:text="@string/moves"
             android:textSize="16sp"
             android:textAlignment="textEnd" />
     </LinearLayout>

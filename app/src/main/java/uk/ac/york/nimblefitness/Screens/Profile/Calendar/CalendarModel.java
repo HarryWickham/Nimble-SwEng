@@ -90,7 +90,7 @@ public class CalendarModel implements CalendarContract.Model {
         Date currentTime = Calendar.getInstance().getTime();
         String monthString = month.format(currentTime);
         String dayString = day.format(currentTime);
-        /* Outputs month name followed by date and the number's corresponding prefix. */
+        // Outputs month name followed by date and the number's corresponding prefix. //
         return String.format("%s %s%s", monthText(Integer.parseInt(monthString)),
                 dayString, datePrefix(Integer.parseInt(dayString)));
     }
@@ -109,7 +109,7 @@ public class CalendarModel implements CalendarContract.Model {
      */
     @Override
     public String selectedDay(int month, int dayOfMonth) {
-        /* Outputs month name followed by date and the number's corresponding prefix. */
+        // Outputs month name followed by date and the number's corresponding prefix. //
         return String.format(Locale.UK, "%s %d%s",
                 monthText(month + 1), dayOfMonth, datePrefix(dayOfMonth));
     }
@@ -132,7 +132,7 @@ public class CalendarModel implements CalendarContract.Model {
     @Override
     public MovesListAdapter completedMoves(Context context, String dayNumber, ListView listView) {
         ArrayList<Exercise> exercises = new ArrayList<>();
-        /* The relevant user's completed exercises is retrieved from the database. */
+        // The relevant user's completed exercises is retrieved from the database. //
         FirebaseDatabase rootDatabase = FirebaseDatabase.getInstance();
         DatabaseReference completedExercisesRootReference = rootDatabase.
                 getReference("users").child(currentFirebaseUser.getUid()).child("exercises");

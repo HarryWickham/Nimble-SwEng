@@ -18,7 +18,7 @@
         android:id="@+id/nothing_found_routines"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="There are no routines in your favourites"
+        android:text="@string/no_favourites"
         android:visibility="gone"/>
 
 

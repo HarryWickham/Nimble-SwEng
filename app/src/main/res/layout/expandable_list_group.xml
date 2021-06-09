@@ -28,7 +28,7 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    android:contentDescription="Image showing each exercise within this routine">
+                    android:contentDescription="@string/routine_content_description">
 
                 </ImageView>
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -50,8 +50,7 @@
                         android:id="@+id/routines_activity_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Activity name"
-                        android:textSize="20dp"
+                        android:textSize="20sp"
                         android:textStyle="bold"
                         android:padding="8dp"/>
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -91,7 +90,7 @@
                         android:id="@+id/expand_routines_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Start Routine"
+                        android:text="@string/start_routine_button"
                         android:layout_margin="8dp"
                         />
                 </LinearLayout>

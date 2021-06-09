@@ -52,7 +52,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:src="@drawable/ic_baseline_share_24"
-                    android:contentDescription="Share your high score"
+                    android:contentDescription="@string/share_your_high_score"
                     android:visibility="invisible"/>
             </LinearLayout>
 

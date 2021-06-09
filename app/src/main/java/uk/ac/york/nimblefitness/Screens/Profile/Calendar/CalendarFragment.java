@@ -23,7 +23,7 @@ import uk.ac.york.nimblefitness.R;
 public class CalendarFragment extends Fragment implements CalendarContract.CalendarView{
 
     CalendarPresenter calendarPresenter;
-    /** This method initialises the fragment. */
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,7 +33,7 @@ public class CalendarFragment extends Fragment implements CalendarContract.Calen
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        requireActivity().setTitle("Profile"); /* The title that appears at the top of the page. */
+        requireActivity().setTitle("Profile"); // The title that appears at the top of the page. //
         View view = inflater.inflate(R.layout.fragment_calendar, container, false);
         /* The calendar has its minimum and maximum selectable date set and the default selected
            date set which is displayed as text.
@@ -60,10 +60,10 @@ public class CalendarFragment extends Fragment implements CalendarContract.Calen
             }
         });
 
-        /* The user's name is displayed above the list of completed moves. */
+        // The user's name is displayed above the list of completed moves. //
         TextView userName = view.findViewById(R.id.user_name);
         userName.setText(calendarPresenter.displayUserName());
-        /* The list height is set depending on the number of completed exercises children. */
+        // The list height is set depending on the number of completed exercises children. //
         listView.setAdapter(calendarPresenter.
                 setCompletedMovesList(String.valueOf(dayNumber.getText()),listView));
         /* The user has the ability to share their completed exercises to any social media
