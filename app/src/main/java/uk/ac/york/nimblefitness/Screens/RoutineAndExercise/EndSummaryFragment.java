@@ -163,15 +163,19 @@ public class EndSummaryFragment extends Fragment {
         //mDatabase.setValue(favoriteRoutines);
     }
 
+    /** This method instantiates the GIF on this fragment view, using the image media handler. */
     private void birdAnimation(View view) {
-        ImageLayout birdGIF;
-
-        String imageSource = Integer.toString(R.drawable.bird_animation2);
+        String imageSource ="https://www-users.york.ac.uk/~hew550/NimbleAssets/bird_animation2.gif";
         Context context = this.getActivity();
         FrameLayout parentLayout = view.findViewById(R.id.bird_animation_frame);
+        /* The width of the GIF is as wide as the device's screen and the height is calculated from
+           that, retaining the original aspect ratio of 3:2.
+         */
         int screenWidth = Resources.getSystem().getDisplayMetrics().widthPixels;
+        int height = (int) Math.round(screenWidth*0.6667);
 
-        birdGIF = new ImageLayout(0, 1000, screenWidth, 390, 0, imageSource, parentLayout, context);
+        ImageLayout birdGIF = new ImageLayout(0, 0,
+                screenWidth, height, 0, imageSource, parentLayout, context);
         birdGIF.draw();
     }
 

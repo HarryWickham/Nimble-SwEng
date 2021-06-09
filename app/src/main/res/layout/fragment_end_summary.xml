@@ -55,11 +55,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/bird_animation_frame">
-
-        <!--    <pl.droidsonroids.gif.GifImageView
-            android:layout_width="match_parent"
-            android:layout_height="390dp"
-            android:src="@drawable/bird_animation2"/> -->
     </FrameLayout>
 
     <Button
