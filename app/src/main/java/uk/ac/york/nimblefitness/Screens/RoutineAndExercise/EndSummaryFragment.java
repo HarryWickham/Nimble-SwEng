@@ -1,8 +1,10 @@
 package uk.ac.york.nimblefitness.Screens.RoutineAndExercise;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -11,12 +13,15 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -37,6 +42,7 @@ import java.util.ArrayList;
 
 import uk.ac.york.nimblefitness.HelperClasses.CreateNotification;
 import uk.ac.york.nimblefitness.HelperClasses.Routine;
+import uk.ac.york.nimblefitness.MediaHandlers.Images.ImageLayout;
 import uk.ac.york.nimblefitness.R;
 import uk.ac.york.nimblefitness.Screens.MainActivity;
 
@@ -62,7 +68,7 @@ public class EndSummaryFragment extends Fragment {
         routine = (Routine) getArguments().getSerializable("routine");
 
         getActivity().setTitle(routine.getRoutineName());
-
+        birdAnimation(view);
         RatingBar ratingBar = view.findViewById(R.id.rating_bar);
 
         Button returnHome = view.findViewById(R.id.end_summary_home_button);
@@ -155,6 +161,18 @@ public class EndSummaryFragment extends Fragment {
         Log.i("addNewFavouriteRoutine", favoriteRoutines.get(favoriteRoutines.size()-1));
         Log.i("size", String.valueOf(favoriteRoutines.size()));
         //mDatabase.setValue(favoriteRoutines);
+    }
+
+    private void birdAnimation(View view) {
+        ImageLayout birdGIF;
+
+        String imageSource = Integer.toString(R.drawable.bird_animation2);
+        Context context = this.getActivity();
+        FrameLayout parentLayout = view.findViewById(R.id.bird_animation_frame);
+        int screenWidth = Resources.getSystem().getDisplayMetrics().widthPixels;
+
+        birdGIF = new ImageLayout(0, 1000, screenWidth, 390, 0, imageSource, parentLayout, context);
+        birdGIF.draw();
     }
 
 }

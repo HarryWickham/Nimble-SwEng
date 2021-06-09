@@ -3,12 +3,17 @@ package uk.ac.york.nimblefitness.MediaHandlers.Images;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 
 import androidx.appcompat.widget.AppCompatImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.Target;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
@@ -26,6 +31,7 @@ public class ImageModule extends AppCompatImageView implements Serializable {
     private int height;
     private int duration;
     private String imageSource;
+    public ImageType imageType = new ImageType();
 
     /**
      *
@@ -102,8 +108,24 @@ public class ImageModule extends AppCompatImageView implements Serializable {
 
     public void setImage(){
         //Instantiating image with glide
-        Glide.with(getContext()).load(imageSource).override(width, height).into(this);
+
+        ImageView view = this;
+        if (getImageDuration() != 0 ){
+            delay(view);
+        }
+
+        Glide.with(getContext()).load(imageSource).override(width, height).into(view);
         this.setContentDescription("Image of muscle groups targeted by this exercise");
     }
 
+    /** Sets the duration the image is displayed on the slide. */
+    public void delay(ImageView imageView){
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Glide.with(getContext()).clear(imageView);
+            }
+        }, this.getImageDuration());
+    }
 }
