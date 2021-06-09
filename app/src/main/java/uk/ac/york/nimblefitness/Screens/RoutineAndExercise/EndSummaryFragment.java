@@ -53,6 +53,7 @@ public class EndSummaryFragment extends Fragment {
     Routine routine;
     FirebaseUser currentFirebaseUser;
     DatabaseReference mDatabase;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,7 +76,8 @@ public class EndSummaryFragment extends Fragment {
         returnHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Toast.makeText(getActivity(), String.valueOf(ratingBar.getRating()), Toast.LENGTH_LONG).show();
+                //Toast.makeText(getActivity(), String.valueOf(ratingBar.getRating()), Toast
+                // .LENGTH_LONG).show();
 
                 startActivity(new Intent(getActivity(), MainActivity.class));
                 getActivity().finish();
@@ -83,36 +85,41 @@ public class EndSummaryFragment extends Fragment {
         });
 
 
-
         TextView summaryTextView = view.findViewById(R.id.end_summary_text_view);
 
         FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         SharedPreferences prefs = getDefaultSharedPreferences(getApplicationContext());
-        summaryTextView.setText(String.format("You have just completed the %s routine and gained %d moves. %s",routine.getRoutineName(), totalMoves(routine), movesToGoal(prefs, currentFirebaseUser)));
-        //favouriteRoutine(view);
+        summaryTextView.setText(String.format("You have just completed the %s routine and gained " +
+                "%d moves. %s", routine.getRoutineName(), totalMoves(routine), movesToGoal(prefs,
+                currentFirebaseUser)));
+        favouriteRoutine(view);
         return view;
     }
 
-    private int totalMoves(Routine routine){
+    private int totalMoves(Routine routine) {
         int routineTotalMoves = 0;
 
-        for(int i = 0; i < routine.getExerciseArrayList().size(); i++){
-            routineTotalMoves = (int) (routineTotalMoves + routine.getExerciseArrayList().get(i).getMovesPerRep()*routine.getExerciseArrayList().get(i).getReps());
+        for (int i = 0; i < routine.getExerciseArrayList().size(); i++) {
+            routineTotalMoves =
+                    (int) (routineTotalMoves + routine.getExerciseArrayList().get(i)
+                            .getMovesPerRep() * routine.getExerciseArrayList().get(i).getReps());
         }
 
-        routineTotalMoves = routineTotalMoves*routine.getSets();
+        routineTotalMoves = routineTotalMoves * routine.getSets();
 
         return routineTotalMoves;
     }
 
     @SuppressLint("DefaultLocale")
-    private String movesToGoal(SharedPreferences prefs, FirebaseUser currentFirebaseUser){
+    private String movesToGoal(SharedPreferences prefs, FirebaseUser currentFirebaseUser) {
 
-        int movesGoalDifference = prefs.getInt(currentFirebaseUser+"weeklyGoal", 0)-prefs.getInt(currentFirebaseUser+"currentMoves", 0);
+        int movesGoalDifference =
+                prefs.getInt(currentFirebaseUser + "weeklyGoal", 0) -
+                        prefs.getInt(currentFirebaseUser + "currentMoves", 0);
 
-        if(movesGoalDifference > 0) {
+        if (movesGoalDifference > 0) {
             return String.format("You are %d moves from your goal!", movesGoalDifference);
-        }else {
+        } else {
             return "Congratulations you have reached your weekly goal!";
         }
     }
@@ -128,20 +135,21 @@ public class EndSummaryFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Log.i("onCheckedChanged", "onCheckedChanged: ");
-                currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();  // Getting the unique ID for the current user for their information
-                mDatabase = FirebaseDatabase.getInstance().getReference("users").child(currentFirebaseUser.getUid()).child("favorites");
+                currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();  // Getting
+                // the unique ID for the current user for their information
+                mDatabase =
+                        FirebaseDatabase.getInstance().getReference("users")
+                                .child(currentFirebaseUser.getUid()).child("favorites");
                 ArrayList<String> favoriteRoutines = new ArrayList<>();
                 mDatabase.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         Log.i("onDataChange", "onDataChange: ");
-                            for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                                if(dataSnapshot != null) {
-                                    favoriteRoutines.add(dataSnapshot.getValue(String.class));
-                                }
+                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                            if (dataSnapshot != null) {
+                                favoriteRoutines.add(dataSnapshot.getValue(String.class));
                             }
-                            Gson gson = new Gson();
-                        Log.i("DataSnapshot", gson.toJson(snapshot));
+                        }
                         addNewFavouriteRoutine(favoriteRoutines);
                     }
 
@@ -155,26 +163,39 @@ public class EndSummaryFragment extends Fragment {
 
     }
 
-    private void addNewFavouriteRoutine(ArrayList<String> favoriteRoutines){
-        favoriteRoutines.add(routine.getRoutineName());
-        Log.i("addNewFavouriteRoutine", favoriteRoutines.get(favoriteRoutines.size()-1));
-        Log.i("size", String.valueOf(favoriteRoutines.size()));
-        //mDatabase.setValue(favoriteRoutines);
+    private void addNewFavouriteRoutine(ArrayList<String> favoriteRoutines) {
+        boolean alreadyThere = false;
+        for (String favs : favoriteRoutines) {
+            if (favs.equals(routine.getRoutineName())) {
+                alreadyThere = true;
+            }
+        }
+        if (!alreadyThere) {
+            Gson gson = new Gson();
+            favoriteRoutines.add(routine.getRoutineName());
+            gson.toJson(favoriteRoutines);
+            Log.i("addNewFavouriteRoutine", favoriteRoutines.get(favoriteRoutines.size() - 1));
+            Log.i("size", String.valueOf(favoriteRoutines.size()));
+            mDatabase.setValue(favoriteRoutines);
+        }
     }
 
-    /** This method instantiates the GIF on this fragment view, using the image media handler. */
+    /**
+     * This method instantiates the GIF on this fragment view, using the image media handler.
+     */
     private void birdAnimation(View view) {
-        String imageSource ="https://www-users.york.ac.uk/~hew550/NimbleAssets/bird_animation2.gif";
+        String imageSource = "https://www-users.york.ac.uk/~hew550/NimbleAssets/bird_animation2" +
+                ".gif";
         Context context = this.getActivity();
         FrameLayout parentLayout = view.findViewById(R.id.bird_animation_frame);
         /* The width of the GIF is as wide as the device's screen and the height is calculated from
            that, retaining the original aspect ratio of 3:2.
          */
         int screenWidth = Resources.getSystem().getDisplayMetrics().widthPixels;
-        int height = (int) Math.round(screenWidth*0.6667);
+        int height = (int) Math.round(screenWidth * 0.6667);
 
-        ImageLayout birdGIF = new ImageLayout(0, 0,
-                screenWidth, height, 0, imageSource, parentLayout, context);
+        ImageLayout birdGIF = new ImageLayout(0, 0, screenWidth, height, 0, imageSource,
+                parentLayout, context);
         birdGIF.draw();
     }
 
