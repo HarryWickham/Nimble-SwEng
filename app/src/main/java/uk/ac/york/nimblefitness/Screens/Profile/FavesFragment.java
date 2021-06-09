@@ -83,7 +83,7 @@ public class FavesFragment extends Fragment {
 
                 FavouritesList.setAdapter(listAdapter);
                 if (favourites.isEmpty()) {
-                    nothingFoundText = view.findViewById(R.id.nothingFoundText);
+                    nothingFoundText = view.findViewById(R.id.nothing_found_text);
                     nothingFoundText.setVisibility(View.VISIBLE);
                     FavouritesList.setVisibility(View.GONE);
                     nothingFoundText.setText("You currently have no favourite routines. Complete a routine to add it to your favourites!");
