@@ -30,6 +30,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class TermsAndConditionsActivityTest {
     public static final long CONVERT_FROM_NANO_TO_SECONDS = 1000000000;
 
+    //Instantiates the relevant activity
     @Rule
     public ActivityTestRule<TermsAndConditionsActivity> termsAndConditionsActivityTestRule = new ActivityTestRule<>(TermsAndConditionsActivity.class);
 

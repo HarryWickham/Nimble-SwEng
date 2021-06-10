@@ -35,7 +35,7 @@ public class OnBoardingActivityTest {
 
     public static final long CONVERT_FROM_NANO_TO_SECONDS = 1000000000;
 
-
+    //Instantiates the relevant activity
     @Rule
     public ActivityTestRule<OnBoardingActivity> OnBoardingActivityTestRule = new ActivityTestRule(OnBoardingActivity.class);
 
@@ -82,7 +82,7 @@ public class OnBoardingActivityTest {
 
     }
 
-    //Test to see if skip button works, intent checks if main activity is opened
+    //Test to see if skip button works, intent checks if main activity is opened within the required time
     @Test
     public void testSkipButton(){
         init();
