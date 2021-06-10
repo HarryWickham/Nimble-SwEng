@@ -55,7 +55,7 @@ public class SettingsFragment extends Fragment {
 
         //the text that go in each different list view item
         String[] settings_list_items = {"Account", "Membership Plan", "Billing Information",
-                "Report a Problem", "Terms and Conditions", "Logout", "HandlerTestActivity"};
+                "Report a Problem", "Terms and Conditions", "Logout", "Load New Presentation"};
 
         //the icons that go in each different list view item
         int[] settingsListIcons = {R.drawable.ic_baseline_account_circle_24,
