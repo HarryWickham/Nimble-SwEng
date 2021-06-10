@@ -350,16 +350,16 @@ public class SignupActivity extends AppCompatActivity {
         boolean acceptedTC = prefs.getBoolean(currentFirebaseUser+"acceptedTC", false);
         Log.i("acceptedTC", String.valueOf(acceptedTC));
         boolean onBoarded = prefs.getBoolean(currentFirebaseUser+"onBoarded", false);
-        if(membershipPlan.equals("error")){
+        if(!acceptedTC) {
+            startActivity(new Intent(SignupActivity.this,TermsAndConditionsActivity.class));
+            finish();
+        } else if(membershipPlan.equals("error")){
             Log.i("routing membershipPlan ", membershipPlan);
             startActivity(new Intent(SignupActivity.this,PaymentActivity.class));
             finish();
         } else if((userName.equals("error") || userName.equals("null null"))){
             Log.i("routing userName", userName);
             startActivity(new Intent(SignupActivity.this,UserDetailsActivity.class));
-            finish();
-        } else if(!acceptedTC) {
-            startActivity(new Intent(SignupActivity.this,TermsAndConditionsActivity.class));
             finish();
         } else if(!onBoarded){
             startActivity(new Intent(SignupActivity.this, OnBoardingActivity.class));
