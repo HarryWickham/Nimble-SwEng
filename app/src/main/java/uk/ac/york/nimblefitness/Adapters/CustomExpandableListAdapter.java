@@ -48,7 +48,7 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getGroupCount() {
-        return this.routineArrayList.size() - 1;
+        return this.routineArrayList.size();
     }
 
     @Override
