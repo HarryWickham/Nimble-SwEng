@@ -114,7 +114,7 @@ public class SigninActivity extends AppCompatActivity {
                         Toast.makeText(SigninActivity.this, "Login Successful",
                                 Toast.LENGTH_SHORT).show();
                         //takes user the main page
-                        startActivity(new Intent(getApplicationContext(), PaymentActivity.class));
+                        receiveData();
                     } else {
                         invalidUser();
                     }
@@ -144,7 +144,6 @@ public class SigninActivity extends AppCompatActivity {
         googleSignIn.setOnClickListener(v -> {
             Intent gSignIn = signInClient.getSignInIntent();
             startActivityForResult(gSignIn, GOOGLE_SIGNIN_CODE);
-            //startActivity(new Intent(getApplicationContext(), PaymentActivity.class));
         });
     }
 
@@ -210,7 +209,7 @@ public class SigninActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     FirebaseUser user = firebaseAuth.getCurrentUser();
-                    startActivity(new Intent(getApplicationContext(), PaymentActivity.class));
+                    receiveData();
 
                 }
             }
