@@ -1,12 +1,10 @@
 package uk.ac.york.nimblefitness.Adapters;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -26,8 +24,8 @@ import uk.ac.york.nimblefitness.R;
 */
 public class MovesListAdapter extends BaseAdapter {
 
+    private final ArrayList<Exercise> exercise;
     Context context;
-    private ArrayList<Exercise> exercise;
 
     public MovesListAdapter(Context context, ArrayList<Exercise> exercise) {
         this.context = context;
@@ -61,9 +59,9 @@ public class MovesListAdapter extends BaseAdapter {
             LayoutInflater inflater = LayoutInflater.from(context);
             convertView = inflater.inflate(R.layout.moves_list_layout, parent, false);
 
-            viewHolder.txtName = (TextView) convertView.findViewById(R.id.exercise_name);
-            viewHolder.txtDetails = (TextView) convertView.findViewById(R.id.sets_of_reps);
-            viewHolder.txtMoves = (TextView) convertView.findViewById(R.id.number_of_moves);
+            viewHolder.txtName = convertView.findViewById(R.id.exercise_name);
+            viewHolder.txtDetails = convertView.findViewById(R.id.sets_of_reps);
+            viewHolder.txtMoves = convertView.findViewById(R.id.number_of_moves);
             viewHolder.colourBar = convertView.findViewById(R.id.moves_list_colour_bar);
 
             result = convertView;
@@ -73,20 +71,23 @@ public class MovesListAdapter extends BaseAdapter {
             result = convertView;
         }
 
-        if(exercise.size() != 0) {
+        if (exercise.size() != 0) {
             viewHolder.txtName.setText(exercise.get(position).getExerciseName());
             if (exercise.get(position).getRepType().equalsIgnoreCase("time")) {
-                viewHolder.txtDetails.setText(String.format(Locale.UK, "%d seconds", exercise.get(position).getReps()));
+                viewHolder.txtDetails.setText(String.format(Locale.UK, "%d seconds",
+                        exercise.get(position).getReps()));
             } else if (exercise.get(position).getRepType().equalsIgnoreCase("number")) {
-                viewHolder.txtDetails.setText(String.format(Locale.UK, "%d reps", exercise.get(position).getReps()));
+                viewHolder.txtDetails.setText(String.format(Locale.UK, "%d reps",
+                        exercise.get(position).getReps()));
             }
-            viewHolder.txtMoves.setText(String.format(Locale.UK, "Moves: %d", (int) exercise.get(position).getMovesPerRep() * exercise.get(position).getReps()));
+            viewHolder.txtMoves.setText(String.format(Locale.UK, "Moves: %d",
+                    (int) exercise.get(position).getMovesPerRep() * exercise.get(position).getReps()));
             viewHolder.colourBar.setBackgroundColor(exercise.get(position).getColour());
         }
         return convertView;
     }
 
-    public String getExerciseTitleAtPosition(int position){
+    public String getExerciseTitleAtPosition(int position) {
         return exercise.get(position).getExerciseName();
     }
 

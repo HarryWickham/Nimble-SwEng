@@ -1,7 +1,6 @@
 package uk.ac.york.nimblefitness.Adapters;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,22 +15,27 @@ import androidx.annotation.Nullable;
 
 import uk.ac.york.nimblefitness.R;
 
-/**The PaymentListAdapter class fills the payment screen with text by only changing
+/**
+ * The PaymentListAdapter class fills the payment screen with text by only changing
  * the text inside the different payment cards. This is done in conjunction with the
  * payment related layout xml files and PaymentActivity. Arrays are defined and used
- * to contain all possible text and image variations of the different membership tiers**/
+ * to contain all possible text and image variations of the different membership tiers
+ **/
 
 public class PaymentListAdapter extends BaseAdapter {
-    
-    Context context;
-    private String[] planSubtitle;
-    private String[] planTier;
-    private int[] planImage;
-    private String[] membershipDetailsText;
-    private MyActionCallback mActionCallback;
-    private String[] selectionButton;
 
-    public PaymentListAdapter(Context context, String[] planSubtitle, String[] planTier, int[] planImage, String[] membershipDetailsText, MyActionCallback actionCallback, String[] selectionButton) {
+    private final String[] planSubtitle;
+    private final String[] planTier;
+    private final int[] planImage;
+    private final String[] membershipDetailsText;
+    private final MyActionCallback mActionCallback;
+    private final String[] selectionButton;
+    Context context;
+
+
+    public PaymentListAdapter(Context context, String[] planSubtitle, String[] planTier,
+                              int[] planImage, String[] membershipDetailsText,
+                              MyActionCallback actionCallback, String[] selectionButton) {
         this.context = context;
         this.planSubtitle = planSubtitle;
         this.planTier = planTier;
@@ -74,7 +78,8 @@ public class PaymentListAdapter extends BaseAdapter {
             viewHolder.planTier = convertView.findViewById(R.id.plan_tier);
             viewHolder.planImage = convertView.findViewById(R.id.plan_image);
             viewHolder.moreLessButton = convertView.findViewById(R.id.more_less_button);
-            viewHolder.membershipDetailsTextView = convertView.findViewById(R.id.membership_details_text);
+            viewHolder.membershipDetailsTextView =
+                    convertView.findViewById(R.id.membership_details_text);
             viewHolder.membershipDetailsLayout = convertView.findViewById(R.id.membership_details);
             viewHolder.selectedPlan = convertView.findViewById(R.id.selection_button);
 
@@ -91,7 +96,7 @@ public class PaymentListAdapter extends BaseAdapter {
 
         viewHolder.membershipDetailsTextView.setText(membershipDetailsText[position]);
 
-    viewHolder.selectedPlan.setText(selectionButton[position]);
+        viewHolder.selectedPlan.setText(selectionButton[position]);
 
         viewHolder.moreLessButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,8 +110,6 @@ public class PaymentListAdapter extends BaseAdapter {
         viewHolder.selectedPlan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i("selectedPlan", "onClick: ");
-                Log.i("selectedPlan", selectedPlan(viewHolder));
                 mActionCallback.onActionPerformed(selectedPlan(viewHolder));
                 notifyDataSetChanged();
             }
@@ -116,34 +119,26 @@ public class PaymentListAdapter extends BaseAdapter {
         return convertView;
     }
 
-    public String getPlanTierAtPosition(int position){
+    public String getPlanTierAtPosition(int position) {
         return planTier[position];
     }
 
-    private static class ViewHolder {
-        ImageView planImage;
-        TextView planSubtitle;
-        TextView planTier;
-        Button moreLessButton;
-        TextView membershipDetailsTextView;
-        LinearLayout membershipDetailsLayout;
-        Button selectedPlan;
-    }
-
-    private void moreLessSelector(ViewHolder viewHolder){
-        if(viewHolder.moreLessButton.getText().equals("Less Details")){
+    private void moreLessSelector(ViewHolder viewHolder) {
+        if (viewHolder.moreLessButton.getText().equals("Less Details")) {
             viewHolder.membershipDetailsLayout.setVisibility(View.GONE);
             viewHolder.moreLessButton.setText("More Details");
 
-        }else if(viewHolder.moreLessButton.getText().equals("More Details")){
+        } else if (viewHolder.moreLessButton.getText().equals("More Details")) {
             viewHolder.membershipDetailsLayout.setVisibility(View.VISIBLE);
             viewHolder.moreLessButton.setText("Less Details");
         }
     }
 
-    /**Changes name of selected plan, based on content of the button currently pressed**/
+    /**
+     * Changes name of selected plan, based on content of the button currently pressed
+     **/
 
-    private String selectedPlan(ViewHolder viewHolder){
+    private String selectedPlan(ViewHolder viewHolder) {
         switch (viewHolder.selectedPlan.getText().toString()) {
             case "select this plan (£1.99)":
                 return "bronze";
@@ -155,7 +150,17 @@ public class PaymentListAdapter extends BaseAdapter {
         return "error";
     }
 
-    public interface MyActionCallback{
+    public interface MyActionCallback {
         void onActionPerformed(String position);
+    }
+
+    private static class ViewHolder {
+        ImageView planImage;
+        TextView planSubtitle;
+        TextView planTier;
+        Button moreLessButton;
+        TextView membershipDetailsTextView;
+        LinearLayout membershipDetailsLayout;
+        Button selectedPlan;
     }
 }

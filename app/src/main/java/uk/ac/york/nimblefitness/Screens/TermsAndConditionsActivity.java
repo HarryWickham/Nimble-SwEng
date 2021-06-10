@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -23,14 +22,15 @@ import uk.ac.york.nimblefitness.R;
 
 import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 
-/** This class displays the app's terms and conditions to the user. They can only continue into the
+/**
+ * This class displays the app's terms and conditions to the user. They can only continue into the
  * app after sign-up if they accept them. They're only actively displayed once when the user signs
  * up.
  */
 public class TermsAndConditionsActivity extends Activity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_terms_and_conditions);
         setTitle("Terms & Conditions");
@@ -73,37 +73,28 @@ public class TermsAndConditionsActivity extends Activity {
             }
         });
     }
-    /** The next page to be displayed is decided by this method. The first two branches of the 'if'
+
+    /**
+     * The next page to be displayed is decided by this method. The first two branches of the 'if'
      * statement could be triggered if the user exits the app before having filled in the relevant
      * details.
      */
-    private void routing(FirebaseUser currentFirebaseUser){
+    private void routing(FirebaseUser currentFirebaseUser) {
         SharedPreferences prefs = getDefaultSharedPreferences(getApplicationContext());
-        String userName =
-                prefs.getString(currentFirebaseUser+"userFullName", "error");
-        String membershipPlan =
-                prefs.getString(currentFirebaseUser+"membershipPlan", "error");
-        boolean onBoarded = prefs.getBoolean(currentFirebaseUser+"onBoarded", false);
-        if(membershipPlan.equals("error")){
-            Log.i("routing membershipPlan ", membershipPlan);
-            startActivity(new Intent(
-                    TermsAndConditionsActivity.this, PaymentActivity.class));
+        String userName = prefs.getString(currentFirebaseUser + "userFullName", "error");
+        String membershipPlan = prefs.getString(currentFirebaseUser + "membershipPlan", "error");
+        boolean onBoarded = prefs.getBoolean(currentFirebaseUser + "onBoarded", false);
+        if (membershipPlan.equals("error")) {
+            startActivity(new Intent(TermsAndConditionsActivity.this, PaymentActivity.class));
             finish();
-        } else if((userName.equals("error") || userName.equals("null null"))){
-            Log.i("routing userName", userName);
-            startActivity(new Intent(
-                    TermsAndConditionsActivity.this, UserDetailsActivity.class));
+        } else if ((userName.equals("error") || userName.equals("null null"))) {
+            startActivity(new Intent(TermsAndConditionsActivity.this, UserDetailsActivity.class));
             finish();
-        } else if(!onBoarded){
-            startActivity(new Intent(
-                    TermsAndConditionsActivity.this, OnBoardingActivity.class));
+        } else if (!onBoarded) {
+            startActivity(new Intent(TermsAndConditionsActivity.this, OnBoardingActivity.class));
             finish();
-        }else {
-            Log.i("routing FirebaseUser", String.valueOf(currentFirebaseUser));
-            Log.i("routing membershipPlan", membershipPlan);
-            Log.i("routing userName", userName);
-            startActivity(new Intent(
-                    TermsAndConditionsActivity.this, MainActivity.class));
+        } else {
+            startActivity(new Intent(TermsAndConditionsActivity.this, MainActivity.class));
             finish();
         }
     }

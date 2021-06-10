@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Looper;
 import android.preference.PreferenceManager;
-import android.util.Log;
 
 import java.io.Serializable;
 
@@ -15,9 +14,10 @@ import uk.ac.york.nimblefitness.MediaHandlers.AbstractLayout;
 public class AudioType implements Serializable, AbstractLayout {
     String url;
     int starttime;
-    boolean loop;
+    boolean loop, isPlaying = false;
     String id;
     Context context;
+    Intent musicIntent;
 
     public AudioType(String url, int starttime, boolean loop, String id, Context context) {
         this.url = url;
@@ -30,7 +30,7 @@ public class AudioType implements Serializable, AbstractLayout {
     public AudioType() {
     }
 
-    public void stop(){
+    public void stop() {
         context.stopService(new Intent(context, Audio.class));
     }
 
@@ -68,11 +68,11 @@ public class AudioType implements Serializable, AbstractLayout {
 
     @Override
     public void draw() {
-        SharedPreferences prefs  = PreferenceManager.getDefaultSharedPreferences(context);
+        musicIntent = new Intent(context.getApplicationContext(), Audio.class);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = prefs.edit();
-        Log.i("prefs putString URL", url);
-        editor.putString("url",url);
-        editor.putBoolean("loop",loop);
+        editor.putString("url", url);
+        editor.putBoolean("loop", loop);
         editor.apply();
         delay(this);
     }
@@ -82,14 +82,28 @@ public class AudioType implements Serializable, AbstractLayout {
         return id;
     }
 
-    /** This method delays when the audio starts as set by the user using setStartTime. */
+    /**
+     * This method delays when the audio starts as set by the user using setStartTime.
+     */
     public void delay(AudioType audioType) {
         Handler handler = new Handler(Looper.getMainLooper());
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                context.startService(new Intent(context.getApplicationContext(), Audio.class));
+
+                context.startService(musicIntent);
+                isPlaying = true;
             }
         }, audioType.getStarttime());
+    }
+
+    @Override
+    public void playPause() {
+        if (isPlaying) {
+            context.stopService(musicIntent);
+            isPlaying = false;
+        } else {
+            context.startService(musicIntent);
+        }
     }
 }

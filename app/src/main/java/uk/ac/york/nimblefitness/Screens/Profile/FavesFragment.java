@@ -29,7 +29,8 @@ import uk.ac.york.nimblefitness.Screens.Routines.RoutineData;
 // For this iteration the favourites list only loads a single favourited routine from the firebase
 // This load is account based and the favourited routine must be added manually
 // This tests only purpose is to show a routine being loaded from the firebase
-// This favourited routine is a child under a users unique code, called favouriteRoutines with the value being the routine
+// This favourited routine is a child under a users unique code, called favouriteRoutines with
+// the value being the routine
 // An example of this is under user ez6SMLl19sUlhfUJ46mRXJDdGSf2
 
 public class FavesFragment extends Fragment {
@@ -53,9 +54,12 @@ public class FavesFragment extends Fragment {
 
         ExpandableListView FavouritesList = view.findViewById(R.id.routine_exp_list);
 
-        FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();  // Getting the unique ID for the current user for their information
+        FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();  //
+        // Getting the unique ID for the current user for their information
 
-        mDatabase = FirebaseDatabase.getInstance().getReference("users").child(currentFirebaseUser.getUid()); // Finding the "users" child in the firebase
+        mDatabase =
+                FirebaseDatabase.getInstance().getReference("users").child(currentFirebaseUser.getUid());
+        // Finding the "users" child in the firebase
 
         // Listener to gather information out of the firebase
         mDatabase.child("favorites").addListenerForSingleValueEvent(new ValueEventListener() {
@@ -66,7 +70,8 @@ public class FavesFragment extends Fragment {
                     favourites.add(dataSnapshot.getValue(String.class));
                 }
 
-                RoutineData routineData = new RoutineData(getContext(), R.raw.routines); // Object of routine data, that holds all the data from the routines.xml
+                RoutineData routineData = new RoutineData(getContext(), R.raw.routines);
+                // Object of routine data, that holds all the data from the routines.xml
                 ArrayList<Routine> routines = routineData.getRoutine();
 
                 ArrayList<Routine> favouriteRoutines = new ArrayList<>();
@@ -79,14 +84,17 @@ public class FavesFragment extends Fragment {
                     }
                 }
 
-                CustomExpandableListAdapter listAdapter = new CustomExpandableListAdapter(getContext(), favouriteRoutines); // Assigns the listAdapter with the
+                CustomExpandableListAdapter listAdapter =
+                        new CustomExpandableListAdapter(getContext(), favouriteRoutines);
+                // Assigns the listAdapter with the
 
                 FavouritesList.setAdapter(listAdapter);
                 if (favourites.isEmpty()) {
                     nothingFoundText = view.findViewById(R.id.nothing_found_text);
                     nothingFoundText.setVisibility(View.VISIBLE);
                     FavouritesList.setVisibility(View.GONE);
-                    nothingFoundText.setText("You currently have no favourite routines. Complete a routine to add it to your favourites!");
+                    nothingFoundText.setText("You currently have no favourite routines. Complete " +
+                            "a routine to add it to your favourites!");
                 }
             }
 

@@ -2,7 +2,6 @@ package uk.ac.york.nimblefitness.Screens.Profile;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +23,8 @@ import uk.ac.york.nimblefitness.Screens.Profile.Goal.GoalFragment;
 import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 import static com.facebook.FacebookSdk.getApplicationContext;
 
-/** This class initialises the Tab Layout within the profile page and allows the user to switch and
+/**
+ * This class initialises the Tab Layout within the profile page and allows the user to switch and
  * view the different tabs: Calendar, Favourites & Goals.
  */
 public class ProfileTabsFragment extends Fragment {
@@ -43,13 +43,12 @@ public class ProfileTabsFragment extends Fragment {
         FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
         SharedPreferences prefs = getDefaultSharedPreferences(getApplicationContext());
-        Log.i("onCreateView", prefs.getString("membershipPlan", "bronze"));
 
-        if(prefs.getString(currentFirebaseUser+"membershipPlan", "bronze").
+        if (prefs.getString(currentFirebaseUser + "membershipPlan", "bronze").
                 equals("gold")) {
             view = inflater.
                     inflate(R.layout.fragment_profile_tabs_gold, container, false);
-        }else{
+        } else {
             view = inflater.inflate(R.layout.fragment_profile_tabs, container, false);
         }
         // Finds where in the fragment the tab layout should go. //
@@ -90,9 +89,12 @@ public class ProfileTabsFragment extends Fragment {
             public void onTabReselected(TabLayout.Tab tab) {
             }
         });
-    return view;
+        return view;
     }
-    /** This switches the current fragment displayed when the corresponding tab is selected. */
+
+    /**
+     * This switches the current fragment displayed when the corresponding tab is selected.
+     */
     void switchFragment(Fragment fragment) {
         FragmentTransaction ft = getParentFragmentManager().beginTransaction();
         ft.replace(R.id.profile_frame, fragment);

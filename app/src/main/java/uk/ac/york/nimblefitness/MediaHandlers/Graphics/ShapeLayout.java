@@ -9,21 +9,21 @@ import java.io.Serializable;
 import uk.ac.york.nimblefitness.MediaHandlers.AbstractLayout;
 
 public class ShapeLayout implements Serializable, AbstractLayout {
-    private int yStart;
-    private int xStart;
-    private int width;
-    private int height;
-    private int colour;
-    private int xEnd;
-    private int yEnd;
-    private String shape_type;
-    private LinearGradient shading;
-    private int duration;
-    private Context context;
     FrameLayout parentLayout;
+    private final int yStart;
+    private final int xStart;
+    private final int width;
+    private final int height;
+    private final int colour;
+    private final int xEnd;
+    private final int yEnd;
+    private final String shape_type;
+    private final LinearGradient shading;
+    private final int duration;
+    private final Context context;
 
-    public ShapeLayout(int yStart, int xStart, int width, int height, int colour,
-                       int xEnd, int yEnd, String shape_type, LinearGradient shading, int duration,
+    public ShapeLayout(int yStart, int xStart, int width, int height, int colour, int xEnd,
+                       int yEnd, String shape_type, LinearGradient shading, int duration,
                        Context context, FrameLayout parentLayout) {
         this.yStart = yStart;
         this.xStart = xStart;
@@ -60,5 +60,9 @@ public class ShapeLayout implements Serializable, AbstractLayout {
     @Override
     public String getMediaId() {
         return null;
+    }
+
+    @Override
+    public void playPause() {
     }
 }

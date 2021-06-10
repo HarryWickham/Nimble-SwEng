@@ -35,6 +35,11 @@ import uk.ac.york.nimblefitness.Screens.MainActivity;
 import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 import static com.facebook.FacebookSdk.getApplicationContext;
 
+/**
+ * This fragment will only appear once the user has completed their entire routine and will allow
+ * the user to rate the routine and add it to their favorites.
+ */
+
 public class EndSummaryFragment extends Fragment {
     Routine routine;
     FirebaseUser currentFirebaseUser;
@@ -75,20 +80,21 @@ public class EndSummaryFragment extends Fragment {
 
         FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         SharedPreferences prefs = getDefaultSharedPreferences(getApplicationContext());
-        summaryTextView.setText(String.format("You have just completed the %s routine and gained " +
-                "%d moves. %s", routine.getRoutineName(), totalMoves(routine), movesToGoal(prefs,
-                currentFirebaseUser)));
+        summaryTextView.setText(String.format("You have just completed the %s routine and gained "
+                + "%d moves. %s", routine.getRoutineName(), totalMoves(routine),
+                movesToGoal(prefs, currentFirebaseUser)));
         favouriteRoutine(view);
         return view;
     }
 
+    //Calculates the total moves that have been gained while doing this routine
     private int totalMoves(Routine routine) {
         int routineTotalMoves = 0;
 
         for (int i = 0; i < routine.getExerciseArrayList().size(); i++) {
             routineTotalMoves =
-                    (int) (routineTotalMoves + routine.getExerciseArrayList().get(i)
-                            .getMovesPerRep() * routine.getExerciseArrayList().get(i).getReps());
+                    (int) (routineTotalMoves + routine.getExerciseArrayList()
+                            .get(i).getMovesPerRep() * routine.getExerciseArrayList().get(i).getReps());
         }
 
         routineTotalMoves = routineTotalMoves * routine.getSets();
@@ -96,6 +102,7 @@ public class EndSummaryFragment extends Fragment {
         return routineTotalMoves;
     }
 
+    //Calculates and returns a string based on how close the user is to their goal
     @SuppressLint("DefaultLocale")
     private String movesToGoal(SharedPreferences prefs, FirebaseUser currentFirebaseUser) {
 
@@ -110,10 +117,8 @@ public class EndSummaryFragment extends Fragment {
         }
     }
 
-    private void rateRoutine() {
-
-    }
-
+    //A call to firebase is made to see if the routine is already in their favourites, if it is
+    // then the add to favourites button wil change to say remove from favourites.
     private void favouriteRoutine(View view) {
         Button favouritesButton = view.findViewById(R.id.favourite_button);
 
@@ -123,14 +128,16 @@ public class EndSummaryFragment extends Fragment {
                 FirebaseDatabase.getInstance().getReference("users")
                         .child(currentFirebaseUser.getUid()).child("favorites");
         ArrayList<String> favoriteRoutines = new ArrayList<>();
+        //Upon clicking the button the program will work out if they want to add or remove the
+        // favourites and will send them to the correct function
         favouritesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(favouritesButton.getText().equals("Add routine to favourites")) {
+                if (favouritesButton.getText().equals("Add routine to favourites")) {
                     favouritesButton.setEnabled(false);
                     addNewFavouriteRoutine(favoriteRoutines);
                     favouritesButton.setText("Remove routine from favourites");
-                } else if(favouritesButton.getText().equals("Remove routine from favourites")){
+                } else if (favouritesButton.getText().equals("Remove routine from favourites")) {
                     favouritesButton.setEnabled(false);
                     removeFavouriteRoutine(favoriteRoutines);
                     favouritesButton.setText("Add routine to favourites");
@@ -144,7 +151,7 @@ public class EndSummaryFragment extends Fragment {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     if (dataSnapshot != null) {
                         favoriteRoutines.add(dataSnapshot.getValue(String.class));
-                        if(dataSnapshot.getValue(String.class).equals(routine.getRoutineName())){
+                        if (dataSnapshot.getValue(String.class).equals(routine.getRoutineName())) {
                             favouritesButton.setText("Remove routine from favourites");
                         }
                     }
@@ -161,6 +168,9 @@ public class EndSummaryFragment extends Fragment {
 
     }
 
+    //to remove routine form their favourites the routine is checked against the list collected
+    // from firebase and if their name match that routine will be removed. The new list will then
+    // added back to firebase where it can be re-downloaded next time.
     private void removeFavouriteRoutine(ArrayList<String> favoriteRoutines) {
         for (int i = 0; i < favoriteRoutines.size(); i++) {
             if (favoriteRoutines.get(i).equals(routine.getRoutineName())) {
@@ -170,6 +180,8 @@ public class EndSummaryFragment extends Fragment {
         }
     }
 
+    //to add to the favorites the routine list is checked to see if it is already in the
+    // database, if not then it will be added, if it is it will be ignored.
     private void addNewFavouriteRoutine(ArrayList<String> favoriteRoutines) {
         boolean alreadyThere = false;
         for (String favs : favoriteRoutines) {
@@ -189,8 +201,8 @@ public class EndSummaryFragment extends Fragment {
      * This method instantiates the GIF on this fragment view, using the image media handler.
      */
     private void birdAnimation(View view) {
-        String imageSource = "https://www-users.york.ac.uk/~hew550/NimbleAssets/bird_animation2" +
-                ".gif";
+        String imageSource =
+                "https://www-users.york.ac.uk/~hew550/NimbleAssets/bird_animation2" + ".gif";
         Context context = this.getActivity();
         FrameLayout parentLayout = view.findViewById(R.id.bird_animation_frame);
         /* The width of the GIF is as wide as the device's screen and the height is calculated from

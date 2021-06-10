@@ -2,14 +2,13 @@ package uk.ac.york.nimblefitness.Screens.RoutineAndExercise;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import uk.ac.york.nimblefitness.HelperClasses.Exercise;
 import uk.ac.york.nimblefitness.HelperClasses.Routine;
@@ -19,7 +18,8 @@ import uk.ac.york.nimblefitness.MediaHandlers.Text.TextLayout;
 import uk.ac.york.nimblefitness.R;
 import uk.ac.york.nimblefitness.Screens.MainActivity;
 
-/** This class loads in the information for the current exercise in a routine including its video,
+/**
+ * This class loads in the information for the current exercise in a routine including its video,
  * image, title and description. The fragment appears after the StartSummary fragment and before the
  * Counter fragment, with the ability to go back to the profile page which acts as the 'main menu'.
  */
@@ -45,13 +45,13 @@ public class InformationFragment extends Fragment {
         Bundle bundle = intent.getExtras();
         Exercise exercise = (Exercise) bundle.getSerializable("exercise");
 
-        if(exercise.getExerciseName().equals("fake")) {
+        if (exercise.getExerciseName().equals("fake")) {
             /* This is the routine object shared between this page, the counter, finish summary and
                end summary pages.
              */
             Routine routine = (Routine) getArguments().getSerializable("routine");
             loadExercise(view, routine.getExerciseArrayList().get(routine.getCurrentExercise()));
-        }else if(bundle.getSerializable("exercise")!=null){
+        } else if (bundle.getSerializable("exercise") != null) {
             loadExercise(view, exercise);
             toCounterPage.setVisibility(View.GONE);
         }
@@ -86,12 +86,15 @@ public class InformationFragment extends Fragment {
 
         return view;
     }
-    /** Initialises the information for the current exercise in the routine. */
+
+    /**
+     * Initialises the information for the current exercise in the routine.
+     */
     public void loadExercise(View view, Exercise exercise) {
         /* Sets the context and parent layout for the current exercise's name and description and
            displays it in the fragment.
          */
-        for (TextLayout textLayout : exercise.getTextLayouts()){
+        for (TextLayout textLayout : exercise.getTextLayouts()) {
             textLayout.setContext(getActivity());
             textLayout.setParentLayout(view.findViewById(R.id.infoPage));
             textLayout.draw();
@@ -99,10 +102,10 @@ public class InformationFragment extends Fragment {
 
         // A rectangle is drawn behind the video and image. //
         ShapeView rectangles = view.findViewById(R.id.information_shape_view);
-        for(ShapeType shapeType : exercise.getBackgroundShapes()){
-            rectangles.addShape(shapeType.getxStart(),shapeType.getyStart(),
-                    shapeType.getWidth(),shapeType.getHeight(),
-                    shapeType.getColour(),shapeType.getShape_type(),shapeType.getDuration());
+        for (ShapeType shapeType : exercise.getBackgroundShapes()) {
+            rectangles.addShape(shapeType.getxStart(), shapeType.getyStart(),
+                    shapeType.getWidth(), shapeType.getHeight(), shapeType.getColour(),
+                    shapeType.getShape_type(), shapeType.getDuration());
         }
 
         /* Sets the context and parent layout for the current exercise's video and displays it in

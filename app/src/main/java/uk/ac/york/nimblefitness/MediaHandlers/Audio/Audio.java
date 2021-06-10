@@ -18,16 +18,13 @@ public class Audio extends Service {
     public void onCreate() {
         //Set up media player
         myPlayer = new MediaPlayer();
-        myPlayer.setAudioAttributes(
-                new AudioAttributes.Builder()
-                        .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                        .setUsage(AudioAttributes.USAGE_GAME)
-                        .build()
-        );
+        myPlayer.setAudioAttributes(new AudioAttributes.Builder()
+                .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                .setUsage(AudioAttributes.USAGE_GAME).build());
         //Set up shared preferences to allow URL and Looping function to be passed to service
         prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
-        String URL = prefs.getString("url","");
+        String URL = prefs.getString("url", "");
         //To catch an invalid URL
         try {
             myPlayer.setDataSource(URL);
@@ -44,17 +41,21 @@ public class Audio extends Service {
         myPlayer.setLooping(true); // Set looping, setting loop play to true
     }
 
-    /** This sets the looping value*/
-   @Override
+    /**
+     * This sets the looping value
+     */
+    @Override
     public void onStart(Intent intent, int startID) {
         //Set the looping value
-       Boolean loop = prefs.getBoolean("loop",false);
-       myPlayer.start();
-       myPlayer.setLooping(loop);
+        Boolean loop = prefs.getBoolean("loop", false);
+        myPlayer.start();
+        myPlayer.setLooping(loop);
 
     }
 
-    /** This method is triggered when the app stops. */
+    /**
+     * This method is triggered when the app stops.
+     */
     @Override
     public void onDestroy() {
         myPlayer.stop();

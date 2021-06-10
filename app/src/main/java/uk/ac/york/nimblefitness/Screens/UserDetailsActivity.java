@@ -8,7 +8,6 @@ import android.text.InputFilter;
 import android.text.InputType;
 import android.text.Spanned;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -48,25 +47,41 @@ import uk.ac.york.nimblefitness.R;
 
 import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 
+/**
+ * The UserDetailsActivity allows the user to personalise their account by inputting their name,
+ * age, gender and exercise level. this will be saved to the firebase database and received
+ * every time they open the app and are logged in
+ */
+
 public class UserDetailsActivity extends AppCompatActivity {
 
+    public static InputFilter[] myFilter = new InputFilter[]{new InputFilter() {
+        public CharSequence filter(CharSequence source, int start, int end, Spanned dest,
+                                   int dstart, int dend) {
+            for (int i = start; i < end; i++) {
+                if (!Character.isLetter(source.charAt(i))) {
+                    return "";
+                }
+            }
+            return null;
+        }
+    }};
     Button save_user_details_button;
-    TextInputLayout user_account_first_name, user_account_last_name, user_account_age,  gender_selector, activity_level_selector, exercise_type_selector, user_account_goal;
-    MaterialBetterSpinner gender_selector_spinner, activity_level_selector_spinner, exercise_type_selector_spinner;
-
-    TextInputEditText user_account_first_name_edit_text, user_account_last_name_edit_text, user_account_age_edit_text, user_account_goal_edit_text;
-
-    ArrayAdapter<String> arrayAdapter_gender, arrayAdapter_activity_level, arrayAdapter_exercise_type_selector;
-
+    TextInputLayout user_account_first_name, user_account_last_name, user_account_age,
+            gender_selector, activity_level_selector, exercise_type_selector, user_account_goal;
+    MaterialBetterSpinner gender_selector_spinner, activity_level_selector_spinner,
+            exercise_type_selector_spinner;
+    TextInputEditText user_account_first_name_edit_text, user_account_last_name_edit_text,
+            user_account_age_edit_text, user_account_goal_edit_text;
+    ArrayAdapter<String> arrayAdapter_gender, arrayAdapter_activity_level,
+            arrayAdapter_exercise_type_selector;
     FirebaseDatabase rootDatabase;
     DatabaseReference rootReference;
     DatabaseReference rootReferenceScoreBoard;
-
     UserDetails helperClass;
     UserDetails helperClass2;
-
     String membershipPlan;
-    int currentMoves, completedRoutines, lastLogin;
+    int currentMoves, completedRoutines, lastLogin, lastLoginWeek;
     boolean acceptedTC, onBoarded;
 
     @Override
@@ -84,12 +99,14 @@ public class UserDetailsActivity extends AppCompatActivity {
 
     }
 
-    private void firebaseSetup(){
-        
+    //Downloading the users information off firebase if they are already logged in
+    private void firebaseSetup() {
+
         rootDatabase = FirebaseDatabase.getInstance();
         FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         rootReference = rootDatabase.getReference("users").child(currentFirebaseUser.getUid());
-        rootReferenceScoreBoard = rootDatabase.getReference("scoreBoard").child(currentFirebaseUser.getUid());
+        rootReferenceScoreBoard =
+                rootDatabase.getReference("scoreBoard").child(currentFirebaseUser.getUid());
         rootReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -98,17 +115,19 @@ public class UserDetailsActivity extends AppCompatActivity {
                 if (helperClass != null) {
                     user_account_first_name_edit_text.setText(helperClass.getFirstName());
                     user_account_last_name_edit_text.setText(helperClass.getLastName());
-                    user_account_age_edit_text.setText(String.valueOf(helperClass.getAge()).equals("0") ? "":String.valueOf(helperClass.getAge()));
+                    user_account_age_edit_text.setText(String.valueOf(helperClass.getAge()).
+                            equals("0") ? "" : String.valueOf(helperClass.getAge()));
                     gender_selector_spinner.setText(helperClass.getGender());
                     activity_level_selector_spinner.setText(helperClass.getExerciseDuration());
                     exercise_type_selector_spinner.setText(helperClass.getExerciseType());
-                    if(helperClass.getWeeklyGoal() != 0) {
+                    if (helperClass.getWeeklyGoal() != 0) {
                         user_account_goal_edit_text.setText(String.valueOf(helperClass.getWeeklyGoal()));
                     }
                     currentMoves = helperClass.getCurrentMoves();
                     membershipPlan = helperClass.getMembershipPlan();
                     completedRoutines = helperClass.getCompletedRoutines();
                     lastLogin = helperClass.getLastLogin();
+                    lastLoginWeek = helperClass.getLastLoginWeek();
                     acceptedTC = helperClass.isAcceptedTC();
                     onBoarded = helperClass.isOnBoarded();
                 }
@@ -116,24 +135,33 @@ public class UserDetailsActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(UserDetailsActivity.this, "Failed to get data.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(UserDetailsActivity.this, "Failed to get data.",
+                        Toast.LENGTH_SHORT).show();
             }
         });
 
+        //Once the save button is pressed the user information is saved back to firebase and some
+        // fields are saved in local phone storage to speed up later information displays
         save_user_details_button.setOnClickListener(view -> {
-            if(validateFirstName() & validateLastName() & validateAge() & validateGender() & validateExerciseDuration() & validateExerciseType() & validateWeeklyGoal()) {
+            if (validateFirstName() & validateLastName() & validateAge() & validateGender() &
+                    validateExerciseDuration() & validateExerciseType() & validateWeeklyGoal()) {
 
-                String firstName = user_account_first_name.getEditText().getText().toString().trim();
+                String firstName =
+                        user_account_first_name.getEditText().getText().toString().trim();
                 String lastName = user_account_last_name.getEditText().getText().toString().trim();
-                int userAge = Integer.parseInt(user_account_age.getEditText().getText().toString().trim());
+                int userAge =
+                        Integer.parseInt(user_account_age.getEditText().getText().toString().trim());
                 String gender = gender_selector.getEditText().getText().toString();
                 String exerciseType = exercise_type_selector.getEditText().getText().toString();
-                String exerciseDuration = activity_level_selector.getEditText().getText().toString();
-                int weeklyGoal = Integer.parseInt(user_account_goal.getEditText().getText().toString().trim());
+                String exerciseDuration =
+                        activity_level_selector.getEditText().getText().toString();
+                int weeklyGoal =
+                        Integer.parseInt(user_account_goal.getEditText().getText().toString().trim());
 
-                helperClass2 = new UserDetails(firstName, lastName, gender, exerciseType, exerciseDuration, userAge, membershipPlan, weeklyGoal, currentMoves, completedRoutines, lastLogin, acceptedTC, onBoarded);
+                helperClass2 = new UserDetails(firstName, lastName, gender, exerciseType,
+                        exerciseDuration, userAge, membershipPlan, weeklyGoal, currentMoves,
+                        completedRoutines, lastLogin, lastLoginWeek, acceptedTC, onBoarded);
                 Gson gson = new Gson();
-                Log.i("helperClass2", gson.toJson(helperClass2));
 
                 rootReference.child("userDetails").setValue(helperClass2);
 
@@ -148,9 +176,9 @@ public class UserDetailsActivity extends AppCompatActivity {
                 editor.putInt(currentFirebaseUser + "completedRoutines", completedRoutines);
                 editor.putBoolean(currentFirebaseUser + "acceptedTC", true);
                 editor.apply();
-                if(!onBoarded) {
+                if (!onBoarded) {
                     startActivity(new Intent(UserDetailsActivity.this, OnBoardingActivity.class));
-                }else {
+                } else {
                     startActivity(new Intent(UserDetailsActivity.this, MainActivity.class));
                 }
                 finish();
@@ -160,7 +188,7 @@ public class UserDetailsActivity extends AppCompatActivity {
 
     }
 
-    private void textEntrySetup(){
+    private void textEntrySetup() {
         save_user_details_button = findViewById(R.id.save_user_details);
 
         user_account_first_name = findViewById(R.id.user_account_first_name);
@@ -175,45 +203,47 @@ public class UserDetailsActivity extends AppCompatActivity {
         user_account_age = findViewById(R.id.user_account_age);
 
         user_account_first_name.getEditText().setOnFocusChangeListener((view, b) -> {
-            if(!b){
+            if (!b) {
                 validateFirstName();
             }
         });
 
         user_account_last_name.getEditText().setOnFocusChangeListener((view, b) -> {
-            if(!b){
+            if (!b) {
                 validateLastName();
             }
         });
 
         user_account_age.getEditText().setOnFocusChangeListener((view, b) -> {
-            if(!b){
+            if (!b) {
                 validateAge();
             }
         });
     }
 
-    private void genderSelectorSetup(){
+    private void genderSelectorSetup() {
         gender_selector = findViewById(R.id.gender_selector);
         gender_selector_spinner = findViewById(R.id.gender_selector_spinner);
         String[] arrayList_gender = {"Female", "Male", "Other"};
-        arrayAdapter_gender = new ArrayAdapter<>(getApplicationContext(), R.layout.material_spinner_layout, arrayList_gender);
+        arrayAdapter_gender = new ArrayAdapter<>(getApplicationContext(),
+                R.layout.material_spinner_layout, arrayList_gender);
         gender_selector_spinner.setAdapter(arrayAdapter_gender);
 
 
         gender_selector.getEditText().setOnFocusChangeListener((view, b) -> {
-            if(!b){
+            if (!b) {
                 validateGender();
             }
         });
     }
 
-    private void activityLevelSelectorSetup(){
+    private void activityLevelSelectorSetup() {
         activity_level_selector = findViewById(R.id.activity_level_selector);
         activity_level_selector_spinner = findViewById(R.id.activity_level_selector_spinner);
         String[] arrayList_activity_level = {"None", "Less than 1 hour", "Between 1 and 2 hours",
                 "Between 2 and 4 hours", "Between 4 and 8 hours", "More than 8 hours"};
-        arrayAdapter_activity_level = new ArrayAdapter<>(getApplicationContext(), R.layout.material_spinner_layout, arrayList_activity_level);
+        arrayAdapter_activity_level = new ArrayAdapter<>(getApplicationContext(),
+                R.layout.material_spinner_layout, arrayList_activity_level);
         activity_level_selector_spinner.setAdapter(arrayAdapter_activity_level);
 
         activity_level_selector.getEditText().addTextChangedListener(new TextWatcher() {
@@ -234,18 +264,21 @@ public class UserDetailsActivity extends AppCompatActivity {
         });
 
         activity_level_selector.getEditText().setOnFocusChangeListener((view, b) -> {
-            if(!b){
+            if (!b) {
                 validateExerciseDuration();
             }
         });
     }
 
-    private void exerciseTypeSelectorSetup(){
+    private void exerciseTypeSelectorSetup() {
         exercise_type_selector = findViewById(R.id.exercise_type_selector);
         exercise_type_selector_spinner = findViewById(R.id.exercise_type_selector_spinner);
-        String[] arrayList_exercise_type_selector = {"None", "Aerobic: cycling, running...", "Anaerobic: weight training...",
-                "Calisthenics: large muscle group exercises", "Strength Training: compound or isolated exercise", "Stretching Exercises"}; //the text that goes in each different list view item
-        arrayAdapter_exercise_type_selector = new ArrayAdapter<>(getApplicationContext(), R.layout.material_spinner_layout, arrayList_exercise_type_selector);
+        String[] arrayList_exercise_type_selector = {"None", "Aerobic: cycling, running...",
+                "Anaerobic: weight training...", "Calisthenics: large muscle group exercises",
+                "Strength Training: compound or isolated exercise", "Stretching Exercises"};
+        //the text that goes in each different list view item
+        arrayAdapter_exercise_type_selector = new ArrayAdapter<>(getApplicationContext(),
+                R.layout.material_spinner_layout, arrayList_exercise_type_selector);
         exercise_type_selector_spinner.setAdapter(arrayAdapter_exercise_type_selector);
 
         exercise_type_selector.getEditText().addTextChangedListener(new TextWatcher() {
@@ -266,197 +299,193 @@ public class UserDetailsActivity extends AppCompatActivity {
         });
 
         exercise_type_selector.getEditText().setOnFocusChangeListener((view, b) -> {
-            if(!b){
+            if (!b) {
                 validateExerciseType();
 
             }
         });
     }
 
-    private void weeklyGoalDisplay(){
+    private void weeklyGoalDisplay() {
         user_account_goal = findViewById(R.id.user_account_goal);
         user_account_goal_edit_text = findViewById(R.id.user_account_goal_edit_text);
-        Log.i("exercise_type_selector", String.valueOf((!exercise_type_selector.getEditText().getText().toString().trim().equals(""))));
-        Log.i("activity_level_selector", String.valueOf((!activity_level_selector.getEditText().getText().toString().trim().equals(""))));
-        if((!exercise_type_selector.getEditText().getText().toString().trim().equals(""))&&(!activity_level_selector.getEditText().getText().toString().trim().equals(""))){
+        if ((!exercise_type_selector.getEditText().getText().toString().trim().equals("")) &&
+                (!activity_level_selector.getEditText().getText().toString().trim().equals(""))) {
             user_account_goal_edit_text.setText(weeklyGoalCalculation());
         }
         user_account_goal.getEditText().setOnFocusChangeListener((view, b) -> {
-            if(!b){
+            if (!b) {
                 validateWeeklyGoal();
             }
         });
     }
 
-    private String weeklyGoalCalculation(){
 
-            switch (activity_level_selector.getEditText().getText().toString()){
-                case "None":
-                    switch (exercise_type_selector.getEditText().getText().toString()) {
-                        case "None":
-                        case "Aerobic: cycling, running...":
-                        case "Anaerobic: weight training...":
-                        case "Calisthenics: large muscle group exercises":
-                        case "Strength Training: compound or isolated exercise":
-                        case "Stretching Exercises":
-                            return "450";
-                    }
-                case "Less than 1 hour":
-                    switch (exercise_type_selector.getEditText().getText().toString()){
-                        case "None":
-                            return "450";
-                        case "Aerobic: cycling, running...":
-                        case "Strength Training: compound or isolated exercise":
-                        case "Stretching Exercises":
-                            return "825";
-                        case "Anaerobic: weight training...":
-                        case "Calisthenics: large muscle group exercises":
-                            return "1080";
-                    }
-                case "Between 1 and 2 hours":
-                    switch (exercise_type_selector.getEditText().getText().toString()){
-                        case "None":
-                            return "450";
-                        case "Aerobic: cycling, running...":
-                        case "Strength Training: compound or isolated exercise":
-                        case "Stretching Exercises":
-                            return "1080";
-                        case "Anaerobic: weight training...":
-                        case "Calisthenics: large muscle group exercises":
-                            return "1260";
-                    }
-                case "Between 2 and 4 hours":
-                    switch (exercise_type_selector.getEditText().getText().toString()){
-                        case "None":
-                            return "450";
-                        case "Aerobic: cycling, running...":
-                        case "Strength Training: compound or isolated exercise":
-                        case "Stretching Exercises":
-                            return "1260";
-                        case "Anaerobic: weight training...":
-                        case "Calisthenics: large muscle group exercises":
-                            return "1710";
-                    }
-                case "Between 4 and 8 hours":
-                    switch (exercise_type_selector.getEditText().getText().toString()){
-                        case "None":
+    //calculates the user recommending weekly goal based on the information they have put into the
+    // fields
+    private String weeklyGoalCalculation() {
+
+        switch (activity_level_selector.getEditText().getText().toString()) {
+            case "None":
+                switch (exercise_type_selector.getEditText().getText().toString()) {
+                    case "None":
+                    case "Aerobic: cycling, running...":
+                    case "Anaerobic: weight training...":
+                    case "Calisthenics: large muscle group exercises":
+                    case "Strength Training: compound or isolated exercise":
+                    case "Stretching Exercises":
                         return "450";
-                        case "Aerobic: cycling, running...":
-                        case "Strength Training: compound or isolated exercise":
-                        case "Stretching Exercises":
-                            return "1710";
-                        case "Anaerobic: weight training...":
-                        case "Calisthenics: large muscle group exercises":
-                            return "2610";
-                    }
-                case "More than 8 hours":
-                    switch (exercise_type_selector.getEditText().getText().toString()){
-                        case "None":
-                            return "450";
-                        case "Aerobic: cycling, running...":
-                        case "Strength Training: compound or isolated exercise":
-                        case "Stretching Exercises":
-                            return "2610";
-                        case "Anaerobic: weight training...":
-                        case "Calisthenics: large muscle group exercises":
-                            return "3780";
-                    }
-                default:
-                    return "0";
-            }
+                }
+            case "Less than 1 hour":
+                switch (exercise_type_selector.getEditText().getText().toString()) {
+                    case "None":
+                        return "450";
+                    case "Aerobic: cycling, running...":
+                    case "Strength Training: compound or isolated exercise":
+                    case "Stretching Exercises":
+                        return "825";
+                    case "Anaerobic: weight training...":
+                    case "Calisthenics: large muscle group exercises":
+                        return "1080";
+                }
+            case "Between 1 and 2 hours":
+                switch (exercise_type_selector.getEditText().getText().toString()) {
+                    case "None":
+                        return "450";
+                    case "Aerobic: cycling, running...":
+                    case "Strength Training: compound or isolated exercise":
+                    case "Stretching Exercises":
+                        return "1080";
+                    case "Anaerobic: weight training...":
+                    case "Calisthenics: large muscle group exercises":
+                        return "1260";
+                }
+            case "Between 2 and 4 hours":
+                switch (exercise_type_selector.getEditText().getText().toString()) {
+                    case "None":
+                        return "450";
+                    case "Aerobic: cycling, running...":
+                    case "Strength Training: compound or isolated exercise":
+                    case "Stretching Exercises":
+                        return "1260";
+                    case "Anaerobic: weight training...":
+                    case "Calisthenics: large muscle group exercises":
+                        return "1710";
+                }
+            case "Between 4 and 8 hours":
+                switch (exercise_type_selector.getEditText().getText().toString()) {
+                    case "None":
+                        return "450";
+                    case "Aerobic: cycling, running...":
+                    case "Strength Training: compound or isolated exercise":
+                    case "Stretching Exercises":
+                        return "1710";
+                    case "Anaerobic: weight training...":
+                    case "Calisthenics: large muscle group exercises":
+                        return "2610";
+                }
+            case "More than 8 hours":
+                switch (exercise_type_selector.getEditText().getText().toString()) {
+                    case "None":
+                        return "450";
+                    case "Aerobic: cycling, running...":
+                    case "Strength Training: compound or isolated exercise":
+                    case "Stretching Exercises":
+                        return "2610";
+                    case "Anaerobic: weight training...":
+                    case "Calisthenics: large muscle group exercises":
+                        return "3780";
+                }
+            default:
+                return "0";
+        }
 
     }
 
-    private Boolean validateFirstName(){
+    private Boolean validateFirstName() {
         String firstName = user_account_first_name.getEditText().getText().toString().trim();
 
-        if(firstName.isEmpty()){
+        if (firstName.isEmpty()) {
             user_account_first_name.setError("First name cannot be empty");
             return false;
-        }
-        else{
+        } else {
             user_account_first_name.setError(null);
             user_account_first_name.setErrorEnabled(false);
             return true;
         }
     }
 
-    private Boolean validateLastName(){
+    private Boolean validateLastName() {
         String lastName = user_account_last_name.getEditText().getText().toString().trim();
 
-        if(lastName.isEmpty()){
+        if (lastName.isEmpty()) {
             user_account_last_name.setError("Last name cannot be empty");
             return false;
-        }
-        else{
+        } else {
             user_account_last_name.setError(null);
             user_account_last_name.setErrorEnabled(false);
             return true;
         }
     }
 
-    private Boolean validateAge(){
+    private Boolean validateAge() {
         String userAge = user_account_age.getEditText().getText().toString().trim();
-        if(userAge.isEmpty()){
+        if (userAge.isEmpty()) {
             user_account_age.setError("Age cannot be empty");
             return false;
-        } else if(Integer.parseInt(userAge)<18){
+        } else if (Integer.parseInt(userAge) < 18) {
             user_account_age.setError("You Must be 18 or older");
             return false;
-        }
-        else{
+        } else {
             user_account_age.setError(null);
             user_account_age.setErrorEnabled(false);
             return true;
         }
     }
 
-    private Boolean validateGender(){
+    private Boolean validateGender() {
         String gender = gender_selector.getEditText().getText().toString().trim();
 
-        if(gender.isEmpty()){
+        if (gender.isEmpty()) {
             gender_selector.setError("Gender cannot be empty");
             return false;
-        }
-        else{
+        } else {
             gender_selector.setError(null);
             gender_selector.setErrorEnabled(false);
             return true;
         }
     }
 
-    private Boolean validateExerciseDuration(){
+    private Boolean validateExerciseDuration() {
         String exerciseDuration = activity_level_selector.getEditText().getText().toString().trim();
 
-        if(exerciseDuration.isEmpty()){
+        if (exerciseDuration.isEmpty()) {
             activity_level_selector.setError("Activity level cannot be empty");
             return false;
-        }
-        else{
+        } else {
             activity_level_selector.setError(null);
             activity_level_selector.setErrorEnabled(false);
             return true;
         }
     }
 
-    private Boolean validateExerciseType(){
+    private Boolean validateExerciseType() {
         String exerciseType = exercise_type_selector.getEditText().getText().toString().trim();
 
-        if(exerciseType.isEmpty()){
+        if (exerciseType.isEmpty()) {
             exercise_type_selector.setError("Type of exercise cannot be empty");
             return false;
-        }
-        else{
+        } else {
             exercise_type_selector.setError(null);
             exercise_type_selector.setErrorEnabled(false);
             return true;
         }
     }
 
-    private Boolean validateWeeklyGoal(){
+    private Boolean validateWeeklyGoal() {
         String weeklyGoal = user_account_goal.getEditText().getText().toString().trim();
 
-        if(Integer.parseInt(weeklyGoal) <= 0 || Integer.parseInt(weeklyGoal) > 9000){
+        if (Integer.parseInt(weeklyGoal) <= 0 || Integer.parseInt(weeklyGoal) > 9000) {
             user_account_goal.setError("Choose a goal greater than 0 or less than 9000");
             return false;
         } else {
@@ -466,7 +495,7 @@ public class UserDetailsActivity extends AppCompatActivity {
         }
     }
 
-
+    //starts the account deletion process
     private void deleteAccount() {
         Button deleteAccount = findViewById(R.id.delete_user_details);
         deleteAccount.setOnClickListener(new View.OnClickListener() {
@@ -477,28 +506,25 @@ public class UserDetailsActivity extends AppCompatActivity {
         });
     }
 
-    private void deleteAccountAlertBuilder(AuthCredential credential){
-        new MaterialAlertDialogBuilder(this, R.style.AlertDialogStyle)
-        .setTitle("Are you sure you would like to delete your account?")
-        .setMessage("This cannot be undone!")
-        .setCancelable(true)
-        .setPositiveButton("Yes, Delete", (dialog, id) -> {
+    //requests confirmation that they want to delete their account, then deletes their
+    // information from everywhere in the data base and removes their account for the
+    // authentication service
+    private void deleteAccountAlertBuilder(AuthCredential credential) {
+        new MaterialAlertDialogBuilder(this, R.style.AlertDialogStyle).setTitle("Are you sure " + "you" + " would like to delete your account?").setMessage("This cannot be " + "undone!").setCancelable(true).setPositiveButton("Yes, Delete", (dialog, id) -> {
             final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
             rootReference.removeValue();
             rootReferenceScoreBoard.removeValue();
             user.reauthenticate(credential).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {
-                    Log.i("PositiveButton", " attempting account deletion");
                     user.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
-                                Log.i("onComplete", " account deleted");
-                                startActivity(new Intent(UserDetailsActivity.this, SignupActivity.class));
+                                startActivity(new Intent(UserDetailsActivity.this,
+                                        SignupActivity.class));
                                 finish();
-                            }else{
-                                Log.i("onComplete", " account NOT deleted FAILED");
+                            } else {
                             }
                         }
                     });
@@ -506,28 +532,30 @@ public class UserDetailsActivity extends AppCompatActivity {
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(UserDetailsActivity.this, "Incorrect Password, Please Try Again", Toast.LENGTH_LONG).show();
+                    Toast.makeText(UserDetailsActivity.this, "Incorrect Password, Please Try " +
+                            "Again", Toast.LENGTH_LONG).show();
                     reAuthenticateUser();
                 }
             });
 
         })
 
-        .setNegativeButton("Cancel", (dialog, id) -> {
-            dialog.cancel();
-        })
-        // create alert dialog
-        .show();
+                .setNegativeButton("Cancel", (dialog, id) -> {
+                    dialog.cancel();
+                })
+                // create alert dialog
+                .show();
     }
 
-    private void reAuthenticateUser(){
-        String provider = FirebaseAuth.getInstance().getCurrentUser().getIdToken(false).getResult().getSignInProvider(); //Currently only outputs firebase as provider????
-        String password;
-        AuthCredential credential = null;
-        Log.i("reAuthenticateUser", " : "+provider);
+    //reAuthenticates the user to allow the account deletion to occur
+    private void reAuthenticateUser() {
+        String provider =
+                FirebaseAuth.getInstance().getCurrentUser().getIdToken(false).getResult().getSignInProvider();
+        AuthCredential credential;
         switch (provider) {
             case "google.com":
-                GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(UserDetailsActivity.this);
+                GoogleSignInAccount acct =
+                        GoogleSignIn.getLastSignedInAccount(UserDetailsActivity.this);
                 credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
                 deleteAccountAlertBuilder(credential);
                 break;
@@ -538,15 +566,19 @@ public class UserDetailsActivity extends AppCompatActivity {
                 break;
             case "password":
                 EditText passwordInput = new EditText(UserDetailsActivity.this);
-                passwordInput.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);//ensures that text box can only take one line
+                passwordInput.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);//ensures that
+                // text box can only take one line
 
-                AlertDialog.Builder passwordReAuthenticateDialog = new AlertDialog.Builder(UserDetailsActivity.this);
+                AlertDialog.Builder passwordReAuthenticateDialog =
+                        new AlertDialog.Builder(UserDetailsActivity.this);
                 passwordReAuthenticateDialog.setTitle("ReAuthenticate to Delete Account");
                 passwordReAuthenticateDialog.setMessage("Please Enter Your Password");
                 passwordReAuthenticateDialog.setView(passwordInput);
 
                 passwordReAuthenticateDialog.setPositiveButton("Submit", (dialog, which) -> {
-                    AuthCredential credential2 = EmailAuthProvider.getCredential(FirebaseAuth.getInstance().getCurrentUser().getEmail(), passwordInput.getText().toString());
+                    AuthCredential credential2 =
+                            EmailAuthProvider.getCredential(FirebaseAuth.getInstance().getCurrentUser().getEmail(),
+                                    passwordInput.getText().toString());
                     deleteAccountAlertBuilder(credential2);
 
                 });
@@ -554,28 +586,12 @@ public class UserDetailsActivity extends AppCompatActivity {
 
                 });
                 passwordReAuthenticateDialog.show();
-                Log.i("reAuthenticateUser", FirebaseAuth.getInstance().getCurrentUser().getEmail());
 
                 break;
             default:
-                Log.i("reAuthenticateUser", "Default");
                 break;
         }
     }
-
-    public static InputFilter[] myFilter = new InputFilter[] {
-            new InputFilter() {
-                public CharSequence filter(CharSequence source, int start, int end,
-                                           Spanned dest, int dstart, int dend) {
-                    for (int i = start; i < end; i++) {
-                        if (!Character.isLetter(source.charAt(i))) {
-                            return "";
-                        }
-                    }
-                    return null;
-                }
-            }
-    };
 
 }
 

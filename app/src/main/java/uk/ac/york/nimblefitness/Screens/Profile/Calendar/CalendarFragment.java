@@ -16,11 +16,12 @@ import androidx.fragment.app.Fragment;
 import uk.ac.york.nimblefitness.HelperClasses.ShareService;
 import uk.ac.york.nimblefitness.R;
 
-/** This class initialises the 'Calendar' tab within the profile page of the app. It includes a
+/**
+ * This class initialises the 'Calendar' tab within the profile page of the app. It includes a
  * calendar view with days selectable since the user signed up to the app and a list of completed
  * exercises below. The completed exercises are relevant to the day they were completed on.
  */
-public class CalendarFragment extends Fragment implements CalendarContract.CalendarView{
+public class CalendarFragment extends Fragment implements CalendarContract.CalendarView {
 
     CalendarPresenter calendarPresenter;
 
@@ -46,17 +47,17 @@ public class CalendarFragment extends Fragment implements CalendarContract.Calen
         /* For the currently selected day, a list of the moves completed on that particular day is
            displayed.
          */
-        ListView listView = (ListView) view.findViewById(R.id.completed_moves_list);
+        ListView listView = view.findViewById(R.id.completed_moves_list);
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             /** The displayed date text changes accordingly when another day is selected besides the
              * default.
              */
             @Override
-            public void onSelectedDayChange(
-                    @NonNull CalendarView view, int year, int month, int dayOfMonth) {
+            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month,
+                                            int dayOfMonth) {
                 dayNumber.setText(calendarPresenter.displaySelectedDay(month, dayOfMonth));
                 listView.setAdapter(calendarPresenter.
-                        setCompletedMovesList(String.valueOf(dayNumber.getText()),listView));
+                        setCompletedMovesList(String.valueOf(dayNumber.getText()), listView));
             }
         });
 
@@ -65,7 +66,7 @@ public class CalendarFragment extends Fragment implements CalendarContract.Calen
         userName.setText(calendarPresenter.displayUserName());
         // The list height is set depending on the number of completed exercises children. //
         listView.setAdapter(calendarPresenter.
-                setCompletedMovesList(String.valueOf(dayNumber.getText()),listView));
+                setCompletedMovesList(String.valueOf(dayNumber.getText()), listView));
         /* The user has the ability to share their completed exercises to any social media
            platform.
          */
@@ -73,10 +74,9 @@ public class CalendarFragment extends Fragment implements CalendarContract.Calen
         shareButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new ShareService("Look at my workout",
-                        "I have just completed a workout on the Nimble Fitness Companion, " +
-                                "sign up today to view my score!",
-                        "Share your workout - "+ dayNumber.getText()).ShareContent());
+                startActivity(new ShareService("Look at my workout", "I have just completed a " +
+                        "workout on the Nimble Fitness Companion, " + "sign up today to view my " +
+                        "score!", "Share your workout - " + dayNumber.getText()).ShareContent());
             }
         });
 
@@ -84,7 +84,8 @@ public class CalendarFragment extends Fragment implements CalendarContract.Calen
         return view;
     }
 
-    /** This method is used to send the fragment's context to the Presenter so the list of completed
+    /**
+     * This method is used to send the fragment's context to the Presenter so the list of completed
      * moves can be set.
      */
     @Override

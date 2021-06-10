@@ -1,7 +1,6 @@
 package uk.ac.york.nimblefitness.Screens;
 
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
@@ -22,7 +21,6 @@ public class OnBoardingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_on_boarding);
 
         viewPager2 = findViewById(R.id.view_pager2);
-        Log.i("viewpager", String.valueOf(viewPager2));
 
         //list of title text for each page
         List<String> title = new ArrayList<>();
@@ -46,10 +44,9 @@ public class OnBoardingActivity extends AppCompatActivity {
         image.add(R.drawable.leaderboard);
 
         //passes onboaring parameters to the viewPager Adapter
-        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(this, title, viewPager2,
-                image, description);
+        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(this, title, viewPager2, image,
+                description);
 
-        Log.i("onCreate", String.valueOf(viewPagerAdapter));
 
         viewPager2.setAdapter(viewPagerAdapter);
     }

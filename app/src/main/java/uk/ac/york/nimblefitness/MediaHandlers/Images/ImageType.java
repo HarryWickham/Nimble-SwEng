@@ -12,50 +12,54 @@ public class ImageType {
     public ImageType() {
     }
 
-    //Setters
-    public void setXCoordinate(int xCoordinate){
-        this.xCoordinate = xCoordinate;
-    }
-
-    public void setYCoordinate(int yCoordinate){
-        this.yCoordinate = yCoordinate;
-    }
-
-    public void setImageWidth(int width){
-        this.width = width;
-    }
-
-    public void setImageHeight(int height){
-        this.height = height;
-    }
-
-    public void setImageDuration(int duration){ this.duration = duration; }
-
-    public void setImageSource(String imageSource){
-        this.imageSource = imageSource;
-    }
-
     //Getters
-    public int getXCoordinate(){
+    public int getXCoordinate() {
         return xCoordinate;
     }
 
-    public int getYCoordinate(){
+    //Setters
+    public void setXCoordinate(int xCoordinate) {
+        this.xCoordinate = xCoordinate;
+    }
+
+    public int getYCoordinate() {
         return yCoordinate;
     }
 
-    public int getImageWidth(){
+    public void setYCoordinate(int yCoordinate) {
+        this.yCoordinate = yCoordinate;
+    }
+
+    public int getImageWidth() {
         return width;
     }
 
-    public int getImageHeight(){
+    public void setImageWidth(int width) {
+        this.width = width;
+    }
+
+    public int getImageHeight() {
         return height;
     }
 
-    public int getImageDuration(){ return duration; }
+    public void setImageHeight(int height) {
+        this.height = height;
+    }
 
-    public String getImageSource(){
+    public int getImageDuration() {
+        return duration;
+    }
+
+    public void setImageDuration(int duration) {
+        this.duration = duration;
+    }
+
+    public String getImageSource() {
         return imageSource;
+    }
+
+    public void setImageSource(String imageSource) {
+        this.imageSource = imageSource;
     }
 
 }

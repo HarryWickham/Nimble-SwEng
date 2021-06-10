@@ -8,29 +8,19 @@ import android.util.AttributeSet;
 
 import java.io.Serializable;
 
-public class TextModule extends androidx.appcompat.widget.AppCompatTextView implements Serializable{
-
-    public enum fontFamily {
-        default_bold, monospace, sans_serif, serif
-    }
-
-    public enum styleFamily {
-        bold, italic, bold_italic, normal
-    }
+public class TextModule extends androidx.appcompat.widget.AppCompatTextView implements Serializable {
 
     //Declaring variables needed for the text
     styleFamily style;
     fontFamily font;
     String text, fontSize, fontColour;
     int xStart, yStart;
-
     /**
      * Constructor for the text module. Uses all these inputs to fulfill the PWS.
      */
     public TextModule(Context context) {
         super(context);
     }
-
     public TextModule(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
@@ -136,6 +126,7 @@ public class TextModule extends androidx.appcompat.widget.AppCompatTextView impl
     /**
      * Updates text font using a switch case for default, default bold, monospace, sans serif and
      * serif.
+     *
      * @return family: used for setting up the typeface in updateTypeface
      */
     public Typeface updateTextFont() {
@@ -168,5 +159,13 @@ public class TextModule extends androidx.appcompat.widget.AppCompatTextView impl
         updateTextColour();
         updateTextSize();
         setTypeface(updateTextFont());
+    }
+
+    public enum fontFamily {
+        default_bold, monospace, sans_serif, serif
+    }
+
+    public enum styleFamily {
+        bold, italic, bold_italic, normal
     }
 }

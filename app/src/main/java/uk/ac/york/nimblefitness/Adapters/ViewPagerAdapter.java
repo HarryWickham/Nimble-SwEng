@@ -27,18 +27,16 @@ import uk.ac.york.nimblefitness.Screens.MainActivity;
 
 public class ViewPagerAdapter extends RecyclerView.Adapter<ViewPagerAdapter.ViewHolder> {
 
-    private List<String> myTitle;
-    private List<String> myDescription;
-    private LayoutInflater mInflater;
-    private ViewPager2 viewPager2;
-    private List<Integer> myImage;
-    private Context context;
-
-
     //Array of background colours
     private final int[] colorArray = new int[]{android.R.color.holo_blue_bright,
             android.R.color.holo_red_light, android.R.color.holo_purple,
             android.R.color.holo_orange_light};
+    private final List<String> myTitle;
+    private final List<String> myDescription;
+    private final LayoutInflater mInflater;
+    private final ViewPager2 viewPager2;
+    private final List<Integer> myImage;
+    private final Context context;
 
 
     public ViewPagerAdapter(Context context, List<String> data, ViewPager2 viewPager2,
@@ -46,7 +44,7 @@ public class ViewPagerAdapter extends RecyclerView.Adapter<ViewPagerAdapter.View
         this.mInflater = LayoutInflater.from(context);
         this.myTitle = data;
         this.viewPager2 = viewPager2;
-        this.myImage =image;
+        this.myImage = image;
         this.myDescription = description;
         this.context = context;
 
@@ -81,13 +79,13 @@ public class ViewPagerAdapter extends RecyclerView.Adapter<ViewPagerAdapter.View
                 Intent skipIntent = new Intent(context, MainActivity.class);
                 context.startActivity(skipIntent);
                 rootReference.child("onBoarded").setValue(true);
-                ((Activity)context).finish();
+                ((Activity) context).finish();
             }
 
         });
 
         //This makes sure that the get started button is only displayed on the last page
-        if(getItemCount()-1 == position){
+        if (getItemCount() - 1 == position) {
             holder.getStarted.setVisibility(View.VISIBLE);
             holder.getStarted.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -95,7 +93,7 @@ public class ViewPagerAdapter extends RecyclerView.Adapter<ViewPagerAdapter.View
                     Intent getStartedIntent = new Intent(context, MainActivity.class);
                     context.startActivity(getStartedIntent);
                     rootReference.child("onBoarded").setValue(true);
-                    ((Activity)context).finish();
+                    ((Activity) context).finish();
                 }
 
             });
@@ -107,7 +105,6 @@ public class ViewPagerAdapter extends RecyclerView.Adapter<ViewPagerAdapter.View
     public int getItemCount() {
         return myTitle.size();
     }
-
 
 
     public class ViewHolder extends RecyclerView.ViewHolder {

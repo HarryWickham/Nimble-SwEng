@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,15 +22,14 @@ import uk.ac.york.nimblefitness.Screens.Settings.SettingsFragment;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ProfileTabsFragment profileTabsFragment;
-    private RoutinesFragment routinesFragment;
-    private ExerciseFragment exerciseFragment;
-    private SettingsFragment settingsFragment;
-
     AlertDialog internetChecker;
     Handler handler = new Handler();
     Runnable runnable;
     int delay = 10000;
+    private ProfileTabsFragment profileTabsFragment;
+    private RoutinesFragment routinesFragment;
+    private ExerciseFragment exerciseFragment;
+    private SettingsFragment settingsFragment;
 
     /*@Override
     protected void onResume() {
@@ -59,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         openFragment(new ProfileTabsFragment());
         bottomNav.setOnNavigationItemSelectedListener(item -> {
 
-            switch (item.getItemId()){
+            switch (item.getItemId()) {
                 case R.id.profile_page:
                     openFragment(profileTabsFragment);
                     return true;
@@ -81,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    void openFragment(Fragment fragment){
+    void openFragment(Fragment fragment) {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.main_frame, fragment);
         fragmentTransaction.commit();
@@ -93,38 +91,34 @@ public class MainActivity extends AppCompatActivity {
         //super.onBackPressed();
         AlertDialog.Builder exitApp = new AlertDialog.Builder(this);
         exitApp.setTitle("Would you like to close the app?");
-        Log.i("TAG", "onBackPressed: ");
-        exitApp.setCancelable(true)
-                .setPositiveButton("Close", (dialog, id) -> {
-                    // if this button is clicked, close
-                    // current activity
-                    MainActivity.this.finish();
-                })
-                .setNegativeButton("Cancel", (dialog, id) -> {
-                    // if this button is clicked, just close
-                    // the dialog box and do nothing
-                    dialog.cancel();
-                });
+        exitApp.setCancelable(true).setPositiveButton("Close", (dialog, id) -> {
+            // if this button is clicked, close
+            // current activity
+            MainActivity.this.finish();
+        }).setNegativeButton("Cancel", (dialog, id) -> {
+            // if this button is clicked, just close
+            // the dialog box and do nothing
+            dialog.cancel();
+        });
 
         // create alert dialog
         exitApp.create().show();
 
     }
 
-    private void connectedToTheInternet(){
-        if(!isNetworkConnected() | !internetIsConnected()){
+    private void connectedToTheInternet() {
+        if (!isNetworkConnected() | !internetIsConnected()) {
             internetChecker.setTitle("An error has occurred");
             internetChecker.setMessage("Please ensure you are connected to the internet");
-            Log.i("TAG", "onBackPressed: ");
             internetChecker.setCancelable(false);
-            internetChecker.setButton(DialogInterface.BUTTON_NEGATIVE,"Retry", (dialog, id) -> {
-                        if(!isNetworkConnected() | !internetIsConnected()) {
-                            connectedToTheInternet();
-                            internetChecker.cancel();
-                        }
-                    });
+            internetChecker.setButton(DialogInterface.BUTTON_NEGATIVE, "Retry", (dialog, id) -> {
+                if (!isNetworkConnected() | !internetIsConnected()) {
+                    connectedToTheInternet();
+                    internetChecker.cancel();
+                }
+            });
 
-            if(!internetChecker.isShowing()) {
+            if (!internetChecker.isShowing()) {
                 // create alert dialog
                 internetChecker.show();
             }
@@ -132,7 +126,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private boolean isNetworkConnected() {
-        ConnectivityManager cm = (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager cm =
+                (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
         return cm.getActiveNetworkInfo() != null;
     }
 

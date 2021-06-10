@@ -27,7 +27,9 @@ public class ShapeView extends View implements Serializable {
     Paint mPaint;
 
 
-    /** The following 4 creators are implemented due to extending View */
+    /**
+     * The following 4 creators are implemented due to extending View
+     */
     public ShapeView(Context context) {
         super(context);
         init(null);
@@ -43,45 +45,54 @@ public class ShapeView extends View implements Serializable {
         init(attrs);
     }
 
-    public ShapeView(Context context,@Nullable AttributeSet attrs,int defStyleAttr,int defStyleRes){
+    public ShapeView(Context context, @Nullable AttributeSet attrs, int defStyleAttr,
+                     int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         init(attrs);
     }
 
 
-    /** instantiates the previously defined objects with their constructors */
-    public void init(@Nullable AttributeSet set){
+    /**
+     * instantiates the previously defined objects with their constructors
+     */
+    public void init(@Nullable AttributeSet set) {
         mRect = new Rect();
         mOval = new RectF();
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     }
 
 
-    /** adding a shapeType to the shape array when the shape has a linear gradient */
+    /**
+     * adding a shapeType to the shape array when the shape has a linear gradient
+     */
     public void addShape(int xStart, int yStart, int height, int width,
-                         LinearGradient linearGradient, String shape, int duration){
+                         LinearGradient linearGradient, String shape, int duration) {
         shapeTypeArray.add(new ShapeType(xStart, yStart, width, height, Color.RED, shape,
-                            linearGradient, duration));
+                linearGradient, duration));
     }
 
-    /** adding a shapeType to the shape array when the shape has a solid colour */
-    public void addShape(int xStart, int yStart, int height, int width, int colour,
-                         String shape, int duration){
-        shapeTypeArray.add(new ShapeType(xStart, yStart, width, height, colour, shape,
-                    null, duration));
+    /**
+     * adding a shapeType to the shape array when the shape has a solid colour
+     */
+    public void addShape(int xStart, int yStart, int height, int width, int colour, String shape,
+                         int duration) {
+        shapeTypeArray.add(new ShapeType(xStart, yStart, width, height, colour, shape, null,
+                duration));
     }
 
-    /** adding a shapeType to the shape array when the shape is a line */
-    public void addLine(int xStart, int yStart, int xEnd, int yEnd, int colour, int duration){
-        shapeTypeArray.add(new ShapeType(xStart,yStart,xEnd,yEnd,colour,"LINE",duration));
+    /**
+     * adding a shapeType to the shape array when the shape is a line
+     */
+    public void addLine(int xStart, int yStart, int xEnd, int yEnd, int colour, int duration) {
+        shapeTypeArray.add(new ShapeType(xStart, yStart, xEnd, yEnd, colour, "LINE", duration));
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
 
         //looping through the shapeTypeArray to draw the shapes
-        for(ShapeType shapeType : shapeTypeArray){
-            if(shapeType.getDuration() != 0) {
+        for (ShapeType shapeType : shapeTypeArray) {
+            if (shapeType.getDuration() != 0) {
                 delay(shapeType);
             }
             //drawing the shapes that have a linear gradient
@@ -105,7 +116,7 @@ public class ShapeView extends View implements Serializable {
                     canvas.drawOval(mOval, mPaint);
                 }
                 //drawing the shapes that have a solid fill
-            } else{
+            } else {
                 //drawing a rectangle using the drawRect method of canvas
                 switch (shapeType.getShape_type()) {
                     case "RECTANGLE":
@@ -134,7 +145,7 @@ public class ShapeView extends View implements Serializable {
                         mPaint.setShader(shapeType.getShading());
                         mPaint.setColor(shapeType.getColour());
                         canvas.drawLine(shapeType.getxStart(), shapeType.getyStart(),
-                                        shapeType.getxEnd(), shapeType.getyEnd(), mPaint);
+                                shapeType.getxEnd(), shapeType.getyEnd(), mPaint);
                         break;
                 }
             }
@@ -142,14 +153,15 @@ public class ShapeView extends View implements Serializable {
     }
 
     //A method to allow the developer to clear the canvas of all shapes
-    public void clearAll(){
+    public void clearAll() {
         shapeTypeArray.clear();
     }
 
-    /** Runs a delay before removing a shape from the array list dependent on the duration parameter
-     *  defined by the user.
+    /**
+     * Runs a delay before removing a shape from the array list dependent on the duration parameter
+     * defined by the user.
      */
-    public void delay(ShapeType shapeType){
+    public void delay(ShapeType shapeType) {
         Handler handler = new Handler(Looper.getMainLooper());
         handler.postDelayed(new Runnable() {
             @Override

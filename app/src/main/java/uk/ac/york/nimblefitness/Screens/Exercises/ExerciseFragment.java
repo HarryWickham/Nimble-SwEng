@@ -32,7 +32,9 @@ public class ExerciseFragment extends Fragment {
     TextView nothingFound; //nothingFound displays a message if not items are found from a search
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {super.onCreate(savedInstanceState);}
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,12 +51,14 @@ public class ExerciseFragment extends Fragment {
         exercisesSearch.setQueryHint("Search for exercises");
         exercisesSearch.onActionViewExpanded();
         exercisesSearch.setIconified(false);
+        exercisesSearch.clearFocus();
 
         // Object of routine data, that holds all the data from the routines.xml
         RoutineData routineData = new RoutineData(getContext(), R.raw.exercise);
-        ArrayList<Exercise> exercises = (ArrayList<Exercise>) routineData.getRoutine().get(0).getExerciseArrayList().clone();
+        ArrayList<Exercise> exercises =
+                (ArrayList<Exercise>) routineData.getRoutine().get(0).getExerciseArrayList().clone();
 
-        ExerciseListAdapter arrayAdapter = new ExerciseListAdapter(getContext(),exercises);
+        ExerciseListAdapter arrayAdapter = new ExerciseListAdapter(getContext(), exercises);
         list.setAdapter(arrayAdapter);
 
         //the method for the searching functionality
@@ -72,8 +76,7 @@ public class ExerciseFragment extends Fragment {
                 if (!successfulSearch) {
                     nothingFound.setVisibility(VISIBLE);
                     list.setVisibility(GONE);
-                }
-                else {
+                } else {
                     nothingFound.setVisibility(GONE);
                 }
                 return false;

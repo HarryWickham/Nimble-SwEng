@@ -1,16 +1,14 @@
 package uk.ac.york.nimblefitness.Screens.Profile;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -27,8 +25,9 @@ import uk.ac.york.nimblefitness.Adapters.LeaderboardListAdapter;
 import uk.ac.york.nimblefitness.HelperClasses.LeaderBoardUserDetails;
 import uk.ac.york.nimblefitness.R;
 
-/** This class loads the data and appearance for the leaderboard tab which is only available/visible
- *  to users who have a gold subscription plan.
+/**
+ * This class loads the data and appearance for the leaderboard tab which is only available/visible
+ * to users who have a gold subscription plan.
  */
 public class LeaderBoardFragment extends Fragment {
 
@@ -54,7 +53,7 @@ public class LeaderBoardFragment extends Fragment {
         return view;
     }
 
-    private void fetchData(){
+    private void fetchData() {
 
         FirebaseDatabase rootDatabase = FirebaseDatabase.getInstance();
         FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -63,16 +62,10 @@ public class LeaderBoardFragment extends Fragment {
         rootReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot ds : snapshot.getChildren()) {
+                for (DataSnapshot ds : snapshot.getChildren()) {
                     leaderBoardUserDetail = ds.getValue(LeaderBoardUserDetails.class);
-                    if(ds.child("uuid").getValue().equals(currentFirebaseUser.getUid())){
-                        leaderBoardUserDetail.setUser(true);
-                        Log.i("isUser?", "true");
-                    }else{
-                        leaderBoardUserDetail.setUser(false);
-                        Log.i("isUser?", "false");
-
-                    }
+                    leaderBoardUserDetail.setUser(ds.child("uuid").getValue()
+                            .equals(currentFirebaseUser.getUid()));
                     leaderBoardUserDetails.add(leaderBoardUserDetail);
                     updateListView();
                 }
@@ -85,11 +78,11 @@ public class LeaderBoardFragment extends Fragment {
         });
     }
 
-    private void updateListView(){
+    private void updateListView() {
         leaderBoardProgressBar.setVisibility(View.GONE);
         Collections.sort(leaderBoardUserDetails);
         LeaderboardListAdapter listAdapter = new LeaderboardListAdapter(leaderBoardUserDetails,
-                                                                                    getContext());
+                getContext());
         listView.setAdapter(listAdapter);
     }
 

@@ -10,6 +10,11 @@ import android.os.Build;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
+/**
+ * A handler to ease the creation of notifications. The main use of notifications is when the
+ * user reaches their weekly goal.
+ */
+
 public class CreateNotification {
     Intent intent;
     PendingIntent pendingIntent;
@@ -29,7 +34,9 @@ public class CreateNotification {
     Context context;
     Class aClass;
 
-    public CreateNotification(int notificationIcon, String notificationTitle, String notificationContent, Class aClass, String channelID, int notificationID, Context context) {
+    public CreateNotification(int notificationIcon, String notificationTitle,
+                              String notificationContent, Class aClass, String channelID,
+                              int notificationID, Context context) {
         this.notificationIcon = notificationIcon;
         this.notificationTitle = notificationTitle;
         this.notificationContent = notificationContent;
@@ -40,22 +47,21 @@ public class CreateNotification {
         buildNotification();
     }
 
-    public void buildNotification(){
+    public void buildNotification() {
         createNotificationChannel();
         intent = new Intent(context, aClass);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        pendingIntent = PendingIntent.getActivity(context, 0, intent,PendingIntent.FLAG_UPDATE_CURRENT);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        pendingIntent = PendingIntent.getActivity(context, 0, intent,
+                PendingIntent.FLAG_UPDATE_CURRENT);
 
-        notificationBuilder = new NotificationCompat.Builder(context, channelID)
-                .setSmallIcon(notificationIcon)
-                .setContentTitle(notificationTitle)
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .setContentIntent(pendingIntent)
-                .setAutoCancel(true)
-                .setStyle(new NotificationCompat.BigTextStyle().bigText(notificationContent));
+        notificationBuilder =
+                new NotificationCompat.Builder(context, channelID).setSmallIcon(notificationIcon)
+                        .setContentTitle(notificationTitle).setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                        .setContentIntent(pendingIntent).setAutoCancel(true)
+                        .setStyle(new NotificationCompat.BigTextStyle().bigText(notificationContent));
 
         notificationManagerCompat = NotificationManagerCompat.from(context);
-        notificationManagerCompat.notify(notificationID,notificationBuilder.build());
+        notificationManagerCompat.notify(notificationID, notificationBuilder.build());
     }
 
     private void createNotificationChannel() {

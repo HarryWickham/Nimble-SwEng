@@ -11,10 +11,6 @@ public class TextButtonType {
     fontFamily font;
     Context context;
 
-    public enum fontFamily {
-        default_bold, monospace, sans_serif, serif
-    }
-
     public TextButtonType(int xStart, int yStart, int width, int height, String slideId,
                           String mediaId, String fontSize, String fontColour, String text,
                           fontFamily font, Context context) {
@@ -31,7 +27,7 @@ public class TextButtonType {
         this.context = context;
     }
 
-    public Button createButton(){
+    public Button createButton() {
         Button button = new Button(context);
         button.setText(text);
         button.setTextColor(Color.parseColor(fontColour));
@@ -134,5 +130,9 @@ public class TextButtonType {
 
     public void setFont(fontFamily font) {
         this.font = font;
+    }
+
+    public enum fontFamily {
+        default_bold, monospace, sans_serif, serif
     }
 }

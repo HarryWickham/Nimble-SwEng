@@ -20,8 +20,8 @@ public class ShapeType implements Serializable {
     public ShapeType() {
     }
 
-    public ShapeType(int xStart, int yStart, int width, int height, int colour, String shape_type,
-                     LinearGradient shading, int duration) {
+    public ShapeType(int xStart, int yStart, int width, int height, int colour, String shape_type
+            , LinearGradient shading, int duration) {
         this.xStart = xStart;
         this.yStart = yStart;
         this.width = width;
@@ -32,7 +32,8 @@ public class ShapeType implements Serializable {
         this.duration = duration;
     }
 
-    public ShapeType(int xStart,int yStart,int xEnd,int yEnd,int colour,String shape,int duration){
+    public ShapeType(int xStart, int yStart, int xEnd, int yEnd, int colour, String shape,
+                     int duration) {
         this.xStart = xStart;
         this.yStart = yStart;
         this.xEnd = xEnd;

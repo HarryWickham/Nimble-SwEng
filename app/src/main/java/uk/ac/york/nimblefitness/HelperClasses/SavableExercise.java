@@ -1,5 +1,10 @@
 package uk.ac.york.nimblefitness.HelperClasses;
 
+/**
+ * And object that contains everything that will be added to the firebase realtime database when
+ * the user completes an exercise
+ */
+
 public class SavableExercise {
     private String exerciseName;
     private int reps;
@@ -8,7 +13,8 @@ public class SavableExercise {
     private String repType;
     private String dateCompleted;
 
-    public SavableExercise(String exerciseName, int reps, float movesPerRep, int colour, String repType, String dateCompleted) {
+    public SavableExercise(String exerciseName, int reps, float movesPerRep, int colour,
+                           String repType, String dateCompleted) {
         this.exerciseName = exerciseName;
         this.reps = reps;
         this.movesPerRep = movesPerRep;

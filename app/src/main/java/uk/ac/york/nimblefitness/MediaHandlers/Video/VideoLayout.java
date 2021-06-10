@@ -15,6 +15,7 @@ public class VideoLayout implements Serializable, AbstractLayout {
     boolean loop;
     FrameLayout parentLayout;
     Context context;
+    VideoPlayer videoPlayer;
 
     public VideoLayout(String uriPath, int width, int height, int xStart, int yStart, String id,
                        int startTime, boolean loop, FrameLayout parentLayout, Context context) {
@@ -72,27 +73,33 @@ public class VideoLayout implements Serializable, AbstractLayout {
 
     @Override
     public void draw() {
-        VideoPlayer videoPlayer = new VideoPlayer();
-        Uri UrlPath=Uri.parse(this.uriPath);
+        videoPlayer = new VideoPlayer();
+        Uri UrlPath = Uri.parse(this.uriPath);
 
         CustomVideoView videoView = new CustomVideoView(this.context);
 
-        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        params.leftMargin=this.xStart;
-        params.topMargin=this.yStart;
+        FrameLayout.LayoutParams params =
+                new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT);
+        params.leftMargin = this.xStart;
+        params.topMargin = this.yStart;
         videoView.setLayoutParams(params);
 
         parentLayout.addView(videoView);
-        if(this.width != 0 && this.height != 0) {
+        if (this.width != 0 && this.height != 0) {
             videoView.resizeVideo(this.width, this.height);
         }
-        videoPlayer.loadAndPlayVideo(UrlPath,this.loop,videoView, this.xStart,this.yStart,
-                this.id,this.startTime);
+        videoPlayer.loadAndPlayVideo(UrlPath, this.loop, videoView, this.xStart, this.yStart,
+                this.id, this.startTime);
     }
 
     @Override
     public String getMediaId() {
         return id;
+    }
+
+    @Override
+    public void playPause() {
+        videoPlayer.playPause();
     }
 }

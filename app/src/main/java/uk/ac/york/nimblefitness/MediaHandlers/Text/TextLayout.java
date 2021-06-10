@@ -18,8 +18,8 @@ public class TextLayout implements Serializable, AbstractLayout {
     TextModule textModule;
     Context context;
 
-    public TextLayout(String text, TextModule.fontFamily font, String fontSize, String fontColour,
-                      int xStart, int yStart, FrameLayout parentLayout, Context context) {
+    public TextLayout(String text, TextModule.fontFamily font, String fontSize, String fontColour
+            , int xStart, int yStart, FrameLayout parentLayout, Context context) {
         this.font = font;
         this.text = text;
         this.fontSize = fontSize;
@@ -41,19 +41,24 @@ public class TextLayout implements Serializable, AbstractLayout {
     @Override
     public void draw() {
         textModule = new TextModule(this.context);
-        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        params.leftMargin=this.xStart;
-        params.topMargin=this.yStart;
+        FrameLayout.LayoutParams params =
+                new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT);
+        params.leftMargin = this.xStart;
+        params.topMargin = this.yStart;
         textModule.setLayoutParams(params);
         parentLayout.addView(textModule);
-        textModule.setAll(this.text, this.font, this.fontSize, this.fontColour,
-                            this.xStart, this.yStart);
+        textModule.setAll(this.text, this.font, this.fontSize, this.fontColour, this.xStart,
+                this.yStart);
         textModule.writeText();
     }
 
     @Override
     public String getMediaId() {
         return null;
+    }
+
+    @Override
+    public void playPause() {
     }
 }

@@ -1,15 +1,23 @@
 package uk.ac.york.nimblefitness.HelperClasses;
 
+/**
+ * An object that holds all the information that can be associated to a single user, some
+ * parameters are stored locally to be used on any activity/fragment
+ */
+
 public class UserDetails {
 
     String firstName, lastName, gender, exerciseType, exerciseDuration, membershipPlan;
-    int currentMoves, age, weeklyGoal, completedRoutines, lastLogin;
+    int currentMoves, age, weeklyGoal, completedRoutines, lastLogin, lastLoginWeek;
     boolean acceptedTC, onBoarded;
 
     public UserDetails() {
     }
 
-    public UserDetails(String firstName, String lastName, String gender, String exerciseType, String exerciseDuration, int age, String membershipPlan, int weeklyGoal, int currentMoves, int completedRoutines, int lastLogin, boolean acceptedTC, boolean onBoarded) {
+    public UserDetails(String firstName, String lastName, String gender, String exerciseType,
+                       String exerciseDuration, int age, String membershipPlan, int weeklyGoal,
+                       int currentMoves, int completedRoutines, int lastLogin, int lastLoginWeek,
+                       boolean acceptedTC, boolean onBoarded) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;
@@ -21,39 +29,10 @@ public class UserDetails {
         this.weeklyGoal = weeklyGoal;
         this.completedRoutines = completedRoutines;
         this.lastLogin = lastLogin;
+        this.lastLoginWeek = lastLoginWeek;
         this.acceptedTC = acceptedTC;
         this.onBoarded = onBoarded;
     }
-
-    /*
-        public UserDetails(String firstName, String lastName, String gender, String exerciseType, String exerciseDuration, int age, String membershipPlan, int weeklyGoal, int currentMoves, int completedRoutines, int lastLogin) {
-            this.firstName = firstName;
-            this.lastName = lastName;
-            this.gender = gender;
-            this.exerciseType = exerciseType;
-            this.exerciseDuration = exerciseDuration;
-            this.age = age;
-            this.membershipPlan = membershipPlan;
-            this.weeklyGoal = weeklyGoal;
-            this.currentMoves = currentMoves;
-            this.completedRoutines = completedRoutines;
-            this.lastLogin = lastLogin;
-        }
-
-    public UserDetails(String firstName, String lastName, String gender, String exerciseType, String exerciseDuration, int age, String membershipPlan, int weeklyGoal, int currentMoves, int completedRoutines, int lastLogin, boolean acceptedTC) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.gender = gender;
-        this.exerciseType = exerciseType;
-        this.exerciseDuration = exerciseDuration;
-        this.age = age;
-        this.membershipPlan = membershipPlan;
-        this.weeklyGoal = weeklyGoal;
-        this.currentMoves = currentMoves;
-        this.completedRoutines = completedRoutines;
-        this.lastLogin = lastLogin;
-        this.acceptedTC = acceptedTC;
-    }*/
 
     public String getFirstName() {
         return firstName;
@@ -141,6 +120,10 @@ public class UserDetails {
 
     public void setLastLogin(int lastLogin) {
         this.lastLogin = lastLogin;
+    }
+
+    public int getLastLoginWeek() {
+        return lastLoginWeek;
     }
 
     public boolean isAcceptedTC() {

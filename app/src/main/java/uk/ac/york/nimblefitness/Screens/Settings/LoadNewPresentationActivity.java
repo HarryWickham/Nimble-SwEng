@@ -8,7 +8,8 @@ import android.graphics.LinearGradient;
 import android.graphics.Shader;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -31,13 +32,16 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
 
 import uk.ac.york.nimblefitness.HelperClasses.Slide;
 import uk.ac.york.nimblefitness.MediaHandlers.AbstractLayout;
 import uk.ac.york.nimblefitness.MediaHandlers.Audio.AudioType;
+import uk.ac.york.nimblefitness.MediaHandlers.Button.ButtonLayout;
+import uk.ac.york.nimblefitness.MediaHandlers.Button.ButtonType;
+import uk.ac.york.nimblefitness.MediaHandlers.Button.TextButtonType;
 import uk.ac.york.nimblefitness.MediaHandlers.Graphics.ShapeLayout;
 import uk.ac.york.nimblefitness.MediaHandlers.Graphics.ShapeType;
 import uk.ac.york.nimblefitness.MediaHandlers.Graphics.ShapeView;
@@ -50,19 +54,27 @@ import uk.ac.york.nimblefitness.MediaHandlers.Video.VideoLayout;
 import uk.ac.york.nimblefitness.MediaHandlers.Video.VideoType;
 import uk.ac.york.nimblefitness.R;
 
+/**
+ * The activity that can load an XML file that follows the PWS and display all components that
+ * are laid out in the PWS
+ */
+
 public class LoadNewPresentationActivity extends AppCompatActivity {
     private static final int STORAGE_PERMISSION_CODE = 101;
     ShapeView shapeView;
     Button openFileBrowser, downloadXMLFile;
     FrameLayout frameLayout;
-    Map<String, Slide> slides = new HashMap<>();
+    Map<String, Slide> slides = new LinkedHashMap<>();
     String defaultBackgroundColour;
-    TextModule.fontFamily font;
+    TextModule.fontFamily textFont;
+    TextButtonType.fontFamily buttonFont;
     String fontColour;
     String lineColour;
     String fillColour;
     String slideID;
-    int slideDuration;
+    String buttonText;
+    String buttonMediaID;
+    String buttonSlideID;
     int fontSize;
 
     @Override
@@ -77,6 +89,7 @@ public class LoadNewPresentationActivity extends AppCompatActivity {
         frameLayout = findViewById(R.id.handlerTestFrame);
 
 
+        //Opens a browser to allow the user to download an xml file from the internet
         downloadXMLFile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -85,16 +98,13 @@ public class LoadNewPresentationActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        //Opens the file browser to allow the user to navigate to the xml file that is stored on
+        // the phone
         openFileBrowser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startXMLParsing("filePath");
-                new MaterialFilePicker()
-                        .withActivity(LoadNewPresentationActivity.this)
-                        .withRequestCode(1000)
-                        .withFilter(Pattern.compile(".*\\.(xml)$"))
-                        .withHiddenFiles(true)
-                        .start();
+                new MaterialFilePicker().withActivity(LoadNewPresentationActivity.this).withRequestCode(1000).withFilter(Pattern.compile(".*\\.(xml)$")).withHiddenFiles(true).start();
             }
         });
     }
@@ -103,12 +113,15 @@ public class LoadNewPresentationActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+        //receives the path of the file that was selected by the user and the sends that path to
+        // the XML parser
         if (requestCode == 1000 && resultCode == RESULT_OK) {
             String filePath = data.getStringExtra(FilePickerActivity.RESULT_FILE_PATH);
             startXMLParsing(filePath);
         }
     }
 
+    //The full XML -> object conversion
     void parseXML(XmlPullParser parser) throws XmlPullParserException, IOException {
         int eventType = parser.getEventType();
         ShapeType shapeType = null;
@@ -116,8 +129,9 @@ public class LoadNewPresentationActivity extends AppCompatActivity {
         VideoType videoType = null;
         AudioType audioType = null;
         ImageType imageType = null;
+        ButtonType buttonType = null;
         Slide slide = null;
-        ArrayList<AbstractLayout> abstractLayouts = new ArrayList<>();
+        ArrayList<AbstractLayout> abstractLayouts = null;
 
         while (eventType != XmlPullParser.END_DOCUMENT) {
             String name;
@@ -130,9 +144,14 @@ public class LoadNewPresentationActivity extends AppCompatActivity {
                         case "slideshow":
                             break;
                         case "defaults":
+                            //setting the default values to use in later tags
                             defaultBackgroundColour = parser.getAttributeValue(null,
-                                                                        "backgroundcolour");
-                            font = TextModule.fontFamily.valueOf(parser.getAttributeValue(null, "font"));
+                                    "backgroundcolour");
+                            textFont =
+                                    TextModule.fontFamily.valueOf(parser.getAttributeValue(null,
+                                            "font"));
+                            buttonFont =
+                                    TextButtonType.fontFamily.valueOf(parser.getAttributeValue(null, "font"));
                             fontColour = parser.getAttributeValue(null, "fontcolour");
                             lineColour = parser.getAttributeValue(null, "linecolour");
                             fillColour = parser.getAttributeValue(null, "fillcolour");
@@ -140,20 +159,29 @@ public class LoadNewPresentationActivity extends AppCompatActivity {
                             break;
                         case "slide":
                             slide = new Slide();
+                            abstractLayouts = new ArrayList<>();
                             slideID = parser.getAttributeValue(null, "id");
-                            slide.setDuration(Integer.parseInt(parser.getAttributeValue(null, "duration")));
+                            if (parser.getAttributeValue(null, "duration") != null) {
+                                slide.setDuration(Integer.parseInt(parser.getAttributeValue(null,
+                                        "duration")));
+                            }
                             break;
                         case "shape":
                             shapeType = new ShapeType();
                             shapeType.setShape_type(parser.getAttributeValue(null, "type"));
-                            shapeType.setxStart(Integer.parseInt(parser.getAttributeValue(null, "xstart")));
-                            shapeType.setyStart(Integer.parseInt(parser.getAttributeValue(null, "ystart")));
-                            shapeType.setWidth(Integer.parseInt(parser.getAttributeValue(null, "width")));
-                            shapeType.setHeight(Integer.parseInt(parser.getAttributeValue(null, "height")));
+                            shapeType.setxStart(Integer.parseInt(parser.getAttributeValue(null,
+                                    "xstart")));
+                            shapeType.setyStart(Integer.parseInt(parser.getAttributeValue(null,
+                                    "ystart")));
+                            shapeType.setWidth(Integer.parseInt(parser.getAttributeValue(null,
+                                    "width")));
+                            shapeType.setHeight(Integer.parseInt(parser.getAttributeValue(null,
+                                    "height")));
+                            //checking none required tags and if not there set to the default value
                             if (parser.getAttributeValue(null, "fillcolour") != null) {
                                 shapeType.setColour(Color.parseColor(parser.getAttributeValue(null, "fillcolour")));
                             } else {
-                                shapeType.setColour(Color.parseColor("#000000"));
+                                shapeType.setColour(Color.parseColor(fillColour));
                             }
                             if (parser.getAttributeValue(null, "duration") != null) {
                                 shapeType.setDuration(Integer.parseInt(parser.getAttributeValue(null, "duration")));
@@ -169,14 +197,18 @@ public class LoadNewPresentationActivity extends AppCompatActivity {
                         case "line":
                             shapeType = new ShapeType();
                             shapeType.setShape_type("LINE");
-                            shapeType.setxStart(Integer.parseInt(parser.getAttributeValue(null, "xstart")));
-                            shapeType.setyStart(Integer.parseInt(parser.getAttributeValue(null, "ystart")));
-                            shapeType.setxEnd(Integer.parseInt(parser.getAttributeValue(null, "xend")));
-                            shapeType.setyEnd(Integer.parseInt(parser.getAttributeValue(null, "yend")));
+                            shapeType.setxStart(Integer.parseInt(parser.getAttributeValue(null,
+                                    "xstart")));
+                            shapeType.setyStart(Integer.parseInt(parser.getAttributeValue(null,
+                                    "ystart")));
+                            shapeType.setxEnd(Integer.parseInt(parser.getAttributeValue(null,
+                                    "xend")));
+                            shapeType.setyEnd(Integer.parseInt(parser.getAttributeValue(null,
+                                    "yend")));
                             if (parser.getAttributeValue(null, "linecolour") != null) {
                                 shapeType.setColour(Color.parseColor(parser.getAttributeValue(null, "linecolour")));
                             } else {
-                                shapeType.setColour(Color.parseColor("#000000"));
+                                shapeType.setColour(Color.parseColor(lineColour));
                             }
                             if (parser.getAttributeValue(null, "duration") != null) {
                                 shapeType.setDuration(Integer.parseInt(parser.getAttributeValue(null, "duration")));
@@ -185,24 +217,48 @@ public class LoadNewPresentationActivity extends AppCompatActivity {
                             }
                             break;
                         case "text":
-                            textType = new TextType();
-                            textType.setStyle(TextModule.styleFamily.normal);
-                            textType.setxStart(Integer.parseInt(parser.getAttributeValue(null, "xstart")));
-                            textType.setyStart(Integer.parseInt(parser.getAttributeValue(null, "ystart")));
-                            if (parser.getAttributeValue(null, "font") != null) {
-                                textType.setFont(TextModule.fontFamily.valueOf(parser.getAttributeValue(null, "font")));
+                            if (buttonType != null) {
+                                if (parser.getAttributeValue(null, "font") != null) {
+                                    buttonType.setFont(TextButtonType.fontFamily.valueOf(parser.getAttributeValue(null, "font")));
+                                } else {
+                                    buttonType.setFont(buttonFont);
+                                }
+                                if (parser.getAttributeValue(null, "fontcolour") != null) {
+                                    buttonType.setFontColour(parser.getAttributeValue(null,
+                                            "fontcolour"));
+                                } else {
+                                    buttonType.setFontColour(fontColour);
+                                }
+                                if (parser.getAttributeValue(null, "fontsize") != null) {
+                                    buttonType.setFontSize(parser.getAttributeValue(null,
+                                            "fontsize"));
+                                } else {
+                                    buttonType.setFontSize(String.valueOf(fontSize));
+                                }
                             } else {
-                                textType.setFont(TextModule.fontFamily.monospace);
-                            }
-                            if (parser.getAttributeValue(null, "fontcolour") != null) {
-                                textType.setFontColour(parser.getAttributeValue(null, "fontcolour"));
-                            } else {
-                                textType.setFontColour("#000000");
-                            }
-                            if (parser.getAttributeValue(null, "fontsize") != null) {
-                                textType.setFontSize(parser.getAttributeValue(null, "fontsize"));
-                            } else {
-                                textType.setFontSize("20");
+                                textType = new TextType();
+                                textType.setStyle(TextModule.styleFamily.normal);
+                                textType.setxStart(Integer.parseInt(parser.getAttributeValue(null
+                                        , "xstart")));
+                                textType.setyStart(Integer.parseInt(parser.getAttributeValue(null
+                                        , "ystart")));
+                                if (parser.getAttributeValue(null, "font") != null) {
+                                    textType.setFont(TextModule.fontFamily.valueOf(parser.getAttributeValue(null, "font")));
+                                } else {
+                                    textType.setFont(textFont);
+                                }
+                                if (parser.getAttributeValue(null, "fontcolour") != null) {
+                                    textType.setFontColour(parser.getAttributeValue(null,
+                                            "fontcolour"));
+                                } else {
+                                    textType.setFontColour(fontColour);
+                                }
+                                if (parser.getAttributeValue(null, "fontsize") != null) {
+                                    textType.setFontSize(parser.getAttributeValue(null, "fontsize"
+                                    ));
+                                } else {
+                                    textType.setFontSize(String.valueOf(fontSize));
+                                }
                             }
                             break;
                         case "b":
@@ -220,17 +276,32 @@ public class LoadNewPresentationActivity extends AppCompatActivity {
                             } else {
                                 textType.setStyle(TextModule.styleFamily.italic);
                             }
-                            //Not sure how to implement both italics and bold or some not bold/italic some bold/italic @todo
                             break;
                         case "video":
                             videoType = new VideoType();
-                            videoType.setUriPath(String.valueOf(parser.getAttributeValue(null, "urlname")));
-                            videoType.setStartTime(Integer.parseInt(parser.getAttributeValue(null, "starttime")));
-                            videoType.setLoop(Boolean.parseBoolean(parser.getAttributeValue(null, "loop")));
-                            videoType.setxStart(Integer.parseInt(parser.getAttributeValue(null, "xstart")));
-                            videoType.setyStart(Integer.parseInt(parser.getAttributeValue(null, "ystart")));
+                            videoType.setUriPath(String.valueOf(parser.getAttributeValue(null,
+                                    "urlname")));
+                            videoType.setLoop(Boolean.parseBoolean(parser.getAttributeValue(null,
+                                    "loop")));
+                            videoType.setxStart(Integer.parseInt(parser.getAttributeValue(null,
+                                    "xstart")));
+                            videoType.setyStart(Integer.parseInt(parser.getAttributeValue(null,
+                                    "ystart")));
+
+                            if (parser.getAttributeValue(null, "id") != null) {
+                                videoType.setId(parser.getAttributeValue(null, "id"));
+                            } else {
+                                videoType.setId(null);
+                            }
+                            if (parser.getAttributeValue(null, "starttime") != null) {
+                                videoType.setStartTime(Integer.parseInt(parser.getAttributeValue(null, "starttime")));
+                            } else {
+                                videoType.setStartTime(0);
+                            }
+
                             if (parser.getAttributeValue(null, "width") != null) {
-                                videoType.setWidth(Integer.parseInt(parser.getAttributeValue(null, "width")));
+                                videoType.setWidth(Integer.parseInt(parser.getAttributeValue(null
+                                        , "width")));
                             } else {
                                 videoType.setWidth(0);
                             }
@@ -239,45 +310,67 @@ public class LoadNewPresentationActivity extends AppCompatActivity {
                             } else {
                                 videoType.setHeight(0);
                             }
-                            Log.i("videoTypes :", String.valueOf(videoType.getUriPath()));
                             break;
                         case "audio":
                             audioType = new AudioType();
-                            audioType.setUrl(String.valueOf(parser.getAttributeValue(null, "urlname")));
-                            audioType.setLoop(Boolean.parseBoolean(parser.getAttributeValue(null, "loop")));
+                            audioType.setUrl(String.valueOf(parser.getAttributeValue(null,
+                                    "urlname")));
+                            audioType.setLoop(Boolean.parseBoolean(parser.getAttributeValue(null,
+                                    "loop")));
                             if (parser.getAttributeValue(null, "starttime") != null) {
                                 audioType.setStarttime(Integer.parseInt(parser.getAttributeValue(null, "starttime")));
                             } else {
                                 audioType.setStarttime(0);
                             }
                             if (parser.getAttributeValue(null, "id") != null) {
-                                audioType.setId(String.valueOf(parser.getAttributeValue(null, "id")));
+                                audioType.setId(parser.getAttributeValue(null, "id"));
                             } else {
-                                audioType.setId("");
+                                audioType.setId(null);
                             }
                             break;
                         case "image":
-                            imageType = new ImageType();
-                            imageType.setImageSource(String.valueOf(parser.getAttributeValue(null, "urlname")));
-                            imageType.setXCoordinate(Integer.parseInt(parser.getAttributeValue(null, "xstart")));
-                            imageType.setYCoordinate(Integer.parseInt(parser.getAttributeValue(null, "ystart")));
-                            imageType.setImageHeight(Integer.parseInt(parser.getAttributeValue(null, "height")));
-                            imageType.setImageWidth(Integer.parseInt(parser.getAttributeValue(null, "width")));
-                            if (parser.getAttributeValue(null, "duration") != null) {
-                                imageType.setImageDuration(Integer.parseInt(parser.getAttributeValue(null, "duration")));
+                            if (buttonType != null) {
+                                buttonType.setUrlname(String.valueOf(parser.getAttributeValue(null, "urlname")));
                             } else {
-                                imageType.setImageDuration(0);
+                                imageType = new ImageType();
+                                imageType.setImageSource(String.valueOf(parser.getAttributeValue(null, "urlname")));
+                                imageType.setXCoordinate(Integer.parseInt(parser.getAttributeValue(null, "xstart")));
+                                imageType.setYCoordinate(Integer.parseInt(parser.getAttributeValue(null, "ystart")));
+                                imageType.setImageHeight(Integer.parseInt(parser.getAttributeValue(null, "height")));
+                                imageType.setImageWidth(Integer.parseInt(parser.getAttributeValue(null, "width")));
+                                if (parser.getAttributeValue(null, "duration") != null) {
+                                    imageType.setImageDuration(Integer.parseInt(parser.getAttributeValue(null, "duration")));
+                                } else {
+                                    imageType.setImageDuration(0);
+                                }
                             }
+                            break;
+                        case "button":
+                            buttonType = new ButtonType();
+                            buttonType.setHeight(Integer.parseInt(parser.getAttributeValue(null,
+                                    "height")));
+                            buttonType.setWidth(Integer.parseInt(parser.getAttributeValue(null,
+                                    "width")));
+                            buttonType.setYstart(Integer.parseInt(parser.getAttributeValue(null,
+                                    "ystart")));
+                            buttonType.setXstart(Integer.parseInt(parser.getAttributeValue(null,
+                                    "xstart")));
+                            break;
+                        case "slideid":
+                            buttonSlideID = "new";
+                            break;
+                        case "mediaid":
+                            buttonMediaID = "new";
                             break;
                         default:
                             throw new IllegalStateException("Unexpected value: " + name);
                     }
                     break;
                 case XmlPullParser.TEXT:
-                    if (textType != null && !parser.getText().equals("null")) {
+                    if (buttonType != null && (!parser.getText().equals("null") || parser.getText() != null) && buttonSlideID == null && buttonMediaID == null) {
+                        buttonText = parser.getText();
 
-                        //textType.addText(parser.getText());
-
+                    } else if (textType != null && !parser.getText().equals("null")) {
                         switch (textType.getStyle()) {
                             case normal:
                                 textType.addText(parser.getText());
@@ -292,39 +385,78 @@ public class LoadNewPresentationActivity extends AppCompatActivity {
                                 textType.addText("<b><i>" + parser.getText() + "</i></b>");
                                 break;
                         }
+                    } else if (buttonSlideID != null && (!parser.getText().equals("null") || parser.getText() != null)) {
+                        buttonSlideID = parser.getText();
+                    } else if (buttonMediaID != null && (!parser.getText().equals("null") || parser.getText() != null)) {
+                        buttonMediaID = parser.getText();
                     }
                     break;
                 case XmlPullParser.END_TAG:
                     name = parser.getName();
                     if ((name.equalsIgnoreCase("shape") || name.equalsIgnoreCase("line")) && shapeType != null) {
-                        ShapeLayout shapeLayout = new ShapeLayout(shapeType.getyStart(),shapeType.getxStart(),shapeType.getWidth(),shapeType.getHeight(),shapeType.getColour(),shapeType.getxEnd(),shapeType.getyEnd(),shapeType.getShape_type(),shapeType.getShading(),shapeType.getDuration(), this,frameLayout);
+                        ShapeLayout shapeLayout = new ShapeLayout(shapeType.getyStart(),
+                                shapeType.getxStart(), shapeType.getWidth(),
+                                shapeType.getHeight(), shapeType.getColour(), shapeType.getxEnd()
+                                , shapeType.getyEnd(), shapeType.getShape_type(),
+                                shapeType.getShading(), shapeType.getDuration(), this, frameLayout);
                         abstractLayouts.add(shapeLayout);
                         shapeType = null;
                     } else if (name.equalsIgnoreCase("video") && videoType != null) {
-                        VideoLayout videoLayout = new VideoLayout(videoType.getUriPath(), videoType.getWidth(), videoType.getHeight(), videoType.getxStart(), videoType.getyStart(), videoType.getId(), videoType.getStartTime(), videoType.isLoop(), frameLayout, this);
+                        VideoLayout videoLayout = new VideoLayout(videoType.getUriPath(),
+                                videoType.getWidth(), videoType.getHeight(),
+                                videoType.getxStart(), videoType.getyStart(), videoType.getId(),
+                                videoType.getStartTime(), videoType.isLoop(), frameLayout, this);
                         abstractLayouts.add(videoLayout);
                         videoType = null;
-                    } else if (name.equalsIgnoreCase("text") && textType != null) {
-                        TextLayout textLayout = new TextLayout(textType.getText(), textType.getFont(), textType.getFontSize(), textType.getFontColour(), textType.getxStart(), textType.getyStart(), frameLayout, this);
-                        abstractLayouts.add(textLayout);
-                        textType = null;
+                    } else if (name.equalsIgnoreCase("text") && (textType != null || buttonType != null)) {
+                        if (buttonType != null) {
+                            buttonType.setText(buttonText);
+                        } else {
+                            TextLayout textLayout = new TextLayout(textType.getText(),
+                                    textType.getFont(), textType.getFontSize(),
+                                    textType.getFontColour(), textType.getxStart(),
+                                    textType.getyStart(), frameLayout, this);
+                            abstractLayouts.add(textLayout);
+                            textType = null;
+                        }
                     } else if (name.equalsIgnoreCase("audio") && audioType != null) {
-                        AudioType audioType1 = new AudioType(audioType.getUrl(), audioType.getStarttime(), audioType.isLoop(), audioType.getId(), this);
+                        AudioType audioType1 = new AudioType(audioType.getUrl(),
+                                audioType.getStarttime(), audioType.isLoop(), audioType.getId(),
+                                this);
                         abstractLayouts.add(audioType1);
                         audioType = null;
                     } else if (name.equalsIgnoreCase("image") && imageType != null) {
-                        ImageLayout imageLayout = new ImageLayout(imageType.getXCoordinate(), imageType.getYCoordinate(), imageType.getImageWidth(), imageType.getImageHeight(), imageType.getImageDuration(), imageType.getImageSource(), frameLayout, this);
+                        ImageLayout imageLayout = new ImageLayout(imageType.getXCoordinate(),
+                                imageType.getYCoordinate(), imageType.getImageWidth(),
+                                imageType.getImageHeight(), imageType.getImageDuration(),
+                                imageType.getImageSource(), frameLayout, this);
                         abstractLayouts.add(imageLayout);
                         imageType = null;
                     } else if (name.equalsIgnoreCase("b") && textType != null) {
                         textType.setStyle(TextModule.styleFamily.normal);
                     } else if (name.equalsIgnoreCase("i") && textType != null) {
                         textType.setStyle(TextModule.styleFamily.normal);
+                    } else if (name.equalsIgnoreCase("button") && buttonType != null) {
+                        ButtonLayout buttonLayout = new ButtonLayout(buttonType.getXstart(),
+                                buttonType.getYstart(), buttonType.getWidth(),
+                                buttonType.getHeight(), buttonType.getSlideid(),
+                                buttonType.getMediaid(), buttonType.getUrlname(),
+                                buttonType.getFontSize(), buttonType.getFontColour(),
+                                buttonType.getText(), buttonType.getFont(), frameLayout, this,
+                                LoadNewPresentationActivity.this);
+                        abstractLayouts.add(buttonLayout);
+                    } else if (name.equalsIgnoreCase("slideid") && buttonSlideID != null && !buttonSlideID.equals("null")) {
+                        buttonType.setSlideid(buttonSlideID);
+                        buttonSlideID = null;
+                    } else if (name.equalsIgnoreCase("mediaid") && buttonMediaID != null && !buttonMediaID.equals("null")) {
+                        buttonType.setMediaid(buttonMediaID);
+                        buttonMediaID = null;
                     } else if (name.equalsIgnoreCase("slide") && abstractLayouts != null) {
                         slide.setAbstractLayouts(abstractLayouts);
                         slides.put(slideID, slide);
                         slide = null;
                         abstractLayouts = null;
+                        slideID = null;
                     }
 
             }
@@ -332,14 +464,14 @@ public class LoadNewPresentationActivity extends AppCompatActivity {
         }
     }
 
+    //Checks to see if the user has given permission for the app to read the phones internal
+    // storeage
     public void checkPermission(String permission, int requestCode) {
-        if (ContextCompat.checkSelfPermission(LoadNewPresentationActivity.this, permission)
-                == PackageManager.PERMISSION_DENIED) {
+        if (ContextCompat.checkSelfPermission(LoadNewPresentationActivity.this, permission) == PackageManager.PERMISSION_DENIED) {
 
             // Requesting the permission
             ActivityCompat.requestPermissions(LoadNewPresentationActivity.this,
-                    new String[]{permission},
-                    requestCode);
+                    new String[]{permission}, requestCode);
         }
     }
 
@@ -348,30 +480,22 @@ public class LoadNewPresentationActivity extends AppCompatActivity {
     // This request code is provided when the user is prompt for permission.
 
     @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           @NonNull String[] permissions,
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
-        super
-                .onRequestPermissionsResult(requestCode,
-                        permissions,
-                        grantResults);
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
         if (requestCode == STORAGE_PERMISSION_CODE) {
-            if (grantResults.length > 0
-                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(LoadNewPresentationActivity.this,
-                        "Storage Permission Granted",
-                        Toast.LENGTH_SHORT)
-                        .show();
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(LoadNewPresentationActivity.this, "Storage Permission Granted",
+                        Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(LoadNewPresentationActivity.this,
-                        "Storage Permission Denied",
-                        Toast.LENGTH_SHORT)
-                        .show();
+                Toast.makeText(LoadNewPresentationActivity.this, "Storage Permission Denied",
+                        Toast.LENGTH_SHORT).show();
             }
         }
     }
 
+    //Setting up the XML parser and drawing first page after parsing has been completed
     void startXMLParsing(String filePath) {
         XmlPullParserFactory pullParserFactory;
         try {
@@ -385,12 +509,54 @@ public class LoadNewPresentationActivity extends AppCompatActivity {
 
             parseXML(parser);
 
-            for (AbstractLayout abstractLayout : slides.get("Slide1").getAbstractLayouts()){
+            /*for (AbstractLayout abstractLayout : slides.get("Slide2").getAbstractLayouts()) {
                 abstractLayout.draw();
+            }*/
+
+            Slide firstSlide = slides.values().iterator().next();
+
+
+            //Draws the first slide
+            frameLayout.removeAllViews();
+            for (AbstractLayout abstractLayout : firstSlide.getAbstractLayouts()) {
+                abstractLayout.draw();
+            }
+
+            //Remove the first slide and prints the second if they have delays
+            if (firstSlide.getDuration() != 0) {
+                Handler handler = new Handler(Looper.getMainLooper());
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        frameLayout.removeAllViews();
+                        for (AbstractLayout abstractLayout :
+                                slides.values().iterator().next().getAbstractLayouts()) {
+                            abstractLayout.draw();
+                        }
+                    }
+                }, firstSlide.getDuration());
             }
 
         } catch (XmlPullParserException | IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    //allows the changing of slides using button components
+    public void changeSlide(String slideID) {
+        this.slideID = slideID;
+        frameLayout.removeAllViews();
+        for (AbstractLayout abstractLayout : slides.get(slideID).getAbstractLayouts()) {
+            abstractLayout.draw();
+        }
+    }
+
+    //allows the changing of media state by using a button component
+    public void changeMedia(String mediaID) {
+        for (AbstractLayout abstractLayout : slides.get(slideID).getAbstractLayouts()) {
+            if (abstractLayout.getMediaId() == mediaID) {
+                abstractLayout.playPause();
+            }
         }
     }
 }

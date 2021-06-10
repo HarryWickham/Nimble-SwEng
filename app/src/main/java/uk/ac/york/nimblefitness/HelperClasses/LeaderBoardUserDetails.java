@@ -1,5 +1,10 @@
 package uk.ac.york.nimblefitness.HelperClasses;
 
+/**
+ * Creating an object that contains all the information that is required to display all users on
+ * the leader board this is used to save and retrieve from the firebase realtime database
+ */
+
 public class LeaderBoardUserDetails implements Comparable<LeaderBoardUserDetails> {
     String name;
     int score;
@@ -37,6 +42,6 @@ public class LeaderBoardUserDetails implements Comparable<LeaderBoardUserDetails
 
     @Override
     public int compareTo(LeaderBoardUserDetails o) {
-        return o.score-this.score;
+        return o.score - this.score;
     }
 }

@@ -10,17 +10,16 @@ import uk.ac.york.nimblefitness.MediaHandlers.AbstractLayout;
 
 public class ImageLayout implements Serializable, AbstractLayout {
 
+    FrameLayout parentLayout;
+    ImageModule imageModule;
+    Context context;
     //Declaring the variables for the image
     private int xCoordinate;
     private int yCoordinate;
     private int width;
     private int height;
-    private int duration;
-    private String imageSource;
-
-    FrameLayout parentLayout;
-    ImageModule imageModule;
-    Context context;
+    private final int duration;
+    private final String imageSource;
 
 
     public ImageLayout(int xCoordinate, int yCoordinate, int width, int height, int duration,
@@ -83,20 +82,25 @@ public class ImageLayout implements Serializable, AbstractLayout {
     public void draw() {
         imageModule = new ImageModule(this.context);
 
-        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        FrameLayout.LayoutParams params =
+                new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT);
         params.leftMargin = this.xCoordinate;
         params.topMargin = this.yCoordinate;
         imageModule.setLayoutParams(params);
 
         parentLayout.addView(imageModule);
         imageModule.setAll(this.xCoordinate, this.yCoordinate, this.width, this.height,
-                            this.duration, this.imageSource);
+                this.duration, this.imageSource);
         imageModule.setImage();
     }
 
     @Override
     public String getMediaId() {
         return null;
+    }
+
+    @Override
+    public void playPause() {
     }
 }

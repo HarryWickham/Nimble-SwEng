@@ -1,7 +1,11 @@
 package uk.ac.york.nimblefitness.HelperClasses;
 
 import android.content.Intent;
-import android.util.Log;
+
+/**
+ * A handler to ease the creation of the ShareIntent that allows the user to share content to
+ * other apps such as social media or e-mails
+ */
 
 public class ShareService {
     String Subject;
@@ -15,7 +19,6 @@ public class ShareService {
     }
 
     public Intent ShareContent() {
-        Log.i("TAG", "onHandleIntent: ");
         Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
         sharingIntent.setType("text/plain");
         sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, Subject);

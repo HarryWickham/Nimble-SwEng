@@ -28,8 +28,7 @@ public class CustomVideoView extends VideoView {
     }
 
     @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec)
-    {
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         setMeasuredDimension(_overrideWidth, _overrideHeight);
     }
 

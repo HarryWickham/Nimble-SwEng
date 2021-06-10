@@ -4,16 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 
@@ -21,16 +18,11 @@ import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import java.io.Serializable;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 import uk.ac.york.nimblefitness.HelperClasses.Exercise;
 import uk.ac.york.nimblefitness.HelperClasses.Routine;
 import uk.ac.york.nimblefitness.R;
-import uk.ac.york.nimblefitness.Screens.MainActivity;
 import uk.ac.york.nimblefitness.Screens.PaymentActivity;
 import uk.ac.york.nimblefitness.Screens.RoutineAndExercise.RoutineAndExerciseActivity;
 
@@ -44,9 +36,9 @@ import static android.preference.PreferenceManager.getDefaultSharedPreferences;
  */
 public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
 
-    private Context context;
-    private ArrayList<Routine> originalRoutineArrayList;
-    private ArrayList<Routine> routineArrayList;
+    private final Context context;
+    private final ArrayList<Routine> originalRoutineArrayList;
+    private final ArrayList<Routine> routineArrayList;
 
     public CustomExpandableListAdapter(Context context, ArrayList<Routine> routineArrayList) {
         this.context = context;
@@ -56,7 +48,7 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getGroupCount() {
-        return this.routineArrayList.size()-1;
+        return this.routineArrayList.size() - 1;
     }
 
     @Override
@@ -65,7 +57,9 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
     }
 
     @Override
-    public Object getGroup(int groupPosition) { return routineArrayList.get(groupPosition); }
+    public Object getGroup(int groupPosition) {
+        return routineArrayList.get(groupPosition);
+    }
 
     @Override
     public Object getChild(int groupPosition, int childPosition) {
@@ -89,6 +83,7 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
 
     /**
      * Sets out the information needed for displaying a routine card in the expandable list
+     *
      * @param groupPosition
      * @param isExpanded
      * @param convertView
@@ -96,9 +91,11 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
      * @return view for the routines
      */
     @Override
-    public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-        if(convertView==null){
-            LayoutInflater layoutInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    public View getGroupView(int groupPosition, boolean isExpanded, View convertView,
+                             ViewGroup parent) {
+        if (convertView == null) {
+            LayoutInflater layoutInflater =
+                    (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = layoutInflater.inflate(R.layout.expandable_list_group, null);
         }
 
@@ -109,7 +106,7 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
             public void onClick(View view) {
                 SharedPreferences prefs = getDefaultSharedPreferences(context);
                 FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-                if(prefs.getInt(currentFirebaseUser+"completedRoutines", 0) <
+                if (prefs.getInt(currentFirebaseUser + "completedRoutines", 0) <
                         getUserMembershipPlanRoutines(prefs, currentFirebaseUser)) {
 
                     Exercise exercise = new Exercise();
@@ -117,26 +114,26 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
 
                     Intent intent = new Intent(context, RoutineAndExerciseActivity.class);
                     Bundle bundle = new Bundle();
-                    bundle.putSerializable("routine",(Serializable) routineArrayList.get(groupPosition));
-                    bundle.putSerializable("exercise", (Serializable) exercise);
+                    bundle.putSerializable("routine", routineArrayList.get(groupPosition));
+                    bundle.putSerializable("exercise", exercise);
                     intent.putExtras(bundle);
                     context.startActivity(intent);
-                } else{
+                } else {
                     AlertDialog.Builder noMoreRoutines = new AlertDialog.Builder(context);
                     noMoreRoutines.setTitle("You have used all of your routines for this month.");
-                    noMoreRoutines.setMessage("Would you like to upgrade your plan to get access to more plans per month?");
-                    noMoreRoutines.setCancelable(true)
-                            .setPositiveButton("Upgrade", (dialog, id) -> {
-                                // if this button is clicked, close
-                                // current activity
-                                context.startActivity(new Intent(context, PaymentActivity.class));
+                    noMoreRoutines.setMessage("Would you like to upgrade your plan to get access " +
+                            "to more plans per month?");
+                    noMoreRoutines.setCancelable(true).setPositiveButton("Upgrade",
+                            (dialog, id) -> {
+                        // if this button is clicked, close
+                        // current activity
+                        context.startActivity(new Intent(context, PaymentActivity.class));
 
-                            })
-                            .setNegativeButton("Cancel", (dialog, id) -> {
-                                // if this button is clicked, just close
-                                // the dialog box and do nothing
-                                dialog.cancel();
-                            });
+                    }).setNegativeButton("Cancel", (dialog, id) -> {
+                        // if this button is clicked, just close
+                        // the dialog box and do nothing
+                        dialog.cancel();
+                    });
 
                     // create alert dialog
                     noMoreRoutines.create().show();
@@ -158,6 +155,7 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
 
     /**
      * Sets out the information needed for displaying the list of exercises in a routine
+     *
      * @param groupPosition
      * @param childPosition
      * @param isLastChild
@@ -166,17 +164,19 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
      * @return view for the exercises
      */
     @Override
-    public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+    public View getChildView(int groupPosition, int childPosition, boolean isLastChild,
+                             View convertView, ViewGroup parent) {
         Exercise child = (Exercise) getChild(groupPosition, childPosition);
-        if(convertView==null){
-            LayoutInflater layoutInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        if (convertView == null) {
+            LayoutInflater layoutInflater =
+                    (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = layoutInflater.inflate(R.layout.moves_list_layout, null);
         }
-        convertView.setPadding(20,0,20,10);
+        convertView.setPadding(20, 0, 20, 10);
         TextView exerciseName = convertView.findViewById(R.id.exercise_name);
         exerciseName.setText(child.getExerciseName());
         TextView exerciseMoves = convertView.findViewById(R.id.number_of_moves);
-        exerciseMoves.setText("Moves/Set: " + child.getMovesPerRep()*child.getReps());
+        exerciseMoves.setText("Moves/Set: " + child.getMovesPerRep() * child.getReps());
         TextView numberOfReps = convertView.findViewById(R.id.sets_of_reps);
         numberOfReps.setText(child.getReps() + " reps");
         View colourBar = convertView.findViewById(R.id.moves_list_colour_bar);
@@ -193,7 +193,9 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
 
     /**
      * Function for searching the Routines with the SearchView input
-     * Uses a copy of the routineArrayList, clears it, and fills it up with routines/exercises that match the search
+     * Uses a copy of the routineArrayList, clears it, and fills it up with routines/exercises
+     * that match the search
+     *
      * @param query
      * @return boolean determining if a search yielded a valid response
      */
@@ -218,11 +220,11 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
                 boolean alreadyAdded = false;
                 //If exercise is searched
                 for (Exercise exercise : exerciseList) {
-                    if(exercise.getExerciseName().toLowerCase().contains(query)) {
+                    if (exercise.getExerciseName().toLowerCase().contains(query)) {
                         // Check to see if routine is already added
-                        for(Routine addRoutine : routineArrayList) {
+                        for (Routine addRoutine : routineArrayList) {
                             //Compares routine about to be added to routines already added
-                            if(routine.getRoutineName().equals(addRoutine.getRoutineName())) {
+                            if (routine.getRoutineName().equals(addRoutine.getRoutineName())) {
                                 alreadyAdded = true;
                             }
                         }
@@ -246,12 +248,14 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
 
     /**
      * Gets information on user's plan to indicate how many routines a user has remaining
+     *
      * @param prefs
      * @param currentFirebaseUser
      * @return number of routines a user is allowed in a month
      */
-    public int getUserMembershipPlanRoutines(SharedPreferences prefs, FirebaseUser currentFirebaseUser ){
-        switch (prefs.getString(currentFirebaseUser+"membershipPlan", "bronze")){
+    public int getUserMembershipPlanRoutines(SharedPreferences prefs,
+                                             FirebaseUser currentFirebaseUser) {
+        switch (prefs.getString(currentFirebaseUser + "membershipPlan", "bronze")) {
             case "bronze":
                 return 20;
             case "silver":
@@ -265,20 +269,23 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
 
     /**
      * Sums the number of moves of each exercise in a routine
+     *
      * @param routine
      * @return total moves for a given routine
      */
-    private int totalMoves(Routine routine){
+    private int totalMoves(Routine routine) {
         int routineTotalMoves = 0;
 
-        //Adds moves for each routine in a recurring for loop by multiplying movesPerRep x number of reps
-        for(int i = 0; i < routine.getExerciseArrayList().size(); i++){
-            routineTotalMoves = routineTotalMoves +
-                    (int) routine.getExerciseArrayList().get(i).getMovesPerRep()*routine.getExerciseArrayList().get(i).getReps();
+        //Adds moves for each routine in a recurring for loop by multiplying movesPerRep x number
+        // of reps
+        for (int i = 0; i < routine.getExerciseArrayList().size(); i++) {
+            routineTotalMoves =
+                    routineTotalMoves + (int) routine.getExerciseArrayList().get(i).getMovesPerRep()
+                            * routine.getExerciseArrayList().get(i).getReps();
         }
 
         //Multiply the total by the number of sets the routine has
-        routineTotalMoves = routineTotalMoves*routine.getSets();
+        routineTotalMoves = routineTotalMoves * routine.getSets();
 
         return routineTotalMoves;
     }

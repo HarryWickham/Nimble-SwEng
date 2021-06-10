@@ -1,29 +1,6 @@
-<slideshow author="" version="" comment="">
+<slideshow author="Harry Wickham" version="1" comment="Nimble Fitness Multi-Media Example Presentation">
     <defaults backgroundcolour="#ffffff" font="sans_serif" fontsize="13" fontcolour="#000000" linecolour="#000000" fillcolour="#000000"/>
     <slide id="Slide1" duration="0">
-        <!-- <routine routineImage="" routineName="" routineSummary="" rating="" sets="" restBetweenSets="">
-            <exercise exerciseName="" exerciseDescription="" repType="" reps="" timePerRep="" movesPerRep="" restAfterFinish="" colour="">
-                <video urlname="" starttime="0" loop="true" xstart="50" ystart="262" width="980" height="550" id="" />
-                <image urlname="" xstart="50" ystart="887" width="726" height="550" duration="0"/>
-                <shape type="RECTANGLE" xstart="25" ystart="237" width="600" height="1030" fillcolour="#303F9F" duration="0"/>
-                <shape type="RECTANGLE" xstart="25" ystart="862" width="560" height="780" fillcolour="#303F9F" duration="0"/>
-                <text font="sans_serif" fontsize="32" fontcolour="#000000" xstart="50" ystart="50"></text>
-                <text font="sans_serif" fontsize="13" fontcolour="#000000" xstart="50" ystart="1512"></text>
-            </exercise>
-        </routine> -->
-
-        <routine routineImage="https://www-users.york.ac.uk/~hew550/NimbleAssets/routineimages/beginUp.png" routineName="Beginner Upper Body" routineSummary="Let's start easy. This routine concentrates on those upper body muscles including pectorals, deltoids and abdominals with most of the moves requiring the body to be laid out on the stomach."
-            rating="3" sets="1" restBetweenSets="30" setsRemaining="1">
-            <exercise exerciseName="Push Up" exerciseDescription="With your hands placed a shoulder width apart and a straight back, lower yourself to the ground keeping your elbows tucked in. Hold the position. Then push off of the floor to your start position to complete a rep. "
-                repType="number" reps="5" timePerRep="3" movesPerRep="1" restAfterFinish="10" colour="#d82bff">
-                <video urlname="https://www-users.york.ac.uk/~hew550/NimbleAssets/exercisevideos/Normal-Push-Up.mp4" starttime="0" loop="true" xstart="50" ystart="262" width="980" height="550" id="pushUpVideo" />
-                <image urlname="https://www-users.york.ac.uk/~hew550/NimbleAssets/exercisemusclegroups/normal_push_up.png" xstart="50" ystart="887" width="726" height="550" duration="0"/>
-                <shape type="RECTANGLE" xstart="25" ystart="237" width="600" height="1030" fillcolour="#303F9F" duration="0"/>
-                <shape type="RECTANGLE" xstart="25" ystart="862" width="560" height="780" fillcolour="#303F9F" duration="0"/>
-                <text font="sans_serif" fontsize="32" fontcolour="#000000" xstart="50" ystart="50"><b>Push Up</b></text>
-                <text font="sans_serif" fontsize="13" fontcolour="#000000" xstart="50" ystart="1512">With your hands placed a shoulder width apart and a straight back, lower yourself to the ground keeping your elbows tucked in. Hold the position. Then push off of the floor to your start position to complete a rep.</text>
-            </exercise>
-        </routine>
 
         <routine routineImage="https://www-users.york.ac.uk/~hew550/NimbleAssets/routineimages/beginUp.png" routineName="Beginner Upper Body" routineSummary="Let's start easy. This routine concentrates on those upper body muscles including pectorals, deltoids and abdominals with most of the moves requiring the body to be laid out on the stomach."
             rating="3" sets="4" restBetweenSets="30" setsRemaining="4">

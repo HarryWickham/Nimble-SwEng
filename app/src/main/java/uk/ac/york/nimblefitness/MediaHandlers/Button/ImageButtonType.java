@@ -22,7 +22,7 @@ public class ImageButtonType {
         this.context = context;
     }
 
-    public ImageButton createButton(){
+    public ImageButton createButton() {
         ImageButton imageButton = new ImageButton(context);
         imageButton.setMaxWidth(width);
         imageButton.setMaxHeight(height);

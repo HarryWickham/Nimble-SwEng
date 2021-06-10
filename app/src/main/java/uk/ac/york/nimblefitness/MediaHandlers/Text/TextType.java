@@ -1,5 +1,9 @@
 package uk.ac.york.nimblefitness.MediaHandlers.Text;
 
+/**
+ * Text type Object to help with XML parsing
+ */
+
 public class TextType {
     TextModule.styleFamily style;
     TextModule.fontFamily font;

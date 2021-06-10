@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -18,7 +17,8 @@ import pl.pawelkleczkowski.customgauge.CustomGauge;
 import uk.ac.york.nimblefitness.HelperClasses.ShareService;
 import uk.ac.york.nimblefitness.R;
 
-/** This class initialises the 'Goal' tab within the profile page of the app. It includes the 'goal
+/**
+ * This class initialises the 'Goal' tab within the profile page of the app. It includes the 'goal
  * gauge' which shows how many moves the user has completed for the day/week and the list below the
  * gauge gives a breakdown of these moves in terms of the exercises. There is also a randomised
  * motivational quote below the gauge which changes every time the user views the goal tab.
@@ -43,12 +43,12 @@ public class GoalFragment extends Fragment implements GoalContract.GoalView {
         // Sets the maximum value of the gauge. //
         gauge.setEndValue(goalPresenter.setGaugeEndValue());
         // Sets the current value of the gauge and subsequently how much it's filled. //
-        gauge.setValue(goalPresenter.displayGaugeInfo()>goalPresenter.setGaugeEndValue()?
-                goalPresenter.setGaugeEndValue():goalPresenter.displayGaugeInfo());
+        gauge.setValue(goalPresenter.displayGaugeInfo() > goalPresenter.setGaugeEndValue() ?
+                goalPresenter.setGaugeEndValue() : goalPresenter.displayGaugeInfo());
         // The value of the gauge is displayed as text. //
         TextView gaugeNumber = view.findViewById(R.id.moves_counter);
-        gaugeNumber.setText(String.format(Locale.UK,"%d/%d",
-                goalPresenter.displayGaugeInfo(), gauge.getEndValue()));
+        gaugeNumber.setText(String.format(Locale.UK, "%d/%d", goalPresenter.displayGaugeInfo(),
+                gauge.getEndValue()));
         // Finds where the quote should go in this layout. //
         TextView motivationQuote = view.findViewById(R.id.motivation);
         motivationQuote.setText(goalPresenter.displayQuote()); // Sets the quote.
@@ -67,19 +67,20 @@ public class GoalFragment extends Fragment implements GoalContract.GoalView {
         shareButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new ShareService("Look at my workout",
-                        "I have just completed a workout on the Nimble Fitness Companion, " +
-                                "sign up today to view my score!",
-                        "Share your workout - today").ShareContent());
+                startActivity(new ShareService("Look at my workout", "I have just completed a " +
+                        "workout on the Nimble Fitness Companion, " + "sign up today to view my " +
+                        "score!", "Share your workout - today").ShareContent());
             }
         });
         return view;
     }
-    /** This method is used to send the fragment's context to the Presenter so the list of today's
+
+    /**
+     * This method is used to send the fragment's context to the Presenter so the list of today's
      * moves can be set.
      */
     @Override
-    public Context getContext(){
+    public Context getContext() {
         return getActivity();
     }
 }

@@ -31,8 +31,8 @@ public class VideoPlayer extends Activity implements Serializable {
         view.suspend();
     }
 
-    public void loadAndPlayVideo (Uri path, Boolean loop, VideoView outsideView,
-                                  int xStart, int yStart, String id, int startTime) {
+    public void loadAndPlayVideo(Uri path, Boolean loop, VideoView outsideView, int xStart,
+                                 int yStart, String id, int startTime) {
         this.xstart = xStart;
         this.ystart = yStart;
         this.id = id;
@@ -58,7 +58,7 @@ public class VideoPlayer extends Activity implements Serializable {
                                 public void run() {
                                     view.start();
                                 }
-                            }, this.startTime *1000);
+                            }, this.startTime * 1000);
 
                         });
 
@@ -94,6 +94,14 @@ public class VideoPlayer extends Activity implements Serializable {
         };
         Thread videoThread = new Thread(runnable);
         videoThread.start();
+    }
+
+    public void playPause() {
+        if (view.isPlaying()) {
+            view.pause();
+        } else {
+            view.start();
+        }
     }
 
     public int getXstart() {
